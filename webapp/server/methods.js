@@ -3,7 +3,6 @@ Meteor.startup(function() {
     Restivus.configure({
         prettyJson: true,
         useAuth: true,
-        apiPath: "data/",
     });
 
     CRFmetadataCollection.find().forEach(function(collMeta) {

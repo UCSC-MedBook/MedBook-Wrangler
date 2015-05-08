@@ -1,6 +1,7 @@
 import os,sys
 import requests
 import pdb
+import json
 
 class MedBookConnection:
 
@@ -30,12 +31,21 @@ class MedBookConnection:
         raise Exception("Please pass username and password or set MEDBOOKUSER and MEDBOOKPASSWORD in your environment variables");
 
 
-    def find(self, collName, **params):
+
+    def find(self, collName, query=None, **params):
         try:
             headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
-            for key in params:
-                if isinstance(params[key], list):
-                    params[key] = ",".join(params[key])
+j
+            assert query==None or len(params)==0, "MedBook.find(): Use either a Mongo query or keywords, but not both"
+
+            if query:
+                params = { "json": json.dumps(query) };
+            else:
+                for key in params:
+                    if isinstance(params[key], list):
+                        params[key] = ",".join(params[key])
+
+
             res = requests.get(self.server + "/data/api/" + collName, params=params, headers=headers).json()["data"];
             return res;
         except:
@@ -46,16 +56,24 @@ class MedBookConnection:
 
 def test():
     medbook = MedBookConnection();
+    data = medbook.find("Expression2", { "Study_ID": "prad_wcdt", "gene": "BRCA1" });
+    assert len(data) == 1
+
+    data = medbook.find("Expression2", { "Study_ID": {"$in": [ "prad_tcga", "prad_wcdt"] },  "gene": { "$in": ["EGFR","BRCA1"]}});
+    assert len(data) == 4
+
+    print "success"
     data = medbook.find("Expression2", gene="EGFR");
     assert len(data) == 2
+
     data = medbook.find("Expression2", gene=["EGFR","BRCA1"]);
     assert len(data) == 4
+
     data = medbook.find("Expression2", gene=["EGFR","BRCA1"], Study_ID= "prad_wcdt");
     assert len(data) == 2
-    print "success"
+
 
     """
-    import json
     print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
     """
 

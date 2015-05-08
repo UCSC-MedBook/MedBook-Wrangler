@@ -1,0 +1,67 @@
+MedBookLib provides a python interface to MedBook (R version should come next).
+
+PYTHON
+
+  MedBookConnection(<name optional>, <password optional>)
+    You begin the conversation by creating a MedBook Connection object which will be used
+
+    MedBookConnection("ted@soe.ucsc.edu", "test1234");
+
+    or using the MedBook environment  variables: MEDBOOKUSER, MEDBOOKPASSWORD
+
+    medbook = MedBookConnection();
+
+    This will throw an exception object if it does not connect an authenticate to the MedBook server. 
+
+`
+  MedBookConnection.find(<collection required>, <mongo query optional>, <keyword querys optional>)
+
+    The simplest find command will return all of the data objects in a collection. For example
+
+        data = medbook.find("Clinical_Info");
+
+
+
+    Some tables such as Expression2 are very large and if just need one gene from one study, you can do this by simply doing:
+
+        data = medbook.find("Expression2", { "Study_ID": "prad_wcdt", "gene": "BRCA1" });
+
+
+    This can be more easily expressed using the python keyword idiom:
+
+        data = medbook.find("Expression2", Study_ID="prad_wcdt", gene="BRCA1");
+
+
+    But use the mongo syntax to express complicated queriess, 
+
+        data = medbook.find("Expression2", { "Study_ID": {"$in": [ "prad_tcga", "prad_wcdt"] },  "gene": { "$in": ["EGFR","BRCA1"]}});
+
+
+    You cannot combine keyword queries and mongo queries.
+
+
+
+OPTIONAL ENVIRONEMNT VARIABLE CREDENTIALS 
+    You must provide credentials to MedBook in the form of a name and password. There are two ways
+    to do this:
+
+    Preferred way: Set the MEDBOOKUSER and MEDBOOKPASSWORD environment variables. For exmaple:
+        export MEDBOOKUSER=ted@soe.ucsc.edu
+        export MEDBOOKPASSWORD=test1234
+
+
+    There is also a MEDBOOKSERVER environment variable.  If no server is specificed
+    The default server is https://medbook.ucsc.edu. But you can also set the server to be your laptop.
+
+    Common ones are:
+
+        export MEDBOOKSERVER=https://su2c-dev.ucsc.edu/
+        
+        export MEDBOOKSERVER=http://su2c-dev.ucsc.edu:20012/
+        
+        export MEDBOOKSERVER=http://localhost:20012/
+
+    Alternatively, you can provide the name and password in the parameters of the MedBookConnection object (see above).
+
+
+

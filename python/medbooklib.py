@@ -22,9 +22,7 @@ class MedBookConnection:
 
                 payload = dict(user=user, password=password);
                 self.credentials = requests.post(self.server + "/data/api/login", data=payload)
-                pdb.set_trace()
                 self.credentials = self.credentials.json()["data"];
-                print self.credentials
                 self.url = self.server
                 return;
             finally:

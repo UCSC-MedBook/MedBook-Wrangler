@@ -30,22 +30,12 @@ class MedBookConnection:
         raise Exception("Please pass username and password or set MEDBOOKUSER and MEDBOOKPASSWORD in your environment variables");
 
 
-    def find(self, collName):
+    def find(self, collName, **params):
         try:
             headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
-            res = requests.get(self.server + "/data/api/" + collName, headers=headers).json()["data"];
-            return res;
-        except:
-            return None
-
-    def findGenes(self, collName, genes):
-        try:
-            headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
-            if isinstance(genes, list):
-                genes = ",".join(genes);
-            print genes
-            params = dict(gene=genes) 
-            
+            for key in params:
+                if isinstance(params[key], list):
+                    params[key] = ",".join(params[key])
             res = requests.get(self.server + "/data/api/" + collName, params=params, headers=headers).json()["data"];
             return res;
         except:
@@ -54,12 +44,19 @@ class MedBookConnection:
 
 
 
-medbook = MedBookConnection();
-if len(sys.argv) > 2:
-    data = medbook.findGenes(sys.argv[1], sys.argv[2].split(","));
-else:
-    data = medbook.find(sys.argv[1]);
+def test():
+    medbook = MedBookConnection();
+    data = medbook.find("Expression2", gene="EGFR");
+    assert len(data) == 2
+    data = medbook.find("Expression2", gene=["EGFR","BRCA1"]);
+    assert len(data) == 4
+    data = medbook.find("Expression2", gene=["EGFR","BRCA1"], Study_ID= "prad_wcdt");
+    assert len(data) == 2
+    print "success"
 
-import json
-print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+    """
+    import json
+    print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+    """
 
+test()

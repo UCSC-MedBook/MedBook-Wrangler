@@ -24,11 +24,13 @@ class MedBookConnection:
                 payload = dict(user=user, password=password);
                 self.credentials = requests.post(self.server + "/data/api/login", data=payload)
                 self.credentials = self.credentials.json()["data"];
+                assert self.credentials["authToken"] 
+                assert self.credentials["userId"]
                 self.url = self.server
                 return;
             finally:
                 pass
-        raise Exception("Please pass username and password or set MEDBOOKUSER and MEDBOOKPASSWORD in your environment variables");
+        raise Exception("Please pass username and password or set MEDBOOKUSER and MEDBOOKPASSWORD in your environment variables. You will also need to set MEDBOOKSERVER if you are not using medbook.ucsc.edu");
 
 
 

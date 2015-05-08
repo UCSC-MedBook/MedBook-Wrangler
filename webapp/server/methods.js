@@ -26,11 +26,14 @@ function REST(collName, collMeta, coll) {
       if (this.user) {
           if (this.queryParams) {
             query = this.queryParams;
-            Object.keys(query).map(function(key) {
-                var a = query[key].split(",");
-                if (a.length > 1)
-                    query[key] =  { "$in": a };
-            });
+            if ("json" in query)
+                query = JSON.parse(query.json);
+            else
+                Object.keys(query).map(function(key) {
+                    var a = query[key].split(",");
+                    if (a.length > 1)
+                        query[key] =  { "$in": a };
+                });
 
           }
           if (collMeta && 'collaborations' in collMeta.fieldOrder) {

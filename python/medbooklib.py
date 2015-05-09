@@ -29,7 +29,6 @@ class MedBookConnection:
             self.credentials = obj["data"];
             assert self.credentials["authToken"], "Not logged in, check password";
             assert self.credentials["userId"], "Not Logged in";
-            self.url = self.server;
             return;
         raise Exception("Please pass username and password or set MEDBOOKUSER and MEDBOOKPASSWORD in your environment variables. You will also need to set MEDBOOKSERVER if you are not using medbook.ucsc.edu");
 
@@ -47,7 +46,9 @@ class MedBookConnection:
                 if isinstance(params[key], list):
                     params[key] = ",".join(params[key])
 
-        wrapped = requests.get(self.server + "/data/api/" + collName, params=params, headers=headers);
+        url = self.server + "/data/api/" + collName;
+        print(url);
+        wrapped = requests.get(url, params=params, headers=headers);
         assert wrapped, "could not connect, connection timed out"
         result = wrapped.json()["data"];
         assert wrapped, "bad query"
@@ -65,6 +66,10 @@ def test():
     
 
     medbook = MedBookConnection();
+    data = medbook.find("Clinical_Info");
+    assert len(data) > 1
+    tests += 1;
+
     data = medbook.find("Expression2", { "Study_ID": "prad_wcdt", "gene": "BRCA1" });
     assert len(data) == 1
     tests += 1;

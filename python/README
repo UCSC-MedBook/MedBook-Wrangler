@@ -11,7 +11,7 @@ PYTHON
 
     medbook = MedBookConnection();
 
-    This will throw an exception object if it does not connect an authenticate to the MedBook server. 
+    This will throw an exception object if it does not make authenticated connection to the MedBook server. 
 
 `
   MedBookConnection.find(<collection required>, <mongo query optional>, <keyword querys optional>)

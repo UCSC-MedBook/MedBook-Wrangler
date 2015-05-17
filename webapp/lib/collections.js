@@ -23,7 +23,7 @@ CRFmetadataCollection.allow({
     return true;
   },
   update: function(userId, doc){
-    return true;
+    return false;
   },
   remove: function(userId, doc){
     return true;
@@ -31,3 +31,31 @@ CRFmetadataCollection.allow({
 });
 
 Collections = {}
+
+Signature = new Meteor.Collection('signature');
+Signature.allow({
+  insert: function(userId, doc){
+    return true;
+  },
+  update: function(userId, doc){
+    return true;
+  },
+  remove: function(userId, doc){
+    return true;
+  }
+});
+
+
+Contrast = new Meteor.Collection('contrast');
+Contrast.allow({
+  insert: function(userId, doc){
+    return true;
+  },
+  update: function(userId, doc){
+    return true;
+  },
+  remove: function(userId, doc){
+    return true;
+  }
+});
+

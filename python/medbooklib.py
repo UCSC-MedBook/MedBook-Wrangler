@@ -47,15 +47,36 @@ class MedBookConnection:
                     params[key] = ",".join(params[key])
 
         url = self.server + "/data/api/" + collName;
-        print(url);
         wrapped = requests.get(url, params=params, headers=headers);
         assert wrapped, "could not connect, connection timed out"
         result = wrapped.json()["data"];
         assert wrapped, "bad query"
         return result;
 
+    def insert(self, collection, obj):
+        url = self.server + "/data/api/" + collection
+        headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
+        response = requests.post(url, json=obj, headers=headers);
+        if response.status_code == 200:
+            return response.json()['data'];
+        else:
+            raise Exception( str(response.status_code) + " " + str(response.reason));
+
+    def update(self, collection, obj):
+        if not ("_id" in obj)  or obj["_id"] == None:
+            raise Exception( "update needs a valid _id  field:\n" + str(obj) );
+        url = self.server + "/data/api/" + collection  #   + "/" + obj["_id"] + "/";
+        headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
+        response = requests.put(url, json=obj, headers=headers);
+        if response.status_code == 200:
+            return response.json()['data'];
+        else:
+            raise Exception( str(response.status_code) + " " + str(response.reason));
+
 
 def test():
+    medbook = MedBookConnection();
+
     tests = 0;
     try:
         medbook = MedBookConnection("foo", "bar");
@@ -64,8 +85,6 @@ def test():
         tests += 1;
         pass
     
-
-    medbook = MedBookConnection();
     data = medbook.find("Clinical_Info");
     assert len(data) > 1
     tests += 1;
@@ -75,22 +94,52 @@ def test():
     tests += 1;
 
     data = medbook.find("Expression2", { "Study_ID": {"$in": [ "prad_tcga", "prad_wcdt"] },  "gene": { "$in": ["EGFR","BRCA1"]}});
-    assert len(data) == 4
-    tests += 1;
-
-    data = medbook.find("Expression2", gene="EGFR");
     assert len(data) == 2
     tests += 1;
 
+    data = medbook.find("Expression2", gene="EGFR");
+    assert len(data) == 1
+    tests += 1;
+
     data = medbook.find("Expression2", gene=["EGFR","BRCA1"]);
-    assert len(data) == 4
+    assert len(data) == 2
     tests += 1;
 
     data = medbook.find("Expression2", gene=["EGFR","BRCA1"], Study_ID= "prad_wcdt");
     assert len(data) == 2
     tests += 1;
 
+    contrast = medbook.insert("contrast", dict(
+                name="ForBetterOrWorse", 
+                studyID="prad_wcdt", 
+                group1Name="Better", 
+                group2Name="Worse", 
+                list1=["DTB-001", "DTB-002", "DTB-003"],
+                list2=["DTB-004", "DTB-005", "DTB-006"],
+                collaborations="prad_wcdt"));
+
+    assert len(contrast)
+    tests += 1;
+
+    sig  = medbook.insert("signature", dict(
+                name="BOW Sig", 
+                studyID="prad_wcdt",
+                version=1, 
+                contrast=contrast["_id"], 
+                signature={ "AR" : { "weight" : 3.3 },  "ASCL1" : { "weight" : "0.042114584368837" }}));
+    assert len(sig)
+    tests += 1;
+
+    sig["signature"] = { "AR" : { "weight" : 1.0 }, "ASCL1" : { "weight" : "1.0" }};
+    sig  = medbook.update("signature", sig);
+
+    
+    assert len(sig)
+    tests += 1;
+
     print "success tests", tests, "passed"
+    sys.exit(0);
+
 
 if __name__ == "__main__":
     test()

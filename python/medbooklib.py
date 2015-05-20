@@ -15,12 +15,13 @@ class MedBookConnection:
             if "MEDBOOKSERVER" in os.environ:
                 self.server = os.environ["MEDBOOKSERVER"];
             else:
-                self.server = "https://medbook.ucsc.edu";
+                self.server = "http://localhost";
 
             if self.server[-1] == "/":
                 self.server = self.server[0:-1]
 
             payload = dict(user=user, password=password);
+            print "login payload", payload
             self.credentials = requests.post(self.server + "/data/api/login", data=payload)
             assert self.credentials != None, "could not connect to server";
             assert self.credentials.status_code == 200, "Could not login: " + str(self.credentials.status_code) + " " + self.credentials.reason + ", check MEDBOOKUSER and MEDBOOKPASSWORD for server:" + self.server;
@@ -56,7 +57,7 @@ class MedBookConnection:
     def insert(self, collection, obj):
         url = self.server + "/data/api/" + collection
         headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
-        response = requests.post(url, json=obj, headers=headers);
+        response = requests.post(url, data=obj, headers=headers);
         if response.status_code == 200:
             return response.json()['data'];
         else:
@@ -67,7 +68,7 @@ class MedBookConnection:
             raise Exception( "update needs a valid _id  field:\n" + str(obj) );
         url = self.server + "/data/api/" + collection  #   + "/" + obj["_id"] + "/";
         headers = {"X-Auth-Token": self.credentials["authToken"], "X-User-Id": self.credentials["userId"]};
-        response = requests.put(url, json=obj, headers=headers);
+        response = requests.put(url, data=obj, headers=headers);
         if response.status_code == 200:
             return response.json()['data'];
         else:
@@ -86,10 +87,12 @@ def test():
         pass
     
     data = medbook.find("Clinical_Info");
+    print data
     assert len(data) > 1
     tests += 1;
 
     data = medbook.find("Expression2", { "Study_ID": "prad_wcdt", "gene": "BRCA1" });
+    print data
     assert len(data) == 1
     tests += 1;
 

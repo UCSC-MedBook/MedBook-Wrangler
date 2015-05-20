@@ -1,7 +1,7 @@
 
 Meteor.startup(function() {
     Restivus.configure({
-        prettyJson: true,
+        prettyJson: false,
         useAuth: true,
     });
 

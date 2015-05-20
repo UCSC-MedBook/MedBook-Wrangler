@@ -21,7 +21,6 @@ class MedBookConnection:
                 self.server = self.server[0:-1]
 
             payload = dict(user=user, password=password);
-            print "login payload", payload
             self.credentials = requests.post(self.server + "/data/api/login", data=payload)
             assert self.credentials != None, "could not connect to server";
             assert self.credentials.status_code == 200, "Could not login: " + str(self.credentials.status_code) + " " + self.credentials.reason + ", check MEDBOOKUSER and MEDBOOKPASSWORD for server:" + self.server;
@@ -87,12 +86,10 @@ def test():
         pass
     
     data = medbook.find("Clinical_Info");
-    print data
     assert len(data) > 1
     tests += 1;
 
     data = medbook.find("Expression2", { "Study_ID": "prad_wcdt", "gene": "BRCA1" });
-    print data
     assert len(data) == 1
     tests += 1;
 

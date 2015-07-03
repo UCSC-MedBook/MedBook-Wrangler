@@ -15,7 +15,7 @@ class MedBookConnection:
             if "MEDBOOKSERVER" in os.environ:
                 self.server = os.environ["MEDBOOKSERVER"];
             else:
-                self.server = "http://localhost";
+                self.server = "https://medbook.ucsc.edu";
 
             if self.server[-1] == "/":
                 self.server = self.server[0:-1]

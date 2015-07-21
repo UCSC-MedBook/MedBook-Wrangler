@@ -1,16 +1,12 @@
 Template.uploadPathway.events({
   "submit #upload-pathway": function (event) {
-    // Prevent default browser form submit
-    event.preventDefault();
+    event.preventDefault(); // prevent default browser form submit
 
     // upload all the files
     console.log("about to upload");
-    var pathwayFile = event.target.nameOfInput.files[0];
+    var pathwayFile = event.target.pathwayFile.files[0];
     console.log(pathwayFile);
 
-    // should this be in a Meteor method?
-    // can't they update this anyways on their own?
-    // deny them permission to set this themselves in allow()?
     Meteor.call("startFileUpload", {
       "fileName": pathwayFile.name,
       "fileSize": pathwayFile.size,
@@ -22,8 +18,7 @@ Template.uploadPathway.events({
         console.log("There was an error!");
         console.log(error);
       } else {
-        Meteor.call("setFileId", fileObject._id);
-        Meteor.call("parseFile");
+        Meteor.call("parseFile", fileObject._id);
       }
     });
 

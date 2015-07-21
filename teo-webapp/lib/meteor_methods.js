@@ -1,18 +1,17 @@
+FS.debug = true;
+
 Meteor.methods({
   startFileUpload: function (information) {
-    Meteor.users.update({ _id: Meteor.user()._id }, {
+
+    var currentUserId = Meteor.user() && Meteor.user()._id;
+    if (!currentUserId) {
+      throw new Meteor.Error(403, "not logged in");
+    }
+
+    Meteor.users.update({ _id: currentUserId }, {
       $set: {
         "profile.uploadedDocument": information
       }
     });
   },
-  setFileId: function (fileId) {
-    // check if fileId is valid
-    Meteor.users.update({ _id: Meteor.user()._id }, {
-      $set: {
-        "profile.uploadedDocument.fileId": fileId
-      }
-    });
-  },
-  
 });

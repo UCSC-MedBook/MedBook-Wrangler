@@ -8,8 +8,10 @@ meteor-platform
 medbook:primary-collections
 iron:router
 cfs:standard-packages
-cfs:gridfs
 aldeed:collection2@2.3.3
 aldeed:simple-schema
 accounts-password
 accounts-ui
+
+
+cfs:filesystem

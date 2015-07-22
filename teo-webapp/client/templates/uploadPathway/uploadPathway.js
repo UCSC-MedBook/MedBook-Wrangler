@@ -1,27 +1,23 @@
 Template.uploadPathway.events({
-  "submit #upload-pathway": function (event) {
+  "submit #upload-pathway": function (event, template) {
+
+    console.log("someone hit the submit button");
+
     event.preventDefault(); // prevent default browser form submit
 
-    // upload all the files
-    console.log("about to upload");
     var pathwayFile = event.target.pathwayFile.files[0];
-    console.log(pathwayFile);
 
-    Meteor.call("startFileUpload", {
+    Meteor.call("setUploadedFile", {
       "fileName": pathwayFile.name,
       "fileSize": pathwayFile.size,
       "type": "pathway",
     });
 
-    UploadedFiles.insert(pathwayFile, function(error, fileObject) {
-      if (error) {
-        console.log("There was an error!");
-        console.log(error);
-      } else {
-        Meteor.call("parseFile", fileObject._id);
-      }
+    UploadedFiles.insert(new FS.File(pathwayFile), function (error, fileObj) {
+      console.log("done uploading the file");
+      Meteor.call("parseFile", fileObj._id, function () {
+        console.log("done parsing file");
+      });
     });
-
-    console.log("done uploading");
   }
 });

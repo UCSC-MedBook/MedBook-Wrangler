@@ -1,7 +1,12 @@
-var uploadedFileStore = new FS.Store.FileSystem("uploaded_files");
+UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
+  beforeWrite: function (fileObject) {
+    // this.userId because we're on the server (doesn't work)
+    fileObject.owner = this.userId;
+  }
+});
 
 UploadedFiles = new FS.Collection("uploaded_files", {
-  stores: [uploadedFileStore]
+  stores: [UploadedFileStore],
 });
 
 // allow/deny rules for this collection
@@ -10,15 +15,9 @@ UploadedFiles.allow({
     return true;
   },
   update: function(userId, docs, fields, modifier){
-      // return adminUser(userId) || _.all(docs, function(doc) {
-      //     return doc.owner === userId;
-      // });
       return true;
   },
   remove: function (userId, docs){
-      // return adminUser(userId) || _.all(docs, function(doc) {
-      //     return doc.owner === userId;
-      // });
       return true;
   },
   download: function (userId, doc) {

@@ -1,49 +1,23 @@
 Meteor.methods({
+
   parseFile: function (fileId) {
 
-    var currentUserId = Meteor.user() && Meteor.user()._id;
-    if (!currentUserId) {
-      throw new Meteor.Error(403, "not logged in");
-    }
+    var currentUserId = Meteor.call("assertLoggedIn");
 
-    console.log("ready to parse file in Meteor method");
-    Meteor.users.update({ _id: currentUserId }, {
-      $set: {
-        "profile.uploadedDocument.fileId": fileId
-      }
-    });
+    console.log("fileId: " + fileId);
 
-    var theFile = UploadedFiles.findOne({ _id: fileId });
-    console.log("theFile::");
+    var theFile = UploadedFiles.findOne({_id: fileId});
+    // ensure they're the owner of the file
+
     console.log(theFile);
-    //debugger;
 
-    var theStream = theFile.createReadStream()
-      .on('open', function () {
-        console.log("openned!!!");
-      })
+    // this will crash
+    theFile.createReadStream("uploaded_files")
       .on('data', function () {
-        console.log("data recieved");
+        console.log("data!");
       });
 
-    // var theStream = theFile.createReadStream();
-    // theStream.on('data', function (chunk) {
-    //   console.log("got chunk!");
-    // });
-
-    // var ByLine = Meteor.npmRequire('byline');
-    // var byLineStream = new ByLine(theFile.createReadStream());
-    //var byLineStream = new ByLine(FS.TempStore.createReadStream(theFile));
-    //
-    // var newPathway = {
-    //   "pathway_label": "No label provided",
-    //   "elements": [],
-    //   "interactions": [],
-    // };
-    // byLineStream.on('data', function (line) {
-    //   console.log("line: " + line);
-    //   var tabCount = line.split("\t").length - 1;
-    // });
+    // this is the place where I want to read text inside theFile
 
     console.log("done with meteor method");
   }

@@ -14,4 +14,6 @@ accounts-password
 accounts-ui
 
 
-cfs:filesystem
+cfs:ui
+cfs:gridfs
+cfs:data-man

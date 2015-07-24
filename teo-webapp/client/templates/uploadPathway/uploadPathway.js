@@ -7,17 +7,14 @@ Template.uploadPathway.events({
 
     var pathwayFile = event.target.pathwayFile.files[0];
 
-    Meteor.call("setUploadedFile", {
-      "fileName": pathwayFile.name,
-      "fileSize": pathwayFile.size,
-      "type": "pathway",
-    });
+    // Meteor.call("setUploadedFile", {
+    //   "fileName": pathwayFile.name,
+    //   "fileSize": pathwayFile.size,
+    //   "type": "pathway",
+    // });
 
     UploadedFiles.insert(new FS.File(pathwayFile), function (error, fileObj) {
-      console.log("done uploading the file");
-      Meteor.call("parseFile", fileObj._id, function () {
-        console.log("done parsing file");
-      });
+      console.log("inserted file successfully");
     });
   }
 });

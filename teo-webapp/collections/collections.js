@@ -5,6 +5,15 @@ UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
   }
 });
 
+UploadedFileStore.on("stored", function (storeName, fileObject) {
+  if (storeName !== UploadedFileStore.name) return; // workaround for known bug
+
+  fileObject.createReadStream("uploaded_files")
+    .on('data', function (chunk) {
+      console.log("chunk: " + chunk);
+    });
+});
+
 UploadedFiles = new FS.Collection("uploaded_files", {
   stores: [UploadedFileStore],
 });

@@ -9,4 +9,17 @@ Router.map(function() {
       return Meteor.subscribe("uploaded_files");
     },
   });
+  this.route('uploadSignature', {
+    path: 'uploadSignature',
+    subscriptions: function () {
+      return Meteor.subscribe("uploaded_files");
+    },
+  });
+  this.route('uploadCohortSignature', {
+    path: 'uploadCohortSignature',
+    subscriptions: function () {
+      return Meteor.subscribe("uploaded_files");
+    },
+  });
+  
 });

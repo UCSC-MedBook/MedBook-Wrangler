@@ -1,4 +1,5 @@
+cd webapp
 # export NODE_OPTIONS='--debug'
 export MONGO_URL=mongodb://localhost:27017/MedBook
-export ROOT_URL=localhost:10000/data/
+#export ROOT_URL=localhost:10000/data/
 meteor  --port 20012

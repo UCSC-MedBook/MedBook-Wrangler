@@ -5,10 +5,11 @@
 # but you can also edit it by hand.
 
 meteor-platform
-insecure
-less
-awatson1978:fonts-helveticas
+medbook:primary-collections
 iron:router
-cfs:http-methods
-nimble:restivus
+cfs:standard-packages
+cfs:gridfs
+aldeed:collection2@2.3.3
+aldeed:simple-schema
 accounts-password
+accounts-ui

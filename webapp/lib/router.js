@@ -1,17 +1,12 @@
-
-//--------------------------------------------------------------
-// Global Configuration
-
-Router.configure({
-  layoutTemplate: 'appLayout',
-  yieldTemplates: {
-    'navbarHeader': {to: 'header'},
-    'navbarFooter': {to: 'footer'}
-  }
-});
-
-
-Router.route('/data', {
-  template: "mainPage",
-  name: "mainPage"
+Router.map(function() {
+  // showPatient (/sample/:currentSampleLabel) ==> same thing
+  this.route('chooseUpload', {
+    path: '/',
+  });
+  this.route('uploadPathway', {
+    path: 'uploadPathway',
+    subscriptions: function () {
+      return Meteor.subscribe("uploaded_files");
+    },
+  });
 });

@@ -49,7 +49,10 @@ class MedBookConnection:
         url = self.server + "/data/api/" + collName;
         wrapped = requests.get(url, params=params, headers=headers);
         assert wrapped, "could not connect, connection timed out"
-        result = wrapped.json()["data"];
+        try:
+            result = wrapped.json()["data"];
+        except:
+            raise Exception( "Invalid json returned " + str(wrapped));
         assert wrapped, "bad query"
         return result;
 
@@ -85,6 +88,11 @@ def test():
         tests += 1;
         pass
     
+    data = medbook.find("Histology_Research");
+    for d in data:
+        print d
+    assert len(data) > 1
+    tests += 1;
     data = medbook.find("Clinical_Info");
     assert len(data) > 1
     tests += 1;

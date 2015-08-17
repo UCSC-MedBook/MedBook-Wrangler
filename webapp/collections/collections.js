@@ -8,9 +8,11 @@ UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
 UploadedFileStore.on("stored", function (storeName, fileObject) {
   if (storeName !== UploadedFileStore.name) return; // workaround for known bug
 
-  fileObject.createReadStream("uploaded_files")
-    .on('data', function (chunk) {
-      console.log("chunk: " + chunk);
+  var byLine = Meteor.npmRequire('byline');
+
+  var stream = byLine(fileObject.createReadStream("uploaded_files"))
+    .on('data', function (line) {
+      console.log("line: " + line);
     });
 });
 

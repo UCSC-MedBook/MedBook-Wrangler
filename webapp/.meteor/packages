@@ -17,3 +17,7 @@ accounts-ui
 cfs:ui
 cfs:gridfs
 cfs:data-man
+meteorhacks:npm
+
+
+npm-container

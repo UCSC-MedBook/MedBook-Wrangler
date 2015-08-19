@@ -1,20 +1,35 @@
 Template.uploadPathway.events({
-  "submit #upload-pathway": function (event, template) {
+  "click #add-files-button": function (event, instance) {
+    $("#upload-files-input").click();
+  },
+  "change #upload-files-input": function (event, instance) {
+    event.preventDefault();
 
-    console.log("someone hit the submit button");
+    function insertCallback(error, fileObject) {
+      console.log("insertCallback function");
+      Meteor.call("addFileToSubmission", instance.data._id, fileObject._id,
+          fileObject.original.name);
+    }
 
+    var files = event.target.files;
+    for (var i = 0; i < files.length; i++) {
+      var pathwayFile = new FS.File(files[i]);
+      pathwayFile.user_id = Meteor.userId();
+      // This isn't in a Meteor method because insertion should happen on the
+      // client according to the FS.File docs
+      UploadedFiles.insert(pathwayFile, insertCallback);
+    }
+  },
+  "click .remove-this-file": function(event, instance) {
+    Meteor.call("removeFile", instance.data._id,
+        this.file_id);
+  },
+
+
+
+  "submit #upload-pathway": function (event, instance) {
     event.preventDefault(); // prevent default browser form submit
+    console.log("someone hit the submit button");
+  },
 
-    var pathwayFile = event.target.pathwayFile.files[0];
-
-    // Meteor.call("setUploadedFile", {
-    //   "fileName": pathwayFile.name,
-    //   "fileSize": pathwayFile.size,
-    //   "type": "pathway",
-    // });
-
-    UploadedFiles.insert(new FS.File(pathwayFile), function (error, fileObj) {
-      console.log("inserted file successfully");
-    });
-  }
 });

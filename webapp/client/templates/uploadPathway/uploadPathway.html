@@ -1,6 +1,33 @@
 <template name="uploadPathway">
-  <form id="upload-pathway">
-    <input type="file" name="pathwayFile">
-    <input type="submit">
-  </form>
+  {{print "this:"}}
+  {{print this}}
+
+  {{#if this}}
+    <h2>Files</h2>
+    {{#each files}}
+      <div class="input-group">
+        <div class="form-control">
+          <i class="glyphicon glyphicon-file"></i>
+          <span class="fileinput-filename">{{file_name}}</span>
+        </div>
+        <a href="#" class="input-group-addon btn btn-default remove-this-file">
+          {{print "inside each:"}}
+          {{print this}}
+          Remove
+        </a>
+
+      </div>
+    {{/each}}
+
+    <span class="btn btn-default btn-file">
+      Add files...
+      <input id="upload-files-input" type="file">
+    </span>
+
+    <h2>Metadata</h2>
+
+
+  {{else}}
+    {{> pageNotFound}}
+  {{/if}}
 </template>

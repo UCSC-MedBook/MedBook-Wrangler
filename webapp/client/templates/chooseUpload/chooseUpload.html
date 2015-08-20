@@ -1,6 +1,8 @@
 <template name="chooseUpload">
   {{> loginButtons }}
-  <p><a href="{{ pathFor 'uploadPathway' wranglerSubmissionId='create' }}">Upload new pathway</a></p>
-  <p><a href="{{ pathFor 'uploadSignature' }}">Upload new signature</a></p>
-  <p><a href="{{ pathFor 'uploadCohortSignature' }}">Upload new signature scores for a cohort</a></p>
+  <p>
+    <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">
+      Create a new submission
+    </a>
+  </p>
 </template>

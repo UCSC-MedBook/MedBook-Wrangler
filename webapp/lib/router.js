@@ -15,24 +15,25 @@ Router.map(function() {
     path: '/Wrangler/',
   });
 
-  this.route('uploadPathway', {
-    path: '/Wrangler/uploadPathway/:wranglerSubmissionId',
+  this.route('uploadNew', {
+    path: '/Wrangler/uploadNew/:wranglerSubmissionId',
     waitOn: function () {
       return Meteor.subscribe("wranglerSubmission", this.params.wranglerSubmissionId);
     },
     onBeforeAction: function () {
       var submissionId = this.params.wranglerSubmissionId;
+
+      // make sure submission belongs to them
+
       if (submissionId === "create") {
         // create one if we need to
-        Meteor.call("createSubmission", "pathway", function (error, result) {
+        Meteor.call("createSubmission", function (error, result) {
           console.log("result:", result);
 
-          Router.go('uploadPathway', {
-            "wranglerSubmissionId": result
-          });
+          Router.go('uploadNew',
+              { "wranglerSubmissionId": result },
+              { replaceState: true });
         });
-        // unclear if this does anything
-        //this.creating = true;
         this.render("loading");
       } else {
         this.next();
@@ -41,13 +42,6 @@ Router.map(function() {
     data: function () {
       return WranglerSubmissions.findOne(this.params.wranglerSubmissionId);
     },
-  });
-
-  this.route('uploadSignature', {
-    path: '/Wrangler/uploadSignature',
-  });
-  this.route('uploadCohortSignature', {
-    path: '/Wrangler/uploadCohortSignature',
   });
 
 });

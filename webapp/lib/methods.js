@@ -7,12 +7,10 @@ function makeSureLoggedIn() {
 }
 
 Meteor.methods({
-  createSubmission: function (typeName) {
-    check(typeName, String);
+  createSubmission: function () {
     var userId = makeSureLoggedIn();
 
     return WranglerSubmissions.insert({
-      "type": typeName,
       "user_id": userId,
     });
   },
@@ -46,6 +44,7 @@ Meteor.methods({
         "files": {
           "file_id": fileId,
           "file_name": fileName,
+          "status": Meteor.isClient ? "creating" : "uploading",
         }
       }
     });
@@ -70,11 +69,13 @@ Meteor.methods({
   },
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
-  removeAllUploadedFiles: function() {
+  removeWranglerData: function() {
+    // only allow Teo's user id
     if (Meteor.userId() === "yKWxvJi5ouvbjqjRQ") {
       if (Meteor.isServer) {
         UploadedFiles.remove({});
-        console.log("Teo removed all the UploadedFiles");
+        WranglerSubmissions.remove({});
+        console.log("Teo removed all the wrangler data");
       } else {
         console.log("you're not the server, silly stub");
       }

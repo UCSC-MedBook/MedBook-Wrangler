@@ -2,6 +2,14 @@
   "dependencies": {
     "byline": {
       "version": "4.2.1"
+    },
+    "vcf.js": {
+      "version": "0.2.6",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3"
+        }
+      }
     }
   }
 }

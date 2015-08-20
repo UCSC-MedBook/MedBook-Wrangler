@@ -28,13 +28,15 @@ UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
 
 UploadedFileStore.on("stored", function (storeName, fileObject) {
   if (storeName !== UploadedFileStore.name) return; // workaround for known bug
-
-  // var byLine = Meteor.npmRequire('byline');
-  //
-  // var stream = byLine(fileObject.createReadStream("uploaded_files"))
-  //   .on('data', function (line) {
-  //     //console.log("line: " + line);
-  //   });
+  //var assert = require("assert"),
+  //    fs = require("fs");
+  // var byLine = Meteor.npmRequire('byLine');
+   var stream = fileObject.createReadStream("uploaded_files")
+     .on('data', function (chunk) {
+      console.log("file: " + chunk);
+      var vcf = Meteor.npmRequire('vcf.js');
+      vcf.parser()(chunk);
+     });
   console.log("stored file");
 });
 

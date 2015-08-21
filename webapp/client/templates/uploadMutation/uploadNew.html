@@ -1,6 +1,5 @@
 <template name="uploadNew">
-  {{print "this:"}}
-  {{print this}}
+  {{print "uploadNew this:" this}}
 
   {{#if this}}
     <h2>Files</h2>
@@ -23,16 +22,24 @@
     </span>
 
     <h2>Review data</h2>
-    {{#each networkElementDocuments}}
-      networkElement
-    {{/each}}
+    {{#if hasWranglerDocuments}}
+      <div id="data-review" class="flex-container">
+        {{#each reviewObjects}}
+          {{> reviewNewData}}
 
-    {{#each networkInteractionDocuments}}
-      networkInteraction
-    {{/each}}
+        {{/each}}
+      </div>
+      <button type="button" class="btn btn-primary">
+        Submit submission
+      </button>
+    {{else}}
+      <span class="help-block">
+        Upload files to review data...
+      </span>
+    {{/if}}
 
 
-
+    {{!-- this is how you show schemas... TODO --}}
     {{#each otherDocuments}} {{!-- things that don't fit elsewhere --}}
       {{print 'this ::' this}}
       {{#autoForm id=makeUniqueID schema=dynamicSchema
@@ -51,4 +58,12 @@
     {{!-- loading handled in the router --}}
     {{> pageNotFound}}
   {{/if}}
+</template>
+
+<template name="reviewNewData">
+  <!-- {{print "reviewNewData this:" this}} -->
+  <div class="component-box">
+    <h3>{{title}}</h3>
+    {{> reactiveTable settings=dynamicSettings}}
+  </div>
 </template>

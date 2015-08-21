@@ -47,14 +47,33 @@ function getSchemaFromName(collectionName) {
   }
 }
 
-var counter = 0;
+function fieldsFromProspectiveDocument(collectionName) {
+  var schema = getSchemaFromName(collectionName);
+  var fields = schema.fieldOrder;
 
+  return _.map(fields, function (value, key) {
+    return {
+      key: "prospective_document",
+      label: schema.label(value),
+      fn: function(rowValue, outerObject) {
+        return rowValue[value];
+      },
+    };
+  });
+}
+
+
+
+var counter = 0;
 Template.uploadNew.helpers({
-  networkElementDocuments: function () {
-    return _.where(this.documents, {"collection_name": "network_elements"});
+  hasWranglerDocuments: function () {
+    return WranglerDocuments.find().count() > 0;
   },
-  networkInteractionDocuments: function () {
-    return _.where(this.documents, {"collection_name": "network_interactions"});
+  reviewObjects: function () {
+    return [
+      { title: "Network elements", collectionName: "network_elements" },
+      { title: "Network interactions", collectionName: "network_interactions" },
+    ];
   },
   otherDocuments: function () {
     return []; // TODO
@@ -66,5 +85,19 @@ Template.uploadNew.helpers({
     counter++;
     console.log("counter:", counter);
     return "document-quickform-" + counter;
+  },
+});
+
+Template.reviewNewData.helpers({
+  dynamicSettings: function () {
+    return {
+      collection: WranglerDocuments.find({
+        "submission_id": Template.parentData()._id,
+        "collection_name": this.collectionName,
+      }),
+      rowsPerPage: 10,
+      showFilter: false,
+      fields: fieldsFromProspectiveDocument(this.collectionName),
+    };
   },
 });

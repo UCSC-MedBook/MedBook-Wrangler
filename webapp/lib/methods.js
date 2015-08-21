@@ -75,6 +75,7 @@ Meteor.methods({
       if (Meteor.isServer) {
         UploadedFiles.remove({});
         WranglerSubmissions.remove({});
+        WranglerDocuments.remove({});
         console.log("Teo removed all the wrangler data");
       } else {
         console.log("you're not the server, silly stub");

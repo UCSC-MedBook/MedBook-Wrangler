@@ -9,22 +9,29 @@ function lineByLineStream(fileObject, callWithLine) {
     }));
 }
 
+function insertCallback(error, result) {
+  if (error) {
+    console.log("something went wrong adding to the database...");
+    console.log(error);
+  }
+}
+
 UploadedFileStore.on("stored", Meteor.bindEnvironment(
   function (storeName, fileObject) {
     if (storeName !== UploadedFileStore.name) return; // workaround for known bug
     console.log("stored file callback");
 
-    var submission = WranglerSubmissions.findOne({
+    var submissionId = WranglerSubmissions.findOne({
       "files": {
         $elemMatch: {
           "file_id": fileObject._id
         }
       }
-    });
+    })._id;
 
     function setFileStatus(statusString) {
       WranglerSubmissions.update({
-            "_id": submission._id,
+            "_id": submissionId,
             "files.file_id": fileObject._id,
           }, {
             $set: { "files.$.status": statusString }
@@ -42,7 +49,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
         if (brokenTabs.length === 3) {
           console.log("adding interaction:", line);
           WranglerDocuments.insert({
-            "submission_id": submission._id,
+            "submission_id": submissionId,
             "collection_name": "network_interactions",
             "prospective_document": {
               "source": brokenTabs[0],
@@ -62,9 +69,9 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
       lineByLineStream(fileObject, function(line){
         var brokenTabs = line.split("\t");
         if (brokenTabs.length === 2) {
-          console.log("adding definition:", line);
+          // console.log("adding definition:", line);
           WranglerDocuments.insert({
-            "submission_id": submission._id,
+            "submission_id": submissionId,
             "collection_name": "network_elements",
             "prospective_document": {
               "name": brokenTabs[1],
@@ -74,6 +81,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
         } else {
           console.log("don't know what to do:", line);
           setFileStatus("error");
+          return;
         }
       });
     } else {
@@ -82,6 +90,8 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
       return;
     }
 
+    // TODO: check if not error before (currently just returning after each...)
+    console.log("finished file processing!");
     setFileStatus("done");
   },
   function (error) {

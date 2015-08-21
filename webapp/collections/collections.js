@@ -23,21 +23,19 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
     ],
     optional: true
   },
-  "documents": {
-    type: [
-      new SimpleSchema({
-        "collection_name": { // not so enthused about this
-          type: String,
-          allowedValues: [
-            "network_elements",
-            "network_interactions",
-          ],
-        },
-        "prospective_document": { type: Object, blackbox: true },
-      })
+}));
+
+WranglerDocuments = new Meteor.Collection("wrangler_documents");
+WranglerDocuments.attachSchema(new SimpleSchema({
+  "submission_id": { type: Meteor.ObjectID },
+  "collection_name": { // not so enthused about this
+    type: String,
+    allowedValues: [
+      "network_elements",
+      "network_interactions",
     ],
-    optional: true,
-  }
+  },
+  "prospective_document": { type: Object, blackbox: true },
 }));
 
 UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
@@ -142,103 +140,6 @@ UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
 UploadedFiles = new FS.Collection("uploaded_files", {
   stores: [UploadedFileStore],
 });
-
-UploadedFileStore.on("stored", Meteor.bindEnvironment(
-  function (storeName, fileObject) {
-    if (storeName !== UploadedFileStore.name) return; // workaround for known bug
-
-    console.log("stored file callback");
-
-    var submission = WranglerSubmissions.findOne({
-      "files": {
-        $elemMatch: {
-          "file_id": fileObject._id
-        }
-      }
-    });
-
-    function setFileStatus(statusString) {
-      WranglerSubmissions.update({
-            "_id": submission._id,
-            "files.file_id": fileObject._id,
-          }, {
-            $set: { "files.$.status": statusString }
-          });
-    }
-    setFileStatus("processing");
-
-    var fileName = fileObject.original.name;
-    if (fileName.slice(-4) === ".sif") {
-      console.log("we found a sif file:", fileName);
-
-      var byLine = Meteor.npmRequire('byline');
-
-      var processingDefinitions = true;
-      var stream = byLine(fileObject.createReadStream("uploaded_files"))
-        .on('data', Meteor.bindEnvironment(function (lineObject) {
-          var line = lineObject.toString();
-
-          var brokenTabs = line.split("\t");
-          if (brokenTabs.length === 2 && processingDefinitions === true) {
-            console.log("adding definition:", line);
-            WranglerSubmissions.update({
-                  "_id": submission._id,
-                }, {
-                  $push: {
-                    "documents": {
-                      "collection_name": "network_elements",
-                      "prospective_document": {
-                        "network_label": "superpathway_hardcoded",
-                        "name": brokenTabs[1],
-                        "type": brokenTabs[0],
-                      }
-                    }
-                  }
-                });
-          } else if (brokenTabs.length === 3) {
-            processingDefinitions = false;
-            console.log("adding interaction:", line);
-            WranglerSubmissions.update({
-                  "_id": submission._id,
-                }, {
-                  $push: {
-                    "documents": {
-                      "collection_name": "network_interactions",
-                      "prospective_document": {
-                        "network_label": "superpathway_hardcoded",
-                        "source": brokenTabs[0],
-                        "target": brokenTabs[1],
-                        "interaction": brokenTabs[2],
-                      }
-                    }
-                  }
-                });
-          } else {
-            console.log("don't know what to do:", line);
-          }
-        }
-      ));
-    } else {
-      console.log("unknown file type");
-      setFileStatus("error");
-      return;
-    }
-
-
-
-
-    setFileStatus("done");
-    // var stream = fileObject.createReadStream("uploaded_files")
-    //   .on('data', function (chunk) {
-    //     console.log("file: " + chunk);
-    //     var vcf = Meteor.npmRequire('vcf.js');
-    //     vcf.parser()(chunk);
-    //   });
-  },
-  function (error) {
-    console.log("Error calling callback on .on('stored') for file:", error);
-  }
-));
 
 // users can only modify their own documents
 UploadedFiles.allow({

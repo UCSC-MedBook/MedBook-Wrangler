@@ -50,6 +50,15 @@ function getSchemaFromName(collectionName) {
 var counter = 0;
 
 Template.uploadNew.helpers({
+  networkElementDocuments: function () {
+    return _.where(this.documents, {"collection_name": "network_elements"});
+  },
+  networkInteractionDocuments: function () {
+    return _.where(this.documents, {"collection_name": "network_interactions"});
+  },
+  otherDocuments: function () {
+    return []; // TODO
+  },
   dynamicSchema: function () {
     return getSchemaFromName(this.collection_name);
   },

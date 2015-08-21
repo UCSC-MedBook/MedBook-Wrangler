@@ -22,8 +22,18 @@
       <input id="upload-files-input" type="file" multiple>
     </span>
 
-    <h2>Metadata</h2>
-    {{#each documents}}
+    <h2>Review data</h2>
+    {{#each networkElementDocuments}}
+      networkElement
+    {{/each}}
+
+    {{#each networkInteractionDocuments}}
+      networkInteraction
+    {{/each}}
+
+
+
+    {{#each otherDocuments}} {{!-- things that don't fit elsewhere --}}
       {{print 'this ::' this}}
       {{#autoForm id=makeUniqueID schema=dynamicSchema
           doc=prospective_document}}

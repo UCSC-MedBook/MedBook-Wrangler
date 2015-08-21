@@ -34,3 +34,28 @@ Template.uploadNew.events({
   },
 
 });
+
+function getSchemaFromName(collectionName) {
+  switch (collectionName) {
+    case "network_elements":
+      return NetworkElements.simpleSchema();
+    case "network_interactions":
+      return NetworkInteractions.simpleSchema();
+    default:
+      console.log("couldn't find appropriate schema");
+      return false;
+  }
+}
+
+var counter = 0;
+
+Template.uploadNew.helpers({
+  dynamicSchema: function () {
+    return getSchemaFromName(this.collection_name);
+  },
+  makeUniqueID: function () {
+    counter++;
+    console.log("counter:", counter);
+    return "document-quickform-" + counter;
+  },
+});

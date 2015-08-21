@@ -1,5 +1,5 @@
-// TODO: write a cron job to go through and delete old ones of these
-  WranglerSubmissions = new Meteor.Collection("wrangler_submissions");
+// TODO: write a cron job to go through and delete unused ones (also files)
+WranglerSubmissions = new Meteor.Collection("wrangler_submissions");
 WranglerSubmissions.attachSchema(new SimpleSchema({
   "user_id": { type: Meteor.ObjectID },
   "files": {
@@ -26,8 +26,14 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
   "documents": {
     type: [
       new SimpleSchema({
-        "schema": { type: Object }, // TODO: define with function (?)
-        "data": { type: Object },
+        "collection_name": { // not so enthused about this
+          type: String,
+          allowedValues: [
+            "network_elements",
+            "network_interactions",
+          ],
+        },
+        "prospective_document": { type: Object, blackbox: true },
       })
     ],
     optional: true,
@@ -158,13 +164,64 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
           $set: { "files.$.status": "processing" }
         });
 
-    // var byLine = Meteor.npmRequire('byline');
-    //
-    // var stream = byLine(fileObject.createReadStream("uploaded_files"))
-    //   .on('data', function (line) {
-    //     //console.log("line: " + line);
-    //     // this is where you'd put stuff!
-    //   });
+    var fileName = fileObject.original.name;
+
+    if (fileName.slice(-4) === ".sif") {
+      console.log("we found a sif file:", fileName);
+
+      var byLine = Meteor.npmRequire('byline');
+
+      var processingDefinitions = true;
+      var stream = byLine(fileObject.createReadStream("uploaded_files"))
+        .on('data', Meteor.bindEnvironment(function (lineObject) {
+          var line = lineObject.toString();
+
+          var brokenTabs = line.split("\t");
+          if (brokenTabs.length === 2 && processingDefinitions === true) {
+            console.log("adding definition:", line);
+            WranglerSubmissions.update({
+                  "_id": submission._id,
+                }, {
+                  $push: {
+                    "documents": {
+                      "collection_name": "network_elements",
+                      "prospective_document": {
+                        "network_label": "superpathway_hardcoded",
+                        "name": brokenTabs[1],
+                        "type": brokenTabs[0],
+                      }
+                    }
+                  }
+                });
+          } else if (brokenTabs.length === 3) {
+            processingDefinitions = false;
+            console.log("adding interaction:", line);
+            WranglerSubmissions.update({
+                  "_id": submission._id,
+                }, {
+                  $push: {
+                    "documents": {
+                      "collection_name": "network_interactions",
+                      "prospective_document": {
+                        "network_label": { type: "superpathway_hardcoded" },
+                        "source": { type: brokenTabs[0] },
+                        "target": { type: brokenTabs[1] },
+                        "interaction": { type: brokenTabs[2] },
+                        "score": { type: Number, optional: true, decimal: true },
+                      }
+                    }
+                  }
+                });
+          } else {
+            console.log("don't know what to do:", line);
+          }
+        }
+      ));
+    } else {
+      console.log("unknown file type");
+    }
+
+
 
     // var stream = fileObject.createReadStream("uploaded_files")
     //   .on('data', function (chunk) {
@@ -185,7 +242,7 @@ UploadedFiles.allow({
     return userId === doc.user_id;
   },
   update: function(userId, doc, fields, modifier) {
-    console.log("UploadedFiles.allow update:", fields, modifier);
+    console.log("UploadedFiles.allow update:", modifier);
     return userId === doc.user_id;
   },
   remove: function (userId, doc) {

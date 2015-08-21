@@ -23,9 +23,22 @@
     </span>
 
     <h2>Metadata</h2>
+    {{#each documents}}
+      {{print 'this ::' this}}
+      {{#autoForm id=makeUniqueID schema=dynamicSchema
+          doc=prospective_document}}
 
+        {{> afQuickFields name=""}} {{!-- we need that blank string --}}
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-default">Reset Form</button>
+        </div>
+      {{/autoForm}}
+    {{/each}}
 
   {{else}}
+    {{!-- loading handled in the router --}}
     {{> pageNotFound}}
   {{/if}}
 </template>

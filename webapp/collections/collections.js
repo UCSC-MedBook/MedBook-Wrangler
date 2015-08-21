@@ -157,15 +157,17 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
       }
     });
 
-    WranglerSubmissions.update({
-          "_id": submission._id,
-          "files.file_id": fileObject._id,
-        }, {
-          $set: { "files.$.status": "processing" }
-        });
+    function setFileStatus(statusString) {
+      WranglerSubmissions.update({
+            "_id": submission._id,
+            "files.file_id": fileObject._id,
+          }, {
+            $set: { "files.$.status": statusString }
+          });
+    }
+    setFileStatus("processing");
 
     var fileName = fileObject.original.name;
-
     if (fileName.slice(-4) === ".sif") {
       console.log("we found a sif file:", fileName);
 
@@ -203,11 +205,10 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
                     "documents": {
                       "collection_name": "network_interactions",
                       "prospective_document": {
-                        "network_label": { type: "superpathway_hardcoded" },
-                        "source": { type: brokenTabs[0] },
-                        "target": { type: brokenTabs[1] },
-                        "interaction": { type: brokenTabs[2] },
-                        "score": { type: Number, optional: true, decimal: true },
+                        "network_label": "superpathway_hardcoded",
+                        "source": brokenTabs[0],
+                        "target": brokenTabs[1],
+                        "interaction": brokenTabs[2],
                       }
                     }
                   }
@@ -219,10 +220,14 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
       ));
     } else {
       console.log("unknown file type");
+      setFileStatus("error");
+      return;
     }
 
 
 
+
+    setFileStatus("done");
     // var stream = fileObject.createReadStream("uploaded_files")
     //   .on('data', function (chunk) {
     //     console.log("file: " + chunk);

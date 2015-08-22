@@ -13,6 +13,9 @@ Router.map(function() {
   // showPatient (/sample/:currentSampleLabel) ==> same thing
   this.route('chooseUpload', {
     path: '/Wrangler/',
+    subscriptions: function () {
+      return Meteor.subscribe("listSubmissions");
+    },
   });
 
   this.route('uploadNew', {
@@ -28,11 +31,9 @@ Router.map(function() {
       if (submissionId === "create") {
         // create one if we need to
         Meteor.call("createSubmission", function (error, result) {
-          console.log("result:", result);
-
           Router.go('uploadNew',
               { "wranglerSubmissionId": result },
-              { replaceState: true });
+              { replaceState: true }); // back button will work
         });
         this.render("loading");
       } else {

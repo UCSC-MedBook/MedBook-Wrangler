@@ -1,7 +1,9 @@
 // TODO: write a cron job to go through and delete unused ones (also files)
+// TODO: should we make them name their submissions?
 WranglerSubmissions = new Meteor.Collection("wrangler_submissions");
 WranglerSubmissions.attachSchema(new SimpleSchema({
   "user_id": { type: Meteor.ObjectID },
+  "created_at": { type: Date },
   "files": {
     type: [
       new SimpleSchema({
@@ -13,6 +15,7 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
             "creating",
             "uploading",
             "processing",
+            "writing",
             "done",
             "error",
           ],
@@ -23,6 +26,16 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
     ],
     optional: true
   },
+  "status": {
+    type: String,
+    allowedValues: [
+      "creating",
+      "editing",
+      "validating",
+      "writing",
+      "done",
+    ],
+  }
 }));
 
 WranglerDocuments = new Meteor.Collection("wrangler_documents");

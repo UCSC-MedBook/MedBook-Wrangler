@@ -1,7 +1,9 @@
 Template.uploadNew.events({
+  // when they click the button to add a file
   "click #add-files-button": function (event, instance) {
     $("#upload-files-input").click();
   },
+  // when they actually select a file
   "change #upload-files-input": function (event, instance) {
     event.preventDefault();
 
@@ -21,16 +23,17 @@ Template.uploadNew.events({
       UploadedFiles.insert(newFile, insertCallback);
     }
   },
+  // click the remove button for a specific file
   "click .remove-this-file": function(event, instance) {
     Meteor.call("removeFile", instance.data._id,
         this.file_id);
   },
-
-
-
-  "submit #finalize-submission": function (event, instance) {
+  // click the submit button at the end
+  "click #submit-all-data": function (event, instance) {
     event.preventDefault(); // prevent default browser form submit
     console.log("someone hit the submit button");
+    Meteor.call("submitData", instance.data._id);
+    Router.go("chooseUpload");
   },
 
 });
@@ -66,8 +69,10 @@ function fieldsFromProspectiveDocument(collectionName) {
 
 var counter = 0;
 Template.uploadNew.helpers({
-  hasWranglerDocuments: function () {
-    return WranglerDocuments.find().count() > 0;
+  hasDocuments: function () {
+    return WranglerDocuments.find({
+      "submission_id": this._id,
+    }).count() > 0;
   },
   reviewObjects: function () {
     return [
@@ -100,4 +105,28 @@ Template.reviewNewData.helpers({
       fields: fieldsFromProspectiveDocument(this.collectionName),
     };
   },
+  hasDocumentsForMe: function () {
+    return WranglerDocuments.find({
+      "submission_id": Template.instance().submissionId,
+      "collection_name": Template.instance().collectionName,
+    }).count() > 0;
+  },
+});
+
+Template.reviewNewData.onCreated(function () {
+
+  var instance = this;
+  instance.submissionId = Template.parentData()._id;
+  instance.collectionName = this.data.collectionName;
+
+  // instance.loaded = new ReactiveVar(0);
+
+  instance.autorun(function () {
+    instance.subscribe('wranglerDocuments',
+        instance.submissionId, instance.collectionName,
+        function () { // callback
+          // console.log("I got the data for you");
+        }
+    );
+  });
 });

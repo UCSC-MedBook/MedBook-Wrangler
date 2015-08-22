@@ -1,22 +1,20 @@
-function makeSureLoggedIn() {
-  var userId = Meteor.user() && Meteor.user()._id;
-  if (!userId) {
-    throw new Meteor.Error(403, "not-logged-in", "Log in to proceed");
-  }
-  return userId;
-}
-
 Meteor.methods({
   createSubmission: function () {
     var userId = makeSureLoggedIn();
 
     return WranglerSubmissions.insert({
       "user_id": userId,
+      "created_at": new Date(),
+      "status": Meteor.isClient ? "creating" : "editing",
     });
   },
   addFileToSubmission: function (submissionId, fileId, fileName) {
     check(submissionId, String);
     check(fileId, String);
+
+    // fileName sent so it can be fast on the client
+    // (UploadedFiles is not published at this point)
+    // (the file is inserted and then removed because it's not published)
     check(fileName, String);
     var userId = makeSureLoggedIn();
 
@@ -55,7 +53,7 @@ Meteor.methods({
 
     var userId = makeSureLoggedIn();
     if (Meteor.isServer) {
-
+      // TODO: make sure it's theirs
     }
 
     WranglerSubmissions.update(submissionId, {
@@ -67,6 +65,7 @@ Meteor.methods({
     });
     UploadedFiles.remove(this.file_id);
   },
+
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
   removeWranglerData: function() {

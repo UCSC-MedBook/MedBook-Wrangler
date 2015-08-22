@@ -9,13 +9,6 @@ function lineByLineStream(fileObject, callWithLine) {
     }));
 }
 
-function insertCallback(error, result) {
-  if (error) {
-    console.log("something went wrong adding to the database...");
-    console.log(error);
-  }
-}
-
 UploadedFileStore.on("stored", Meteor.bindEnvironment(
   function (storeName, fileObject) {
     if (storeName !== UploadedFileStore.name) return; // workaround for known bug
@@ -39,6 +32,25 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     }
     setFileStatus("processing");
 
+    // TODO: will this make it faster to insert?
+    var insertedCount = 0;
+    var callbackCount = 0;
+    function insertCallback(error, result) {
+      if (error) {
+        console.log("something went wrong adding to the database...");
+        console.log(error);
+      }
+      callbackCount++;
+      if (callbackCount === insertedCount) {
+        setFileStatus("done");
+        console.log("finished writing new data from file:", fileName);
+      }
+    }
+    function documentInsert(document) {
+      insertedCount++;
+      WranglerDocuments.insert(document, insertCallback);
+    }
+
     var fileName = fileObject.original.name;
     if (fileName.slice(-4) === ".sif") {
       console.log("we found a sif file (network_interactions definition):",
@@ -47,8 +59,8 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
       lineByLineStream(fileObject, function (line) {
         var brokenTabs = line.split("\t");
         if (brokenTabs.length === 3) {
-          console.log("adding interaction:", line);
-          WranglerDocuments.insert({
+          //console.log("adding interaction:", line);
+          documentInsert({
             "submission_id": submissionId,
             "collection_name": "network_interactions",
             "prospective_document": {
@@ -70,7 +82,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
         var brokenTabs = line.split("\t");
         if (brokenTabs.length === 2) {
           // console.log("adding definition:", line);
-          WranglerDocuments.insert({
+          documentInsert({
             "submission_id": submissionId,
             "collection_name": "network_elements",
             "prospective_document": {
@@ -91,8 +103,8 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     }
 
     // TODO: check if not error before (currently just returning after each...)
-    console.log("finished file processing!");
-    setFileStatus("done");
+    console.log("finished processing file:", fileName);
+    setFileStatus("writing");
   },
   function (error) {
     // TODO: set status to error if there's an exception thrown for the file

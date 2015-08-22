@@ -1,8 +1,20 @@
 <template name="chooseUpload">
+  {{!-- TODO: name this something better --}}
+
   {{> loginButtons }}
+
+  {{!-- TODO: list uploads belonging to this user --}}
+
+  {{> listSubmissions}}
+
   <p>
     <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">
       Create a new submission
     </a>
   </p>
 </template>
+
+<template name="listSubmissions">
+  there will be a list of the things here...
+  I need to make the subscription template-based because I'm cool
+</tempalte>

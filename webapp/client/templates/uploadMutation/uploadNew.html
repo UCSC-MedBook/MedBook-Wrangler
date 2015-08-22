@@ -22,22 +22,24 @@
     </span>
 
     <h2>Review data</h2>
-    {{#if hasWranglerDocuments}}
-      <div id="data-review" class="flex-container">
-        {{#each reviewObjects}}
-          {{> reviewNewData}}
 
-        {{/each}}
-      </div>
-      <button type="button" class="btn btn-primary">
-        Submit submission
+    <div id="data-review" class="flex-container">
+      {{#each reviewObjects}}
+        {{> reviewNewData}}
+      {{/each}}
+    </div>
+
+    {{#if hasDocuments}}
+      {{!-- TODO: only show in blue if every file is done processing --}}
+      {{!-- TODO: only show in blue if every subscription is ready --}}
+      <button id="submit-all-data" type="button" class="btn btn-primary">
+        Submit data
       </button>
     {{else}}
       <span class="help-block">
         Upload files to review data...
       </span>
     {{/if}}
-
 
     {{!-- this is how you show schemas... TODO --}}
     {{#each otherDocuments}} {{!-- things that don't fit elsewhere --}}
@@ -62,8 +64,16 @@
 
 <template name="reviewNewData">
   <!-- {{print "reviewNewData this:" this}} -->
-  <div class="component-box">
-    <h3>{{title}}</h3>
-    {{> reactiveTable settings=dynamicSettings}}
-  </div>
+  {{#if hasDocumentsForMe}}
+    <div class="component-box">
+      <h3>{{title}}</h3>
+      {{#if Template.subscriptionsReady}}
+        {{> reactiveTable settings=dynamicSettings}}
+      {{else}}
+        <div class="relative-spinner">
+          {{> spinner}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
 </template>

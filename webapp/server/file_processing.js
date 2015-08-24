@@ -96,7 +96,98 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
           return;
         }
       });
-    } else {
+    } else if (fileName.slice(-4) === ".vcf") {
+		console.log('upload VCF', fileName);
+		var assert = Meteor.npmRequire("assert");
+		var Fiber = Npm.require('fibers');
+		var fs = Meteor.npmRequire("fs");
+		var vcf = Meteor.npmRequire('vcf.js');
+		var blob = "";
+		var stream = fileObject.createReadStream("uploaded_files")
+		      .on('data', function (chunk) {
+		        blob += chunk;
+		      })
+		      .on('end', function () {
+		       //var myData = JSON.parse(stream);
+		       //console.log("##file: " + myData);
+		       if (blob) {
+		         data = vcf.parser()(blob);
+		         //for (h in data.header) {
+		         //    console.log('#vcf header:',h);
+		         //}
+		         //console.log('#DR',  data.records);
+		         var len = data.records.length;
+		         //console.log('len',len);
+		         var mut = {};
+				 mut['mutation_type'] = 'snp';
+		         for (var i = 0; i < len; i++) {
+		              var dx = data.records[i];
+		              var keys = Object.keys(dx);
+		
+		              //console.log('keys',keys, dx);
+		              mut.gene_id = 'none';
+		              mut['gene_label'] = 'WIERD';
+					 
+		              for (k in keys) {
+		                var key = keys[k];
+		                var mapped_key = key;
+		                if (key == 'TYPE') {
+		                    mapped_key = 'mutation_type';
+		                }
+						if (key == 'CHROM') {
+		                    mapped_key = 'chromosome';
+						}
+						if (key == 'POS') {
+		                    mapped_key = 'start_position';
+							mut['end_position'] = dx[key] + 1;
+						}
+						if (key == 'REF') {
+		                    mapped_key = 'reference_allele';
+						}
+						if (key == 'ALT') {
+		                    mapped_key = 'variant_allele';
+						}
+						if (key == 'sampleNames') {
+		                    mapped_key = 'sample_label';
+							var sample_name = dx[key][0];
+							dx[key] = sample_name;
+							mut['sample_id'] = 'none';
+						}
+						if (key == 'INFO') {
+		                    mapped_key = 'effects';
+							
+							effDoc = dx[key];
+							var eff_keys = Object.keys(effDoc);
+							console.log('#EFF keys',eff_keys);
+							
+							var effArray = []
+							for (k in eff_keys) {
+								console.log('#key',k);
+								if (k == 'TYPE') {
+									console.log ('#type', effDoc[k])
+								}
+								if (k == 'EFF') {
+									var effectsArray = effDoc[k];
+									console.log ('###EFF', effDoc[k])
+									if (effectsArray) {
+										var anno = effectsArray.split(',');
+										console.log('anno length', anno.length);
+									}
+									
+								}
+							}
+						}
+		                mut[mapped_key] = dx[key];
+		                //console.log('dx [',mapped_key,']=',dx[key]);
+		              }
+	  				  Fiber(function() {
+	  						 Mutations.insert(mut);
+	  				  }).run();  
+		             
+				}
+			}
+		})
+	} else {
       console.log("unknown file type");
       setFileStatus("error");
       return;

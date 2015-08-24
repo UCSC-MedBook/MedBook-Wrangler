@@ -86,7 +86,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
             "submission_id": submissionId,
             "collection_name": "network_elements",
             "prospective_document": {
-              "name": brokenTabs[1],
+              "label": brokenTabs[1],
               "type": brokenTabs[0],
             },
           });
@@ -123,11 +123,11 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 		         for (var i = 0; i < len; i++) {
 		              var dx = data.records[i];
 		              var keys = Object.keys(dx);
-		
+
 		              //console.log('keys',keys, dx);
 		              mut.gene_id = 'none';
 		              mut['gene_label'] = 'WIERD';
-					 
+
 		              for (k in keys) {
 		                var key = keys[k];
 		                var mapped_key = key;
@@ -155,11 +155,11 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 						}
 						if (key == 'INFO') {
 		                    mapped_key = 'effects';
-							
+
 							effDoc = dx[key];
 							var eff_keys = Object.keys(effDoc);
 							console.log('#EFF keys',eff_keys);
-							
+
 							var effArray = []
 							for (k in eff_keys) {
 								console.log('#key',k);
@@ -173,7 +173,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 										var anno = effectsArray.split(',');
 										console.log('anno length', anno.length);
 									}
-									
+
 								}
 							}
 						}
@@ -182,8 +182,8 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 		              }
 	  				  Fiber(function() {
 	  						 Mutations.insert(mut);
-	  				  }).run();  
-		             
+	  				  }).run();
+
 				}
 			}
 		})

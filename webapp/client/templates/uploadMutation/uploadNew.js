@@ -38,18 +38,6 @@ Template.uploadNew.events({
 
 });
 
-function getSchemaFromName(collectionName) {
-  switch (collectionName) {
-    case "network_elements":
-      return NetworkElements.simpleSchema();
-    case "network_interactions":
-      return NetworkInteractions.simpleSchema();
-    default:
-      console.log("couldn't find appropriate schema");
-      return false;
-  }
-}
-
 function fieldsFromProspectiveDocument(collectionName) {
   var schema = getSchemaFromName(collectionName);
   var fields = schema.fieldOrder;

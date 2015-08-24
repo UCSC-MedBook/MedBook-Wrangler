@@ -124,7 +124,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 		              var dx = data.records[i];
 		              var keys = Object.keys(dx);
 		
-		              //console.log('keys',keys, dx);
+		              console.log('#records',len,'#top level keys',keys);
 		              mut.gene_id = 'none';
 		              mut['gene_label'] = 'WIERD';
 					 
@@ -161,7 +161,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 							console.log('#EFF keys',eff_keys);
 							
 							var effArray = []
-							for (k in eff_keys) {
+							eff_keys.map(function(k) {
 								console.log('#key',k);
 								if (k == 'TYPE') {
 									console.log ('#type', effDoc[k])
@@ -172,14 +172,27 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 									if (effectsArray) {
 										var anno = effectsArray.split(',');
 										console.log('anno length', anno.length);
+										for (i = 0 ; i < anno.length ; i++ )
+										{
+											var a= anno[i];
+											var firstWord = a.replace(/\(.*/,"")
+											a = a.replace(/.*\(/,"");
+											a = a.replace(/\).*/,"");
+											var values = a.split("|");
+											console.log("obtuse", firstWord, values)
+										}
+										
 									}
 									
 								}
-							}
-						}
-		                mut[mapped_key] = dx[key];
-		                //console.log('dx [',mapped_key,']=',dx[key]);
+							})
+						};
+						if (mapped_key != '__HEADER__') {
+							mut[mapped_key] = dx[key];
+							console.log('dx [',mapped_key,']=',dx[key]);
+						}    
 		              }
+					  console.log('#mut',mut)
 	  				  Fiber(function() {
 	  						 Mutations.insert(mut);
 	  				  }).run();  

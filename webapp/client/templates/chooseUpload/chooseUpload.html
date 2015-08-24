@@ -1,20 +1,44 @@
 <template name="chooseUpload">
+  {{print "chooseUpload this:" this}}
   {{!-- TODO: name this something better --}}
 
   {{> loginButtons }}
+  <hr />
 
-  {{!-- TODO: list uploads belonging to this user --}}
+  <div style="margin: 50px;">
+    {{> reactiveTable collection=mySubmissions settings=tableSettings}}
 
-  {{> listSubmissions}}
-
-  <p>
-    <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">
-      Create a new submission
-    </a>
-  </p>
+    <h3>
+      <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">
+        Create a new submission
+      </a>
+    </h3>
+  </div>
 </template>
 
-<template name="listSubmissions">
-  there will be a list of the things here...
-  I need to make the subscription template-based because I'm cool
+<template name="listFiles">
+  {{! used by reacitveTable to render the files column}}
+  <ul>
+    {{#each files}}
+      <li>
+        <span>{{file_name}}: {{status}}</span>
+      </li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="submissionActions">
+  {{#if compare status "editing"}}
+    <a href="{{pathFor 'uploadNew' wranglerSubmissionId=_id}}"
+        class="edit-submission">
+      Edit
+    </a>
+    <a href="#" class="delete-submission">Delete</a>
+  {{/if}}
+  {{#if compare status "validating"}}
+    <a href="#" class="cancel-validation">Cancel validation</a>
+  {{/if}}
+  {{#if compare status "writing"}}
+    Too late now!
+  {{/if}}
 </template>

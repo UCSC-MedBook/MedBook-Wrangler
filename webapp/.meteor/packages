@@ -28,3 +28,4 @@ audit-argument-checks
 less
 aslagle:reactive-table
 dburles:mongo-collection-instances
+momentjs:moment

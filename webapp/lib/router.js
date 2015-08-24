@@ -31,6 +31,7 @@ Router.map(function() {
       if (submissionId === "create") {
         // create one if we need to
         Meteor.call("createSubmission", function (error, result) {
+          // TODO: catch error
           Router.go('uploadNew',
               { "wranglerSubmissionId": result },
               { replaceState: true }); // back button will work

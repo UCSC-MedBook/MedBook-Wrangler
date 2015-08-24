@@ -10,6 +10,14 @@ Template.registerHelper("print", function (first, second, third, fourth) {
   }
 });
 
+Template.registerHelper('compare', function(v1, v2) {
+  if (typeof v1 === 'object' && typeof v2 === 'object') {
+    return _.isEqual(v1, v2); // do a object comparison
+  } else {
+    return v1 === v2;
+  }
+});
+
 /**
  * Get the parent template instance
  * http://stackoverflow.com/a/27962713/1092640

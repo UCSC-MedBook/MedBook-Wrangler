@@ -8,6 +8,20 @@ Meteor.methods({
       "status": Meteor.isClient ? "creating" : "editing",
     });
   },
+  deleteSubmission: function (submissionId) {
+    check(submissionId, String);
+
+    var userId = makeSureLoggedIn();
+
+    var submission = WranglerSubmissions.findOne(submissionId);
+    if (submission.user_id !== userId) {
+      throw new Meteor.Error("submission-not-available",
+          "The submission _id provided does not exist or is not available" +
+          " to you");
+    }
+
+    WranglerSubmissions.remove(submissionId);
+  },
   addFileToSubmission: function (submissionId, fileId, fileName) {
     check(submissionId, String);
     check(fileId, String);
@@ -19,6 +33,7 @@ Meteor.methods({
     var userId = makeSureLoggedIn();
 
     if (Meteor.isServer) {
+      
       var file = UploadedFiles.findOne(fileId);
       if (!file || userId !== file.user_id) {
         throw new Meteor.Error("file-not-available",
@@ -28,13 +43,14 @@ Meteor.methods({
         throw new Meteor.Error("file-name-wrong",
             "Why would you want to change the fileName?");
       }
+    }
 
-      var submission = WranglerSubmissions.findOne(submissionId);
-      if (!submission || submission.user_id !== userId) {
-        throw new Meteor.Error("submission-not-available",
-            "The submission _id provided does not exist or is not available" +
-            " to you");
-      }
+    var submission = WranglerSubmissions.findOne(submissionId);
+    if (!submission || submission.user_id !== userId ||
+        submission.status !== "editing") {
+      throw new Meteor.Error("submission-not-available",
+          "The submission _id provided does not exist or is not available" +
+          " to you");
     }
 
     WranglerSubmissions.update(submissionId, {

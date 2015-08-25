@@ -84,6 +84,8 @@
   {{#if isValid}}
     OK
   {{else}}
+    WranglerDocument._id: {{_id}}
+    <br />
     {{#each invalidKeys}}
       Error: {{stringify this}}
     {{/each}}

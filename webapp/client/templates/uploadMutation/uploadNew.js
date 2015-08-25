@@ -66,6 +66,7 @@ Template.uploadNew.helpers({
     return [
       { title: "Network elements", collectionName: "network_elements" },
       { title: "Network interactions", collectionName: "network_interactions" },
+      { title: "Mutation data", collectionName: "mutations" },
     ];
   },
   otherDocuments: function () {

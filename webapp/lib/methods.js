@@ -33,7 +33,7 @@ Meteor.methods({
     var userId = makeSureLoggedIn();
 
     if (Meteor.isServer) {
-      
+
       var file = UploadedFiles.findOne(fileId);
       if (!file || userId !== file.user_id) {
         throw new Meteor.Error("file-not-available",
@@ -86,17 +86,13 @@ Meteor.methods({
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
   removeWranglerData: function() {
     // only allow Teo's user id
-    if (Meteor.userId() === "yKWxvJi5ouvbjqjRQ") {
-      if (Meteor.isServer) {
-        UploadedFiles.remove({});
-        WranglerSubmissions.remove({});
-        WranglerDocuments.remove({});
-        console.log("Teo removed all the wrangler data");
-      } else {
-        console.log("you're not the server, silly stub");
-      }
+    if (Meteor.isServer) {
+      UploadedFiles.remove({});
+      WranglerSubmissions.remove({});
+      WranglerDocuments.remove({});
+      console.log("Teo removed all the wrangler data");
     } else {
-      console.log("someone tried to do it who wasn't me");
+      console.log("you're not the server, silly stub");
     }
   },
 });

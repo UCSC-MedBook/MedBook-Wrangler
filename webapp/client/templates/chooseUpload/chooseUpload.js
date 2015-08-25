@@ -3,6 +3,9 @@ Template.chooseUpload.helpers({
     // for reactiveTable
     return WranglerSubmissions;
   },
+  hasCreatedSubmission: function () {
+    return WranglerSubmissions.find({}).count() > 0;
+  },
   tableSettings: function () {
       return {
         rowsPerPage: 10,

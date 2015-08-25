@@ -6,7 +6,11 @@
   <hr />
 
   <div style="margin: 50px;">
-    {{> reactiveTable collection=mySubmissions settings=tableSettings}}
+    {{#if hasCreatedSubmission}}
+      {{> reactiveTable collection=mySubmissions settings=tableSettings}}
+    {{else}}
+      No submissions created :(
+    {{/if}}
 
     <h3>
       <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">

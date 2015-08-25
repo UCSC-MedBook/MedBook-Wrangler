@@ -179,7 +179,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     							});
 					      }
     						if (mapped_key != '__HEADER__') {
-    							mutationDoc[mapped_key] = dx[key];
+    							// mutationDoc[mapped_key] = dx[key];
     							// console.log('dx [',mapped_key,']=',dx[key]);
     						}
 	            }

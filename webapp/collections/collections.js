@@ -46,6 +46,7 @@ WranglerDocuments.attachSchema(new SimpleSchema({
     allowedValues: [
       "network_elements",
       "network_interactions",
+      "mutations",
     ],
   },
   "prospective_document": { type: Object, blackbox: true },

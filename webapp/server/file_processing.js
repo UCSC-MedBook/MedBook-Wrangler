@@ -148,13 +148,13 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 
 						      effDoc = dx[key];
                   var eff_keys = Object.keys(effDoc);
-						      console.log('#EFF keys',eff_keys);
+						      // console.log('#EFF keys',eff_keys);
 
     							var effArray = [];
 
                   // TODO: don't make functions within a loop
     							eff_keys.map(function(k) {
-    								console.log('#key',k);
+    								// console.log('#key',k);
     								if (k == 'TYPE') {
     									console.log ('#type', effDoc[k]);
     								}
@@ -163,7 +163,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     									// console.log ('###EFF', effDoc[k]);
     									if (effectsArray) {
     										var anno = effectsArray.split(',');
-    										console.log('anno length', anno.length);
+    										// console.log('anno length', anno.length);
     										for (i = 0 ; i < anno.length ; i++ )
     										{
     											var a= anno[i];
@@ -187,8 +187,8 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
                 // grab it from the file name
                 mutationDoc.sample_label = "DTB-" + fileName.substring(7, 10);
                 mutationDoc.sample_id = 'noneHardcoded';
-                console.log("grabbing sample label from file name:",
-                    mutationDoc.sample_label);
+                // console.log("grabbing sample label from file name:",
+                //     mutationDoc.sample_label);
               }
 
               // console.log("mutationDoc:", mutationDoc);

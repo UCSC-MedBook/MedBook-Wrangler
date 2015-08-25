@@ -107,6 +107,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 
 	          var len = data.records.length;
 	          var mutationDoc;
+            console.log("len:", len);
             for (var i = 0; i < len; i++) {
               var dx = data.records[i];
               var keys = Object.keys(dx);
@@ -164,7 +165,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     									if (effectsArray) {
     										var anno = effectsArray.split(',');
     										// console.log('anno length', anno.length);
-    										for (i = 0 ; i < anno.length ; i++ )
+    										for (var i = 0 ; i < anno.length ; i++ )
     										{
     											var a= anno[i];
     											var firstWord = a.replace(/\(.*/,"");
@@ -192,6 +193,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
               }
 
               // console.log("mutationDoc:", mutationDoc);
+              console.log("about to insert mutation document. i=", i);
               documentInsert("mutations", mutationDoc);
 			      }
 		      })

@@ -1,4 +1,4 @@
-Template.uploadNew.events({
+Template.editSubmission.events({
   // when they click the button to add a file
   "click #add-files-button": function (event, instance) {
     $("#upload-files-input").click();
@@ -42,7 +42,23 @@ function fieldsFromProspectiveDocument(collectionName) {
   var schema = getSchemaFromName(collectionName);
   var fields = schema.fieldOrder;
 
-  return _.map(fields, function (value, key) {
+  return [{
+      key: "validation",
+      label: "Validation",
+      tmpl: Template.rowValidation,
+      // fn: function(rowValue, outerObject) {
+      //   console.log("outerObject:", outerObject);
+      //
+      //   var context = getSchemaFromName(outerObject.collection_name)
+      //       .newContext();
+      //   if (context.validate(outerObject.prospective_document)) {
+      //     return "OK";
+      //   } else {
+      //     console.log("invalid document found!", context.invalidKeys());
+      //     return ":(";
+      //   }
+      // },
+  }].concat(_.map(fields, function (value, key) {
     return {
       key: "prospective_document",
       label: schema.label(value),
@@ -50,13 +66,11 @@ function fieldsFromProspectiveDocument(collectionName) {
         return rowValue[value];
       },
     };
-  });
+  }));
 }
 
-
-
 var counter = 0;
-Template.uploadNew.helpers({
+Template.editSubmission.helpers({
   hasDocuments: function () {
     return WranglerDocuments.find({
       "submission_id": this._id,
@@ -82,7 +96,7 @@ Template.uploadNew.helpers({
   },
 });
 
-Template.reviewNewData.helpers({
+Template.reviewData.helpers({
   dynamicSettings: function () {
     return {
       collection: WranglerDocuments.find({
@@ -102,7 +116,7 @@ Template.reviewNewData.helpers({
   },
 });
 
-Template.reviewNewData.onCreated(function () {
+Template.reviewData.onCreated(function () {
 
   var instance = this;
   instance.submissionId = Template.parentData()._id;
@@ -118,4 +132,22 @@ Template.reviewNewData.onCreated(function () {
         }
     );
   });
+});
+
+Template.rowValidation.helpers({
+  isValid: function () {
+    var data = Template.instance().data;
+    console.log("data:", data);
+    var collection = getCollectionByName(data.collection_name);
+    var context = collection.simpleSchema().namedContext(data._id);
+    return context.validate(data.prospective_document);
+  },
+  invalidKeys: function () {
+    var data = Template.instance().data;
+    var collection = getCollectionByName(data.collection_name);
+    var context = collection.simpleSchema().namedContext(data._id);
+    return context.invalidKeys();
+  },
+  stringify: JSON.stringify,
+  
 });

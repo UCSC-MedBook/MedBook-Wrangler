@@ -18,8 +18,8 @@ Router.map(function() {
     },
   });
 
-  this.route('uploadNew', {
-    path: '/Wrangler/uploadNew/:wranglerSubmissionId',
+  this.route('editSubmission', {
+    path: '/Wrangler/editSubmission/:wranglerSubmissionId',
     waitOn: function () {
       return Meteor.subscribe("wranglerSubmission", this.params.wranglerSubmissionId);
     },
@@ -32,7 +32,7 @@ Router.map(function() {
         // create one if we need to
         Meteor.call("createSubmission", function (error, result) {
           // TODO: catch error
-          Router.go('uploadNew',
+          Router.go('editSubmission',
               { "wranglerSubmissionId": result },
               { replaceState: true }); // back button will work
         });

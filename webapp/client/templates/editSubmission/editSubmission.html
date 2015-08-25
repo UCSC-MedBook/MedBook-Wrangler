@@ -1,5 +1,5 @@
-<template name="uploadNew">
-  {{print "uploadNew this:" this}}
+<template name="editSubmission">
+  {{print "editSubmission this:" this}}
   {{!-- TODO: name this something better --}}
 
   {{#if this}}
@@ -26,7 +26,7 @@
 
     <div id="data-review" class="flex-container">
       {{#each reviewObjects}}
-        {{> reviewNewData}}
+        {{> reviewData}}
       {{/each}}
     </div>
 
@@ -63,8 +63,8 @@
   {{/if}}
 </template>
 
-<template name="reviewNewData">
-  <!-- {{print "reviewNewData this:" this}} -->
+<template name="reviewData">
+  <!-- {{print "reviewData this:" this}} -->
   {{#if hasDocumentsForMe}}
     <div class="component-box">
       <h3>{{title}}</h3>
@@ -76,5 +76,16 @@
         </div>
       {{/if}}
     </div>
+  {{/if}}
+</template>
+
+<template name="rowValidation">
+  <!-- {{print "rowValidation this:" this}} -->
+  {{#if isValid}}
+    OK
+  {{else}}
+    {{#each invalidKeys}}
+      Error: {{stringify this}}
+    {{/each}}
   {{/if}}
 </template>

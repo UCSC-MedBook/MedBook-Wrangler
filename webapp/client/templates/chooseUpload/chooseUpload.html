@@ -13,7 +13,7 @@
     {{/if}}
 
     <h3>
-      <a href="{{ pathFor 'uploadNew' wranglerSubmissionId='create' }}">
+      <a href="{{ pathFor 'editSubmission' wranglerSubmissionId='create' }}">
         Create a new submission
       </a>
     </h3>
@@ -33,7 +33,7 @@
 
 <template name="submissionActions">
   {{#if compare status "editing"}}
-    <a href="{{pathFor 'uploadNew' wranglerSubmissionId=_id}}"
+    <a href="{{pathFor 'editSubmission' wranglerSubmissionId=_id}}"
         class="edit-submission">
       Edit
     </a>

@@ -107,7 +107,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 		      .on('data', function (chunk) {
 		        blob += chunk;
 		      })
-		      .on('end', function () {
+		      .on('end', Meteor.bindEnvironment(function () {
 		       //var myData = JSON.parse(stream);
 		       //console.log("##file: " + myData);
 		       if (blob) {
@@ -179,25 +179,20 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
 											var values = a.split("|");
 											console.log("obtuse", firstWord, values)
 										}
-										
 									}
-
 								}
 							})
 						};
 						if (mapped_key != '__HEADER__') {
 							mut[mapped_key] = dx[key];
 							console.log('dx [',mapped_key,']=',dx[key]);
-						}    
+						}
 		              }
 					  console.log('#mut',mut)
-	  				  Fiber(function() {
-	  						 Mutations.insert(mut);
-	  				  }).run();
-
+	  				Mutations.insert(mut);
 				}
 			}
-		})
+		}));
 	} else {
       console.log("unknown file type");
       setFileStatus("error");

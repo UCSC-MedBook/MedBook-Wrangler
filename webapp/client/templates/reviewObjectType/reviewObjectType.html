@@ -1,0 +1,20 @@
+<template name="reviewObjectType">
+  <!-- {{print "reviewObjectType this:" this}} -->
+  {{#if hasDocumentsForMe}}
+    <div class="component-box">
+      <h3>{{title}}</h3>
+      {{#if Template.subscriptionsReady}}
+        {{> reactiveTable settings=dynamicSettings}}
+      {{else}}
+        <div class="relative-spinner">
+          {{> spinner}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="rowValidation">
+  {{print "rowValidation this:" this}}
+  hello
+</template>

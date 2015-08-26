@@ -11,7 +11,7 @@ Router.configure({
 
 Router.map(function() {
   // showPatient (/sample/:currentSampleLabel) ==> same thing
-  this.route('chooseUpload', {
+  this.route('listSubmissions', {
     path: '/Wrangler/',
     subscriptions: function () {
       return Meteor.subscribe("listSubmissions");

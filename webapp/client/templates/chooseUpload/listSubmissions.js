@@ -1,4 +1,4 @@
-Template.chooseUpload.helpers({
+Template.listSubmissions.helpers({
   mySubmissions: function () {
     // for reactiveTable
     return WranglerSubmissions;

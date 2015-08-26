@@ -1,6 +1,6 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
-  {{!-- TODO: name this something better --}}
+  {{! TODO: name this something better }}
 
   {{#if this}}
     <h2>Files</h2>
@@ -25,14 +25,16 @@
     <h2>Review data</h2>
 
     <div id="data-review" class="flex-container">
+      {{> reviewSuperpathwayData}}
+
       {{#each reviewObjects}}
-        {{> reviewData}}
+        {{> reviewObjectType}}
       {{/each}}
     </div>
 
     {{#if hasDocuments}}
-      {{!-- TODO: only show in blue if every file is done processing --}}
-      {{!-- TODO: only show in blue if every subscription is ready --}}
+      {{! TODO: only show in blue if every file is done processing }}
+      {{! TODO: only show in blue if every subscription is ready }}
       <button id="submit-all-data" type="button" class="btn btn-primary">
         Submit data
       </button>
@@ -42,52 +44,34 @@
       </span>
     {{/if}}
 
-    {{!-- this is how you show schemas... TODO --}}
-    {{#each otherDocuments}} {{!-- things that don't fit elsewhere --}}
+    {{! this is how you show schemas... TODO }}
+    {{#each otherDocuments}} {{! things that don't fit elsewhere }}
       {{print 'this ::' this}}
-      {{#autoForm id=makeUniqueID schema=dynamicSchema
-          doc=prospective_document}}
 
-        {{> afQuickFields name=""}} {{!-- we need that blank string --}}
+    {{/each}}
+
+  {{else}}
+    {{! loading handled in the router }}
+    {{> pageNotFound}}
+  {{/if}}
+</template>
+
+<template name="reviewSuperpathwayData">
+  {{#if hasDocuments}}
+    <div id="superpathway-data-review" class="component-box flex-container">
+      {{#autoForm id="superpathway-schema" schema=superpathwaySchema}}
+          <!-- doc=prospective_document}} -->
+
+        {{> afQuickFields name=""}} {{! we need that blank string }}
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="reset" class="btn btn-default">Reset Form</button>
         </div>
       {{/autoForm}}
-    {{/each}}
-
-  {{else}}
-    {{!-- loading handled in the router --}}
-    {{> pageNotFound}}
-  {{/if}}
-</template>
-
-<template name="reviewData">
-  <!-- {{print "reviewData this:" this}} -->
-  {{#if hasDocumentsForMe}}
-    <div class="component-box">
-      <h3>{{title}}</h3>
-      {{#if Template.subscriptionsReady}}
-        {{> reactiveTable settings=dynamicSettings}}
-      {{else}}
-        <div class="relative-spinner">
-          {{> spinner}}
-        </div>
-      {{/if}}
+      {{#each reviewObjects}}
+        {{> reviewObjectType}}
+      {{/each}}
     </div>
-  {{/if}}
-</template>
-
-<template name="rowValidation">
-  <!-- {{print "rowValidation this:" this}} -->
-  {{#if isValid}}
-    OK
-  {{else}}
-    WranglerDocument._id: {{_id}}
-    <br />
-    {{#each invalidKeys}}
-      Error: {{stringify this}}
-    {{/each}}
   {{/if}}
 </template>

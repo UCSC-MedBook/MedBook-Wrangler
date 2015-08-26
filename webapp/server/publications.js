@@ -16,7 +16,23 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   }
 });
 
-Meteor.publish("wranglerDocuments", function (submissionId, collectionName) {
+Meteor.publish("documentsForSubmission", function (submissionId) {
+  check(submissionId, String);
+
+  var submission = WranglerSubmissions.findOne(submissionId);
+  if (submission && submission.user_id === this.userId) {
+    // don't publish prospective_document
+    return WranglerDocuments.find({
+          "submission_id": submissionId
+        }, {
+          fields: { "prospective_document": 0 }
+        });
+  } else {
+    this.ready();
+  }
+});
+
+Meteor.publish("documentsForCollection", function (submissionId, collectionName) {
   check(submissionId, String);
   check(collectionName, String);
 

@@ -41,6 +41,8 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
 WranglerDocuments = new Meteor.Collection("wrangler_documents");
 WranglerDocuments.attachSchema(new SimpleSchema({
   "submission_id": { type: Meteor.ObjectID },
+  // TODO: link up remove button so it removes these documents
+  // "file_id": { type: Meteor.ObjectID }, // which file it's from
   "collection_name": { // not so enthused about this
     type: String,
     allowedValues: [
@@ -48,6 +50,17 @@ WranglerDocuments.attachSchema(new SimpleSchema({
       "network_interactions",
       "mutations",
     ],
+  },
+  "validation_errors": {
+    type: String,
+    autoValue: function () {
+      var collection = getCollectionByName(this.field("collection_name").value);
+      var context = collection.simpleSchema().namedContext("autoValue");
+      if (!context.validate(this.field("prospective_document").value)) {
+        return JSON.stringify(context.invalidKeys());
+      }
+    },
+    optional: true, // if not set ==> valid
   },
   "prospective_document": { type: Object, blackbox: true },
 }));
@@ -66,19 +79,19 @@ UploadedFiles = new FS.Collection("uploaded_files", {
 // users can only modify their own documents
 UploadedFiles.allow({
   insert: function (userId, doc) {
-    console.log("UploadedFiles.allow insert");
+    // console.log("UploadedFiles.allow insert");
     return userId === doc.user_id;
   },
   update: function(userId, doc, fields, modifier) {
-    console.log("UploadedFiles.allow update:", modifier);
+    // console.log("UploadedFiles.allow update:", modifier);
     return userId === doc.user_id;
   },
   remove: function (userId, doc) {
-    console.log("UploadedFiles.allow remove");
+    // console.log("UploadedFiles.allow remove");
     return userId === doc.user_id;
   },
   download: function (userId, doc) {
-    console.log("UploadedFiles.allow download");
+    // console.log("UploadedFiles.allow download");
     return userId === doc.user_id;
   }
 });

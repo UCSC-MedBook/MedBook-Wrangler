@@ -28,6 +28,24 @@ function setHighLevel(highLevelObject, key, newValue) {
   }
 }
 
+function wrangleSampleNumber(disgustingName) {
+  var firstDashIndex = disgustingName.indexOf("-");
+  var secondDashIndex = disgustingName.indexOf("-", firstDashIndex + 1);
+  var dashIndex = secondDashIndex === -1 ? firstDashIndex : secondDashIndex;
+  var threeCharNumber = disgustingName.substr(dashIndex + 1, 3);
+
+  // make sure it's not just two digits long
+  if (isNaN(parseInt(threeCharNumber.substr(2, 1), 10))) {
+    return "0" + threeCharNumber.substr(0, 2);
+  } else {
+    return threeCharNumber;
+  }
+}
+
+function isProgression(disgustingName) {
+  return disgustingName.toLowerCase().indexOf("pro") > -1;
+}
+
 parseMutationVCF = function (fileObject, documentInsert) {
   var vcf = Meteor.npmRequire('vcf.js');
   var blob = "";
@@ -38,8 +56,26 @@ parseMutationVCF = function (fileObject, documentInsert) {
   .on('end', Meteor.bindEnvironment(function () {
     var data = vcf.parser()(blob);
 
+    // TODO: pull from the sampleNames in the header
+    // var possibleSampleLabel = record.__HEADER__.sampleNames[0];
+    // if (possibleSampleLabel !== "ion-sample") {
+    //   console.log("possibleSampleLabel:", possibleSampleLabel);
+    //   mutationDoc.sample_label = possibleSampleLabel;
+    // } else {
+    //
+    // }
+
+    var sampleLabel = "DTB-" +
+        wrangleSampleNumber(fileObject.original.name);
+    if (isProgression(fileObject.original.name)) {
+      sampleLabel += "Pro";
+    }
+
     _.mapObject(data.records, function (record) {
-      var mutationDoc = {};
+      var mutationDoc = {
+        "sample_label": sampleLabel,
+      };
+
 
       var directMappings = {
         "REF": "reference_allele",
@@ -108,22 +144,9 @@ parseMutationVCF = function (fileObject, documentInsert) {
       */
 
       // grab sample_label from file name if needed
-      if (mutationDoc.sample_label === undefined) {
-        mutationDoc.sample_label = "DTB-" +
-            fileObject.original.name.substring(7, 10);
-      }
-
       if (mutationDoc.mutation_type === undefined) {
         mutationDoc.mutation_type = "snp";
       }
-
-      if (mutationDoc.gene_label === undefined) {
-        mutationDoc.gene_label = "WEIRD_NOT_SPECIFIED";
-      }
-      if (mutationDoc.effect_impact === undefined) {
-        mutationDoc.effect_impact = "NOT_DEFINED_IN_FILE";
-      }
-
       if (mutationDoc.start_position !== undefined) {
         // TODO: hardcoded
         mutationDoc.end_position = mutationDoc.start_position + 1;
@@ -192,7 +215,8 @@ parseMutationVCF = function (fileObject, documentInsert) {
 
       // console.log("mutationDoc:", mutationDoc);
       // debugger;
-      if (mutationDoc.effect_impact === "LOW") {
+      if (mutationDoc.effect_impact === "LOW" ||
+          mutationDoc.gene_label === undefined) {
         // console.log("not adding low impact mutation...");
       } else {
         documentInsert("mutations", mutationDoc);

@@ -46,7 +46,7 @@ function isProgression(disgustingName) {
   return disgustingName.toLowerCase().indexOf("pro") > -1;
 }
 
-parseMutationVCF = function (fileObject, documentInsert) {
+parseMutationVCF = function (fileObject, documentInsert, onError) {
   var vcf = Meteor.npmRequire('vcf.js');
   var blob = "";
   var stream = fileObject.createReadStream("uploaded_files")

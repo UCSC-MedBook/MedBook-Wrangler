@@ -20,19 +20,22 @@ function fieldsFromProspectiveDocument(collectionName) {
   var schema = getSchemaFromName(collectionName);
   var fields = schema.fieldOrder;
 
-  return [{
-      key: "validation_errors",
-      label: "Validation errors",
-      //tmpl: Template.rowValidation,
-  }].concat(_.map(fields, function (value, key) {
-    return {
-      key: "prospective_document",
-      label: schema.label(value),
-      fn: function(rowValue, outerObject) {
-        return rowValue[value];
-      },
-    };
-  }));
+  var firstColumn = {
+    label: "Validation errors",
+    tmpl: Template.rowValidation,
+    sortable: false,
+  };
+
+  return [firstColumn]
+      .concat(_.map(fields, function (value, key) {
+        return {
+          key: "prospective_document",
+          label: schema.label(value),
+          fn: function(rowValue, outerObject) {
+            return rowValue[value];
+          },
+        };
+      }));
 }
 
 Template.reviewObjectType.helpers({
@@ -52,5 +55,21 @@ Template.reviewObjectType.helpers({
       "submission_id": Template.instance().submissionId,
       "collection_name": Template.instance().collectionName,
     }).count() > 0;
+  },
+});
+
+function contextFromData(data) {
+  return getCollectionByName(data.collection_name)
+      .simpleSchema()
+      .namedContext(data._id);
+}
+
+Template.rowValidation.helpers({
+  isValid: function () {
+    var data = Template.instance().data;
+    return contextFromData(data).validate(data.prospective_document);
+  },
+  invalidKeys: function () {
+    return contextFromData(Template.instance().data).invalidKeys();
   },
 });

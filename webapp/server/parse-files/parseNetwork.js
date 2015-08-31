@@ -1,4 +1,4 @@
-parseNetworkInteractions = function(fileObject, documentInsert) {
+parseNetworkInteractions = function(fileObject, documentInsert, onError) {
   lineByLineStream(fileObject, function (line) {
     var brokenTabs = line.split("\t");
     if (brokenTabs.length === 3) {
@@ -9,14 +9,13 @@ parseNetworkInteractions = function(fileObject, documentInsert) {
         "interaction": brokenTabs[1],
       });
     } else {
-      console.log("don't know what to do:", line);
-      // setFileStatus("error");
+      onError("Invalid line: " + line);
       return;
     }
   });
 };
 
-parseNetworkElements = function(fileObject, documentInsert) {
+parseNetworkElements = function(fileObject, documentInsert, onError) {
   lineByLineStream(fileObject, function(line){
     var brokenTabs = line.split("\t");
     if (brokenTabs.length === 2) {
@@ -26,8 +25,7 @@ parseNetworkElements = function(fileObject, documentInsert) {
         "type": brokenTabs[0],
       });
     } else {
-      console.log("don't know what to do:", line);
-      // setFileStatus("error");
+      onError("Invalid line: " + line);
       return;
     }
   });

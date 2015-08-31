@@ -29,3 +29,5 @@ less
 aslagle:reactive-table
 dburles:mongo-collection-instances
 momentjs:moment
+natestrauser:select2
+aldeed:autoform-select2

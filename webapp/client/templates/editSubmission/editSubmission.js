@@ -2,8 +2,6 @@ Template.editSubmission.onCreated(function () {
 
   var instance = this;
 
-  console.log("onCreated for editSubmission");
-
   instance.autorun(function () {
     instance.subscribe('documentsForSubmission', instance.data._id,
         function () { // callback
@@ -63,6 +61,11 @@ Template.editSubmission.helpers({
   },
 });
 
+var superpathwayReviewObjects = [
+  { title: "Network elements", collectionName: "network_elements" },
+  { title: "Network interactions", collectionName: "network_interactions" },
+];
+
 Template.reviewSuperpathwayData.helpers({
   hasDocuments: function () {
     return WranglerDocuments.find({
@@ -72,12 +75,35 @@ Template.reviewSuperpathwayData.helpers({
     }).count() > 0;
   },
   reviewObjects: function () {
-    return [
-      { title: "Network elements", collectionName: "network_elements" },
-      { title: "Network interactions", collectionName: "network_interactions" },
-    ];
+    return superpathwayReviewObjects;
   },
   superpathwaySchema: function () {
-    return Superpathways.simpleSchema();
+    return new SimpleSchema({
+      "superpathway_id": {
+        type: String,
+        autoform: {
+          type: "select2",
+          options: function () {
+            return [
+              {label: "2013 label", value: "2013"},
+              {label: "2014 label", value: "2014"},
+              {label: "2015 label", value: "2015"}
+            ];
+          }
+        },
+      },
+    });
   },
+});
+
+Template.reviewSuperpathwayData.events({
+  "submit #superpathway-schema": function (event, instance){
+    event.preventDefault();
+    var formValues = AutoForm.getFormValues("superpathway-schema");
+
+    Meteor.call("updateAllDocuments",
+        instance.data._id,
+        _.pluck(superpathwayReviewObjects, "collectionName"),
+        formValues.updateDoc.$set);
+  }
 });

@@ -2,7 +2,7 @@
   <!-- {{print "reviewObjectType this:" this}} -->
   {{#if hasDocumentsForMe}}
     <div class="component-box">
-      <h3>{{title}}</h3>
+      <h4>{{title}}</h4>
       {{#if Template.subscriptionsReady}}
         {{> reactiveTable settings=dynamicSettings}}
       {{else}}
@@ -15,6 +15,12 @@
 </template>
 
 <template name="rowValidation">
-  {{print "rowValidation this:" this}}
-  hello
+  <!-- {{print "rowValidation this:" this}} -->
+  {{#if isValid}}
+    OK
+  {{else}}
+    {{#each invalidKeys}}
+      {{name}}: {{type}}
+    {{/each}}
+  {{/if}}
 </template>

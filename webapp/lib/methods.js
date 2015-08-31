@@ -82,6 +82,31 @@ Meteor.methods({
     UploadedFiles.remove(this.file_id);
   },
 
+  updateAllDocuments: function (submissionId, collectionNames, setPart) {
+    check(submissionId, String);
+    check(collectionNames, [String]);
+    check(setPart, {
+      "superpathway_id": Match.Optional(String),
+    });
+
+    // TODO: validate input
+
+    var prospectivePartUpdate = {};
+    _.mapObject(setPart, function(value, key) {
+      prospectivePartUpdate["prospective_document." + key] = value;
+    });
+
+    console.log("prospectivePartUpdate:", prospectivePartUpdate);
+
+    WranglerDocuments.update({
+          "submission_id": submissionId,
+          "collection_name": {
+            $in: ["network_elements", "network_interactions"]
+          },
+        }, { $set: prospectivePartUpdate },
+        { multi: true });
+  },
+
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
   removeWranglerData: function() {

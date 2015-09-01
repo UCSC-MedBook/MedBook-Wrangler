@@ -49,7 +49,7 @@ function isProgression(disgustingName) {
 parseMutationVCF = function (fileObject, documentInsert, onError) {
   var vcf = Meteor.npmRequire('vcf.js');
   var blob = "";
-  var stream = fileObject.createReadStream("uploaded_files")
+  var stream = fileObject.createReadStream("blobs")
   .on('data', function (chunk) {
     blob += chunk;
   })

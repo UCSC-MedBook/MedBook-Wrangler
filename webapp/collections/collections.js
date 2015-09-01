@@ -54,19 +54,19 @@ WranglerDocuments.attachSchema(new SimpleSchema({
   "prospective_document": { type: Object, blackbox: true },
 }));
 
-UploadedFileStore = new FS.Store.GridFS("uploaded_files", {
+BlobStore = new FS.Store.GridFS("blobs", {
   beforeWrite: function (fileObject) {
     // this.userId because we're on the server (doesn't work)
     fileObject.uploaded_date = new Date();
   }
 });
 
-UploadedFiles = new FS.Collection("uploaded_files", {
-  stores: [UploadedFileStore],
+Blobs = new FS.Collection("blobs", {
+  stores: [BlobStore],
 });
 
 // users can only modify their own documents
-UploadedFiles.allow({
+Blobs.allow({
   insert: function (userId, doc) {
     return userId === doc.user_id;
   },

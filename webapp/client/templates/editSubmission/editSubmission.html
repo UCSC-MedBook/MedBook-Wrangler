@@ -1,8 +1,8 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
-  {{! TODO: name this something better }}
 
-  {{#if this}}
+  {{#if this}} {{! if no data, invalid WranglerDocuments _id in URL }}
+    <!-- TODO: pull out uploader from Telescope post, put in package -->
     <h2>Files</h2>
     {{#each files}}
       <div class="input-group">
@@ -21,13 +21,36 @@
           Remove
         </a>
 
-      </div>
+      </div><!-- /input-group -->
     {{/each}}
 
+    <br />
+
+    <!-- add from locally -->
     <span class="btn btn-default btn-file">
       Add files...
       <input id="upload-files-input" type="file" multiple>
     </span>
+
+
+    <!-- add from the the web -->
+    <form class="add-from-web-form">
+      <!-- <input type="text" name="text" placeholder="Type to add new tasks" /> -->
+      <div class="input-group">
+        <input name="urlInput" type="text" class="form-control"
+            placeholder="Enter URL here">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            Add from the web
+          </button>
+        </span>
+      </div><!-- /input-group -->
+    </form>
+
+
+
+
+
 
     <h2>Review data</h2>
 
@@ -50,12 +73,6 @@
         Upload files to review data...
       </span>
     {{/if}}
-
-    {{! this is how you show schemas... TODO }}
-    {{#each otherDocuments}} {{! things that don't fit elsewhere }}
-      {{print 'this ::' this}}
-
-    {{/each}}
 
   {{else}}
     {{! loading handled in the router }}

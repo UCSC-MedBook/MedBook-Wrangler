@@ -23,18 +23,55 @@ Meteor.methods({
     WranglerSubmissions.remove(submissionId);
   },
   addFileToSubmission: function (submissionId, fileId, fileName) {
-    check(submissionId, String);
-    check(fileId, String);
+    // fileName sent so it can be fast on the client
+    // (Blobs is not published at this point)
+    // (the file is inserted and then removed because it's not published)
+    check([submissionId, fileId, fileName], [String]);
+
+    var userId = makeSureLoggedIn();
+
+    if (Meteor.isServer) {
+      var file = Blobs.findOne(fileId);
+      if (!file || userId !== file.user_id) {
+        throw new Meteor.Error("file-not-available",
+            "The file _id provided does not exist or is not available to you");
+      }
+      if (file.original.name !== fileName) {
+        throw new Meteor.Error("file-name-wrong",
+            "Why would you want to change the fileName?");
+      }
+    }
+
+    var submission = WranglerSubmissions.findOne(submissionId);
+    if (!submission || submission.user_id !== userId ||
+        submission.status !== "editing") {
+      throw new Meteor.Error("submission-not-available",
+          "The submission _id provided does not exist or is not available" +
+          " to you");
+    }
+
+    WranglerSubmissions.update(submissionId, {
+      $addToSet: {
+        "files": {
+          "file_id": fileId,
+          "file_name": fileName,
+          "status": Meteor.isClient ? "creating" : "uploading",
+        }
+      }
+    });
+  },
+  addUrlToSubmission: function (submissionId, url) {
+    check([submissionId, url], [String]);
 
     // fileName sent so it can be fast on the client
-    // (UploadedFiles is not published at this point)
+    // (Blobs is not published at this point)
     // (the file is inserted and then removed because it's not published)
     check(fileName, String);
     var userId = makeSureLoggedIn();
 
     if (Meteor.isServer) {
 
-      var file = UploadedFiles.findOne(fileId);
+      var file = Blobs.findOne(fileId);
       if (!file || userId !== file.user_id) {
         throw new Meteor.Error("file-not-available",
             "The file _id provided does not exist or is not available to you");
@@ -79,7 +116,7 @@ Meteor.methods({
         }
       }
     });
-    UploadedFiles.remove(this.file_id);
+    Blobs.remove(this.file_id);
   },
 
   updateAllDocuments: function (submissionId, collectionNames, setPart) {
@@ -112,7 +149,7 @@ Meteor.methods({
   removeWranglerData: function() {
     // only allow Teo's user id
     if (Meteor.isServer) {
-      UploadedFiles.remove({});
+      Blobs.remove({});
       WranglerSubmissions.remove({});
       WranglerDocuments.remove({});
       console.log("Teo removed all the wrangler data");

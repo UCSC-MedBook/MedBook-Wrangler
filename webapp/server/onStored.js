@@ -1,7 +1,7 @@
-UploadedFileStore.on("stored", Meteor.bindEnvironment(
+BlobStore.on("stored", Meteor.bindEnvironment(
   function (storeName, fileObject) {
     // workaround for known bug
-    if (storeName !== UploadedFileStore.name) return;
+    if (storeName !== BlobStore.name) return;
 
     var submissionId = WranglerSubmissions.findOne({
       "files": {
@@ -49,19 +49,7 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
     }
     var onError = _.partial(setFileStatus, "error");
 
-    try {
-      var fileName = fileObject.original.name;
-      if (fileName.slice(-4) === ".sif") {
-        parseNetworkInteractions(fileObject, documentInsert, onError);
-      } else if (fileName.slice(-4) === ".tab" &&
-          fileName.indexOf("definitions") > -1) {
-        parseNetworkElements(fileObject, documentInsert, onError);
-      } else if (fileName.slice(-4) === ".vcf") {
-  		  parseMutationVCF(fileObject, documentInsert, onError);
-  	  } else {
-        onError("unknown file type");
-      }
-
+    function setToWriting() {
       // if there was no error, set status to writing
       if (WranglerSubmissions.findOne({
             "files.file_id": fileObject._id
@@ -70,6 +58,25 @@ UploadedFileStore.on("stored", Meteor.bindEnvironment(
             fields: { "files.$": 1 }
           }).files[0].status !== "error") {
         setFileStatus("writing");
+      }
+    }
+
+    try {
+      var fileName = fileObject.original.name;
+      if (fileName.slice(-4) === ".sif") {
+        parseNetworkInteractions(fileObject, documentInsert, onError);
+      } else if (fileName.slice(-4) === ".tab" &&
+          fileName.indexOf("definitions") > -1) {
+        parseNetworkElements(fileObject, documentInsert, onError);
+        setToWriting();
+      } else if (fileName.slice(-4) === ".vcf") {
+  		  parseMutationVCF(fileObject, documentInsert, onError);
+        setToWriting();
+  	  } else if (fileName.slice(-7) === ".tar.gz") {
+        uncompressTarGz(fileObject, documentInsert, onError);
+        debugger;
+      } else {
+        onError("unknown file type");
       }
     }
     catch (error) {

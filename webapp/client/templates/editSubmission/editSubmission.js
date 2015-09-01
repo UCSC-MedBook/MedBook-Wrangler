@@ -11,6 +11,13 @@ Template.editSubmission.onCreated(function () {
   });
 });
 
+function fullInsertCallback (submissionId, error, fileObject) {
+  console.log("fullInsertCallback");
+  console.log("fileObject:", fileObject);
+  Meteor.call("addFileToSubmission", submissionId, fileObject._id,
+      fileObject.original.name);
+}
+
 Template.editSubmission.events({
   // when they click the button to add a file
   "click #add-files-button": function (event, instance) {
@@ -20,20 +27,17 @@ Template.editSubmission.events({
   "change #upload-files-input": function (event, instance) {
     event.preventDefault();
 
-    function insertCallback(error, fileObject) {
-      console.log("insertCallback function");
-      Meteor.call("addFileToSubmission", instance.data._id, fileObject._id,
-          fileObject.original.name);
-      console.log(WranglerSubmissions.findOne(instance.data._id).files[0]);
-    }
+    var insertCallback = _.partial(fullInsertCallback, instance.data._id);
 
     var files = event.target.files;
+    console.log("files:", files);
     for (var i = 0; i < files.length; i++) {
       var newFile = new FS.File(files[i]);
-      newFile.user_id = Meteor.userId();
+      newFile.user_id = Meteor.userId(); // TODO: place in a better spot
       // This isn't in a Meteor method because insertion should happen on the
       // client according to the FS.File docs
-      UploadedFiles.insert(newFile, insertCallback);
+      console.log("newFile:", newFile);
+      Blobs.insert(newFile, insertCallback);
     }
   },
   // click the remove button for a specific file
@@ -48,6 +52,29 @@ Template.editSubmission.events({
     Meteor.call("submitData", instance.data._id);
     Router.go("listSubmissions");
   },
+  // add a URL from tbe web
+  "submit .add-from-web-form": function (event, instance) {
+      // Prevent default browser form submit
+      event.preventDefault();
+
+      var urlInput = event.target.urlInput;
+      var insertCallback = _.partial(fullInsertCallback, instance.data._id);
+
+      // https://github.com/CollectionFS/Meteor-CollectionFS/
+      // wiki/Insert-One-File-From-a-Remote-URL
+      var newFile = new FS.File();
+      newFile.attachData(urlInput.value, function (error) {
+        if (error) {
+          console.log("error:", error);
+          throw error;
+        }
+        newFile.user_id = Meteor.userId(); // TODO: place in a better spot
+        // newFile.name("the_name_of_the_file.png");
+        Blobs.insert(newFile, insertCallback);
+      });
+
+      urlInput.value = "";
+    }
 });
 
 Template.editSubmission.helpers({
@@ -84,6 +111,7 @@ Template.reviewSuperpathwayData.helpers({
         autoform: {
           type: "select2",
           options: function () {
+            // TODO: list the actual pathways that they can upload to
             return [
               {label: "2013 label", value: "2013"},
               {label: "2014 label", value: "2014"},

@@ -46,7 +46,7 @@ function isProgression(disgustingName) {
   return disgustingName.toLowerCase().indexOf("pro") > -1;
 }
 
-parseMutationVCF = function (fileObject, documentInsert, onError) {
+parseMutationVCF = function (fileObject, processingFunctions) {
   var vcf = Meteor.npmRequire('vcf.js');
   var blob = "";
   var stream = fileObject.createReadStream("blobs")
@@ -65,6 +65,7 @@ parseMutationVCF = function (fileObject, documentInsert, onError) {
     //
     // }
 
+    // TODO: use .match(//g)
     var sampleLabel = "DTB-" +
         wrangleSampleNumber(fileObject.original.name);
     if (isProgression(fileObject.original.name)) {
@@ -219,7 +220,7 @@ parseMutationVCF = function (fileObject, documentInsert, onError) {
           mutationDoc.gene_label === undefined) {
         // console.log("not adding low impact mutation...");
       } else {
-        documentInsert("mutations", mutationDoc);
+        processingFunctions.documentInsert("mutations", mutationDoc);
       }
     });
   })); // end of .on('end')

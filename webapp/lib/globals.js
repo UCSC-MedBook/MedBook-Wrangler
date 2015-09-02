@@ -14,6 +14,8 @@ getCollectionByName = function(collectionName) {
       return NetworkInteractions;
     case "mutations":
       return Mutations;
+    case "gene_expression":
+      return GeneExpression;
     default:
       console.log("couldn't find appropriate schema");
       return null;

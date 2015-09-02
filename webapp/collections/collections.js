@@ -14,8 +14,9 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
           allowedValues: [
             "creating",
             "uploading",
+            "uncompressing",
             "processing",
-            "writing",
+            "saving",
             "done",
             "error",
           ],
@@ -41,14 +42,14 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
 WranglerDocuments = new Meteor.Collection("wrangler_documents");
 WranglerDocuments.attachSchema(new SimpleSchema({
   "submission_id": { type: Meteor.ObjectID },
-  // TODO: link up remove button so it removes these documents
-  // "file_id": { type: Meteor.ObjectID }, // which file it's from
+  "file_id": { type: Meteor.ObjectID },
   "collection_name": { // not so enthused about this
     type: String,
     allowedValues: [
       "network_elements",
       "network_interactions",
       "mutations",
+      "gene_expression",
     ],
   },
   "prospective_document": { type: Object, blackbox: true },
@@ -56,8 +57,10 @@ WranglerDocuments.attachSchema(new SimpleSchema({
 
 BlobStore = new FS.Store.GridFS("blobs", {
   beforeWrite: function (fileObject) {
-    // this.userId because we're on the server (doesn't work)
-    fileObject.uploaded_date = new Date();
+    if (fileObject.metadata === undefined) {
+      fileObject.metadata = {};
+    }
+    fileObject.metadata.uploaded_date = new Date();
   }
 });
 
@@ -68,16 +71,16 @@ Blobs = new FS.Collection("blobs", {
 // users can only modify their own documents
 Blobs.allow({
   insert: function (userId, doc) {
-    return userId === doc.user_id;
+    return userId === doc.metadata.user_id;
   },
   update: function(userId, doc, fields, modifier) {
-    return userId === doc.user_id;
+    return userId === doc.metadata.user_id;
   },
   remove: function (userId, doc) {
-    return userId === doc.user_id;
+    return userId === doc.metadata.user_id;
   },
   download: function (userId, doc) {
-    return userId === doc.user_id;
+    return userId === doc.metadata.user_id;
   }
 });
 

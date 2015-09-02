@@ -44,6 +44,14 @@ Meteor.methods({
 
     setSubmissionStatus("writing");
 
+    var updateGeneExpression = true;
+    if (WranglerDocuments.findOne({
+          "submission_id": submissionId,
+          "collection_name": "gene_expression",
+        })) {
+      // TODO: update GeneExpressionSummary
+    }
+
     // TODO: https://docs.mongodb.org/v3.0/tutorial/perform-two-phase-commits/
     WranglerDocuments.find({"submission_id": submissionId})
         .forEach(function (object) {

@@ -12,10 +12,12 @@ Template.editSubmission.onCreated(function () {
 });
 
 function fullInsertCallback (submissionId, error, fileObject) {
-  console.log("fullInsertCallback");
-  console.log("fileObject:", fileObject);
-  Meteor.call("addFileToSubmission", submissionId, fileObject._id,
-      fileObject.original.name);
+  if (error) {
+    console.log("error:", error);
+  } else {
+    Meteor.call("addFileToSubmission", submissionId, fileObject._id,
+        fileObject.original.name);
+  }
 }
 
 Template.editSubmission.events({
@@ -27,17 +29,19 @@ Template.editSubmission.events({
   "change #upload-files-input": function (event, instance) {
     event.preventDefault();
 
-    var insertCallback = _.partial(fullInsertCallback, instance.data._id);
-
     var files = event.target.files;
-    console.log("files:", files);
     for (var i = 0; i < files.length; i++) {
       var newFile = new FS.File(files[i]);
-      newFile.user_id = Meteor.userId(); // TODO: place in a better spot
-      // This isn't in a Meteor method because insertion should happen on the
-      // client according to the FS.File docs
+      newFile.metadata = {
+        "user_id": Meteor.userId(),
+        "submission_id": instance.data._id,
+      };
+
       console.log("newFile:", newFile);
-      Blobs.insert(newFile, insertCallback);
+
+      // insertion is supposed to happen on the client
+      Blobs.insert(newFile,
+          _.partial(fullInsertCallback, instance.data._id));
     }
   },
   // click the remove button for a specific file
@@ -54,12 +58,9 @@ Template.editSubmission.events({
   },
   // add a URL from tbe web
   "submit .add-from-web-form": function (event, instance) {
-      // Prevent default browser form submit
       event.preventDefault();
 
       var urlInput = event.target.urlInput;
-      var insertCallback = _.partial(fullInsertCallback, instance.data._id);
-
       // https://github.com/CollectionFS/Meteor-CollectionFS/
       // wiki/Insert-One-File-From-a-Remote-URL
       var newFile = new FS.File();
@@ -67,13 +68,16 @@ Template.editSubmission.events({
         if (error) {
           console.log("error:", error);
           throw error;
+        } else {
+          newFile.metadata = {
+            "user_id": Meteor.userId(),
+            "submission_id": instance.data._id,
+          };
+          Blobs.insert(newFile,
+              _.partial(fullInsertCallback, instance.data._id));
+          urlInput.value = "";
         }
-        newFile.user_id = Meteor.userId(); // TODO: place in a better spot
-        // newFile.name("the_name_of_the_file.png");
-        Blobs.insert(newFile, insertCallback);
       });
-
-      urlInput.value = "";
     }
 });
 

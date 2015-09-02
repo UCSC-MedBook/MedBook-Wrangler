@@ -32,49 +32,12 @@ Meteor.methods({
 
     if (Meteor.isServer) {
       var file = Blobs.findOne(fileId);
-      if (!file || userId !== file.user_id) {
-        throw new Meteor.Error("file-not-available",
-            "The file _id provided does not exist or is not available to you");
+      if (!file.metadata) {
+        throw new Meteor.Error("file-lacks-metadata", "File metadata not set");
       }
-      if (file.original.name !== fileName) {
-        throw new Meteor.Error("file-name-wrong",
-            "Why would you want to change the fileName?");
-      }
-    }
-
-    var submission = WranglerSubmissions.findOne(submissionId);
-    if (!submission || submission.user_id !== userId ||
-        submission.status !== "editing") {
-      throw new Meteor.Error("submission-not-available",
-          "The submission _id provided does not exist or is not available" +
-          " to you");
-    }
-
-    WranglerSubmissions.update(submissionId, {
-      $addToSet: {
-        "files": {
-          "file_id": fileId,
-          "file_name": fileName,
-          "status": Meteor.isClient ? "creating" : "uploading",
-        }
-      }
-    });
-  },
-  addUrlToSubmission: function (submissionId, url) {
-    check([submissionId, url], [String]);
-
-    // fileName sent so it can be fast on the client
-    // (Blobs is not published at this point)
-    // (the file is inserted and then removed because it's not published)
-    check(fileName, String);
-    var userId = makeSureLoggedIn();
-
-    if (Meteor.isServer) {
-
-      var file = Blobs.findOne(fileId);
-      if (!file || userId !== file.user_id) {
-        throw new Meteor.Error("file-not-available",
-            "The file _id provided does not exist or is not available to you");
+      if (file.metadata.user_id !== Meteor.userId() ||
+          file.metadata.submission_id !== submissionId) {
+        throw new Meteor.Error("file-metadata-wrong", "File metadata is wrong");
       }
       if (file.original.name !== fileName) {
         throw new Meteor.Error("file-name-wrong",
@@ -106,8 +69,15 @@ Meteor.methods({
 
     var userId = makeSureLoggedIn();
     if (Meteor.isServer) {
-      // TODO: make sure it's theirs
+      var file = Blobs.findOne(fileId);
+      if (file.metadata.user_id !== Meteor.userId() ||
+          file.metadata.submission_id !== submissionId) {
+        throw new Meteor.Error("file-not available",
+            "The file is either not yours or is from the wrong submission");
+      }
     }
+
+    WranglerDocuments.remove({ "file_id": fileId });
 
     WranglerSubmissions.update(submissionId, {
       $pull: {
@@ -116,6 +86,9 @@ Meteor.methods({
         }
       }
     });
+
+    // TODO: call this for everything that is uncompressed from this
+
     Blobs.remove(this.file_id);
   },
 

@@ -17,10 +17,8 @@ accounts-ui
 cfs:ui
 cfs:gridfs
 cfs:data-man
-meteorhacks:npm
 
 
-npm-container
 aldeed:autoform
 twbs:bootstrap
 sacha:spin
@@ -28,5 +26,5 @@ audit-argument-checks
 less
 aslagle:reactive-table
 momentjs:moment
-natestrauser:select2
 aldeed:autoform-select2
+medbook:wrangler-collections

@@ -54,8 +54,8 @@ Meteor.publish("superpathways", function () {
 
 ReactiveTable.publish("reviewObjectsForCollection", WranglerDocuments,
     function (submissionId, collectionName) {
-      console.log("reviewObjectsForCollection publish:",
-          submissionId, collectionName);
+      // console.log("reviewObjectsForCollection publish:",
+      //     submissionId, collectionName);
       check([submissionId, collectionName], [String]);
 
       return {

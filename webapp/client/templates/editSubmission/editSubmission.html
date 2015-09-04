@@ -95,7 +95,7 @@
 </template>
 
 <template name="noDataForTable">
-  No new data for this object type.
+  No data for this object type.
 </template>
 
 <template name="reviewSuperpathwayDocuments">
@@ -103,23 +103,31 @@
     <h3 style="margin-top: 0px;">Superpathway</h3>
     <div class="component-box">
       <h4>Options</h4>
-      {{#autoForm id="superpathway-options" schema=superpathwaySchema
-          resetOnSuccess=false}}
-        {{> afQuickField name="update_or_create" options="allowed"
-            firstOption="(Create new or update existing)"}}
-        {{#if updateCreateSelected}}
-          {{! has options for both text and select }}
-          {{> afQuickField name="name" type=nameType
-              options=superpathwayOptions
-              placeholder="Enter name"
-              firstOption="(Select superpathway name)"}}
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">
-                  Apply
-                </button>
-              </div>
-        {{/if}}
-      {{/autoForm}}
+      {{#if Template.subscriptionsReady}}
+        {{#autoForm id="superpathway-options" schema=superpathwaySchema
+            resetOnSuccess=false}}
+          <!-- TODO: hide update if there are no superpathways -->
+          {{> afQuickField name="update_or_create" options="allowed"
+              firstOption="(Create new or update existing)"}}
+          {{#if updateCreateSelected}}
+            {{! has options for both text and select }}
+            {{> afQuickField name="name" type=nameType
+                options=superpathwayOptions
+                placeholder="Enter name"
+                firstOption="(Select superpathway name)"}}
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">
+                    Apply
+                  </button>
+                </div>
+          {{/if}}
+        {{/autoForm}}
+      {{else}}
+        <div class="relative-spinner">
+          {{> spinner}}
+        </div>
+      {{/if}}
     </div>
     <div class="component-box">
       <h4>Superpathways</h4>

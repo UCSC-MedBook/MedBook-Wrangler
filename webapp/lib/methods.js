@@ -17,7 +17,7 @@ Meteor.methods({
 
     return WranglerSubmissions.insert({
       "user_id": userId,
-      "created_at": new Date(),
+      "date_created": new Date(),
       "status": Meteor.isClient ? "creating" : "editing",
     });
   },
@@ -170,6 +170,7 @@ Meteor.methods({
       Blobs.remove({});
       WranglerSubmissions.remove({});
       WranglerDocuments.remove({});
+      Jobs.remove({});
       console.log("Teo removed all the wrangler data");
     } else {
       console.log("you're not the server, silly stub");

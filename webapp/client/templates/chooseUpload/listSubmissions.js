@@ -14,7 +14,7 @@ Template.listSubmissions.helpers({
         // TODO: pull from labels in schema (?)
         fields: [
           {
-            key: 'created_at',
+            key: 'date_created',
             label: 'Created date',
             fn: function (value) {
               return moment(value).fromNow();// TODO: make reactive

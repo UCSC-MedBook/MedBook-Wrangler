@@ -7,7 +7,8 @@
 
   <div style="margin: 50px;">
     {{#if hasCreatedSubmission}}
-      {{> reactiveTable collection=mySubmissions settings=tableSettings}}
+      {{> tabular table=TabularTables.listSubmissions
+          class="table table-striped table-bordered table-condensed"}}
     {{else}}
       No submissions created :(
     {{/if}}
@@ -21,7 +22,6 @@
 </template>
 
 <template name="listFiles">
-  {{! used by reacitveTable to render the files column}}
   <ul>
     {{#each files}}
       <li>

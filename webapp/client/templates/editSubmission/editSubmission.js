@@ -66,28 +66,6 @@ Template.fileUploader.events({
   },
 });
 
-function fieldsFromProspectiveDocument (collectionName) {
-  var schema = getSchemaFromName(collectionName);
-  var fields = schema.fieldOrder;
-
-  var firstColumn = {
-    label: "Validation errors",
-    tmpl: Template.rowValidation,
-    sortable: false,
-  };
-
-  return [firstColumn]
-      .concat(_.map(fields, function (value, key) {
-        return {
-          key: "prospective_document",
-          label: schema.label(value),
-          fn: function(rowValue, outerObject) {
-            return rowValue[value];
-          },
-        };
-      }));
-}
-
 AutoForm.addHooks('superpathway-options', {
   // Called when form does not have a `type` attribute
   onSubmit: function(insertDoc, updateDoc, currentDoc) {
@@ -106,18 +84,6 @@ Template.reviewSuperpathwayDocuments.onCreated(function () {
 
   template.subscribe("superpathways");
 });
-
-function tableSettings(collectionName) {
-  // TODO: fix sorting by column
-  return {
-    collection: "reviewObjectsForCollection",
-    serverArgs: [Template.instance().data._id, collectionName],
-    rowsPerPage: 10,
-    showFilter: false, // TODO: filtering on the server doesn't work
-    fields: fieldsFromProspectiveDocument(collectionName),
-    noDataTmpl: Template.noDataForTable,
-  };
-}
 
 function getUpdateOrCreate() {
   return AutoForm.getFieldValue("update_or_create", "superpathway-options");
@@ -163,17 +129,23 @@ Template.reviewSuperpathwayDocuments.helpers({
       };
     });
   },
-  tableSettings: tableSettings,
-  superpathwaySettings: function () {
-    return _.extend(tableSettings("superpathways"), {
-      showNavigation: "auto",
-    });
+  superpathwaySelector: function () {
+    return {
+      "submission_id": this._id,
+      "collection_name": "superpathways",
+    };
   },
-  elementsSettings: function () {
-    return tableSettings("network_elements");
+  elementsSelector: function () {
+    return {
+      "submission_id": this._id,
+      "collection_name": "network_elements",
+    };
   },
-  interactionsSettings: function () {
-    return tableSettings("network_interactions");
+  interactionsSelector: function () {
+    return {
+      "submission_id": this._id,
+      "collection_name": "network_interactions",
+    };
   },
 });
 

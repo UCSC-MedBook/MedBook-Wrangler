@@ -24,7 +24,7 @@ twbs:bootstrap
 sacha:spin
 audit-argument-checks
 less
-aslagle:reactive-table
 momentjs:moment
 aldeed:autoform-select2
 medbook:wrangler-collections
+aldeed:tabular

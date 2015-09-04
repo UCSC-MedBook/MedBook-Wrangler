@@ -131,15 +131,21 @@
     </div>
     <div class="component-box">
       <h4>Superpathways</h4>
-      {{> reactiveTable settings=superpathwaySettings}}
+      {{> tabular table=TabularTables.superpathways
+          selector=superpathwaySelector
+          class="table table-striped table-bordered table-condensed"}}
     </div>
     <div class="component-box">
       <h4>Elements</h4>
-      {{> reactiveTable settings=elementsSettings}}
+      {{> tabular table=TabularTables.network_elements
+          selector=elementsSelector
+          class="table table-striped table-bordered table-condensed"}}
     </div>
     <div class="component-box">
       <h4>Interactions</h4>
-      {{> reactiveTable settings=interactionsSettings}}
+      {{> tabular table=TabularTables.network_interactions
+          selector=interactionsSelector
+          class="table table-striped table-bordered table-condensed"}}
     </div>
   </div>
 </template>

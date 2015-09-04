@@ -16,6 +16,9 @@ Router.map(function() {
     subscriptions: function () {
       return Meteor.subscribe("listSubmissions");
     },
+    data: function () {
+      return "Hello!";
+    },
   });
 
   this.route('editSubmission', {
@@ -36,7 +39,7 @@ Router.map(function() {
               { "wranglerSubmissionId": result },
               { replaceState: true }); // back button will work
         });
-        this.render("loading");
+        this.render("spinner");
       } else {
         this.next();
       }

@@ -1,17 +1,11 @@
 Meteor.methods({
   // TODO: what happens if the client quits before this is done?
-  submitData: function (submissionId) {
+  submitSubmission: function (submissionId) {
     check(submissionId, String);
     console.log("they submitted it!");
 
     var userId = makeSureLoggedIn();
-
-    var submission = WranglerSubmissions.findOne(submissionId);
-    if (!submission || submission.user_id !== userId) {
-      throw new Meteor.Error("submission-not-available",
-          "The submission _id provided does not exist or is not available" +
-          " to you");
-    }
+    ensureSubmissionAvailable(userId, submissionId);
 
     function setSubmissionStatus(status) {
       WranglerSubmissions.update(submissionId, {
@@ -19,6 +13,8 @@ Meteor.methods({
       });
     }
     setSubmissionStatus("validating");
+
+    // TODO: make a job submission here: don't make the client stay on the page
 
     var noErrors = true;
     WranglerDocuments.find({"submission_id": submissionId})

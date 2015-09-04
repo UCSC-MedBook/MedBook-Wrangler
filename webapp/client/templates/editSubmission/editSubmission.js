@@ -1,16 +1,13 @@
-Template.editSubmission.onCreated(function () {
-
-  var instance = this;
-
-  instance.autorun(function () {
-    instance.subscribe('documentsForSubmission', instance.data._id,
-        function () { // callback
-          // console.log("I got the data for you");
-        }
-    );
-  });
+Template.submissionFileList.events({
+  // click the remove button for a specific file
+  "click .remove-this-file": function(event, instance) {
+    Meteor.call("removeFileFromSubmission", instance.data._id,
+        this.file_id);
+  },
 });
 
+// defined out here because it's used in two helpers
+// (_.partial used within the functions)
 function fullInsertCallback (submissionId, error, fileObject) {
   if (error) {
     console.log("error:", error);
@@ -20,7 +17,7 @@ function fullInsertCallback (submissionId, error, fileObject) {
   }
 }
 
-Template.editSubmission.events({
+Template.fileUploader.events({
   // when they click the button to add a file
   "click #add-files-button": function (event, instance) {
     $("#upload-files-input").click();
@@ -44,98 +41,164 @@ Template.editSubmission.events({
           _.partial(fullInsertCallback, instance.data._id));
     }
   },
-  // click the remove button for a specific file
-  "click .remove-this-file": function(event, instance) {
-    Meteor.call("removeFile", instance.data._id,
-        this.file_id);
-  },
-  // click the submit button at the end
-  "click #submit-all-data": function (event, instance) {
-    event.preventDefault(); // prevent default browser form submit
-    console.log("someone hit the submit button");
-    Meteor.call("submitData", instance.data._id);
-    Router.go("listSubmissions");
-  },
   // add a URL from tbe web
   "submit .add-from-web-form": function (event, instance) {
-      event.preventDefault();
+    event.preventDefault();
 
-      var urlInput = event.target.urlInput;
-      // https://github.com/CollectionFS/Meteor-CollectionFS/
-      // wiki/Insert-One-File-From-a-Remote-URL
-      var newFile = new FS.File();
-      newFile.attachData(urlInput.value, function (error) {
-        if (error) {
-          console.log("error:", error);
-          throw error;
-        } else {
-          newFile.metadata = {
-            "user_id": Meteor.userId(),
-            "submission_id": instance.data._id,
-          };
-          Blobs.insert(newFile,
-              _.partial(fullInsertCallback, instance.data._id));
-          urlInput.value = "";
-        }
-      });
-    }
-});
-
-Template.editSubmission.helpers({
-  hasDocuments: function () {
-    return WranglerDocuments.find({}).count() > 0;
-  },
-  reviewObjects: function () {
-    return [
-      { title: "Mutation data", collectionName: "mutations" },
-    ];
-  },
-});
-
-var superpathwayReviewObjects = [
-  { title: "Network elements", collectionName: "network_elements" },
-  { title: "Network interactions", collectionName: "network_interactions" },
-];
-
-Template.reviewSuperpathwayData.helpers({
-  hasDocuments: function () {
-    return WranglerDocuments.find({
-      collection_name: {
-        $in: ["network_elements", "network_interactions"]
+    var urlInput = event.target.urlInput;
+    // https://github.com/CollectionFS/Meteor-CollectionFS/
+    // wiki/Insert-One-File-From-a-Remote-URL
+    var newFile = new FS.File();
+    newFile.attachData(urlInput.value, function (error) {
+      if (error) {
+        console.log("error:", error);
+        throw error;
+      } else {
+        newFile.metadata = {
+          "user_id": Meteor.userId(),
+          "submission_id": instance.data._id,
+        };
+        Blobs.insert(newFile,
+            _.partial(fullInsertCallback, instance.data._id));
+        urlInput.value = "";
       }
-    }).count() > 0;
-  },
-  reviewObjects: function () {
-    return superpathwayReviewObjects;
-  },
-  superpathwaySchema: function () {
-    return new SimpleSchema({
-      "superpathway_id": {
-        type: String,
-        autoform: {
-          type: "select2",
-          options: function () {
-            // TODO: list the actual pathways that they can upload to
-            return [
-              {label: "2013 label", value: "2013"},
-              {label: "2014 label", value: "2014"},
-              {label: "2015 label", value: "2015"}
-            ];
-          }
-        },
-      },
     });
   },
 });
 
-Template.reviewSuperpathwayData.events({
-  "submit #superpathway-schema": function (event, instance){
-    event.preventDefault();
-    var formValues = AutoForm.getFormValues("superpathway-schema");
+function fieldsFromProspectiveDocument (collectionName) {
+  var schema = getSchemaFromName(collectionName);
+  var fields = schema.fieldOrder;
 
-    Meteor.call("updateAllDocuments",
-        instance.data._id,
-        _.pluck(superpathwayReviewObjects, "collectionName"),
-        formValues.updateDoc.$set);
-  }
+  var firstColumn = {
+    label: "Validation errors",
+    tmpl: Template.rowValidation,
+    sortable: false,
+  };
+
+  return [firstColumn]
+      .concat(_.map(fields, function (value, key) {
+        return {
+          key: "prospective_document",
+          label: schema.label(value),
+          fn: function(rowValue, outerObject) {
+            return rowValue[value];
+          },
+        };
+      }));
+}
+
+AutoForm.addHooks('superpathway-options', {
+  // Called when form does not have a `type` attribute
+  onSubmit: function(insertDoc, updateDoc, currentDoc) {
+    // console.log("onSubmit hook:", insertDoc);
+    this.event.preventDefault();
+
+    var submissionId = Template.instance().parentInstance().data._id;
+    Meteor.call("setSuperpathway", submissionId, insertDoc.name);
+
+    this.done();
+  },
+}, true);
+
+Template.reviewSuperpathwayDocuments.onCreated(function () {
+  var template = this;
+
+  template.subscribe("superpathways");
+});
+
+function tableSettings(collectionName) {
+  // TODO: fix sorting by column
+  return {
+    collection: "reviewObjectsForCollection",
+    serverArgs: [Template.instance().data._id, collectionName],
+    rowsPerPage: 10,
+    showFilter: false, // TODO: filtering on the server doesn't work
+    fields: fieldsFromProspectiveDocument(collectionName),
+    noDataTmpl: Template.noDataForTable,
+  };
+}
+
+function getUpdateOrCreate() {
+  return AutoForm.getFieldValue("update_or_create", "superpathway-options");
+}
+
+Template.reviewSuperpathwayDocuments.helpers({
+  superpathwaySchema: function () {
+    return new SimpleSchema({
+      "update_or_create": {
+        type: String,
+        label: "Update or create",
+        allowedValues: ["update", "create"],
+      },
+      "name": {
+        type: String
+      }
+    });
+  },
+  updateCreateSelected: function () {
+    return getUpdateOrCreate() !== undefined;
+  },
+  nameType: function () {
+    if (getUpdateOrCreate() === "update") {
+      return "select";
+    } else {
+      return "text";
+    }
+  },
+  superpathwayOptions: function () {
+    var sortedNames = _.pluck(Superpathways.find({}).fetch(), "name").sort();
+
+    var uniqueNames = [];
+    _.each(sortedNames, function (value, index) {
+      if (index === 0 || sortedNames[index - 1] !== value) {
+        uniqueNames.push(value);
+      }
+    });
+
+    return _.map(uniqueNames, function (value) {
+      return {
+        "label": value,
+        "value": value,
+      };
+    });
+  },
+  tableSettings: tableSettings,
+  superpathwaySettings: function () {
+    return _.extend(tableSettings("superpathways"), {
+      showNavigation: "auto",
+    });
+  },
+  elementsSettings: function () {
+    return tableSettings("network_elements");
+  },
+  interactionsSettings: function () {
+    return tableSettings("network_interactions");
+  },
+});
+
+Template.submitSubmission.events({
+  // click the submit button at the end
+  "click #submit-all-data": function (event, instance) {
+    event.preventDefault(); // prevent default browser form submit
+    console.log("someone hit the submit button");
+    Meteor.call("submitSubmission", instance.data._id);
+    Router.go("listSubmissions");
+  },
+});
+
+function getValidationContext(data) {
+  return getCollectionByName(data.collection_name)
+      .simpleSchema()
+      .namedContext(data._id);
+}
+
+Template.rowValidation.helpers({
+  isValid: function () {
+    var data = Template.instance().data;
+    return getValidationContext(data).validate(data.prospective_document);
+  },
+  invalidKeys: function () {
+    return getValidationContext(Template.instance().data).invalidKeys();
+  },
 });

@@ -1,4 +1,17 @@
+function ensureSubmissionAvailable(userId, submissionId) {
+  var submission = WranglerSubmissions.findOne(submissionId);
+  if (submission.user_id !== userId) {
+    throw new Meteor.Error("submission-not-available",
+        "The submission _id provided does not exist or is not available" +
+        " to you");
+  }
+  return submission;
+}
+
 Meteor.methods({
+  //
+  // WranglerSubmission methods
+  //
   createSubmission: function () {
     var userId = makeSureLoggedIn();
 
@@ -12,13 +25,7 @@ Meteor.methods({
     check(submissionId, String);
 
     var userId = makeSureLoggedIn();
-
-    var submission = WranglerSubmissions.findOne(submissionId);
-    if (submission.user_id !== userId) {
-      throw new Meteor.Error("submission-not-available",
-          "The submission _id provided does not exist or is not available" +
-          " to you");
-    }
+    ensureSubmissionAvailable(userId, submissionId);
 
     WranglerSubmissions.remove(submissionId);
   },
@@ -29,6 +36,7 @@ Meteor.methods({
     check([submissionId, fileId, fileName], [String]);
 
     var userId = makeSureLoggedIn();
+    ensureSubmissionAvailable(userId, submissionId);
 
     if (Meteor.isServer) {
       var file = Blobs.findOne(fileId);
@@ -45,14 +53,6 @@ Meteor.methods({
       }
     }
 
-    var submission = WranglerSubmissions.findOne(submissionId);
-    if (!submission || submission.user_id !== userId ||
-        submission.status !== "editing") {
-      throw new Meteor.Error("submission-not-available",
-          "The submission _id provided does not exist or is not available" +
-          " to you");
-    }
-
     WranglerSubmissions.update(submissionId, {
       $addToSet: {
         "files": {
@@ -63,7 +63,7 @@ Meteor.methods({
       }
     });
   },
-  removeFile: function (submissionId, fileId) {
+  removeFileFromSubmission: function (submissionId, fileId) {
     check(submissionId, String);
     check(fileId, String);
 
@@ -92,31 +92,76 @@ Meteor.methods({
     Blobs.remove(this.file_id);
   },
 
-  updateAllDocuments: function (submissionId, collectionNames, setPart) {
-    check(submissionId, String);
-    check(collectionNames, [String]);
-    check(setPart, {
-      "superpathway_id": Match.Optional(String),
-    });
+  //
+  // WranglerDocument methods
+  //
+  insertDocument: function (document) {
+    check(document, WranglerDocuments.simpleSchema());
 
-    // TODO: validate input
+    ensureSubmissionAvailable(makeSureLoggedIn(), document.submission_id);
 
-    var prospectivePartUpdate = {};
-    _.mapObject(setPart, function(value, key) {
-      prospectivePartUpdate["prospective_document." + key] = value;
-    });
-
-    console.log("prospectivePartUpdate:", prospectivePartUpdate);
-
-    WranglerDocuments.update({
-          "submission_id": submissionId,
-          "collection_name": {
-            $in: ["network_elements", "network_interactions"]
-          },
-        }, { $set: prospectivePartUpdate },
-        { multi: true });
+    WranglerDocuments.insert(document);
   },
+  removeAllDocuments: function (submissionId, collectionName) {
+    check(submissionId, String);
+    check(collectionName, String);
+    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
 
+    WranglerDocuments.remove({
+      "submission_id": submissionId,
+      "collection_name": collectionName,
+    });
+  },
+  // updateDocumentsOfCollection: function (submissionId, collectionName,
+  //     attribute, value) {
+  //   check(submissionId, String);
+  //   check(collectionName, String);
+  //   check(attribute, Match.Optional(String));
+  //
+  //   var userId = makeSureLoggedIn();
+  //   ensureSubmissionAvailable(userId, submissionId);
+  //
+  //   var prospectivePartUpdate = {};
+  //   _.mapObject(setPart, function(value, key) {
+  //     prospectivePartUpdate["prospective_document." + key] = value;
+  //   });
+  //
+  //   console.log("prospectivePartUpdate:", prospectivePartUpdate);
+  //
+  //   WranglerDocuments.update({
+  //         "submission_id": submissionId,
+  //         "collection_name": collectionName,
+  //       }, { $set: prospectivePartUpdate },
+  //       { multi: true });
+  // },
+
+  //
+  // Specific methods
+  //
+  setSuperpathway: function (submissionId, superpathwayName) {
+    check([submissionId, superpathwayName], [String]);
+    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
+
+    WranglerDocuments.remove({
+      "submission_id": submissionId,
+      "collection_name": "superpathways",
+    });
+
+    var oldOne = Superpathways.findOne({"name": superpathwayName},
+        { sort: { version: -1 } });
+    var newVersion = 1;
+    if (oldOne) {
+      newVersion = oldOne.version + 1;
+    }
+    WranglerDocuments.insert({
+      "submission_id": submissionId,
+      "collection_name": "superpathways",
+      "prospective_document": {
+        "name": superpathwayName,
+        "version": newVersion,
+      }
+    });
+  },
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
   removeWranglerData: function() {

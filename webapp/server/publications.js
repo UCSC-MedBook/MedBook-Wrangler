@@ -16,6 +16,7 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   }
 });
 
+// TODO: is this used anywhere?
 Meteor.publish("documentsForSubmission", function (submissionId) {
   check(submissionId, String);
 
@@ -46,3 +47,20 @@ Meteor.publish("documentsForCollection", function (submissionId, collectionName)
     this.ready();
   }
 });
+
+Meteor.publish("superpathways", function () {
+  return Superpathways.find({});
+});
+
+ReactiveTable.publish("reviewObjectsForCollection", WranglerDocuments,
+    function (submissionId, collectionName) {
+      console.log("reviewObjectsForCollection publish:",
+          submissionId, collectionName);
+      check([submissionId, collectionName], [String]);
+
+      return {
+        "submission_id": submissionId,
+        "collection_name": collectionName,
+      };
+    }
+);

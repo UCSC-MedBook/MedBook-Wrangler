@@ -42,7 +42,6 @@ WranglerSubmissions.attachSchema(new SimpleSchema({
 WranglerDocuments = new Meteor.Collection("wrangler_documents");
 WranglerDocuments.attachSchema(new SimpleSchema({
   "submission_id": { type: Meteor.ObjectID },
-  "file_id": { type: Meteor.ObjectID },
   "collection_name": { // not so enthused about this
     type: String,
     allowedValues: [
@@ -50,9 +49,14 @@ WranglerDocuments.attachSchema(new SimpleSchema({
       "network_interactions",
       "mutations",
       "gene_expression",
+      "superpathways",
     ],
   },
-  "prospective_document": { type: Object, blackbox: true },
+  "prospective_document": {
+    type: Object,
+    blackbox: true,
+  },
+  "file_id": { type: Meteor.ObjectID, optional: true },
 }));
 
 BlobStore = new FS.Store.GridFS("blobs", {

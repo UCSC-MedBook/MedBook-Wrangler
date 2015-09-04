@@ -7,6 +7,7 @@ parseNetworkInteractions = function(fileObject, processingFunctions) {
         "source": brokenTabs[0],
         "target": brokenTabs[2],
         "interaction": brokenTabs[1],
+        "superpathway_id": "not_created_yet",
       });
     } else {
       processingFunctions.onError("Invalid line: " + line);
@@ -23,6 +24,7 @@ parseNetworkElements = function(fileObject, processingFunctions) {
       processingFunctions.documentInsert("network_elements", {
         "label": brokenTabs[1],
         "type": brokenTabs[0],
+        "superpathway_id": "not_created_yet",
       });
     } else {
       processingFunctions.onError("Invalid line: " + line);

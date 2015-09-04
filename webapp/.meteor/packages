@@ -27,7 +27,6 @@ sacha:spin
 audit-argument-checks
 less
 aslagle:reactive-table
-dburles:mongo-collection-instances
 momentjs:moment
 natestrauser:select2
 aldeed:autoform-select2

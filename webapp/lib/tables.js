@@ -25,6 +25,7 @@ TabularTables.listSubmissions = new Tabular.Table({
     { data: "status", title: "Status" },
     {
       title: "Files",
+      data: "files",
       tmpl: Meteor.isClient && Template.listFiles,
     },
     {
@@ -51,7 +52,6 @@ generateColumns = function (collectionName) {
       tmpl: Meteor.isClient && Template.rowValidation,
     }
   ].concat(_.map(fields, function (fieldName) {
-    console.log("fieldName:", fieldName);
     return {
       title: schema.label(fieldName),
       data: "prospective_document." + fieldName,

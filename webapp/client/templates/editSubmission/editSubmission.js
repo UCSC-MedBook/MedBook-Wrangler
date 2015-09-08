@@ -66,6 +66,12 @@ Template.fileUploader.events({
   },
 });
 
+Template.reviewWranglerDocuments.helpers({
+  submissionHasReviewType: function (typeName) {
+    return this.document_types && _.contains(this.document_types, typeName);
+  },
+});
+
 AutoForm.addHooks('superpathway-options', {
   // Called when form does not have a `type` attribute
   onSubmit: function(insertDoc, updateDoc, currentDoc) {
@@ -77,7 +83,7 @@ AutoForm.addHooks('superpathway-options', {
 
     this.done();
   },
-}, true);
+});
 
 Template.reviewSuperpathwayDocuments.onCreated(function () {
   var template = this;
@@ -91,16 +97,16 @@ function getUpdateOrCreate() {
 
 Template.reviewSuperpathwayDocuments.helpers({
   superpathwaySchema: function () {
-    return new SimpleSchema({
-      "update_or_create": {
-        type: String,
-        label: "Update or create",
-        allowedValues: ["update", "create"],
+    return new SimpleSchema([
+      {
+        "update_or_create": {
+          type: String,
+          label: "Update or create",
+          allowedValues: ["update", "create"],
+        },
       },
-      "name": {
-        type: String
-      }
-    });
+      Superpathways.simpleSchema().pick(['name']),
+    ]);
   },
   updateCreateSelected: function () {
     return getUpdateOrCreate() !== undefined;
@@ -146,6 +152,28 @@ Template.reviewSuperpathwayDocuments.helpers({
       "submission_id": this._id,
       "collection_name": "network_interactions",
     };
+  },
+});
+
+AutoForm.addHooks('mutation-options', {
+  // Called when form does not have a `type` attribute
+  onSubmit: function(insertDoc, updateDoc, currentDoc) {
+    // console.log("onSubmit hook:", insertDoc);
+    this.event.preventDefault();
+
+    var submissionId = Template.instance().parentInstance().data._id;
+    Meteor.call("setMutationDocuments", submissionId, insertDoc);
+
+    this.done();
+  },
+});
+
+Template.reviewMutationDocuments.helpers({
+  mutationSchema: function () {
+    return Mutations.simpleSchema().pick([
+      "biological_source",
+      "mutation_impact_assessor",
+    ]);
   },
 });
 

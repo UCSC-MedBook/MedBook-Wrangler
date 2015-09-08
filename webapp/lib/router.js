@@ -10,42 +10,22 @@ Router.configure({
 });
 
 Router.map(function() {
-  // showPatient (/sample/:currentSampleLabel) ==> same thing
   this.route('listSubmissions', {
     path: '/Wrangler/',
     subscriptions: function () {
+      // TODO: why isn't this handled by aldeed:tabular
       return Meteor.subscribe("listSubmissions");
-    },
-    data: function () {
-      return "Hello!";
     },
   });
 
   this.route('editSubmission', {
-    path: '/Wrangler/editSubmission/:wranglerSubmissionId',
+    path: '/Wrangler/editSubmission/:submissionId',
     waitOn: function () {
-      return Meteor.subscribe("wranglerSubmission", this.params.wranglerSubmissionId);
-    },
-    onBeforeAction: function () {
-      var submissionId = this.params.wranglerSubmissionId;
-
-      // make sure submission belongs to them
-
-      if (submissionId === "create") {
-        // create one if we need to
-        Meteor.call("createSubmission", function (error, result) {
-          // TODO: catch error
-          Router.go('editSubmission',
-              { "wranglerSubmissionId": result },
-              { replaceState: true }); // back button will work
-        });
-        this.render("spinner");
-      } else {
-        this.next();
-      }
+      return Meteor.subscribe("wranglerSubmission",
+          this.params.submissionId);
     },
     data: function () {
-      return WranglerSubmissions.findOne(this.params.wranglerSubmissionId);
+      return WranglerSubmissions.findOne(this.params.submissionId);
     },
   });
 

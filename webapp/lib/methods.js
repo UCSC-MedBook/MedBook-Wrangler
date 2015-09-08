@@ -1,17 +1,5 @@
-function ensureSubmissionAvailable(userId, submissionId) {
-  var submission = WranglerSubmissions.findOne(submissionId);
-  if (submission.user_id !== userId) {
-    throw new Meteor.Error("submission-not-available",
-        "The submission _id provided does not exist or is not available" +
-        " to you");
-  }
-  return submission;
-}
-
 Meteor.methods({
-  //
   // WranglerSubmission methods
-  //
   createSubmission: function () {
     var userId = makeSureLoggedIn();
 
@@ -92,9 +80,7 @@ Meteor.methods({
     Blobs.remove(this.file_id);
   },
 
-  //
   // WranglerDocument methods
-  //
   insertDocument: function (document) {
     check(document, WranglerDocuments.simpleSchema());
 
@@ -112,32 +98,8 @@ Meteor.methods({
       "collection_name": collectionName,
     });
   },
-  // updateDocumentsOfCollection: function (submissionId, collectionName,
-  //     attribute, value) {
-  //   check(submissionId, String);
-  //   check(collectionName, String);
-  //   check(attribute, Match.Optional(String));
-  //
-  //   var userId = makeSureLoggedIn();
-  //   ensureSubmissionAvailable(userId, submissionId);
-  //
-  //   var prospectivePartUpdate = {};
-  //   _.mapObject(setPart, function(value, key) {
-  //     prospectivePartUpdate["prospective_document." + key] = value;
-  //   });
-  //
-  //   console.log("prospectivePartUpdate:", prospectivePartUpdate);
-  //
-  //   WranglerDocuments.update({
-  //         "submission_id": submissionId,
-  //         "collection_name": collectionName,
-  //       }, { $set: prospectivePartUpdate },
-  //       { multi: true });
-  // },
 
-  //
   // Specific methods
-  //
   setSuperpathway: function (submissionId, superpathwayName) {
     check([submissionId, superpathwayName], [String]);
     ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
@@ -161,6 +123,26 @@ Meteor.methods({
         "version": newVersion,
       }
     });
+  },
+  setMutationDocuments: function (submissionId, insertDoc) {
+    check(submissionId, String);
+    check(insertDoc, Mutations.simpleSchema().pick([
+      "biological_source",
+      "mutation_impact_assessor",
+    ]));
+    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
+
+    WranglerDocuments.update({
+      "submission_id": submissionId,
+      "collection_name": "mutations",
+    }, {
+      $set: {
+        // could put this into a loop if needed (grab from schema above)
+        "prospective_document.biological_source": insertDoc.biological_source,
+        "prospective_document.mutation_impact_assessor":
+            insertDoc.mutation_impact_assessor,
+      }
+    }, { multi: true });
   },
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION

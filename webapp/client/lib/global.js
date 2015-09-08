@@ -10,11 +10,11 @@ Template.registerHelper("print", function (first, second, third, fourth) {
   }
 });
 
-Template.registerHelper('compare', function(v1, v2) {
-  if (typeof v1 === 'object' && typeof v2 === 'object') {
-    return _.isEqual(v1, v2); // do a object comparison
+Template.registerHelper('compare', function(first, second) {
+  if (typeof first === 'object' && typeof second === 'object') {
+    return _.isEqual(first, second); // do a object comparison
   } else {
-    return v1 === v2;
+    return first === second;
   }
 });
 

@@ -1,5 +1,4 @@
 <template name="listSubmissions">
-  {{print "listSubmissions this:" this}}
   {{! TODO: name this something better }}
 
   {{> loginButtons }}
@@ -14,7 +13,7 @@
     {{/if}}
 
     <h3>
-      <a href="{{ pathFor 'editSubmission' wranglerSubmissionId='create' }}">
+      <a id="create-new-submission" href="#">
         Create a new submission
       </a>
     </h3>
@@ -33,7 +32,7 @@
 
 <template name="submissionActions">
   {{#if compare status "editing"}}
-    <a href="{{pathFor 'editSubmission' wranglerSubmissionId=_id}}"
+    <a href="{{pathFor 'editSubmission' submissionId=_id}}"
         class="edit-submission">
       Edit
     </a>

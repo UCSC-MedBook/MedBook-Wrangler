@@ -6,14 +6,15 @@ if (Meteor.isClient) {
 
 var availableCollections = [
   "superpathways",
-  "network_elements",
-  "network_interactions",
+  "superpathway_elements",
+  "superpathway_interactions",
   "mutations",
 ];
 
 TabularTables.listSubmissions = new Tabular.Table({
   name: "Submissions list",
   collection: WranglerSubmissions,
+  order: [[0, "desc"]],
   columns: [
     {
       data: "date_created",

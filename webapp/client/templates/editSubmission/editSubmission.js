@@ -144,13 +144,13 @@ Template.reviewSuperpathwayDocuments.helpers({
   elementsSelector: function () {
     return {
       "submission_id": this._id,
-      "collection_name": "network_elements",
+      "collection_name": "superpathway_elements",
     };
   },
   interactionsSelector: function () {
     return {
       "submission_id": this._id,
-      "collection_name": "network_interactions",
+      "collection_name": "superpathway_interactions",
     };
   },
 });

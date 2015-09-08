@@ -26,10 +26,10 @@ ensureSubmissionAvailable = function (userId, submissionId) {
 
 getCollectionByName = function(collectionName) {
   switch (collectionName) {
-    case "network_elements":
-      return NetworkElements;
-    case "network_interactions":
-      return NetworkInteractions;
+    case "superpathway_elements":
+      return SuperpathwayElements;
+    case "superpathway_interactions":
+      return SuperpathwayInteractions;
     case "mutations":
       return Mutations;
     case "gene_expression":

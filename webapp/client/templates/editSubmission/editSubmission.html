@@ -3,9 +3,7 @@
 
   {{#if this}} {{! if no data, invalid WranglerDocuments _id in URL }}
 
-    {{> submissionFileList}}
-
-    {{> fileUploader}}
+    {{> submissionFiles}}
 
     {{> reviewWranglerDocuments}}
 
@@ -16,50 +14,62 @@
   {{/if}}
 </template>
 
-<template name="submissionFileList">
-  <!-- TODO: pull out uploader from Telescope post, put in package -->
-  <h2>Upload files</h2>
-  {{#each files}}
-    <div class="input-group">
-      <div class="form-control">
-        <i class="glyphicon glyphicon-file"></i>
-        <span>
-          {{file_name}}: {{status}}
-        </span>
-        {{#if error_description}}
-          <span class="error-description">
-            Error: {{error_description}}
+<template name="submissionFiles">
+  <h2>Files</h2>
+
+  <ul class="list-group">
+    {{#each files}}
+      <li class="list-group-item {{fileContextualClass}}">
+        <h5 class="list-group-item-heading">
+          <i class="glyphicon glyphicon-file"></i>
+
+          {{file_name}}
+
+          <span class="pull-right">
+            <button class="remove-this-file btn btn-xs btn-warning">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
           </span>
-        {{/if}}
+        </h5>
+
+        <p class="list-group-item-text">
+          {{#unless compare status "done"}}
+            <span class="blank-glyphicon-to-left">
+              {{#if compare status "error"}}
+                Error: {{error_description}}
+              {{else}}
+                {{status}}
+              {{/if}}
+            </span>
+          {{/unless}}
+        </p>
+      </li>
+    {{/each}}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <span class="btn btn-default btn-file">
+            Add local files...
+            <input id="upload-files-input" type="file" multiple>
+          </span>
+        </div>
+        <div class="col-md-6">
+          <form class="add-from-web-form">
+            <!-- <input type="text" name="text" placeholder="Type to add new tasks" /> -->
+            <div class="input-group">
+              <input name="urlInput" type="text" class="form-control"
+                  placeholder="Enter URL here">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                  Add from the web
+                </button>
+              </span>
+            </div><!-- /input-group -->
+          </form>
+        </div>
       </div>
-      <a href="#" class="remove-this-file input-group-addon btn btn-default">
-        Remove
-      </a>
-
-    </div><!-- /input-group -->
-  {{/each}}
-</template>
-
-<template name="fileUploader">
-  <!-- add from locally -->
-  <span class="btn btn-default btn-file">
-    Add files...
-    <input id="upload-files-input" type="file" multiple>
-  </span>
-
-  <!-- add from the the web -->
-  <form class="add-from-web-form">
-    <!-- <input type="text" name="text" placeholder="Type to add new tasks" /> -->
-    <div class="input-group">
-      <input name="urlInput" type="text" class="form-control"
-          placeholder="Enter URL here">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">
-          Add from the web
-        </button>
-      </span>
-    </div><!-- /input-group -->
-  </form>
+    </li>
+  </ul>
 </template>
 
 <template name="listErrorsAndSubmit">

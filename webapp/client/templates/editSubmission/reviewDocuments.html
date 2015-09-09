@@ -1,0 +1,110 @@
+<template name="reviewWranglerDocuments">
+  <h2>Review Objects</h2>
+
+  <div class="flex-container">
+    {{#if submissionHasReviewType "superpathway"}}
+      {{> reviewSuperpathwayDocuments}}
+    {{/if}}
+
+    {{#if submissionHasReviewType "mutation"}}
+      {{> reviewMutationDocuments}}
+    {{/if}}
+
+    {{! else have a plus button to add that type }}
+  </div>
+</template>
+
+<template name="reviewSuperpathwayDocuments">
+  <div class="component-box">
+    <h3 style="margin-top: 0px;">Superpathway</h3>
+    <div class="component-box">
+      <h4>Options</h4>
+      {{#if Template.subscriptionsReady}}
+        {{#autoForm id="superpathway-options" schema=superpathwaySchema
+            resetOnSuccess=false}}
+          <!-- TODO: hide update if there are no superpathways -->
+          {{> afQuickField name="update_or_create" options="allowed"
+              firstOption="(Create new or update existing)"}}
+          {{#if updateCreateSelected}}
+            {{! has options for both text and select }}
+            {{> afQuickField name="name" type=nameType
+                options=superpathwayOptions
+                placeholder="Enter name"
+                firstOption="(Select superpathway name)"}}
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">
+                    Apply
+                  </button>
+                </div>
+          {{/if}}
+        {{/autoForm}}
+      {{else}}
+        <div class="relative-spinner">
+          {{> spinner}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="component-box">
+      <h4>Superpathways</h4>
+      {{> tabular table=TabularTables.superpathways
+          selector=superpathwaySelector
+          class="table table-striped table-bordered table-condensed"}}
+    </div>
+    <div class="component-box">
+      <h4>Elements</h4>
+      {{> tabular table=TabularTables.superpathway_elements
+          selector=elementsSelector
+          class="table table-striped table-bordered table-condensed"}}
+    </div>
+    <div class="component-box">
+      <h4>Interactions</h4>
+      {{> tabular table=TabularTables.superpathway_interactions
+          selector=interactionsSelector
+          class="table table-striped table-bordered table-condensed"}}
+    </div>
+  </div>
+</template>
+
+<template name="reviewMutationDocuments">
+  <div class="component-box">
+    <h3 style="margin-top: 0px;">Mutations</h3>
+    <div class="component-box">
+      <h4>Options</h4>
+      {{#autoForm id="mutation-options" schema=mutationSchema
+          resetOnSuccess=false}}
+          {{! TODO: make labels instead of "cellline" }}
+          {{> afQuickField name="biological_source"
+              type="select" options="allowed"
+              firstOption="(Select biological source)" }}
+          {{> afQuickField name="mutation_impact_assessor" type="text" }}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">
+            Apply
+          </button>
+        </div>
+      {{/autoForm}}
+    </div>
+    <div class="component-box">
+      <h4>Mutations</h4>
+      {{> tabular table=TabularTables.mutations
+          selector=mutationSelector
+          class="table table-striped table-bordered table-condensed"}}
+    </div>
+  </div>
+</template>
+
+<template name="rowValidation">
+  <!-- {{print "rowValidation this:" this}} -->
+  {{#if isValid}}
+    OK
+  {{else}}
+    {{#each invalidKeys}}
+      {{name}}: {{type}}
+    {{/each}}
+  {{/if}}
+</template>
+
+<template name="noDataForTable">
+  No data for this object type.
+</template>

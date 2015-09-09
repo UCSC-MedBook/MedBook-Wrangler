@@ -1,3 +1,5 @@
+// TODO: make sure in editing stage to change things
+
 Meteor.methods({
   // WranglerSubmission methods
   createSubmission: function () {

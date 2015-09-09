@@ -9,7 +9,7 @@
       {{> tabular table=TabularTables.listSubmissions
           class="table table-striped table-bordered table-condensed"}}
     {{else}}
-      No submissions created :(
+      No submissions created
     {{/if}}
 
     <h3>
@@ -32,13 +32,15 @@
 
 <template name="submissionActions">
   {{#if compare status "editing"}}
-    <a href="{{pathFor 'editSubmission' submissionId=_id}}"
-        class="edit-submission">
+    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
       Edit
     </a>
     <a href="#" class="delete-submission">Delete</a>
   {{/if}}
   {{#if compare status "validating"}}
+  <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+    View
+  </a>
     <a href="#" class="cancel-validation">Cancel validation</a>
   {{/if}}
   {{#if compare status "writing"}}

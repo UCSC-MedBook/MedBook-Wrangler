@@ -1,21 +1,19 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
 
-  <div class="content-wrapper">
-    {{#if this}} {{! if no data, invalid WranglerDocuments _id in URL }}
+  {{#if this}} {{! if no data, invalid WranglerDocuments _id in URL }}
 
-      {{> submissionFileList}}
+    {{> submissionFileList}}
 
-      {{> fileUploader}}
+    {{> fileUploader}}
 
-      {{> reviewWranglerDocuments}}
+    {{> reviewWranglerDocuments}}
 
-      {{> listErrorsAndSubmit}}
-    {{else}}
-      {{! loading handled in the router }}
-      {{> pageNotFound}}
-    {{/if}}
-  </div>
+    {{> listErrorsAndSubmit}}
+  {{else}}
+    {{! loading handled in the router }}
+    {{> pageNotFound}}
+  {{/if}}
 </template>
 
 <template name="submissionFileList">

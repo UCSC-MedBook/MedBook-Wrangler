@@ -1,23 +1,18 @@
 <template name="listSubmissions">
   {{! TODO: name this something better }}
 
-  {{> loginButtons }}
-  <hr />
+  {{#if hasCreatedSubmission}}
+    {{> tabular table=TabularTables.listSubmissions
+        class="table table-striped table-bordered table-condensed"}}
+  {{else}}
+    No submissions created
+  {{/if}}
 
-  <div style="margin: 50px;">
-    {{#if hasCreatedSubmission}}
-      {{> tabular table=TabularTables.listSubmissions
-          class="table table-striped table-bordered table-condensed"}}
-    {{else}}
-      No submissions created
-    {{/if}}
-
-    <h3>
-      <a id="create-new-submission" href="#">
-        Create a new submission
-      </a>
-    </h3>
-  </div>
+  <h3>
+    <a id="create-new-submission" href="#">
+      Create a new submission
+    </a>
+  </h3>
 </template>
 
 <template name="listFiles">

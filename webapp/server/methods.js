@@ -15,7 +15,6 @@ Meteor.methods({
         "submission_id": submissionId,
       },
     });
-
     console.log("added job:", jobId);
   },
 });

@@ -2,12 +2,11 @@ BlobStore.on("stored", Meteor.bindEnvironment(
   function (storeName, fileObject) {
     if (storeName !== BlobStore.name) return; // workaround for known bug
 
-    WranglerSubmissions.update({
-          "_id": fileObject.metadata.submission_id,
-          "files.file_id": fileObject._id,
-        }, {
-          $set: { "files.$.status": "processing" }
-        });
+    WranglerFiles.update({
+      "file_id": fileObject._id,
+    }, {
+      $set: { "status": "processing" }
+    });
 
     Jobs.insert({
       "name": "processWranglerFile",

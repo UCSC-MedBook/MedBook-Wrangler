@@ -28,3 +28,5 @@ momentjs:moment
 aldeed:autoform-select2
 medbook:wrangler-collections
 aldeed:tabular
+tmeasday:publish-counts
+erasaur:meteor-lodash

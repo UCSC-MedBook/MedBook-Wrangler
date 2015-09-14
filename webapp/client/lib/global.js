@@ -10,12 +10,36 @@ Template.registerHelper("print", function (first, second, third, fourth) {
   }
 });
 
-Template.registerHelper('compare', function(first, second) {
+Template.registerHelper('compare', function (first, second) {
   if (typeof first === 'object' && typeof second === 'object') {
     return _.isEqual(first, second); // do a object comparison
   } else {
     return first === second;
   }
+});
+
+Template.registerHelper('isDefined', function (first) {
+  return first !== undefined;
+});
+
+Template.registerHelper("objectKeys", function (argument) {
+  return Object.keys(argument);
+});
+
+// for validating against a schema and listing invalid keys
+
+function getValidationContext(data) {
+  return getCollectionByName(data.collection_name)
+      .simpleSchema()
+      .namedContext(data._id);
+}
+
+Template.registerHelper("isValid", function (){
+  return getValidationContext(this).validate(this.prospective_document);
+});
+
+Template.registerHelper("invalidKeys", function (){
+  return getValidationContext(this).invalidKeys();
 });
 
 /**

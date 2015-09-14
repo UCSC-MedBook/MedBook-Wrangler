@@ -1,3 +1,5 @@
+_ = lodash;
+
 //
 // Meteor methods
 //
@@ -20,31 +22,43 @@ ensureSubmissionAvailable = function (userId, submissionId) {
   return submission;
 };
 
-//
-// General
-//
-
-getCollectionByName = function(collectionName) {
-  switch (collectionName) {
-    case "superpathway_elements":
-      return SuperpathwayElements;
-    case "superpathway_interactions":
-      return SuperpathwayInteractions;
-    case "mutations":
-      return Mutations;
-    case "gene_expression":
-      return GeneExpression;
-    case "superpathways":
-      return Superpathways;
-    default:
-      console.log("couldn't find appropriate schema");
-      return null;
+ensureWranglerFileAvailable = function (submissionId, wranglerFileId) {
+  var wranglerFile = WranglerFiles.findOne({
+    "submission_id": submissionId,
+    "_id": wranglerFileId
+  });
+  if (!wranglerFile) {
+    throw new Meteor.Error("wrangler-file-not-available",
+        "The wrangler file _id provided does not exist or is not available" +
+        " to you");
   }
+  return wranglerFile;
 };
 
-getSchemaFromName = function(collectionName) {
-  var collection = getCollectionByName(collectionName);
-  if (collection)
-    return collection.simpleSchema();
-  return null;
+getDocumentTypes = function (submissionId) {
+
+  function getCollectionCount(collectionName) {
+    if (Meteor.isClient) {
+      return Counts.get(collectionName);
+    } else {
+      return WranglerDocuments.find({
+        "submission_id": submissionId,
+        "collection_name": collectionName,
+      }).count();
+    }
+  }
+
+  var documentTypes = [];
+
+  if (getCollectionCount("superpathways") > 0 ||
+      getCollectionCount("superpathway_elements") > 0 ||
+      getCollectionCount("superpathway_interactions") > 0) {
+    documentTypes.push("superpathway");
+  }
+
+  if (getCollectionCount("mutations") > 0) {
+    documentTypes.push("mutation");
+  }
+
+  return documentTypes;
 };

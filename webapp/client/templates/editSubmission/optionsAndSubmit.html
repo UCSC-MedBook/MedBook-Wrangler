@@ -1,0 +1,65 @@
+<template name="optionsAndSubmit">
+  <h2>Submit</h2>
+
+  {{#if compare classifySubmissionType "superpathway"}}
+    {{#submissionOptions schema=superpathwaySchema}}
+      {{> superpathwayFields}}
+    {{/submissionOptions}}
+  {{/if}}
+
+  {{#if compare classifySubmissionType "mutation"}}
+    {{#submissionOptions schema=mutationSchema}}
+      {{> mutationFields}}
+    {{/submissionOptions}}
+  {{/if}}
+</template>
+
+<template name="submissionOptions">
+  {{#autoForm id="submission-options" schema=schema
+      doc=currentOptions}}
+    {{> sharedFields}}
+
+    {{> Template.contentBlock}}
+
+    {{> validateAndSubmit}}
+  {{/autoForm}}
+</template>
+
+<template name="superpathwayFields">
+  {{! TODO: hide update if there are no superpathways }}
+  {{> afQuickField name="update_or_create" options="allowed"
+      firstOption="(Create new or update existing superpathway)"}}
+  {{#if updateCreateSelected}}
+    {{! has options for both text and select }}
+    {{> afQuickField name="name" type=selectOrText
+        options=superpathwayOptions
+        placeholder="Enter name"
+        firstOption="(Select superpathway name)"}}
+  {{/if}}
+</template>
+
+<template name="mutationFields">
+  {{> afQuickField name="biological_source" options="allowed"}}
+  {{> afQuickField name="mutation_impact_assessor"}}
+</template>
+
+<template name="sharedFields">
+  {{> afQuickField name="description" type="text"
+      placeholder="Where did the data come from?"}}
+</template>
+
+<template name="validateAndSubmit">
+  {{! TODO: only show in blue if every file is done processing }}
+  {{! TODO: add git commit message }}
+  <div class="form-group">
+    <button class="btn btn-warning reset-options">
+      Reset options
+    </button>
+    <button class="btn btn-info save-for-later">
+      Save
+    </button>
+    <button class="btn btn-primary validate-and-submit">
+      Validate and submit
+    </button>
+  </div>
+</template>

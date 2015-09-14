@@ -1,4 +1,4 @@
-// TODO: make sure in editing stage to change things
+// TODO: just put these in as updates/inserts (security in allow rules)
 
 Meteor.methods({
   // WranglerSubmission methods
@@ -19,7 +19,9 @@ Meteor.methods({
 
     WranglerSubmissions.remove(submissionId);
   },
-  addFileToSubmission: function (submissionId, fileId, fileName) {
+
+  // WranglerFiles methods
+  addFile: function (submissionId, fileId, fileName) {
     // fileName sent so it can be fast on the client
     // (Blobs is not published at this point)
     // (the file is inserted and then removed because it's not published)
@@ -43,49 +45,73 @@ Meteor.methods({
       }
     }
 
-    WranglerSubmissions.update(submissionId, {
-      $addToSet: {
-        "files": {
-          "file_id": fileId,
-          "file_name": fileName,
-          "status": Meteor.isClient ? "creating" : "uploading",
-        }
-      }
+    WranglerFiles.insert({
+      "submission_id": submissionId,
+      "file_id": fileId,
+      "file_name": fileName,
+      "status": Meteor.isClient ? "creating" : "uploading",
     });
   },
-  removeFileFromSubmission: function (submissionId, fileId) {
+  removeFile: function (submissionId, wranglerFileId) {
     check(submissionId, String);
-    check(fileId, String);
+    check(wranglerFileId, String);
 
-    var userId = makeSureLoggedIn();
-    if (Meteor.isServer) {
-      var file = Blobs.findOne(fileId);
-      if (file.metadata.user_id !== Meteor.userId() ||
-          file.metadata.submission_id !== submissionId) {
-        throw new Meteor.Error("file-not available",
-            "The file is either not yours or is from the wrong submission");
-      }
-    }
+    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
+    var wranglerFile =
+        ensureWranglerFileAvailable(submissionId, wranglerFileId);
 
-    WranglerDocuments.remove({ "file_id": fileId });
+    WranglerDocuments.remove({ "wrangler_file_id": wranglerFileId });
 
-    WranglerSubmissions.update(submissionId, {
-      $pull: {
-        "files": {
-          "file_id": fileId
-        }
-      }
-    });
+    Blobs.remove(wranglerFile.file_id);
+
+    WranglerFiles.remove(wranglerFileId);
 
     // TODO: call this for everything that is uncompressed from this
+  },
 
-    Blobs.remove(this.file_id);
+  // editing_file
+  setEditingFile: function (submissionId, wranglerFileId) {
+    check([submissionId, wranglerFileId], [String]);
+    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
+    ensureWranglerFileAvailable(submissionId, wranglerFileId);
+
+    WranglerSubmissions.update(submissionId, {
+      $set: { "editing_file": wranglerFileId }
+    });
+  },
+  unsetEditingFile: function (submissionId) {
+    check(submissionId, String);
+    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
+        submissionId);
+
+    WranglerSubmissions.update(submissionId, {
+      $unset: { "editing_file": 1 }
+    });
+  },
+  unsetManualFileType: function (submissionId) {
+    check(submissionId, String);
+    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
+        submissionId);
+
+    WranglerFiles.update(submission.editing_file, {
+      $unset: { "manual_file_type": 1 }
+    });
+  },
+  setManualFileType: function (submissionId, fileType) {
+    check([submissionId, fileType], [String]);
+    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
+        submissionId);
+
+    WranglerFiles.update(submission.editing_file, {
+      $set: {
+        "manual_file_type": fileType
+      }
+    });
   },
 
   // WranglerDocument methods
   insertDocument: function (document) {
     check(document, WranglerDocuments.simpleSchema());
-
     ensureSubmissionAvailable(makeSureLoggedIn(), document.submission_id);
 
     WranglerDocuments.insert(document);
@@ -126,33 +152,14 @@ Meteor.methods({
       }
     });
   },
-  setMutationDocuments: function (submissionId, insertDoc) {
-    check(submissionId, String);
-    check(insertDoc, Mutations.simpleSchema().pick([
-      "biological_source",
-      "mutation_impact_assessor",
-    ]));
-    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
-
-    WranglerDocuments.update({
-      "submission_id": submissionId,
-      "collection_name": "mutations",
-    }, {
-      $set: {
-        // could put this into a loop if needed (grab from schema above)
-        "prospective_document.biological_source": insertDoc.biological_source,
-        "prospective_document.mutation_impact_assessor":
-            insertDoc.mutation_impact_assessor,
-      }
-    }, { multi: true });
-  },
 
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
-  removeWranglerData: function() {
+  removeAll: function() {
     // only allow Teo's user id
     if (Meteor.isServer) {
       Blobs.remove({});
       WranglerSubmissions.remove({});
+      WranglerFiles.remove({});
       WranglerDocuments.remove({});
       Jobs.remove({});
       console.log("Teo removed all the wrangler data");

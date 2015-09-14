@@ -44,7 +44,7 @@ TabularTables.listSubmissions = new Tabular.Table({
 });
 
 generateColumns = function (collectionName) {
-  var schema = getSchemaFromName(collectionName);
+  var schema = getCollectionByName(collectionName).simpleSchema();
   var fields = schema.fieldOrder;
 
   return [
@@ -65,7 +65,7 @@ _.each(availableCollections, function (collectionName) {
     name: collectionName,
     collection: WranglerDocuments,
     columns: generateColumns(collectionName),
-    extraFields: ['collection_name'],
+    extraFields: ['collection_name', 'wrangler_file_id'],
     changeSelctor: function (selector, userId) {
       console.log("selector:", selector);
       ensureSubmissionAvailable(selector.submission_id, userId);

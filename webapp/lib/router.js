@@ -21,12 +21,13 @@ Router.map(function() {
   this.route('editSubmission', {
     path: '/Wrangler/editSubmission/:submissionId',
     waitOn: function () {
-      return Meteor.subscribe("wranglerSubmission",
-          this.params.submissionId);
+      return Meteor.subscribe("wranglerSubmission", this.params.submissionId);
+    },
+    subscriptions: function () {
+      Meteor.subscribe("documentCounts", this.params.submissionId);
     },
     data: function () {
       return WranglerSubmissions.findOne(this.params.submissionId);
     },
   });
-
 });

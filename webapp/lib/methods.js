@@ -127,32 +127,6 @@ Meteor.methods({
     });
   },
 
-  // Specific methods
-  setSuperpathway: function (submissionId, superpathwayName) {
-    check([submissionId, superpathwayName], [String]);
-    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
-
-    WranglerDocuments.remove({
-      "submission_id": submissionId,
-      "collection_name": "superpathways",
-    });
-
-    var oldOne = Superpathways.findOne({"name": superpathwayName},
-        { sort: { version: -1 } });
-    var newVersion = 1;
-    if (oldOne) {
-      newVersion = oldOne.version + 1;
-    }
-    WranglerDocuments.insert({
-      "submission_id": submissionId,
-      "collection_name": "superpathways",
-      "prospective_document": {
-        "name": superpathwayName,
-        "version": newVersion,
-      }
-    });
-  },
-
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
   removeAll: function() {
     // only allow Teo's user id

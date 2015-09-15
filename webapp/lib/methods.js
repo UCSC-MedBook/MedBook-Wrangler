@@ -1,5 +1,3 @@
-// TODO: just put these in as updates/inserts (security in allow rules)
-
 Meteor.methods({
   // WranglerSubmission methods
   createSubmission: function () {
@@ -15,8 +13,16 @@ Meteor.methods({
     check(submissionId, String);
 
     var userId = makeSureLoggedIn();
-    ensureSubmissionAvailable(userId, submissionId);
+    ensureSubmissionEditable(userId, submissionId);
 
+    // TODO: remove actual objects from the database, if inserted
+
+    WranglerFiles.find({ "submission_id": submissionId })
+        .forEach(function (document) {
+      Blobs.remove(document.file_id);
+    });
+    WranglerDocuments.remove({ "submission_id": submissionId });
+    WranglerFiles.remove({ "submission_id": submissionId });
     WranglerSubmissions.remove(submissionId);
   },
 
@@ -28,9 +34,9 @@ Meteor.methods({
     check([submissionId, fileId, fileName], [String]);
 
     var userId = makeSureLoggedIn();
-    ensureSubmissionAvailable(userId, submissionId);
+    ensureSubmissionEditable(userId, submissionId);
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer) { // must be on the server because Blobs not published
       var file = Blobs.findOne(fileId);
       if (!file.metadata) {
         throw new Meteor.Error("file-lacks-metadata", "File metadata not set");
@@ -40,8 +46,7 @@ Meteor.methods({
         throw new Meteor.Error("file-metadata-wrong", "File metadata is wrong");
       }
       if (file.original.name !== fileName) {
-        throw new Meteor.Error("file-name-wrong",
-            "Why would you want to change the fileName?");
+        throw new Meteor.Error("file-name-wrong");
       }
     }
 
@@ -56,79 +61,17 @@ Meteor.methods({
     check(submissionId, String);
     check(wranglerFileId, String);
 
-    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
-    var wranglerFile =
-        ensureWranglerFileAvailable(submissionId, wranglerFileId);
+    ensureSubmissionEditable(makeSureLoggedIn(), submissionId);
 
     WranglerDocuments.remove({ "wrangler_file_id": wranglerFileId });
-
     Blobs.remove(wranglerFile.file_id);
-
     WranglerFiles.remove(wranglerFileId);
 
     // TODO: call this for everything that is uncompressed from this
   },
 
-  // editing_file
-  setEditingFile: function (submissionId, wranglerFileId) {
-    check([submissionId, wranglerFileId], [String]);
-    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
-    ensureWranglerFileAvailable(submissionId, wranglerFileId);
-
-    WranglerSubmissions.update(submissionId, {
-      $set: { "editing_file": wranglerFileId }
-    });
-  },
-  unsetEditingFile: function (submissionId) {
-    check(submissionId, String);
-    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
-        submissionId);
-
-    WranglerSubmissions.update(submissionId, {
-      $unset: { "editing_file": 1 }
-    });
-  },
-  unsetManualFileType: function (submissionId) {
-    check(submissionId, String);
-    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
-        submissionId);
-
-    WranglerFiles.update(submission.editing_file, {
-      $unset: { "manual_file_type": 1 }
-    });
-  },
-  setManualFileType: function (submissionId, fileType) {
-    check([submissionId, fileType], [String]);
-    var submission = ensureSubmissionAvailable(makeSureLoggedIn(),
-        submissionId);
-
-    WranglerFiles.update(submission.editing_file, {
-      $set: {
-        "manual_file_type": fileType
-      }
-    });
-  },
-
-  // WranglerDocument methods
-  insertDocument: function (document) {
-    check(document, WranglerDocuments.simpleSchema());
-    ensureSubmissionAvailable(makeSureLoggedIn(), document.submission_id);
-
-    WranglerDocuments.insert(document);
-  },
-  removeAllDocuments: function (submissionId, collectionName) {
-    check(submissionId, String);
-    check(collectionName, String);
-    ensureSubmissionAvailable(makeSureLoggedIn(), submissionId);
-
-    WranglerDocuments.remove({
-      "submission_id": submissionId,
-      "collection_name": collectionName,
-    });
-  },
-
   // TODO: DEBUG REMOVE BEFORE PRODUCTION
-  removeAll: function() {
+  clean: function() {
     // only allow Teo's user id
     if (Meteor.isServer) {
       Blobs.remove({});

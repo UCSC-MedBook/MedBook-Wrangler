@@ -37,7 +37,7 @@ TabularTables.listSubmissions = new Tabular.Table({
   extraFields: ['collection_name'],
   changeSelctor: function (selector, userId) {
     console.log("selector:", selector);
-    ensureSubmissionAvailable(selector.submission_id, userId);
+    ensureSubmissionEditable(selector.submission_id, userId);
 
     return selector;
   },
@@ -68,7 +68,7 @@ _.each(availableCollections, function (collectionName) {
     extraFields: ['collection_name', 'wrangler_file_id'],
     changeSelctor: function (selector, userId) {
       console.log("selector:", selector);
-      ensureSubmissionAvailable(selector.submission_id, userId);
+      ensureSubmissionEditable(selector.submission_id, userId);
 
       return selector;
     },

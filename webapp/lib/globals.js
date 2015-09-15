@@ -14,25 +14,22 @@ makeSureLoggedIn = function() {
 
 ensureSubmissionAvailable = function (userId, submissionId) {
   var submission = WranglerSubmissions.findOne(submissionId);
-  if (submission.user_id !== userId) {
-    throw new Meteor.Error("submission-not-available",
-        "The submission _id provided does not exist or is not available" +
-        " to you");
+
+  if (submission && submission.user_id === userId) {
+    return submission;
   }
-  return submission;
+
+  throw new Meteor.Error("submission-not-available");
 };
 
-ensureWranglerFileAvailable = function (submissionId, wranglerFileId) {
-  var wranglerFile = WranglerFiles.findOne({
-    "submission_id": submissionId,
-    "_id": wranglerFileId
-  });
-  if (!wranglerFile) {
-    throw new Meteor.Error("wrangler-file-not-available",
-        "The wrangler file _id provided does not exist or is not available" +
-        " to you");
+ensureSubmissionEditable = function (userId, submissionId) {
+  var submission = ensureSubmissionAvailable(userId, submissionId);
+
+  if (submission.status === "editing") {
+    return submission;
   }
-  return wranglerFile;
+
+  throw new Meteor.Error("submission-not-editable");
 };
 
 getDocumentTypes = function (submissionId) {

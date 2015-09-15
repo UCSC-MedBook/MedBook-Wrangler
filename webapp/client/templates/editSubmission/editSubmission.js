@@ -29,7 +29,9 @@ Template.addFiles.rendered = function() {
   $(document).on('click', function (e) {
     var parents = $(e.target).parents('.click-outside-to-unselect');
     if (parents.length === 0) {
-      Meteor.call("unsetEditingFile", self.templateInstance().data._id);
+      WranglerSubmissions.update(submissionId, {
+        $unset: { "editing_file": 1 }
+      });
     }
   });
 };
@@ -77,7 +79,9 @@ Template.addFiles.events({
     Meteor.call("removeFile", instance.data._id, this._id);
   },
   "click .edit-this-file": function (event, instance) {
-    Meteor.call("setEditingFile", instance.data._id, this._id);
+    WranglerSubmissions.update(instance.data._id, {
+      $set: { "editing_file": this._id }
+    });
   },
 });
 
@@ -124,15 +128,6 @@ Template.uploadFilesListItem.events({
       }
     });
   },
-
-  // adding new objects manually
-  "click .add-superpathway": function () {
-    Meteor.call("insertDocument", {
-      "submission_id": Template.instance().data._id,
-      "collection_name": "superpathways",
-      "prospective_document": {},
-    });
-  },
 });
 
 AutoForm.addHooks('edit-file', {
@@ -140,16 +135,25 @@ AutoForm.addHooks('edit-file', {
   onSubmit: function(insertDoc, updateDoc, currentDoc) {
     this.event.preventDefault();
 
-    var submissionId = Template.instance().parentInstance().data._id;
+    var data = Template.instance().parentInstance().data;
 
     var newFileType = insertDoc.manual_file_type;
     if (newFileType) {
-      Meteor.call("setManualFileType", submissionId, insertDoc.manual_file_type);
+      WranglerFiles.update(dat.editing_file, {
+        $set: {
+          "manual_file_type": insertDoc.manual_file_type
+        }
+      });
     } else {
-      Meteor.call("unsetManualFileType", submissionId);
+      WranglerFiles.update(data.editing_file, {
+        $unset: { "manual_file_type": 1 }
+      });
     }
 
-    Meteor.call("unsetEditingFile", submissionId);
+    // hide that dialog
+    WranglerSubmissions.update(data._id, {
+      $unset: { "editing_file": 1 }
+    });
 
     this.done();
   },

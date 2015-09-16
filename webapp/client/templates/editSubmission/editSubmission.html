@@ -36,57 +36,78 @@
 </template>
 
 <template name="addFiles">
-  <h2>Add files</h2>
-  <div class="row click-outside-to-unselect">
-    <div class="col-md-8">
-      <ul class="list-group">
-        {{#each getFiles}}
-          <li class="list-group-item edit-this-file
-              {{fileContextualClass}}
-              {{activeClass}}">
-            <h5 class="list-group-item-heading"> {{! what a large h5...}}
-              <i class="glyphicon glyphicon-file"></i>
-
-              {{file_name}}
-
-              <span class="pull-right">
-                <span class="badge">{{status}}</span>
-                <button class="remove-this-file btn btn-xs btn-warning">
-                  <span class="sr-only">Remove file</span>
-                  <span class="glyphicon glyphicon-trash"></span>
-                </button>
-              </span>
-            </h5>
-
-            {{#if isDefined manual_file_type}}
-              <p class="list-group-item-text">
-                <span class="blank-glyphicon-to-left">
-                  Forced file type: {{manual_file_type}}
-                </span>
-              </p>
-            {{/if}}
-
-            {{#if compare status "error"}}
-              <p class="list-group-item-text">
-                <span class="blank-glyphicon-to-left">
-                  Error: {{error_description}}
-                </span>
-              </p>
-            {{/if}}
-          </li>
-        {{/each}}
-
-        {{> uploadFilesListItem}}
-      </ul>
-    </div>
-
-    {{#if isDefined editing_file}}
-      <div class="col-md-4">
-        {{> editFileType}}
-      </div>
+  <h2>
+    {{#if compare status "editing"}}
+      Add files
+    {{else}}
+      Files
     {{/if}}
+  </h2>
 
-  </div>
+  {{#if shouldBeFullWidth}}
+    {{> listFiles}}
+  {{else}}
+    <div class="row click-outside-to-unselect">
+      <div class="col-md-8">
+        {{> listFiles}}
+      </div>
+      <div class="col-md-4">
+      {{#if editing_file}}
+        {{> editFileType}}
+      {{else}}
+        <span class="help-block">
+          Select a file to edit.
+        </span>
+      {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</template>
+
+<template name="listFiles">
+  <ul class="list-group">
+    {{#each getFiles}}
+      <li class="list-group-item edit-this-file
+          {{fileContextualClass}}
+          {{activeClass}}">
+        <h5 class="list-group-item-heading"> {{! what a large h5...}}
+          <i class="glyphicon glyphicon-file"></i>
+
+          {{file_name}}
+
+          <span class="pull-right">
+            <span class="badge">{{status}}</span>
+            {{#if isEditable}}
+              <button class="remove-this-file btn btn-xs btn-warning">
+                <span class="sr-only">Remove file</span>
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            {{/if}}
+          </span>
+        </h5>
+
+        {{#if isDefined manual_file_type}}
+          <p class="list-group-item-text">
+            <span class="blank-glyphicon-to-left">
+              Forced file type: {{manual_file_type}}
+            </span>
+          </p>
+        {{/if}}
+
+        {{#if compare status "error"}}
+          <p class="list-group-item-text">
+            <span class="blank-glyphicon-to-left">
+              Error: {{error_description}}
+            </span>
+          </p>
+        {{/if}}
+      </li>
+    {{/each}}
+
+    {{#if compare status "editing"}}
+      {{> uploadFilesListItem}}
+    {{/if}}
+  </ul>
 </template>
 
 <template name="uploadFilesListItem">
@@ -116,7 +137,7 @@
         </form>
       </div>
 
-      {{! add manually}}
+      {{! TODO: add manually}}
       <!-- <div class="col-md-4 btn-group display-block">
         <button class="btn btn-default dropdown-toggle fill-width"
             type="button" data-toggle="dropdown"

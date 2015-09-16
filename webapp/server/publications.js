@@ -14,10 +14,10 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
     WranglerFiles.find({
       "submission_id": submissionId,
     }),
-    WranglerDocuments.find({
-      "submission_id": submissionId,
-      "wrangler_file_id": { $exists: false },
-    }),
+    // WranglerDocuments.find({
+    //   "submission_id": submissionId,
+    //   "wrangler_file_id": { $exists: false },
+    // }),
   ];
 });
 
@@ -37,8 +37,13 @@ Meteor.publish('documentCounts', function(submissionId) {
   publishCounts("superpathway_elements");
   publishCounts("superpathway_interactions");
   publishCounts("mutations");
+  publishCounts("gene_expression");
 
   Counts.publish(self, "all-documents", WranglerDocuments.find({
+    "submission_id": submissionId,
+  }));
+
+  Counts.publish(self, "all-files", WranglerFiles.find({
     "submission_id": submissionId,
   }));
 });

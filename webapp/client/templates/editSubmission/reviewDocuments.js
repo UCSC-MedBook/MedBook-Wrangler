@@ -8,8 +8,8 @@ Template.reviewWranglerDocuments.helpers({
   hasMutationDocuments: function () {
     return Counts.get("mutations");
   },
-  getDocumentType: function () {
-    return getDocumentTypes(this._id)[0];
+  hasGeneExpressionDocuments: function () {
+    return Counts.get("gene_expression");
   },
 });
 
@@ -33,6 +33,15 @@ Template.reviewMutationDocuments.helpers({
     return {
       "submission_id": this._id,
       "collection_name": "mutations",
+    };
+  },
+});
+
+Template.reviewGeneExpressionDocuments.helpers({
+  geneExpressionSelector: function () {
+    return {
+      "submission_id": this._id,
+      "collection_name": "gene_expression",
     };
   },
 });

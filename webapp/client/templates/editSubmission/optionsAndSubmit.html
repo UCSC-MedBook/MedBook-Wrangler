@@ -1,5 +1,5 @@
 <template name="optionsAndSubmit">
-  <h2>Submit</h2>
+  <h2>Options</h2>
 
   {{#if compare classifySubmissionType "superpathway"}}
     {{#submissionOptions schema=superpathwaySchema}}
@@ -12,16 +12,24 @@
       {{> mutationFields}}
     {{/submissionOptions}}
   {{/if}}
+
+  {{#if compare classifySubmissionType "expression"}}
+    {{#submissionOptions schema=expressionSchema}}
+      {{> expressionFields}}
+    {{/submissionOptions}}
+  {{/if}}
 </template>
 
 <template name="submissionOptions">
   {{#autoForm id="submission-options" schema=schema
-      doc=currentOptions}}
+      doc=currentOptions type=readonlyIfNotEditing}}
     {{> sharedFields}}
 
     {{> Template.contentBlock}}
 
-    {{> validateAndSubmit}}
+    {{#if compare ../../status "editing"}}
+      {{> validateAndSubmit}}
+    {{/if}}
   {{/autoForm}}
 </template>
 
@@ -41,6 +49,10 @@
 <template name="mutationFields">
   {{> afQuickField name="biological_source" options="allowed"}}
   {{> afQuickField name="mutation_impact_assessor"}}
+</template>
+
+<template name="expressionFields">
+  {{> afQuickField name="study_label"}}
 </template>
 
 <template name="sharedFields">

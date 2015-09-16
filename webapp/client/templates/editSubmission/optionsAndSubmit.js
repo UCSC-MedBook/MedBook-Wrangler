@@ -40,11 +40,24 @@ Template.optionsAndSubmit.helpers({
       ]),
     ]);
   },
+  expressionSchema: function () {
+    return new SimpleSchema([
+      sharedSchema,
+      GeneExpression.simpleSchema().pick([
+        "study_label",
+      ]),
+    ]);
+  },
 });
 
 Template.submissionOptions.helpers({
   currentOptions: function () {
     return Template.instance().parent().data.options;
+  },
+  readonlyIfNotEditing: function () {
+    if (Template.instance().parent().data.status !== "editing") {
+      return "readonly";
+    }
   },
 });
 

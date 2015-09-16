@@ -22,10 +22,6 @@ Template.registerHelper('isDefined', function (first) {
   return first !== undefined;
 });
 
-Template.registerHelper("objectKeys", function (argument) {
-  return Object.keys(argument);
-});
-
 // for validating against a schema and listing invalid keys
 
 function getValidationContext(data) {

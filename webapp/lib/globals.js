@@ -57,5 +57,9 @@ getDocumentTypes = function (submissionId) {
     documentTypes.push("mutation");
   }
 
+  if (getCollectionCount("gene_expression") > 0) {
+    documentTypes.push("expression");
+  }
+
   return documentTypes;
 };

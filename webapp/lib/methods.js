@@ -34,7 +34,7 @@ Meteor.methods({
     check([submissionId, fileId, fileName], [String]);
 
     var userId = makeSureLoggedIn();
-    ensureSubmissionEditable(userId, submissionId);
+    var submission = ensureSubmissionEditable(userId, submissionId);
 
     if (Meteor.isServer) { // must be on the server because Blobs not published
       var file = Blobs.findOne(fileId);
@@ -52,6 +52,7 @@ Meteor.methods({
 
     WranglerFiles.insert({
       "submission_id": submissionId,
+      "user_id": submission.user_id,
       "file_id": fileId,
       "file_name": fileName,
       "status": Meteor.isClient ? "creating" : "uploading",
@@ -60,8 +61,12 @@ Meteor.methods({
   removeFile: function (submissionId, wranglerFileId) {
     check(submissionId, String);
     check(wranglerFileId, String);
-
     ensureSubmissionEditable(makeSureLoggedIn(), submissionId);
+
+    var wranglerFile = WranglerFiles.findOne({
+      "_id": wranglerFileId,
+      "submission_id": submissionId, // security
+    });
 
     WranglerDocuments.remove({ "wrangler_file_id": wranglerFileId });
     Blobs.remove(wranglerFile.file_id);

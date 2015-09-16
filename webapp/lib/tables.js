@@ -9,6 +9,7 @@ var availableCollections = [
   "superpathway_elements",
   "superpathway_interactions",
   "mutations",
+  "gene_expression",
 ];
 
 TabularTables.listSubmissions = new Tabular.Table({
@@ -24,11 +25,6 @@ TabularTables.listSubmissions = new Tabular.Table({
       },
     },
     { data: "status", title: "Status" },
-    {
-      title: "Files",
-      data: "files",
-      tmpl: Meteor.isClient && Template.listFiles,
-    },
     {
       title: "Actions",
       tmpl: Meteor.isClient && Template.submissionActions,

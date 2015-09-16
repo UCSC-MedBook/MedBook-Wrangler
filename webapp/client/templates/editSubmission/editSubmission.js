@@ -21,33 +21,32 @@ function getValidationContext(data) {
 }
 
 Template.addFiles.rendered = function() {
-  var self;
-  this.autorun(function () {
-    self = this;
-  });
+  this.autorun(function (first, second) {
+    var data = this.templateInstance().data;
 
-  $(document).on('click', function (e) {
-    var parents = $(e.target).parents('.click-outside-to-unselect');
-    if (parents.length === 0) {
-      WranglerSubmissions.update(submissionId, {
-        $unset: { "editing_file": 1 }
+    if (data.status === "editing") {
+      $(document).on('click', function (e) {
+        var parents = $(e.target).parents('.click-outside-to-unselect');
+        if (parents.length === 0) {
+          WranglerSubmissions.update(data._id, {
+            $unset: { "editing_file": 1 }
+          });
+        }
       });
+    } else {
+      $(document).off('click');
     }
   });
 };
 
-// defined out here because it's used in two helpers
-// (_.partial used within the functions)
-function fullInsertCallback (submissionId, error, fileObject) {
-  if (error) {
-    console.log("error:", error);
-  } else {
-    Meteor.call("addFile", submissionId, fileObject._id,
-        fileObject.original.name);
-  }
-}
 
 Template.addFiles.helpers({
+  shouldBeFullWidth: function () {
+    return this.status !== "editing" || Counts.get("all-files") === 0;
+  },
+});
+
+Template.listFiles.helpers({
   getFiles: function () {
     return WranglerFiles.find({});
   },
@@ -71,19 +70,36 @@ Template.addFiles.helpers({
       return "active";
     }
   },
+  isEditable: function () {
+    return Template.instance().data.status === "editing";
+  },
 });
 
-Template.addFiles.events({
+Template.listFiles.events({
   "click .remove-this-file": function(event, instance) {
-    console.log("remove-this-file");
-    Meteor.call("removeFile", instance.data._id, this._id);
+    if (instance.data.status === "editing") {
+      Meteor.call("removeFile", instance.data._id, this._id);
+    }
   },
   "click .edit-this-file": function (event, instance) {
-    WranglerSubmissions.update(instance.data._id, {
-      $set: { "editing_file": this._id }
-    });
+    if (instance.data.status === "editing") {
+      WranglerSubmissions.update(instance.data._id, {
+        $set: { "editing_file": this._id }
+      });
+    }
   },
 });
+
+// defined out here because it's used in two helpers
+// (_.partial used within the functions)
+function blobsInsertCallback (submissionId, error, fileObject) {
+  if (error) {
+    console.log("error:", error);
+  } else {
+    Meteor.call("addFile", submissionId, fileObject._id,
+        fileObject.original.name);
+  }
+}
 
 Template.uploadFilesListItem.events({
   // adding new files
@@ -102,7 +118,7 @@ Template.uploadFilesListItem.events({
 
       // insertion is supposed to happen on the client
       Blobs.insert(newFile,
-          _.partial(fullInsertCallback, instance.data._id));
+          _.partial(blobsInsertCallback, instance.data._id));
     }
   },
   // add a URL from tbe web
@@ -123,7 +139,7 @@ Template.uploadFilesListItem.events({
           "submission_id": instance.data._id,
         };
         Blobs.insert(newFile,
-            _.partial(fullInsertCallback, instance.data._id));
+            _.partial(blobsInsertCallback, instance.data._id));
         urlInput.value = "";
       }
     });

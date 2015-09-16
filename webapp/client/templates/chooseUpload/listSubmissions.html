@@ -15,16 +15,6 @@
   </h3>
 </template>
 
-<template name="listFiles">
-  <ul>
-    {{#each files}}
-      <li>
-        <span>{{file_name}}: {{status}}</span>
-      </li>
-    {{/each}}
-  </ul>
-</template>
-
 <template name="submissionActions">
   {{#if compare status "editing"}}
     <a href="{{pathFor 'editSubmission' submissionId=_id}}">

@@ -13,7 +13,6 @@ Router.map(function() {
   this.route('listSubmissions', {
     path: '/Wrangler/',
     subscriptions: function () {
-      // TODO: why isn't this handled by aldeed:tabular
       return Meteor.subscribe("listSubmissions");
     },
   });
@@ -22,9 +21,6 @@ Router.map(function() {
     path: '/Wrangler/editSubmission/:submissionId',
     waitOn: function () {
       return Meteor.subscribe("wranglerSubmission", this.params.submissionId);
-    },
-    subscriptions: function () {
-      Meteor.subscribe("documentCounts", this.params.submissionId);
     },
     data: function () {
       return WranglerSubmissions.findOne(this.params.submissionId);

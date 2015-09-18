@@ -9,24 +9,30 @@
 
     {{! TODO: add objects manually}}
 
-    {{#if hasDocuments}}
-      {{#if classifySubmissionType this._id}}
-        {{> reviewWranglerDocuments}}
-        <hr />
-        {{> optionsAndSubmit}}
+    {{#if subscriptionsReallyReady}}
+      {{#if hasDocuments}}
+        {{#if classifySubmissionType this._id}}
+          {{> reviewWranglerDocuments}}
+          <hr />
+          {{> optionsAndSubmit}}
+        {{else}}
+          <span class="help-block">
+            Multiple submission types detected:
+            <ul>
+              {{#each getDocumentTypes}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+            Please submit each type of new document seperately.
+          </span>
+        {{/if}}
       {{else}}
-        <span class="help-block">
-          Multiple submission types detected:
-          <ul>
-            {{#each getDocumentTypes}}
-              <li>{{this}}</li>
-            {{/each}}
-          </ul>
-          Please submit each type of new document seperately.
-        </span>
+        <span class="help-block">Add files or objects to continue</span>
       {{/if}}
     {{else}}
-      <span class="help-block">Add files or objects to continue</span>
+      <div class="relative-spinner" style="height: 300px;">
+        {{> spinner}}
+      </div>
     {{/if}}
     {{> lastSubmissionErrors}}
   {{else}}
@@ -55,7 +61,7 @@
       {{#if editing_file}}
         {{> editFileType}}
       {{else}}
-        <span class="help-block">
+        <span class="help-block center-text">
           Select a file to edit.
         </span>
       {{/if}}

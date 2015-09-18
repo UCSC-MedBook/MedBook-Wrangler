@@ -44,10 +44,10 @@ generateColumns = function (collectionName) {
   var fields = schema.fieldOrder;
 
   return [
-    {
-      title: "Errors",
-      tmpl: Meteor.isClient && Template.rowValidation,
-    }
+    // {
+    //   title: "Errors",
+    //   tmpl: Meteor.isClient && Template.rowValidation,
+    // }
   ].concat(_.map(fields, function (fieldName) {
     return {
       title: schema.label(fieldName),

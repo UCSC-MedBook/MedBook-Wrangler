@@ -1,6 +1,12 @@
+Template.editSubmission.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("documentCounts", instance.data._id);
+});
+
 Template.editSubmission.helpers({
   hasDocuments: function () {
-    return Counts.get("all-documents");
+    return Counts.get("all-documents") > 0;
   },
   classifySubmissionType: function () {
     var documentTypes = getDocumentTypes(this._id);
@@ -12,6 +18,9 @@ Template.editSubmission.helpers({
     return null;
   },
   getDocumentTypes: getDocumentTypes,
+  subscriptionsReallyReady: function () {
+    return Counts.has("all-documents");
+  },
 });
 
 function getValidationContext(data) {
@@ -39,10 +48,9 @@ Template.addFiles.rendered = function() {
   });
 };
 
-
 Template.addFiles.helpers({
   shouldBeFullWidth: function () {
-    return this.status !== "editing" || Counts.get("all-files") === 0;
+    return this.status !== "editing" || WranglerFiles.find().count() === 0;
   },
 });
 

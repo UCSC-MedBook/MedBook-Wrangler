@@ -23,12 +23,19 @@
     <a href="#" class="delete-submission">Delete</a>
   {{/if}}
   {{#if compare status "validating"}}
-  <a href="{{pathFor 'editSubmission' submissionId=_id}}">
-    View
-  </a>
+    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+      View
+    </a>
     <a href="#" class="cancel-validation">Cancel validation</a>
   {{/if}}
   {{#if compare status "writing"}}
-    Too late now!
+    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+      View
+    </a>
+  {{/if}}
+  {{#if compare status "done"}}
+    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+      View
+    </a>
   {{/if}}
 </template>

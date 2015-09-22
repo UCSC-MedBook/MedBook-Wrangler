@@ -19,7 +19,7 @@ Meteor.methods({
 
     WranglerFiles.find({ "submission_id": submissionId })
         .forEach(function (document) {
-      Blobs.remove(document.file_id);
+      Blobs.remove(document.blob_id);
     });
     WranglerDocuments.remove({ "submission_id": submissionId });
     WranglerFiles.remove({ "submission_id": submissionId });
@@ -50,13 +50,23 @@ Meteor.methods({
       }
     }
 
-    WranglerFiles.insert({
+    var wranglerFileId = WranglerFiles.insert({
       "submission_id": submissionId,
       "user_id": submission.user_id,
-      "file_id": fileId,
-      "file_name": fileName,
+      "blob_id": fileId,
+      "blob_name": fileName,
       "status": Meteor.isClient ? "creating" : "uploading",
     });
+
+    if (Meteor.isServer){
+      Jobs.insert({
+        "name": "differentiateWranglerFile",
+        "date_created": new Date(),
+        "args": {
+          "wrangler_file_id": wranglerFileId,
+        },
+      });
+    }
   },
   removeFile: function (submissionId, wranglerFileId) {
     check(submissionId, String);
@@ -68,9 +78,17 @@ Meteor.methods({
       "submission_id": submissionId, // security
     });
 
-    WranglerDocuments.remove({ "wrangler_file_id": wranglerFileId });
-    Blobs.remove(wranglerFile.file_id);
     WranglerFiles.remove(wranglerFileId);
+    console.log("removed file");
+
+    this.unblock();
+
+    WranglerDocuments.remove({
+      "submission_id": submissionId,
+      "wrangler_file_id": wranglerFileId,
+    });
+    Blobs.remove(wranglerFile.blob_id);
+    console.log("removed rest of file");
 
     // TODO: call this for everything that is uncompressed from this
   },

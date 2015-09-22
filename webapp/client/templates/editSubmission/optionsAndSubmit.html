@@ -1,23 +1,93 @@
 <template name="optionsAndSubmit">
   <h2>Options</h2>
 
-  {{#if compare classifySubmissionType "superpathway"}}
-    {{#submissionOptions schema=superpathwaySchema}}
-      {{> superpathwayFields}}
-    {{/submissionOptions}}
+  <div class="row">
+    <div class="col-md-6">
+      {{#if compare classifySubmissionType "superpathway"}}
+        {{#submissionOptions schema=superpathwaySchema}}
+          {{> superpathwayFields}}
+        {{/submissionOptions}}
+      {{/if}}
+
+      {{#if compare classifySubmissionType "mutation"}}
+        {{#submissionOptions schema=mutationSchema}}
+          {{> mutationFields}}
+        {{/submissionOptions}}
+      {{/if}}
+
+      {{#if compare classifySubmissionType "expression"}}
+        {{#submissionOptions schema=expressionSchema}}
+          {{> expressionFields}}
+        {{/submissionOptions}}
+      {{/if}}
+    </div>
+    <div class="col-md-6">
+      {{> submissionStatus}}
+    </div>
+  </div>
+</template>
+
+<template name="submissionStatus">
+  {{#if compare status "editing"}}
+    {{#if hasErrors}}
+      <div class="panel panel-danger">
+        <div class="panel-heading">Error</div>
+
+        <ul class="list-group">
+          {{#each firstCoupleErrors}}
+            <li class="list-group-item">
+              {{this}}
+            </li>
+          {{/each}}
+        </ul>
+
+        {{#if tooManyErrors}}
+          <div class="panel-footer">Too many errors to display</div>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="panel panel-default">
+        <div class="panel-heading">Editing</div>
+        <div class="panel-body">
+          Click validate and submit to continue.
+        </div>
+      </div>
+    {{/if}}
   {{/if}}
 
-  {{#if compare classifySubmissionType "mutation"}}
-    {{#submissionOptions schema=mutationSchema}}
-      {{> mutationFields}}
-    {{/submissionOptions}}
+  {{#if compare status "validating"}}
+    <div class="panel panel-info">
+      <div class="panel-heading">Validating</div>
+      <div class="panel-body">
+        <p>
+          Submission is being validated...
+        </p>
+      </div>
+    </div>
   {{/if}}
 
-  {{#if compare classifySubmissionType "expression"}}
-    {{#submissionOptions schema=expressionSchema}}
-      {{> expressionFields}}
-    {{/submissionOptions}}
+  {{#if compare status "writing"}}
+    <div class="panel panel-success">
+      <div class="panel-heading">Writing</div>
+      <div class="panel-body">
+        <p>
+          The objects were validated and are being written to the database.
+        </p>
+      </div>
+    </div>
   {{/if}}
+
+  {{#if compare status "done"}}
+    <div class="panel panel-success">
+      <div class="panel-heading">Done</div>
+      <div class="panel-body">
+        <p>
+          The objects have been added to the MedBook database.
+        </p>
+      </div>
+    </div>
+  {{/if}}
+
 </template>
 
 <template name="submissionOptions">

@@ -50,6 +50,19 @@ Template.optionsAndSubmit.helpers({
   },
 });
 
+var maxErrorsToDisplay = 5;
+Template.submissionStatus.helpers({
+  hasErrors: function () {
+    return this.errors && this.errors.length > 0;
+  },
+  firstCoupleErrors: function () {
+    return this.errors.slice(0, maxErrorsToDisplay);
+  },
+  tooManyErrors: function () {
+    return this.errors.length > maxErrorsToDisplay;
+  },
+});
+
 Template.submissionOptions.helpers({
   currentOptions: function () {
     return Template.instance().parent().data.options;

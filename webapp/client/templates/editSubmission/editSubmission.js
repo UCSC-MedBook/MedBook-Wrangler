@@ -52,6 +52,15 @@ Template.addFiles.helpers({
   shouldBeFullWidth: function () {
     return this.status !== "editing" || WranglerFiles.find().count() === 0;
   },
+  statusOfEditingFile: function () {
+    var editingFile = WranglerFiles.findOne(this.editing_file);
+
+    if (editingFile) {
+      return editingFile.status;
+    } else {
+      console.log("there is no currently selected editing file");
+    }
+  },
 });
 
 Template.listFiles.helpers({
@@ -122,6 +131,7 @@ Template.uploadFilesListItem.events({
       newFile.metadata = {
         "user_id": Meteor.userId(),
         "submission_id": instance.data._id,
+        "uploaded": true,
       };
 
       // insertion is supposed to happen on the client
@@ -145,6 +155,7 @@ Template.uploadFilesListItem.events({
         newFile.metadata = {
           "user_id": Meteor.userId(),
           "submission_id": instance.data._id,
+          "uploaded": true,
         };
         Blobs.insert(newFile,
             _.partial(blobsInsertCallback, instance.data._id));
@@ -189,11 +200,5 @@ Template.editFileType.helpers({
   },
   currentEditingFile: function () {
     return WranglerFiles.findOne(Template.instance().data.editing_file);
-  },
-});
-
-Template.lastSubmissionErrors.helpers({
-  hasErrors: function () {
-    return this.errors && this.errors.length > 0;
   },
 });

@@ -14,10 +14,9 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
     WranglerFiles.find({
       "submission_id": submissionId,
     }),
-    // WranglerDocuments.find({
-    //   "submission_id": submissionId,
-    //   "wrangler_file_id": { $exists: false },
-    // }),
+    Blobs.find({
+      "metadata.submission_id": submissionId,
+    }),
   ];
 });
 

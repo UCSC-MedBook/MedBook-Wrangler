@@ -1,11 +1,7 @@
 var sharedSchema = new SimpleSchema({
-  "description": {
-    type: String,
-  },
-  // "study_label": {
-  //   type: String,
-  //
-  // }
+  "description": { type: String },
+  "study_label": { type: String },
+  "collaboration_label": { type: String },
 });
 
 Template.optionsAndSubmit.helpers({
@@ -103,6 +99,25 @@ Template.superpathwayFields.helpers({
       return {
         "label": value,
         "value": value,
+      };
+    });
+  },
+});
+
+Template.sharedFields.helpers({
+  studyOptions: function () {
+    return Studies.find().map(function (study) {
+      return {
+        label: study.name,
+        value: study.id,
+      };
+    });
+  },
+  collaborationOptions: function () {
+    return Collaborations.find().map(function (collaboration) {
+      return {
+        label: collaboration.description,
+        value: collaboration.name,
       };
     });
   },

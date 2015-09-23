@@ -8,16 +8,29 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   check(submissionId, String);
 
   ensureSubmissionAvailable(this.userId, submissionId);
-  return [
-    Superpathways.find({}), // TODO: move this elsewhere
-    WranglerSubmissions.find(submissionId),
-    WranglerFiles.find({
-      "submission_id": submissionId,
-    }),
-    Blobs.find({
-      "metadata.submission_id": submissionId,
-    }),
-  ];
+  var user = Meteor.users.findOne(this.userId);
+  if (user) {
+    var collaborations = user.profile.collaborations.concat(["public"]);
+    console.log("collaborations:", collaborations);
+    return [
+      Superpathways.find({}), // TODO: move this elsewhere
+      WranglerSubmissions.find(submissionId),
+      WranglerFiles.find({
+        "submission_id": submissionId,
+      }),
+      Blobs.find({
+        "metadata.submission_id": submissionId,
+      }),
+      Studies.find({
+        "collaborations.0": { $in: collaborations },
+      }),
+      Collaborations.find({
+        "name": { $in: collaborations },
+      }),
+    ];
+  } else {
+    this.ready();
+  }
 });
 
 Meteor.publish('documentCounts', function(submissionId) {

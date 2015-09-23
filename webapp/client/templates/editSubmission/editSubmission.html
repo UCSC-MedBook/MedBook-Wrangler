@@ -58,7 +58,7 @@
       </div>
       <div class="col-md-4">
         {{#if editing_file}}
-          {{#if compare statusOfEditingFile "done"}}
+          {{#if doneProcessingFile}}
             {{> editFileType}}
           {{else}}
             <span class="help-block center-text">

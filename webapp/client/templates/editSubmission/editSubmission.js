@@ -61,6 +61,12 @@ Template.addFiles.helpers({
       console.log("there is no currently selected editing file");
     }
   },
+  doneProcessingFile: function () {
+    // TODO: check in the meteor method that it's done or error, not just UI
+    var editingFile = WranglerFiles.findOne(this.editing_file);
+
+    return (editingFile.status === "done" || editingFile.status === "error");
+  },
 });
 
 Template.listFiles.helpers({

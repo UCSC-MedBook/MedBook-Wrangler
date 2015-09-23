@@ -122,12 +122,16 @@
 </template>
 
 <template name="expressionFields">
-  {{> afQuickField name="study_label"}}
+  <!-- {{> afQuickField name="study_label"}} -->
 </template>
 
 <template name="sharedFields">
   {{> afQuickField name="description" type="textarea" rows=3
       placeholder="Where did the data come from?"}}
+  {{> afQuickField name="study_label" type="select"
+      options=studyOptions firstOption="(Select a study)"}}
+  {{> afQuickField name="collaboration_label" type="select"
+      options=collaborationOptions firstOption="(Select a collaboration)"}}
 </template>
 
 <template name="validateAndSubmit">

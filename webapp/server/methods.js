@@ -3,8 +3,7 @@ Meteor.methods({
   submitSubmission: function (submissionId) {
     check(submissionId, String);
 
-    var userId = makeSureLoggedIn();
-    var submission = ensureSubmissionEditable(userId, submissionId);
+    var submission = ensureSubmissionEditable(makeSureLoggedIn(), submissionId);
 
     WranglerSubmissions.update(submissionId, {$set: {"status": "validating"}});
 

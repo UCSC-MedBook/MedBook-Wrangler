@@ -27,7 +27,22 @@
           </span>
         {{/if}}
       {{else}}
-        <span class="help-block">Add files or objects to continue</span>
+        <span class="help-block">
+          {{#if hasFiles}}
+            {{#if hasCompletedFile}}
+              You have uploaded a file, but no documents were created...
+              Maybe you uploaded a blank file?
+            {{else}}
+              {{#if hasProcessingFile}}
+                Your files are being processed...
+              {{else}}
+                Please correct errors to continue.
+              {{/if}}
+            {{/if}}
+          {{else}}
+            Add files or objects to continue
+          {{/if}}
+        </span>
       {{/if}}
     {{else}}
       <div class="relative-spinner" style="height: 300px;">
@@ -58,13 +73,7 @@
       </div>
       <div class="col-md-4">
         {{#if editing_file}}
-          {{#if doneProcessingFile}}
-            {{> editFileType}}
-          {{else}}
-            <span class="help-block center-text">
-              File must be done processing before it is edited.
-            </span>
-          {{/if}}
+          {{> editFileOptions}}
         {{else}}
           <span class="help-block center-text">
             Select a file to edit.
@@ -103,10 +112,10 @@
           </span>
         </h5>
 
-        {{#if isDefined manual_file_type}}
+        {{#if isDefined file_type}}
           <p class="list-group-item-text">
             <span class="blank-glyphicon-to-left">
-              Forced file type: {{manual_file_type}}
+              Forced file type: {{file_type}}
             </span>
           </p>
         {{/if}}
@@ -114,7 +123,7 @@
         {{#if compare status "error"}}
           <p class="list-group-item-text">
             <span class="blank-glyphicon-to-left">
-              Error: {{error_description}}
+              {{error_description}}
             </span>
           </p>
         {{/if}}
@@ -183,12 +192,23 @@
   </li>
 </template>
 
-<template name="editFileType">
+<template name="editFileOptions">
+  {{#if stillProcessing}}
+    <span class="help-block center-text">
+      Note: changes will take effect after current processing job is finished
+    </span>
+  {{/if}}
   {{#autoForm id="edit-file" schema=fileTypeSchema doc=currentEditingFile}}
-    {{> afQuickField name="manual_file_type" options="allowed"
+    {{> afQuickField name="file_type"
         firstOption="Auto"}}
+    {{#if afFieldValueIs name="file_type" value="gene_expression"}}
+      {{> afQuickField name="normalization"}}
+    {{/if}}
+    {{#if afFieldValueIs name="file_type" value="rectangular_gene_expression"}}
+      {{> afQuickField name="normalization"}}
+    {{/if}}
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">
+      <button class="btn btn-primary set-file-options">
         Apply
       </button>
     </div>

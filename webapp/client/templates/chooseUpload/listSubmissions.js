@@ -1,8 +1,4 @@
 Template.listSubmissions.helpers({
-  mySubmissions: function () {
-    // for reactiveTable
-    return WranglerSubmissions;
-  },
   hasCreatedSubmission: function () {
     return WranglerSubmissions.find({}).count() > 0;
   },

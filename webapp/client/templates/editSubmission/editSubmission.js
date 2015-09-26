@@ -21,6 +21,19 @@ Template.editSubmission.helpers({
   subscriptionsReallyReady: function () {
     return Counts.has("all-documents");
   },
+  hasFiles: function () {
+    return WranglerFiles.find().count() > 0;
+  },
+  hasCompletedFile: function () {
+    return WranglerFiles.find({
+      "status": "done"
+    }).count() > 0;
+  },
+  hasProcessingFile: function () {
+    return WranglerFiles.find({
+      "status": "processing" ,
+    }).count() > 0;
+  },
 });
 
 function getValidationContext(data) {
@@ -61,12 +74,6 @@ Template.addFiles.helpers({
       console.log("there is no currently selected editing file");
     }
   },
-  doneProcessingFile: function () {
-    // TODO: check in the meteor method that it's done or error, not just UI
-    var editingFile = WranglerFiles.findOne(this.editing_file);
-
-    return (editingFile.status === "done" || editingFile.status === "error");
-  },
 });
 
 Template.listFiles.helpers({
@@ -101,7 +108,7 @@ Template.listFiles.helpers({
 Template.listFiles.events({
   "click .remove-this-file": function(event, instance) {
     if (instance.data.status === "editing") {
-      Meteor.call("removeFile", instance.data._id, this._id);
+      Meteor.call("removeWranglerFile", instance.data._id, this._id);
     }
   },
   "click .edit-this-file": function (event, instance) {
@@ -119,7 +126,7 @@ function blobsInsertCallback (submissionId, error, fileObject) {
   if (error) {
     console.log("error:", error);
   } else {
-    Meteor.call("addFile", submissionId, fileObject._id,
+    Meteor.call("addWranglerFile", submissionId, fileObject._id,
         fileObject.original.name);
   }
 }
@@ -171,40 +178,33 @@ Template.uploadFilesListItem.events({
   },
 });
 
-AutoForm.addHooks('edit-file', {
-  // Called when form does not have a `type` attribute
-  onSubmit: function(insertDoc, updateDoc, currentDoc) {
-    this.event.preventDefault();
-
-    var data = Template.instance().parentInstance().data;
-
-    var newFileType = insertDoc.manual_file_type;
-    if (newFileType) {
-      WranglerFiles.update(dat.editing_file, {
-        $set: {
-          "manual_file_type": insertDoc.manual_file_type
-        }
-      });
-    } else {
-      WranglerFiles.update(data.editing_file, {
-        $unset: { "manual_file_type": 1 }
-      });
-    }
-
-    // hide that dialog
-    WranglerSubmissions.update(data._id, {
-      $unset: { "editing_file": 1 }
-    });
-
-    this.done();
+Template.editFileOptions.helpers({
+  fileTypeSchema: wranglerFileOptions,
+  currentEditingFile: function () {
+    return WranglerFiles.findOne(Template.instance().data.editing_file).options;
+  },
+  stillProcessing: function () {
+    var editingFile = WranglerFiles.findOne(this.editing_file);
+    return (editingFile.status !== "done" && editingFile.status !== "error");
   },
 });
 
-Template.editFileType.helpers({
-  fileTypeSchema: function () {
-    return WranglerFiles.simpleSchema().pick("manual_file_type");
-  },
-  currentEditingFile: function () {
-    return WranglerFiles.findOne(Template.instance().data.editing_file);
+Template.editFileOptions.events({
+  "click .set-file-options": function (event, instance) {
+    event.preventDefault();
+    var data = instance.parentInstance().data;
+    if (AutoForm.validateForm("edit-file")) {
+      var insertDoc = AutoForm.getFormValues("edit-file").insertDoc;
+      var oldOptions = WranglerFiles.findOne(data.editing_file).options;
+
+      if (JSON.stringify(insertDoc) !== JSON.stringify(oldOptions)) {
+        Meteor.call("reparseWranglerFile", data.editing_file, insertDoc);
+      }
+
+      // hide that dialog
+      WranglerSubmissions.update(data._id, {
+        $unset: { "editing_file": 1 }
+      });
+    }
   },
 });

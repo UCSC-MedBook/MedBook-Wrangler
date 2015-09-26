@@ -11,7 +11,6 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   var user = Meteor.users.findOne(this.userId);
   if (user) {
     var collaborations = user.profile.collaborations.concat(["public"]);
-    console.log("collaborations:", collaborations);
     return [
       Superpathways.find({}), // TODO: move this elsewhere
       WranglerSubmissions.find(submissionId),

@@ -31,11 +31,10 @@ TabularTables.listSubmissions = new Tabular.Table({
     },
   ],
   extraFields: ['collection_name'],
-  changeSelctor: function (selector, userId) {
-    console.log("selector:", selector);
-    ensureSubmissionEditable(selector.submission_id, userId);
-
-    return selector;
+  changeSelector: function (selector, userId) {
+    return {
+      "user_id": userId,
+    };
   },
 });
 
@@ -62,10 +61,8 @@ _.each(availableCollections, function (collectionName) {
     collection: WranglerDocuments,
     columns: generateColumns(collectionName),
     extraFields: ['collection_name', 'wrangler_file_id'],
-    changeSelctor: function (selector, userId) {
-      console.log("selector:", selector);
-      ensureSubmissionEditable(selector.submission_id, userId);
-
+    changeSelector: function (selector, userId) {
+      ensureSubmissionAvailable(userId, selector.submission_id);
       return selector;
     },
   });

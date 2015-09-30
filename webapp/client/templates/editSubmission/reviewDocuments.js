@@ -1,17 +1,5 @@
 Template.reviewWranglerDocuments.helpers({
-  // TODO: use getSubmissionTypes instead
-  superpathwayType: function () {
-    return Counts.get("type_superpathway");
-  },
-  mutationType: function () {
-    return Counts.get("type_mutation");
-  },
-  geneExpressionType: function () {
-    return Counts.get("type_gene_expression");
-  },
-  rectangularGeneExpressionType: function () {
-    return Counts.get("type_gene_expression");
-  },
+  
 });
 
 Template.reviewSuperpathwayDocuments.helpers({

@@ -3,19 +3,25 @@
 
   <div class="row">
     <div class="col-md-6">
-      {{#if compare classifySubmissionType "superpathway"}}
+      {{#if getPublishedCount "type_superpathway"}}
         {{#submissionOptions schema=superpathwaySchema}}
           {{> superpathwayFields}}
         {{/submissionOptions}}
       {{/if}}
 
-      {{#if compare classifySubmissionType "mutation"}}
+      {{#if getPublishedCount "type_mutation"}}
         {{#submissionOptions schema=mutationSchema}}
           {{> mutationFields}}
         {{/submissionOptions}}
       {{/if}}
 
-      {{#if compare classifySubmissionType "expression"}}
+      {{#if getPublishedCount "type_gene_expression"}}
+        {{#submissionOptions schema=expressionSchema}}
+          {{> expressionFields}}
+        {{/submissionOptions}}
+      {{/if}}
+
+      {{#if getPublishedCount "type_rectangular_gene_expression"}}
         {{#submissionOptions schema=expressionSchema}}
           {{> expressionFields}}
         {{/submissionOptions}}

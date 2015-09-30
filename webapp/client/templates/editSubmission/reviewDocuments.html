@@ -2,19 +2,19 @@
   <h2>Review</h2>
 
   <div class="flex-container">
-    {{#if superpathwayType}}
+    {{#if getPublishedCount "type_superpathway"}}
       {{> reviewSuperpathwayDocuments}}
     {{/if}}
 
-    {{#if mutationType}}
+    {{#if getPublishedCount "type_mutation"}}
       {{> reviewMutationDocuments}}
     {{/if}}
 
-    {{#if geneExpressionType}}
+    {{#if getPublishedCount "type_gene_expression"}}
       {{> reviewGeneExpressionDocuments}}
     {{/if}}
 
-    {{#if rectangularGeneExpressionType}}
+    {{#if getPublishedCount "type_rectangular_gene_expression"}}
       {{> reviewRectangularGeneExpressionDocuments}}
     {{/if}}
 
@@ -58,7 +58,14 @@
 
 <template name="reviewRectangularGeneExpressionDocuments">
   <div class="documents-from-collection">
-    Hello!
+    <h4>Sample labels</h4>
+    {{> tabular table=TabularTables.sample_labels
+        selector=geneExpressionSelector
+        class="table table-striped table-bordered table-condensed"}}
+    <h4>Gene labels</h4>
+    {{> tabular table=TabularTables.gene_labels
+        selector=geneExpressionSelector
+        class="table table-striped table-bordered table-condensed"}}
   </div>
 </template>
 

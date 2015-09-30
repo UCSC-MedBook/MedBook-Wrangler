@@ -9,7 +9,7 @@ Template.editSubmission.helpers({
     return Counts.get("all-documents") > 0;
   },
   classifySubmissionType: function () {
-    var documentTypes = getDocumentTypes(this._id);
+    var documentTypes = getSubmissionTypes(this._id);
 
     if (documentTypes.length === 1) {
       return documentTypes[0];
@@ -17,7 +17,7 @@ Template.editSubmission.helpers({
 
     return null;
   },
-  getDocumentTypes: getDocumentTypes,
+  getSubmissionTypes: getSubmissionTypes,
   subscriptionsReallyReady: function () {
     return Counts.has("all-documents");
   },
@@ -25,19 +25,22 @@ Template.editSubmission.helpers({
     return WranglerFiles.find().count() > 0;
   },
   hasCompletedFile: function () {
-    return WranglerFiles.find({
-      "status": "done"
-    }).count() > 0;
+    return WranglerFiles.find({ "status": "done" }).count() > 0;
   },
   hasProcessingFile: function () {
+    return WranglerFiles.find({ "status": "processing" }).count() > 0;
+  },
+  hasUploadingFile: function () {
     return WranglerFiles.find({
-      "status": "processing" ,
+      "status": {
+        $in: ["uploading", "creating"]
+      }
     }).count() > 0;
   },
 });
 
 function getValidationContext(data) {
-  return getCollectionByName(data.collection_name)
+  return getCollectionByName(data.document_type)
       .simpleSchema()
       .namedContext(data._id);
 }
@@ -78,7 +81,7 @@ Template.addFiles.helpers({
 
 Template.listFiles.helpers({
   getFiles: function () {
-    return WranglerFiles.find({});
+    return WranglerFiles.find({}, {sort: {blob_name: 1}});
   },
   fileContextualClass: function () {
     switch (this.status) {

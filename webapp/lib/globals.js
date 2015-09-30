@@ -5,25 +5,25 @@ _ = lodash;
 //
 
 makeSureLoggedIn = function() {
-  var userId = Meteor.user() && Meteor.user()._id;
-  if (!userId) {
+  var user_id = Meteor.user() && Meteor.user()._id;
+  if (!user_id) {
     throw new Meteor.Error(403, "not-logged-in", "Log in to proceed");
   }
-  return userId;
+  return user_id;
 };
 
-ensureSubmissionAvailable = function (userId, submissionId) {
-  var submission = WranglerSubmissions.findOne(submissionId);
+ensureSubmissionAvailable = function (user_id, submission_id) {
+  var submission = WranglerSubmissions.findOne(submission_id);
 
-  if (submission && submission.user_id === userId) {
+  if (submission && submission.user_id === user_id) {
     return submission;
   }
 
   throw new Meteor.Error("submission-not-available");
 };
 
-ensureSubmissionEditable = function (userId, submissionId) {
-  var submission = ensureSubmissionAvailable(userId, submissionId);
+ensureSubmissionEditable = function (user_id, submission_id) {
+  var submission = ensureSubmissionAvailable(user_id, submission_id);
 
   if (submission.status === "editing") {
     return submission;
@@ -32,34 +32,30 @@ ensureSubmissionEditable = function (userId, submissionId) {
   throw new Meteor.Error("submission-not-editable");
 };
 
-getDocumentTypes = function (submissionId) {
+getSubmissionTypes = function (submission_id) {
 
-  function getCollectionCount(collectionName) {
+  function getSubmissionTypeCount(submission_type) {
     if (Meteor.isClient) {
-      return Counts.get(collectionName);
+      return Counts.get("type_" + submission_type);
     } else {
       return WranglerDocuments.find({
-        "submission_id": submissionId,
-        "collection_name": collectionName,
+        "submission_id": submission_id,
+        "submission_type": submission_type,
       }).count();
     }
   }
 
-  var documentTypes = [];
+  var submissionTypes = [];
+  var possibleTypes = WranglerDocuments.simpleSchema()
+      .schema()
+      .submission_type
+      .allowedValues;
 
-  if (getCollectionCount("superpathways") > 0 ||
-      getCollectionCount("superpathway_elements") > 0 ||
-      getCollectionCount("superpathway_interactions") > 0) {
-    documentTypes.push("superpathway");
-  }
+  _.each(possibleTypes, function (submission_type) {
+    if (getSubmissionTypeCount(submission_type) > 0) {
+      submissionTypes.push(submission_type);
+    }
+  });
 
-  if (getCollectionCount("mutations") > 0) {
-    documentTypes.push("mutation");
-  }
-
-  if (getCollectionCount("gene_expression") > 0) {
-    documentTypes.push("expression");
-  }
-
-  return documentTypes;
+  return submissionTypes;
 };

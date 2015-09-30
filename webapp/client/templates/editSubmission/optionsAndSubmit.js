@@ -6,7 +6,7 @@ var sharedSchema = new SimpleSchema({
 
 Template.optionsAndSubmit.helpers({
   classifySubmissionType: function () {
-    var documentTypes = getDocumentTypes(this._id);
+    var documentTypes = getSubmissionTypes(this._id);
 
     if (documentTypes.length === 1) {
       return documentTypes[0];

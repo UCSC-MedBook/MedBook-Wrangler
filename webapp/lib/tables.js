@@ -30,7 +30,7 @@ TabularTables.listSubmissions = new Tabular.Table({
       tmpl: Meteor.isClient && Template.submissionActions,
     },
   ],
-  extraFields: ['collection_name'],
+  extraFields: ['document_type'],
   changeSelector: function (selector, userId) {
     return {
       "user_id": userId,
@@ -60,7 +60,7 @@ _.each(availableCollections, function (collectionName) {
     name: collectionName,
     collection: WranglerDocuments,
     columns: generateColumns(collectionName),
-    extraFields: ['collection_name', 'wrangler_file_id'],
+    extraFields: ['document_type', 'wrangler_file_id'],
     changeSelector: function (selector, userId) {
       ensureSubmissionAvailable(userId, selector.submission_id);
       return selector;

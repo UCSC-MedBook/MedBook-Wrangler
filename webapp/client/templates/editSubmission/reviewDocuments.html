@@ -2,16 +2,20 @@
   <h2>Review</h2>
 
   <div class="flex-container">
-    {{#if hasSuperpathwayDocuments}}
+    {{#if superpathwayType}}
       {{> reviewSuperpathwayDocuments}}
     {{/if}}
 
-    {{#if hasMutationDocuments}}
+    {{#if mutationType}}
       {{> reviewMutationDocuments}}
     {{/if}}
 
-    {{#if hasGeneExpressionDocuments}}
+    {{#if geneExpressionType}}
       {{> reviewGeneExpressionDocuments}}
+    {{/if}}
+
+    {{#if rectangularGeneExpressionType}}
+      {{> reviewRectangularGeneExpressionDocuments}}
     {{/if}}
 
     {{! else have a plus button to add that type }}
@@ -49,6 +53,12 @@
     {{> tabular table=TabularTables.gene_expression
         selector=geneExpressionSelector
         class="table table-striped table-bordered table-condensed"}}
+  </div>
+</template>
+
+<template name="reviewRectangularGeneExpressionDocuments">
+  <div class="documents-from-collection">
+    Hello!
   </div>
 </template>
 

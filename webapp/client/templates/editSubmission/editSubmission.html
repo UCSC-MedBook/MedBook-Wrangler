@@ -19,7 +19,7 @@
           <span class="help-block">
             Multiple submission types detected:
             <ul>
-              {{#each getDocumentTypes}}
+              {{#each getSubmissionTypes}}
                 <li>{{this}}</li>
               {{/each}}
             </ul>
@@ -36,7 +36,11 @@
               {{#if hasProcessingFile}}
                 Your files are being processed...
               {{else}}
-                Please correct errors to continue.
+                {{#if hasUploadingFile}}
+                  Your files are uploading...
+                {{else}}
+                  Please correct errors to continue.
+                {{/if}}
               {{/if}}
             {{/if}}
           {{else}}

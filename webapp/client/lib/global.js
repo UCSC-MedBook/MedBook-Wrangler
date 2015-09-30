@@ -25,7 +25,7 @@ Template.registerHelper('isDefined', function (first) {
 // for validating against a schema and listing invalid keys
 
 function getValidationContext(data) {
-  return getCollectionByName(data.collection_name)
+  return getCollectionByName(data.document_type)
       .simpleSchema()
       .namedContext(data._id);
 }

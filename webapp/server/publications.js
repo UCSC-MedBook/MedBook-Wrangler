@@ -32,29 +32,28 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   }
 });
 
-Meteor.publish('documentCounts', function(submissionId) {
-  check(submissionId, String);
-  ensureSubmissionAvailable(this.userId, submissionId);
-
+Meteor.publish('documentCounts', function(submission_id) {
   var self = this;
-  function publishCounts (collectionName) {
-    Counts.publish(self, collectionName, WranglerDocuments.find({
-      "submission_id": submissionId,
-      "collection_name": collectionName,
-    }));
-  }
 
-  publishCounts("superpathways");
-  publishCounts("superpathway_elements");
-  publishCounts("superpathway_interactions");
-  publishCounts("mutations");
-  publishCounts("gene_expression");
+  check(submission_id, String);
+  ensureSubmissionAvailable(self.userId, submission_id);
+
+  var types = WranglerDocuments.simpleSchema()
+      .schema()
+      .submission_type
+      .allowedValues;
+  _.each(types, function (submission_type) {
+    Counts.publish(self, "type_" + submission_type, WranglerDocuments.find({
+      "submission_id": submission_id,
+      "submission_type": submission_type,
+    }));
+  });
 
   Counts.publish(self, "all-documents", WranglerDocuments.find({
-    "submission_id": submissionId,
+    "submission_id": submission_id,
   }));
 
   Counts.publish(self, "all-files", WranglerFiles.find({
-    "submission_id": submissionId,
+    "submission_id": submission_id,
   }));
 });

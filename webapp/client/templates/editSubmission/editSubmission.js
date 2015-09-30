@@ -33,7 +33,7 @@ Template.editSubmission.helpers({
   hasUploadingFile: function () {
     return WranglerFiles.find({
       "status": {
-        $in: ["uploading", "creating"]
+        $in: ["creating", "uploading", "saving"]
       }
     }).count() > 0;
   },

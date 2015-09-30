@@ -1,5 +1,5 @@
 Template.reviewWranglerDocuments.helpers({
-  
+
 });
 
 Template.reviewSuperpathwayDocuments.helpers({
@@ -31,6 +31,21 @@ Template.reviewGeneExpressionDocuments.helpers({
     return {
       "submission_id": this._id,
       "document_type": "gene_expression",
+    };
+  },
+});
+
+Template.reviewRectangularGeneExpressionDocuments.helpers({
+  sampleLabelSelector: function () {
+    return {
+      "submission_id": this._id,
+      "document_type": "sample_label",
+    };
+  },
+  geneLabelSelector: function () {
+    return {
+      "submission_id": this._id,
+      "document_type": "gene_label",
     };
   },
 });

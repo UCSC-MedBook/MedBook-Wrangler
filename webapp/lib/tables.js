@@ -31,11 +31,36 @@ TabularTables.listSubmissions = new Tabular.Table({
     },
   ],
   extraFields: ['document_type'],
-  changeSelector: function (selector, userId) {
+  changeSelector: function (selector, user_id) {
     return {
-      "user_id": userId,
+      "user_id": user_id,
     };
   },
+});
+
+function ensureAvailableForSelector (selector, user_id) {
+  ensureSubmissionAvailable(user_id, selector.submission_id);
+  return selector;
+}
+
+TabularTables.sample_labels = new Tabular.Table({
+  name: "sample_labels",
+  collection: WranglerDocuments,
+  columns: [
+    { title: "Sample labels", data: "prospective_document.sample_label" }
+  ],
+  extraFields: ['document_type', 'wrangler_file_id'],
+  changeSelector: ensureAvailableForSelector,
+});
+
+TabularTables.gene_labels = new Tabular.Table({
+  name: "gene_labels",
+  collection: WranglerDocuments,
+  columns: [
+    { title: "Gene labels", data: "prospective_document.gene_label" }
+  ],
+  extraFields: ['document_type', 'wrangler_file_id'],
+  changeSelector: ensureAvailableForSelector,
 });
 
 generateColumns = function (collectionName) {
@@ -61,9 +86,6 @@ _.each(availableCollections, function (collectionName) {
     collection: WranglerDocuments,
     columns: generateColumns(collectionName),
     extraFields: ['document_type', 'wrangler_file_id'],
-    changeSelector: function (selector, userId) {
-      ensureSubmissionAvailable(userId, selector.submission_id);
-      return selector;
-    },
+    changeSelector: ensureAvailableForSelector,
   });
 });

@@ -197,11 +197,6 @@
 </template>
 
 <template name="editFileOptions">
-  {{#if stillProcessing}}
-    <span class="help-block center-text">
-      Note: changes will take effect after current processing job is finished
-    </span>
-  {{/if}}
   {{#autoForm id="edit-file" schema=fileTypeSchema doc=currentEditingFile}}
     {{> afQuickField name="file_type"
         firstOption="Auto"}}
@@ -217,4 +212,9 @@
       </button>
     </div>
   {{/autoForm}}
+  {{#if stillProcessing}}
+    <span class="help-block center-text">
+      Note: changes will take effect after current processing job is finished
+    </span>
+  {{/if}}
 </template>

@@ -104,12 +104,28 @@
   <li class="list-group-item edit-this-file
       {{fileContextualClass}}
       {{activeClass}}">
-    <h5 class="list-group-item-heading"> {{! what a large h5...}}
+    <span class="pull-right">
+      <span class="badge">
+        {{#if compare status "done"}}
+          processed
+        {{else}}
+          {{status}}
+        {{/if}}
+      </span>
+      {{#if isEditable}}
+        <button class="remove-this-file btn btn-xs btn-warning">
+          <span class="sr-only">Remove file</span>
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      {{/if}}
+    </span>
+
+    <h5 class="list-group-item-heading elipsis-out-before-badge">
       <i class="glyphicon glyphicon-file"></i>
 
       {{blob_name}}
 
-      <span class="pull-right">
+      <!-- <span class="pull-right">
         <span class="badge">
           {{#if compare status "done"}}
             processed
@@ -123,8 +139,10 @@
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         {{/if}}
-      </span>
+      </span> -->
     </h5>
+
+
 
     {{#if compare status "error"}}
       <p class="list-group-item-text">

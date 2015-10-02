@@ -92,8 +92,6 @@ Template.listFiles.helpers({
 Template.showFile.onCreated(function () {
   var instance = this;
 
-  console.log("instance.data:", instance.data);
-
   instance.autorun(function () {
     // subscribe to the blob for this wrangler file
     instance.subscribe("specificBlob", instance.data.blob_id, function () {
@@ -112,9 +110,6 @@ Template.showFile.onCreated(function () {
       });
     });
   });
-
-
-
 });
 
 Template.showFile.helpers({
@@ -147,8 +142,14 @@ Template.showFile.helpers({
 Template.showFile.events({
   "click .remove-this-file": function(event, instance) {
     if (instance.parent().data.status === "editing") {
-      Meteor.call("removeWranglerFile",
-          instance.parent().data._id, this._id);
+      var wrangler_file_id = this._id;
+
+      // wrapping it in Meteor.defer gets rid of a DOM error
+      // https://github.com/meteor/meteor/issues/2981
+      Meteor.defer(function () {
+        Meteor.call("removeWranglerFile",
+            instance.parent().data._id, wrangler_file_id);
+      });
     }
   },
   "click .edit-this-file": function (event, instance) {

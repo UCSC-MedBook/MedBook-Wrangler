@@ -36,6 +36,13 @@ div#center {
   margin-right: 25px;
   margin-bottom: 5px;
 }
+.elipsis-out-before-badge {
+  // less gets rid of calc... ~ escapes the string
+  width: ~"calc(100% - 110px)";
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 // buttons at bottom of file list
 .display-block {

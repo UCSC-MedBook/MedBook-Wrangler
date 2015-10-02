@@ -26,6 +26,12 @@
           {{> expressionFields}}
         {{/submissionOptions}}
       {{/if}}
+
+      {{#if getPublishedCount "type_mutation_gene_expression"}}
+        {{#submissionOptions schema=expressionSchema}}
+          {{> expressionFields}}
+        {{/submissionOptions}}
+      {{/if}}
     </div>
     <div class="col-md-6">
       {{> submissionStatus}}

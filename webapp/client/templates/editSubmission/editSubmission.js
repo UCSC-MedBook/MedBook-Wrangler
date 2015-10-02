@@ -49,6 +49,8 @@ Template.addFiles.rendered = function() {
   this.autorun(function (first, second) {
     var data = this.templateInstance().data;
 
+    // clicks outside of .click-outside-to-unselect will deselect
+    // the editing_file
     if (data.status === "editing") {
       $(document).on('click', function (e) {
         var parents = $(e.target).parents('.click-outside-to-unselect');
@@ -101,26 +103,27 @@ Template.showFile.helpers({
   },
   activeClass: function () {
     // TODO: fix this
-    var data = Template.instance().data;
+    var data = Template.instance().parent().data;
     if (data.editing_file !== undefined && data.editing_file === this._id) {
       return "active";
     }
   },
   isEditable: function () {
-    console.log("Template.instance():", Template.instance());
-    return Template.instance().data.status === "editing";
+    // console.log("Template.instance():", Template.instance());
+    return Template.instance().parent().data.status === "editing";
   },
 });
 
 Template.showFile.events({
   "click .remove-this-file": function(event, instance) {
-    if (instance.data.status === "editing") {
-      Meteor.call("removeWranglerFile", instance.data._id, this._id);
+    if (instance.parent().data.status === "editing") {
+      Meteor.call("removeWranglerFile",
+          instance.parent().data._id, this._id);
     }
   },
   "click .edit-this-file": function (event, instance) {
-    if (instance.data.status === "editing") {
-      WranglerSubmissions.update(instance.data._id, {
+    if (instance.parent().data.status === "editing") {
+      WranglerSubmissions.update(instance.parent().data._id, {
         $set: { "editing_file": this._id }
       });
     }

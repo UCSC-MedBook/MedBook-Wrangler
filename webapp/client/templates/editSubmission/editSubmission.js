@@ -83,13 +83,16 @@ Template.listFiles.helpers({
   getFiles: function () {
     return WranglerFiles.find({}, {sort: {blob_name: 1}});
   },
+});
+
+Template.showFile.helpers({
   fileContextualClass: function () {
     switch (this.status) {
       case "done":
         return "list-group-item-success";
-      case "creating": case "uploading": case "saving":
+      case "creating": case "uploading":
         return "list-group-item-warning";
-      case "processing":
+      case "processing": case "saving": case "waiting":
         return "list-group-item-info";
       case "error":
         return "list-group-item-danger";
@@ -104,11 +107,12 @@ Template.listFiles.helpers({
     }
   },
   isEditable: function () {
+    console.log("Template.instance():", Template.instance());
     return Template.instance().data.status === "editing";
   },
 });
 
-Template.listFiles.events({
+Template.showFile.events({
   "click .remove-this-file": function(event, instance) {
     if (instance.data.status === "editing") {
       Meteor.call("removeWranglerFile", instance.data._id, this._id);

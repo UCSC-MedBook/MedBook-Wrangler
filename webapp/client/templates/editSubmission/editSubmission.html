@@ -91,63 +91,67 @@
 <template name="listFiles">
   <ul class="list-group">
     {{#each getFiles}}
-      <li class="list-group-item edit-this-file
-          {{fileContextualClass}}
-          {{activeClass}}">
-        <h5 class="list-group-item-heading"> {{! what a large h5...}}
-          <i class="glyphicon glyphicon-file"></i>
-
-          {{blob_name}}
-
-          <span class="pull-right">
-            <span class="badge">
-              {{#if compare status "done"}}
-                processed
-              {{else}}
-                {{status}}
-              {{/if}}
-            </span>
-            {{#if isEditable}}
-              <button class="remove-this-file btn btn-xs btn-warning">
-                <span class="sr-only">Remove file</span>
-                <span class="glyphicon glyphicon-trash"></span>
-              </button>
-            {{/if}}
-          </span>
-        </h5>
-
-        {{#if isDefined file_type}}
-          <p class="list-group-item-text">
-            <span class="blank-glyphicon-to-left">
-              Forced file type: {{file_type}}
-            </span>
-          </p>
-        {{/if}}
-
-        {{#if compare status "error"}}
-          <p class="list-group-item-text">
-            <span class="blank-glyphicon-to-left">
-              {{error_description}}
-            </span>
-          </p>
-        {{/if}}
-
-        {{#if compare status "uploading"}}
-          <p class="list-group-item-text">
-            {{#with FS.GetFile "blobs" blob_id}}
-              {{> FS.UploadProgressBar bootstrap=true
-                  class='progress-bar-striped active'
-                  showPercent=true}}
-            {{/with}}
-          </p>
-        {{/if}}
-      </li>
+      {{> showFile this}}
     {{/each}}
 
     {{#if compare status "editing"}}
       {{> uploadFilesListItem}}
     {{/if}}
   </ul>
+</template>
+
+<template name="showFile">
+  <li class="list-group-item edit-this-file
+      {{fileContextualClass}}
+      {{activeClass}}">
+    <h5 class="list-group-item-heading"> {{! what a large h5...}}
+      <i class="glyphicon glyphicon-file"></i>
+
+      {{blob_name}}
+
+      <span class="pull-right">
+        <span class="badge">
+          {{#if compare status "done"}}
+            processed
+          {{else}}
+            {{status}}
+          {{/if}}
+        </span>
+        {{#if isEditable}}
+          <button class="remove-this-file btn btn-xs btn-warning">
+            <span class="sr-only">Remove file</span>
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        {{/if}}
+      </span>
+    </h5>
+
+    {{#if isDefined file_type}}
+      <p class="list-group-item-text">
+        <span class="blank-glyphicon-to-left">
+          Forced file type: {{file_type}}
+        </span>
+      </p>
+    {{/if}}
+
+    {{#if compare status "error"}}
+      <p class="list-group-item-text">
+        <span class="blank-glyphicon-to-left">
+          {{error_description}}
+        </span>
+      </p>
+    {{/if}}
+
+    {{#if compare status "uploading"}}
+      <p class="list-group-item-text">
+        {{#with FS.GetFile "blobs" blob_id}}
+          {{> FS.UploadProgressBar bootstrap=true
+              class='progress-bar-striped active'
+              showPercent=true}}
+        {{/with}}
+      </p>
+    {{/if}}
+  </li>
 </template>
 
 <template name="uploadFilesListItem">
@@ -176,22 +180,6 @@
           </div>
         </form>
       </div>
-
-      {{! TODO: add manually}}
-      <!-- <div class="col-md-4 btn-group display-block">
-        <button class="btn btn-default dropdown-toggle fill-width"
-            type="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-          Add manually <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li class="add-superpathway"><a href="#">Superpathway</a></li>
-          <li><a href="#">Another action</a></li>
-          <li class="disabled"><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div> -->
     </div>
   </li>
 </template>

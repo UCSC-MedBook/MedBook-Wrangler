@@ -17,9 +17,6 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
       WranglerFiles.find({
         "submission_id": submissionId,
       }),
-      Blobs.find({
-        "metadata.submission_id": submissionId,
-      }),
       Studies.find({
         "collaborations.0": { $in: collaborations },
       }),
@@ -30,6 +27,15 @@ Meteor.publish("wranglerSubmission", function (submissionId) {
   } else {
     this.ready();
   }
+});
+
+Meteor.publish("specificBlob", function (blob_id) {
+  check(blob_id, String);
+
+  return Blobs.find({
+    _id: blob_id,
+    'metadata.user_id': this.userId,
+  });
 });
 
 Meteor.publish('documentCounts', function(submission_id) {

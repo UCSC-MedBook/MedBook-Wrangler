@@ -1,7 +1,9 @@
 Template.editSubmission.onCreated(function () {
   var instance = this;
 
-  instance.subscribe("documentCounts", instance.data._id);
+  this.autorun(function () {
+    instance.subscribe("documentCounts", instance.data._id);
+  });
 });
 
 Template.editSubmission.helpers({
@@ -85,6 +87,34 @@ Template.listFiles.helpers({
   getFiles: function () {
     return WranglerFiles.find({}, {sort: {blob_name: 1}});
   },
+});
+
+Template.showFile.onCreated(function () {
+  var instance = this;
+
+  console.log("instance.data:", instance.data);
+
+  instance.autorun(function () {
+    // subscribe to the blob for this wrangler file
+    instance.subscribe("specificBlob", instance.data.blob_id, function () {
+      // switch from uploading to waiting when blob has stored
+      instance.autorun(function () {
+        var blob = Blobs.findOne(instance.data.blob_id);
+        if (instance.data.status === "uploading" &&
+            blob && blob.hasStored("blobs")) {
+          // update it if it's stored
+          WranglerFiles.update(instance.data._id, {
+            $set: {
+              status: "waiting",
+            }
+          });
+        }
+      });
+    });
+  });
+
+
+
 });
 
 Template.showFile.helpers({

@@ -31,7 +31,7 @@ function getValidationContext(data) {
 }
 
 Template.registerHelper("isValid", function (){
-  return getValidationContext(this).validate(this.prospective_document);
+  return getValidationContext(this).validate(this.contents);
 });
 
 Template.registerHelper("invalidKeys", function (){

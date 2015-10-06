@@ -15,7 +15,6 @@ accounts-ui
 
 
 cfs:ui
-cfs:gridfs
 cfs:data-man
 
 

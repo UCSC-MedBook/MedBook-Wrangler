@@ -47,7 +47,7 @@ TabularTables.sample_labels = new Tabular.Table({
   name: "sample_labels",
   collection: WranglerDocuments,
   columns: [
-    { title: "Sample labels", data: "prospective_document.sample_label" }
+    { title: "Sample labels", data: "contents.sample_label" }
   ],
   extraFields: ['document_type', 'wrangler_file_id'],
   changeSelector: ensureAvailableForSelector,
@@ -57,7 +57,7 @@ TabularTables.gene_labels = new Tabular.Table({
   name: "gene_labels",
   collection: WranglerDocuments,
   columns: [
-    { title: "Gene labels", data: "prospective_document.gene_label" }
+    { title: "Gene labels", data: "contents.gene_label" }
   ],
   extraFields: ['document_type', 'wrangler_file_id'],
   changeSelector: ensureAvailableForSelector,
@@ -75,7 +75,7 @@ generateColumns = function (collectionName) {
   ].concat(_.map(fields, function (fieldName) {
     return {
       title: schema.label(fieldName),
-      data: "prospective_document." + fieldName,
+      data: "contents." + fieldName,
     };
   }));
 };

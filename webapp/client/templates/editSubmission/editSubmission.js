@@ -30,7 +30,9 @@ Template.editSubmission.helpers({
     return WranglerFiles.find({ "status": "done" }).count() > 0;
   },
   hasProcessingFile: function () {
-    return WranglerFiles.find({ "status": "processing" }).count() > 0;
+    return WranglerFiles.find({
+      "status": {$in: ["processing", "waiting"]}
+    }).count() > 0;
   },
   hasUploadingFile: function () {
     return WranglerFiles.find({

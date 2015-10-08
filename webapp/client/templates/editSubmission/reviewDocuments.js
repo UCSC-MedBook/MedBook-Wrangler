@@ -21,7 +21,8 @@ Template.reviewMutationDocuments.helpers({
   mutationsSelector: function () {
     return {
       "submission_id": this._id,
-      "document_type": "mutations",
+      "document_type": "prospective_document",
+      "collection_name": "mutations",
     };
   },
 });

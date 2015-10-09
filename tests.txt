@@ -1,0 +1,18 @@
+clear out WranglerDocuments, WranglerFiles, WranglerSubmisisons, Blobs
+navigate to /Wrangler
+  - check to make sure everything is where it should be (nothing created)
+  click "Create a new submission"
+  - check to make sure browser now at /Wrangler/editSubmission/:submission_id
+  click "Submissions" in breadcrumbs
+  - check to make sure browser now at /Wrangler
+  - check to make sure there is a table
+  - check to make sure there is one item in the table
+  - check to make sure status of single submission "editing"
+  click "Edit" button
+  - check to make sure browser now at /Wrangler/editSubmission/:submission_id
+  navigate to /Wrangler
+  click on "delete" button
+  - check to make sure everything is where it should be (nothing created)
+  click "Create a new submission"
+  - check to make sure browser now at /Wrangler/editSubmission/:submission_id
+  - 

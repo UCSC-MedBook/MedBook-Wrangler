@@ -144,14 +144,14 @@ Template.validateAndSubmit.events({
   "click .validate-and-submit": function (event, instance) {
     event.preventDefault();
     if (AutoForm.validateForm("submission-options")) {
-      var submissionId = instance.parent().parent().data._id;
-      WranglerSubmissions.update(submissionId, {
+      var submission_id = instance.parent().parent().data._id;
+      WranglerSubmissions.update(submission_id, {
         $set: {
           "options": AutoForm.getFormValues("submission-options").insertDoc
         }
       });
 
-      Meteor.call("submitSubmission", submissionId);
+      Meteor.call("submitSubmission", submission_id);
     }
   },
 });

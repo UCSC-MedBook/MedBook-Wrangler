@@ -49,30 +49,31 @@ function getValidationContext(data) {
       .namedContext(data._id);
 }
 
-Template.addFiles.rendered = function() {
-  this.autorun(function (first, second) {
-    var data = this.templateInstance().data;
+Template.addFiles.onCreated(function () {
+  var instance = this;
+  instance.editingFileId = new ReactiveVar(null);
+});
 
-    // clicks outside of .click-outside-to-unselect will deselect
-    // the editing_file
-    if (data.status === "editing") {
-      $(document).on('click', function (e) {
-        var parents = $(e.target).parents('.click-outside-to-unselect');
-        if (parents.length === 0) {
-          WranglerSubmissions.update(data._id, {
-            $unset: { "editing_file": 1 }
-          });
-        }
-      });
-    } else {
-      $(document).off('click');
+Template.addFiles.onRendered(function() {
+  var instance = Template.instance();
+
+  // clicks outside of .click-outside-to-unselect will deselect
+  // the editing file
+  $(document).on('click', function (e) {
+    var parents = $(e.target).parents('.click-outside-to-unselect');
+    if (parents.length === 0) {
+      instance.editingFileId.set(null);
     }
   });
-};
+});
+
+Template.addFiles.onDestroyed(function () {
+  $(document).off('click');
+});
 
 Template.addFiles.helpers({
-  shouldBeFullWidth: function () {
-    return this.status !== "editing" || WranglerFiles.find().count() === 0;
+  noWranglerFiles: function () {
+    return WranglerFiles.find().count() === 0;
   },
   statusOfEditingFile: function () {
     var editingFile = WranglerFiles.findOne(this.editing_file);
@@ -81,6 +82,12 @@ Template.addFiles.helpers({
       return editingFile.status;
     } else {
       console.log("there is no currently selected editing file");
+    }
+  },
+  editingFileSelected: function () {
+    var wranglerFileId = Template.instance().editingFileId.get();
+    if (wranglerFileId) {
+      return WranglerFiles.findOne(wranglerFileId);
     }
   },
 });
@@ -129,9 +136,9 @@ Template.showFile.helpers({
     console.log("Error: file contextual class not found");
   },
   activeClass: function () {
-    // TODO: fix this
-    var data = Template.instance().parent().data;
-    if (data.editing_file !== undefined && data.editing_file === this._id) {
+    var editingFileId = Template.instance().parent().parent()
+        .editingFileId.get();
+    if (editingFileId === this._id) {
       return "active";
     }
   },
@@ -155,21 +162,17 @@ Template.showFile.events({
     }
   },
   "click .edit-this-file": function (event, instance) {
-    if (instance.parent().data.status === "editing") {
-      WranglerSubmissions.update(instance.parent().data._id, {
-        $set: { "editing_file": this._id }
-      });
-    }
+    instance.parent().parent().editingFileId.set(this._id);
   },
 });
 
 // defined out here because it's used in two helpers
 // (_.partial used within the functions)
-function blobsInsertCallback (submissionId, error, fileObject) {
+function blobsInsertCallback (submission_id, error, fileObject) {
   if (error) {
     console.log("error:", error);
   } else {
-    Meteor.call("addWranglerFile", submissionId, fileObject._id,
+    Meteor.call("addWranglerFile", submission_id, fileObject._id,
         fileObject.original.name);
   }
 }
@@ -224,30 +227,36 @@ Template.uploadFilesListItem.events({
 Template.editFileOptions.helpers({
   fileTypeSchema: wranglerFileOptions,
   currentEditingFile: function () {
-    return WranglerFiles.findOne(Template.instance().data.editing_file).options;
+    var editingFile = WranglerFiles
+        .findOne(Template.instance().parent().editingFileId.get());
+    if (editingFile) {
+      return editingFile.options;
+    }
   },
   stillProcessing: function () {
-    var editingFile = WranglerFiles.findOne(this.editing_file);
-    return (editingFile.status !== "done" && editingFile.status !== "error");
+    var editingFileId = Template.instance().parent().editingFileId.get();
+    var editingFile = WranglerFiles.findOne(editingFileId);
+    if (editingFile) {
+      return (editingFile.status !== "done" && editingFile.status !== "error");
+    }
   },
 });
 
 Template.editFileOptions.events({
   "click .set-file-options": function (event, instance) {
     event.preventDefault();
-    var data = instance.parentInstance().data;
+    var parentInstance = instance.parentInstance();
     if (AutoForm.validateForm("edit-file")) {
+      var editingFileId = parentInstance.editingFileId.get();
       var insertDoc = AutoForm.getFormValues("edit-file").insertDoc;
-      var oldOptions = WranglerFiles.findOne(data.editing_file).options;
+      var oldOptions = WranglerFiles.findOne(editingFileId).options;
 
       if (JSON.stringify(insertDoc) !== JSON.stringify(oldOptions)) {
-        Meteor.call("reparseWranglerFile", data.editing_file, insertDoc);
+        Meteor.call("reparseWranglerFile", editingFileId, insertDoc);
       }
 
       // hide that dialog
-      WranglerSubmissions.update(data._id, {
-        $unset: { "editing_file": 1 }
-      });
+      parentInstance.editingFileId.set(null);
     }
   },
 });

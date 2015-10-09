@@ -1,61 +1,56 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
 
-  {{#if this}} {{! if no data, invalid WranglerDocuments _id in URL }}
 
-    {{> addFiles}}
+  {{> addFiles}}
 
-    <hr />
+  <hr />
 
-    {{! TODO: add objects manually}}
+  {{! TODO: add objects manually}}
 
-    {{#if subscriptionsReallyReady}}
-      {{#if hasDocuments}}
-        {{#if classifySubmissionType this._id}}
-          {{> reviewWranglerDocuments}}
-          <hr />
-          {{> optionsAndSubmit}}
-        {{else}}
-          <span class="help-block">
-            Multiple submission types detected:
-            <ul>
-              {{#each getSubmissionTypes}}
-                <li>{{this}}</li>
-              {{/each}}
-            </ul>
-            Please submit each type of new document seperately.
-          </span>
-        {{/if}}
+  {{#if subscriptionsReallyReady}}
+    {{#if hasDocuments}}
+      {{#if classifySubmissionType this._id}}
+        {{> reviewWranglerDocuments}}
+        <hr />
+        {{> optionsAndSubmit}}
       {{else}}
         <span class="help-block">
-          {{#if hasFiles}}
-            {{#if hasCompletedFile}}
-              You have uploaded a file, but no documents were created...
-              Maybe you uploaded a blank file?
-            {{else}}
-              {{#if hasProcessingFile}}
-                Your files are being processed...
-              {{else}}
-                {{#if hasUploadingFile}}
-                  Your files are uploading...
-                {{else}}
-                  Please correct errors to continue.
-                {{/if}}
-              {{/if}}
-            {{/if}}
-          {{else}}
-            Add files or objects to continue
-          {{/if}}
+          Multiple submission types detected:
+          <ul>
+            {{#each getSubmissionTypes}}
+              <li>{{this}}</li>
+            {{/each}}
+          </ul>
+          Please submit each type of new document seperately.
         </span>
       {{/if}}
     {{else}}
-      <div class="relative-spinner" style="height: 300px;">
-        {{> spinner}}
-      </div>
+      <span class="help-block">
+        {{#if hasFiles}}
+          {{#if hasCompletedFile}}
+            You have uploaded a file, but no documents were created...
+            Maybe you uploaded a blank file?
+          {{else}}
+            {{#if hasProcessingFile}}
+              Your files are being processed...
+            {{else}}
+              {{#if hasUploadingFile}}
+                Your files are uploading...
+              {{else}}
+                Please correct errors to continue.
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        {{else}}
+          Add files or objects to continue
+        {{/if}}
+      </span>
     {{/if}}
   {{else}}
-    {{! loading handled in the router }}
-    {{> pageNotFound}}
+    <div class="relative-spinner" style="height: 300px;">
+      {{> spinner}}
+    </div>
   {{/if}}
 </template>
 
@@ -68,7 +63,7 @@
     {{/if}}
   </h2>
 
-  {{#if shouldBeFullWidth}}
+  {{#if noWranglerFiles}}
     {{> listFiles}}
   {{else}}
     <div class="row click-outside-to-unselect">
@@ -76,7 +71,7 @@
         {{> listFiles}}
       </div>
       <div class="col-md-4">
-        {{#if editing_file}}
+        {{#if editingFileSelected}}
           {{> editFileOptions}}
         {{else}}
           <span class="help-block center-text">
@@ -198,17 +193,20 @@
   {{#autoForm id="edit-file" schema=fileTypeSchema doc=currentEditingFile}}
     {{> afQuickField name="file_type"
         firstOption="Auto"}}
-    {{#if afFieldValueIs name="file_type" value="gene_expression"}}
+    <!-- {{#if afFieldValueIs name="file_type" value="gene_expression"}}
       {{> afQuickField name="normalization"}}
     {{/if}}
     {{#if afFieldValueIs name="file_type" value="rectangular_gene_expression"}}
       {{> afQuickField name="normalization"}}
+    {{/if}} -->
+
+    {{#if compare status "editing"}}
+      <div class="form-group">
+        <button class="btn btn-primary set-file-options">
+          Apply
+        </button>
+      </div>
     {{/if}}
-    <div class="form-group">
-      <button class="btn btn-primary set-file-options">
-        Apply
-      </button>
-    </div>
   {{/autoForm}}
   {{#if stillProcessing}}
     <span class="help-block center-text">

@@ -27,12 +27,19 @@ Template.reviewMutationDocuments.helpers({
   },
 });
 
-Template.reviewGeneExpressionDocuments.helpers({
-  geneExpressionSelector: function () {
-    return {
-      "submission_id": this._id,
-      "document_type": "gene_expression",
-    };
+Template.reviewGeneExpression.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("addSubmissionDocuments", instance.data._id);
+});
+
+Template.reviewGeneExpression.helpers({
+  sampleNormalization: function () {
+    return WranglerDocuments.find({
+      document_type: "sample_normalization"
+    }, {
+      sort: [["contents.sample_label", "asc"]]
+    });
   },
 });
 

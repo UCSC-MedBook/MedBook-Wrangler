@@ -17,24 +17,24 @@
 
 <template name="submissionActions">
   {{#if compare status "editing"}}
-    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
       Edit
     </a>
     <a href="#" class="delete-submission">Delete</a>
   {{/if}}
   {{#if compare status "validating"}}
-    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
       View
     </a>
     <a href="#" class="cancel-validation">Cancel validation</a>
   {{/if}}
   {{#if compare status "writing"}}
-    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
       View
     </a>
   {{/if}}
   {{#if compare status "done"}}
-    <a href="{{pathFor 'editSubmission' submissionId=_id}}">
+    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
       View
     </a>
   {{/if}}

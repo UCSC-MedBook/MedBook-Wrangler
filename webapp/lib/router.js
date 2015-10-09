@@ -18,12 +18,16 @@ Router.map(function() {
   });
 
   this.route('editSubmission', {
-    path: '/Wrangler/editSubmission/:submissionId',
+    path: '/Wrangler/editSubmission/:submission_id',
     waitOn: function () {
-      return Meteor.subscribe("wranglerSubmission", this.params.submissionId);
+      return Meteor.subscribe("wranglerSubmission", this.params.submission_id);
     },
     data: function () {
-      return WranglerSubmissions.findOne(this.params.submissionId);
+      var submission = WranglerSubmissions.findOne(this.params.submission_id);
+      if (!submission) {
+        this.render("pageNotFound");
+      }
+      return submission;
     },
   });
 });

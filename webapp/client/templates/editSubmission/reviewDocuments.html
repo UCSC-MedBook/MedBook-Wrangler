@@ -49,38 +49,64 @@
 
 <template name="reviewGeneExpression">
   <div class="documents-from-collection">
-    <div class="panel panel-default">
-      <div class="panel-heading">Gene expression data</div>
-
-      <!-- Table -->
-      {{#if Template.subscriptionsReady}}
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Sample label</th>
-              <th>Normalization</th>
-              <th>Gene count</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each sampleNormalization}}
-              {{#with contents}}
-                <tr>
-                  <th scope="row">{{sample_label}}</th>
-                  <td>{{normalization}}</td>
-                  <td>{{gene_count}}</td>
-                </tr>
-              {{/with}}
-            {{/each}}
-          </tbody>
-        </table>
-      {{else}}
-      <div class="panel-body">
-        Loading...
-        {{> spinner}}
+    {{#if Template.subscriptionsReady}}
+      <div class="panel panel-default">
+        <div class="panel-heading">Gene expression data</div>
+        {{#if count sampleNormalization}}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Sample label</th>
+                <th>Normalization</th>
+                <th>Gene count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each sampleNormalization}}
+                {{#with contents}}
+                  <tr>
+                    <th scope="row">{{sample_label}}</th>
+                    <td>{{normalization}}</td>
+                    <td>{{gene_count}}</td>
+                  </tr>
+                {{/with}}
+              {{/each}}
+            </tbody>
+          </table>
+        {{else}}
+          <div class="panel-body">
+            <p>No data</p>
+          </div>
+        {{/if}}
       </div>
+
+      {{#if count sampleLabelMaps}}
+        <div class="panel panel-default">
+          <div class="panel-heading">Sample label mapping</div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Sample label</th>
+                <th>Sample UUID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each sampleLabelMaps}}
+                {{#with contents}}
+                  <tr>
+                    <th scope="row">{{sample_label}}</th>
+                    <td>{{sample_uuid}}</td>
+                  </tr>
+                {{/with}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       {{/if}}
-    </div>
+    {{else}}
+      {{> spinner}}
+    {{/if}}
   </div>
 </template>
 

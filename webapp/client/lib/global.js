@@ -22,6 +22,10 @@ Template.registerHelper('isDefined', function (first) {
   return first !== undefined;
 });
 
+Template.registerHelper('count', function (first) {
+  return first.count();
+});
+
 // for validating against a schema and listing invalid keys
 
 function getValidationContext(data) {

@@ -193,12 +193,9 @@
   {{#autoForm id="edit-file" schema=fileTypeSchema doc=currentEditingFile}}
     {{> afQuickField name="file_type"
         firstOption="Auto"}}
-    <!-- {{#if afFieldValueIs name="file_type" value="gene_expression"}}
+    {{#if fileTypeIsGeneExpression}}
       {{> afQuickField name="normalization"}}
     {{/if}}
-    {{#if afFieldValueIs name="file_type" value="rectangular_gene_expression"}}
-      {{> afQuickField name="normalization"}}
-    {{/if}} -->
 
     {{#if compare status "editing"}}
       <div class="form-group">

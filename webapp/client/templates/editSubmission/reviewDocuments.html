@@ -80,6 +80,31 @@
         {{/if}}
       </div>
 
+      {{#if count geneLabelMaps}}
+        <div class="panel panel-default">
+          <div class="panel-heading">Gene label mapping</div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Used gene label</th>
+                <th>Global gene label</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each geneLabelMaps}}
+                {{#with contents}}
+                  <tr>
+                    <th scope="row">{{old_label}}</th>
+                    <td>{{new_label}}</td>
+                  </tr>
+                {{/with}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{/if}}
+
       {{#if count sampleLabelMaps}}
         <div class="panel panel-default">
           <div class="panel-heading">Sample label mapping</div>

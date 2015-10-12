@@ -47,7 +47,14 @@ Template.reviewGeneExpression.helpers({
     }, {
       sort: [["contents.sample_label", "asc"]]
     });
-  }
+  },
+  geneLabelMaps: function () {
+    return WranglerDocuments.find({
+      document_type: "gene_label_map"
+    }, {
+      sort: [["contents.gene_label", "asc"]]
+    });
+  },
 });
 
 Template.reviewRectangularGeneExpressionDocuments.helpers({

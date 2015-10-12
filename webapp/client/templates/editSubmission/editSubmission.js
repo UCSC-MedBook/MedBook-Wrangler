@@ -240,6 +240,10 @@ Template.editFileOptions.helpers({
       return (editingFile.status !== "done" && editingFile.status !== "error");
     }
   },
+  fileTypeIsGeneExpression: function () {
+    var fieldValue = AutoForm.getFieldValue("file_type", "edit-file");
+    return fieldValue === "BD2KGeneExpression";
+  },
 });
 
 Template.editFileOptions.events({

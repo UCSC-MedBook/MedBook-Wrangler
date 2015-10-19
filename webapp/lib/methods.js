@@ -59,22 +59,13 @@ Meteor.methods({
     });
 
     if (Meteor.isServer){
-      var guessJobId = Jobs.insert({
-        "name": "guessWranglerFileType",
-        "user_id": userId,
-        "date_created": new Date(),
-        "args": {
-          "wrangler_file_id": wranglerFileId,
-        }
-      });
       Jobs.insert({
-        "name": "parseWranglerFile",
+        "name": "ParseWranglerFile",
         "user_id": userId,
         "date_created": new Date(),
         "args": {
           "wrangler_file_id": wranglerFileId,
         },
-        "prerequisite_job_id": guessJobId,
       });
     }
   },
@@ -119,34 +110,13 @@ Meteor.methods({
       });
 
       if (Meteor.isServer) {
-        var guessJobId;
-        if (!newOptions.file_type) {
-          guessJobId = Jobs.insert({
-            "name": "guessWranglerFileType",
-            "user_id": userId,
-            "date_created": new Date(),
-            "args": {
-              "wrangler_file_id": wranglerFileId,
-            },
-          });
-        }
-        var removeDocumentsId = Jobs.insert({
-          "name": "removeWranglerDocuments",
-          "user_id": userId,
-          "date_created": new Date(),
-          "args": {
-            "wrangler_file_id": wranglerFileId,
-          },
-          "prerequisite_job_id": guessJobId,
-        });
         Jobs.insert({
-          "name": "parseWranglerFile",
+          "name": "ParseWranglerFile",
           "user_id": userId,
           "date_created": new Date(),
           "args": {
             "wrangler_file_id": wranglerFileId,
           },
-          "prerequisite_job_id": removeDocumentsId,
         });
       }
     } else {

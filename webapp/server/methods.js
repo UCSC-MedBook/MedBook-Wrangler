@@ -9,7 +9,7 @@ Meteor.methods({
     WranglerSubmissions.update(submission_id, {$set: {"status": "validating"}});
 
     var jobId = Jobs.insert({
-      "name": "submitWranglerSubmission",
+      "name": "SubmitWranglerSubmission",
       user_id: userId,
       "date_created": new Date(),
       "args": {

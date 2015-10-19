@@ -75,7 +75,7 @@
           {{> editFileOptions}}
         {{else}}
           <span class="help-block center-text">
-            Select a file to edit.
+            Click on a file to edit options.
           </span>
         {{/if}}
       </div>
@@ -102,7 +102,11 @@
     <span class="pull-right">
       <span class="badge">
         {{#if compare status "done"}}
-          processed
+          {{#if written_to_database}}
+            written
+          {{else}}
+            processed
+          {{/if}}
         {{else}}
           {{status}}
         {{/if}}

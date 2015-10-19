@@ -1,28 +1,46 @@
-17:09:44.068 INFO - Launching a standalone server
+17:36:19.496 INFO - Launching a standalone server
 Setting system property webdriver.chrome.driver to /usr/local/lib/node_modules/starrynight/node_modules/chromedriver/bin/chromedriver
-17:09:44.135 INFO - Java: Oracle Corporation 24.75-b04
-17:09:44.135 INFO - OS: Mac OS X 10.11 x86_64
-17:09:44.153 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
-17:09:44.292 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
-17:09:44.349 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-17:09:44.350 INFO - Version Jetty/5.1.x
-17:09:44.351 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
-17:09:44.352 INFO - Started HttpContext[/selenium-server,/selenium-server]
-17:09:44.352 INFO - Started HttpContext[/,/]
-17:09:44.385 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@611c1cdf
-17:09:44.385 INFO - Started HttpContext[/wd,/wd]
-17:09:44.393 INFO - Started SocketListener on 0.0.0.0:4444
-17:09:44.393 INFO - Started org.openqa.jetty.jetty.Server@792bf755
-17:09:44.807 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]])
-17:09:44.826 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]
-Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 25816
+17:36:19.530 INFO - Java: Oracle Corporation 24.75-b04
+17:36:19.531 INFO - OS: Mac OS X 10.11 x86_64
+17:36:19.541 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
+17:36:19.621 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
+17:36:19.655 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+17:36:19.656 INFO - Version Jetty/5.1.x
+17:36:19.656 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+17:36:19.657 INFO - Started HttpContext[/selenium-server,/selenium-server]
+17:36:19.657 INFO - Started HttpContext[/,/]
+17:36:19.673 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@66d7fef7
+17:36:19.674 INFO - Started HttpContext[/wd,/wd]
+17:36:19.679 INFO - Started SocketListener on 0.0.0.0:4444
+17:36:19.679 INFO - Started org.openqa.jetty.jetty.Server@34a205d1
+17:36:20.103 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]])
+17:36:20.123 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]
+Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 10945
 Only local connections are allowed.
-17:09:46.773 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]]
-17:09:46.787 INFO - Executing: [get: http://localhost:3000])
-17:09:48.400 INFO - Done: [get: http://localhost:3000]
-17:09:48.410 INFO - Executing: [set window size])
-17:09:48.640 INFO - Done: [set window size]
-17:09:48.646 INFO - Executing: [find elements: By.cssSelector: body])
-17:09:48.692 INFO - Done: [find elements: By.cssSelector: body]
-17:09:48.696 INFO - Executing: [delete session: bb13bfa5-e519-4a95-9060-46bfcda37c2a])
-17:09:49.271 INFO - Done: [delete session: bb13bfa5-e519-4a95-9060-46bfcda37c2a]
+17:36:22.022 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]]
+17:36:22.031 INFO - Executing: [get: http://localhost:3000/Wrangler])
+17:36:23.364 INFO - Done: [get: http://localhost:3000/Wrangler]
+17:36:23.374 INFO - Executing: [set window size])
+17:36:23.607 INFO - Done: [set window size]
+17:36:24.619 INFO - Executing: [find elements: By.cssSelector: .container])
+17:36:24.663 INFO - Done: [find elements: By.cssSelector: .container]
+17:36:24.667 INFO - Executing: [find elements: By.cssSelector: #top-controls])
+17:36:24.680 INFO - Done: [find elements: By.cssSelector: #top-controls]
+17:36:24.684 INFO - Executing: [find elements: By.cssSelector: #left])
+17:36:24.697 INFO - Done: [find elements: By.cssSelector: #left]
+17:36:24.704 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
+17:36:24.719 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
+17:36:24.722 INFO - Executing: [find elements: By.cssSelector: li.active])
+17:36:24.740 INFO - Done: [find elements: By.cssSelector: li.active]
+17:36:24.748 INFO - Executing: [find elements: By.cssSelector: #center])
+17:36:24.766 INFO - Done: [find elements: By.cssSelector: #center]
+17:36:24.770 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+17:36:24.786 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+17:36:24.793 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
+17:36:24.809 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
+17:36:25.317 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
+17:36:25.332 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
+17:36:25.838 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
+17:36:25.846 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
+17:36:25.851 INFO - Executing: [delete session: 324caeb8-d462-48d4-afd5-a9a840a703e4])
+17:36:26.471 INFO - Done: [delete session: 324caeb8-d462-48d4-afd5-a9a840a703e4]

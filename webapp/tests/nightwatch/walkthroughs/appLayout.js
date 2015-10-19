@@ -2,13 +2,17 @@
 // http://nightwatchjs.org/api
 
 module.exports = {
-  "Layout & Static Pages" : function (client) {
+  "Create a submission" : function (client) {
     client
-      .url("http://localhost:3000")
-      .resizeWindow(1024, 768)
-      .verify.elementPresent("body")
+      .url("http://localhost:3000/Wrangler")
+      .resizeWindow(1024, 768).pause(1000)
+      .reviewMainLayout()
+      .signIn("bonjour@meteor.com","bonjour")
 
+      .createNewSubmission()
 
+      .signOut()
+      .reviewMainLayout()
       .end();
-  }
+  },
 };

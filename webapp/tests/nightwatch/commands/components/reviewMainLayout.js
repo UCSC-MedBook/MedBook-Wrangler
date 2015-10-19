@@ -1,10 +1,12 @@
 exports.command = function(username, password) {
   this
-    .verify.elementPresent("#appBody")
-      .verify.elementPresent("#navbarHeader")
-        .verify.elementPresent("#contentContainer")
-        .verify.elementPresent("#contentContainer .content-scrollable")
-      .verify.elementPresent("#navbarFooter")
+    .verify.elementPresent(".container")
+      .verify.elementPresent("#top-controls")
+        .verify.elementPresent("#left")
+          .verify.elementPresent(".breadcrumb")
+            .verify.elementPresent("li.active") // one always has to be active
+        .verify.elementPresent("#center")
+          .verify.elementPresent("#login-buttons");
 
   return this; // allows the command to be chained.
 };

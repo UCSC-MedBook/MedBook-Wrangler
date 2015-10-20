@@ -149,20 +149,26 @@ Template.showFile.helpers({
 });
 
 Template.showFile.events({
+  "click .reparse-this-file": function (event, instance) {
+    Meteor.call("reparseWranglerFile", this._id);
+  },
   "click .remove-this-file": function(event, instance) {
-    if (instance.parent().data.status === "editing") {
-      var wrangler_file_id = this._id;
+    var wrangler_file_id = this._id;
 
-      // wrapping it in Meteor.defer gets rid of a DOM error
-      // https://github.com/meteor/meteor/issues/2981
-      Meteor.defer(function () {
-        Meteor.call("removeWranglerFile",
-            instance.parent().data._id, wrangler_file_id);
-      });
-    }
+    // wrapping it in Meteor.defer gets rid of a DOM error
+    // https://github.com/meteor/meteor/issues/2981
+    Meteor.defer(function () {
+      Meteor.call("removeWranglerFile",
+          instance.parent().data._id, wrangler_file_id);
+    });
   },
   "click .edit-this-file": function (event, instance) {
-    instance.parent().parent().editingFileId.set(this._id);
+    // only set to editing if they didn't click the reparse button
+    var parents = $(event.target).parents('.reparse-this-file');
+    console.log("parents:", parents);
+    if (parents.length === 0) {
+      instance.parent().parent().editingFileId.set(this._id);
+    }
   },
 });
 

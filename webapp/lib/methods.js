@@ -95,18 +95,23 @@ Meteor.methods({
   },
   reparseWranglerFile: function (wranglerFileId, newOptions) {
     check(wranglerFileId, String);
-    check(newOptions, wranglerFileOptions);
+    // check newOptions down below
 
     var wranglerFile = WranglerFiles.findOne(wranglerFileId);
     if (wranglerFile) {
       var userId = makeSureLoggedIn();
       ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
+      var setObject = {
+        "status": "waiting",
+      };
+      if (newOptions !== undefined) {
+        check(newOptions, Object);
+        setObject.options = newOptions;
+      }
+
       WranglerFiles.update(wranglerFileId, {
-        $set: {
-          "status": "processing",
-          "options": newOptions,
-        }
+        $set: setObject
       });
 
       if (Meteor.isServer) {

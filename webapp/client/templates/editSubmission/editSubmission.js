@@ -165,7 +165,6 @@ Template.showFile.events({
   "click .edit-this-file": function (event, instance) {
     // only set to editing if they didn't click the reparse button
     var parents = $(event.target).parents('.reparse-this-file');
-    console.log("parents:", parents);
     if (parents.length === 0) {
       instance.parent().parent().editingFileId.set(this._id);
     }

@@ -102,9 +102,11 @@ Meteor.methods({
       var userId = makeSureLoggedIn();
       ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
-      var setObject = {
-        "status": "waiting",
-      };
+      var setObject = {};
+      if (wranglerFile.status !== "uploading" &&
+          wranglerFile.status !== "creating") {
+        setObject.status = "waiting";
+      }
       if (newOptions !== undefined) {
         check(newOptions, Object);
         setObject.options = newOptions;
@@ -115,14 +117,19 @@ Meteor.methods({
       });
 
       if (Meteor.isServer) {
-        Jobs.insert({
-          "name": "ParseWranglerFile",
-          "user_id": userId,
-          "date_created": new Date(),
-          "args": {
-            "wrangler_file_id": wranglerFileId,
+        var newJob = {
+          name: "ParseWranglerFile",
+          user_id: userId,
+          args: {
+            wrangler_file_id: wranglerFileId,
           },
-        });
+          status: "waiting",
+        };
+
+        // only add the new job if it's not already there
+        if (!Jobs.findOne(newJob)) {
+          Jobs.insert(newJob);
+        }
       }
     } else {
       throw new Meteor.Error("document-does-not-exist");

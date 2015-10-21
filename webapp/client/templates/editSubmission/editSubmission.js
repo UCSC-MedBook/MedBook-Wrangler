@@ -27,7 +27,10 @@ Template.editSubmission.helpers({
     return WranglerFiles.find().count() > 0;
   },
   hasCompletedFile: function () {
-    return WranglerFiles.find({ "status": "done" }).count() > 0;
+    return WranglerFiles.find({
+      "status": "done",
+      $error_description: { $exists: false },
+    }).count() > 0;
   },
   hasProcessingFile: function () {
     return WranglerFiles.find({
@@ -125,7 +128,12 @@ Template.showFile.helpers({
   fileContextualClass: function () {
     switch (this.status) {
       case "done":
-        return "list-group-item-success";
+        if (this.error_description) {
+          return "list-group-item-warning";
+        } else {
+          return "list-group-item-success";
+        }
+        break;
       case "creating": case "uploading":
         return "list-group-item-warning";
       case "processing": case "saving": case "waiting":
@@ -145,6 +153,10 @@ Template.showFile.helpers({
   isEditable: function () {
     // console.log("Template.instance():", Template.instance());
     return Template.instance().parent().data.status === "editing";
+  },
+  shouldShowDescription: function () {
+    return this.error_description &&
+        (this.status === "error" || this.status === "done");
   },
 });
 

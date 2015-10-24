@@ -1,12 +1,8 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
 
-
-  {{> addFiles}}
-
+  {{> submissionFiles}}
   <hr />
-
-  {{! TODO: add objects manually}}
 
   {{#if subscriptionsReallyReady}}
     {{#if hasDocuments}}
@@ -30,7 +26,7 @@
         {{#if hasFiles}}
           {{#if hasCompletedFile}}
             You have uploaded a file, but no documents were created...
-            Please select a file to edit options. 
+            Please select a file to edit options.
           {{else}}
             {{#if hasProcessingFile}}
               Your files are being processed...
@@ -51,150 +47,5 @@
     <div class="relative-spinner" style="height: 300px;">
       {{> spinner}}
     </div>
-  {{/if}}
-</template>
-
-<template name="addFiles">
-  <h2>Files</h2>
-
-  {{#if noWranglerFiles}}
-    {{> listFiles}}
-  {{else}}
-    <div class="row click-outside-to-unselect">
-      <div class="col-md-6">
-        {{> listFiles}}
-      </div>
-      <div class="col-md-6">
-        {{#if editingFileSelected}}
-          {{> editFileOptions}}
-        {{else}}
-          <span class="help-block center-text">
-            Click on a file to preview and edit options.
-          </span>
-        {{/if}}
-      </div>
-    </div>
-  {{/if}}
-</template>
-
-<template name="listFiles">
-  <ul class="list-group">
-    {{#each getFiles}}
-      {{> showFile this}}
-    {{/each}}
-
-    {{#if compare status "editing"}}
-      {{> uploadFilesListItem}}
-    {{/if}}
-  </ul>
-</template>
-
-<template name="showFile">
-  <a href="#" class="list-group-item edit-this-file
-      {{fileContextualClass}}
-      {{activeClass}}">
-    <span class="pull-right">
-      <span class="badge">
-        {{#if compare status "done"}}
-          {{#if written_to_database}}
-            written
-          {{else}}
-            {{#if error_description}}
-              need info
-            {{else}}
-              processed
-            {{/if}}
-          {{/if}}
-        {{else}}
-          {{status}}
-        {{/if}}
-      </span>
-      {{#if isEditable}}
-        <button class="reparse-this-file btn btn-xs btn-info">
-          <span class="sr-only">Reparse file</span>
-          <span class="glyphicon glyphicon-refresh"></span>
-        </button>
-        <button class="remove-this-file btn btn-xs btn-warning">
-          <span class="sr-only">Remove file</span>
-          <span class="glyphicon glyphicon-trash"></span>
-        </button>
-      {{/if}}
-    </span>
-
-    <h5 class="list-group-item-heading elipsis-out-before-badge">
-      <i class="glyphicon glyphicon-file"></i>
-      {{blob_name}}
-    </h5>
-
-
-
-    {{#if shouldShowDescription}}
-      <p class="list-group-item-text blank-glyphicon-to-left">
-        {{error_description}}
-      </p>
-    {{/if}}
-
-    {{#if compare status "uploading"}}
-      <p class="list-group-item-text">
-        {{#with FS.GetFile "blobs" blob_id}}
-          {{> FS.UploadProgressBar bootstrap=true
-              class='progress-bar-striped active'
-              showPercent=true}}
-        {{/with}}
-      </p>
-    {{/if}}
-  </a>
-</template>
-
-<template name="uploadFilesListItem">
-  {{! the last list item: for adding files/objects}}
-  <li class="list-group-item">
-    <div class="row">
-      {{! upload local files}}
-      <div class="col-xs-6">
-        <span class="btn btn-default btn-file fill-width">
-          Upload local files
-          <input id="upload-files-input" type="file" multiple>
-        </span>
-      </div>
-
-      {{! add from the web}}
-      <div class="col-xs-6">
-        <form class="add-from-web-form">
-          <div class="input-group">
-            <input name="urlInput" type="text" class="form-control"
-                placeholder="Enter URL">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">
-                Add
-              </button>
-            </span>
-          </div>
-        </form>
-      </div>
-    </div>
-  </li>
-</template>
-
-<template name="editFileOptions">
-  {{#autoForm id="edit-file" schema=fileTypeSchema doc=currentEditingFile}}
-    {{> afQuickField name="file_type"
-        firstOption="Auto"}}
-    {{#if fileTypeIsGeneExpression}}
-      {{> afQuickField name="normalization"}}
-    {{/if}}
-
-    {{#if compare status "editing"}}
-      <div class="form-group">
-        <button class="btn btn-primary set-file-options">
-          Apply
-        </button>
-      </div>
-    {{/if}}
-  {{/autoForm}}
-  {{#if stillProcessing}}
-    <span class="help-block center-text">
-      Note: changes will take effect after current processing job is finished
-    </span>
   {{/if}}
 </template>

@@ -1,0 +1,111 @@
+<template name="submissionFiles">
+  <h2>Files</h2>
+
+  {{#if compare status "editing"}}
+    <div class="well insert-file-well">
+      {{> uploadNewFiles}}
+    </div>
+  {{/if}}
+
+  {{#each getFiles}}
+    {{> showFile}}
+  {{/each}}
+</template>
+
+<template name="uploadNewFiles">
+  <div class="row">
+    {{! upload local files}}
+    <div class="col-md-6 insert-file-button">
+      <span class="btn btn-default btn-file fill-width">
+        Upload local files
+        <input id="upload-files-input" type="file" multiple>
+      </span>
+    </div>
+
+    {{! add from the web}}
+    <div class="col-md-6 insert-file-button">
+      <form class="add-from-web-form">
+        <div class="input-group">
+          <input name="urlInput" type="text" class="form-control"
+              placeholder="Enter URL">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              Add
+            </button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="showFile">
+  <div class="panel {{panelClass}}">
+    <div class="panel-heading">
+      <span class="panel-title">
+        <span class="glyphicon glyphicon-file"></span>
+        <span class="ellipsis-out-before-badge">{{blob_name}}</span>
+
+        <span class="badge">
+          {{#if compare status "done"}}
+            {{#if written_to_database}}
+              written
+            {{else}}
+              {{#if error_description}}
+                need info
+              {{else}}
+                processed
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{status}}
+          {{/if}}
+        </span>
+      </span>
+
+      <span class="pull-right">
+        {{#if isEditable}}
+          <button class="remove-this-file btn btn-xs btn-warning">
+            <span class="glyphicon glyphicon-trash"></span>
+            <span>Delete</span>
+          </button>
+        {{/if}}
+      </span>
+    </div>
+    <div class="panel-body">
+      {{#if showUploadBar}}
+        <p class="list-group-item-text">
+          {{print "blob_id:" blob_id}}
+          {{#with FS.GetFile "blobs" blob_id}}
+            {{> FS.UploadProgressBar bootstrap=true
+                class='progress-bar-striped active'
+                showPercent=true}}
+          {{/with}}
+        </p>
+      {{else}}
+        <div class="sometimes-horizontal-scroll">
+          {{! NOTE: it will show line breaks, so keep it on one line }}
+          <samp class="whitespace-pre">{{blob_text_sample}}</samp>
+        </div>
+      {{/if}}
+      <hr>
+
+      {{#if shouldShowDescription}}
+        <div class="alert alert-warning" role="alert">
+          <p class="list-group-item-text blank-glyphicon-to-left">
+            {{error_description}}
+          </p>
+        </div>
+      {{/if}}
+
+      {{#autoForm id=autoformId collection=WranglerFiles doc=this type="update"
+          autosave=true template="bootstrap3-horizontal"}}
+        {{> afQuickField name="options" firstOption="Auto"
+            template="bootstrap3-horizontal"
+            label-class="col-sm-2 col-xs-3"
+            input-col-class="col-sm-10 col-xs-9"}}
+      {{/autoForm}}
+
+    </div>
+  </div>
+</template>

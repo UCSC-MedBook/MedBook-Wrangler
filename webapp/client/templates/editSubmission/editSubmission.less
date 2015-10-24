@@ -26,23 +26,49 @@ div#center {
   }
 }
 
-// file list
-.blank-glyphicon-to-left {
-  margin-left: 18px;
+.control-label::after {
+  content: ": ";
 }
-.progress {
-  .blank-glyphicon-to-left;
-  margin-top: 15px;
-  margin-right: 25px;
-  margin-bottom: 5px;
-}
-.elipsis-out-before-badge {
+
+// submissionFiles
+.ellipsis-out-before-badge {
   // less gets rid of calc... ~ escapes the string
   width: ~"calc(100% - 150px)";
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
+
+// blob_text_sample
+.sometimes-horizontal-scroll {
+  overflow-x: auto;
+}
+.whitespace-pre {
+  white-space: pre;
+}
+
+// getting the well around the insert buttons to resize correctly
+.insert-file-well {
+  padding-bottom: 0px;
+}
+.insert-file-button {
+  padding-bottom: 19px;
+}
+
+
+
+
+// .blank-glyphicon-to-left {
+//   margin-left: 18px;
+// }
+// .progress {
+//   .blank-glyphicon-to-left;
+//   margin-top: 15px;
+//   margin-right: 25px;
+//   margin-bottom: 5px;
+// }
+
 
 // buttons at bottom of file list
 .display-block {

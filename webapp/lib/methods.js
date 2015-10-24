@@ -80,7 +80,6 @@ Meteor.methods({
     });
 
     WranglerFiles.remove(wranglerFileId);
-    console.log("removed file");
 
     this.unblock();
 
@@ -89,11 +88,10 @@ Meteor.methods({
       "wrangler_file_id": wranglerFileId,
     });
     Blobs.remove(wranglerFile.blob_id);
-    console.log("removed rest of file");
 
     // TODO: call this for everything that is uncompressed from this
   },
-  reparseWranglerFile: function (wranglerFileId, newOptions) {
+  reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
     // check newOptions down below
 
@@ -102,18 +100,8 @@ Meteor.methods({
       var userId = makeSureLoggedIn();
       ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
-      var setObject = {};
-      if (wranglerFile.status !== "uploading" &&
-          wranglerFile.status !== "creating") {
-        setObject.status = "waiting";
-      }
-      if (newOptions !== undefined) {
-        check(newOptions, Object);
-        setObject.options = newOptions;
-      }
-
       WranglerFiles.update(wranglerFileId, {
-        $set: setObject
+        $set: { status: "waiting" }
       });
 
       if (Meteor.isServer) {

@@ -10,22 +10,22 @@ Meteor.publish("wranglerSubmission", function (submission_id) {
   try {
     ensureSubmissionAvailable(this.userId, submission_id);
 
-    var collaborations = ['public'];
+    var collabStrings = ['public'];
     var user = Meteor.users.findOne(this.userId);
     if (user && user.profile && user.profile.collaborations) {
-      collaborations = collaborations.concat(user.profile.collaborations);
+      collabStrings = collabStrings.concat(user.profile.collaborations);
     }
+
     return [
       Superpathways.find({}), // TODO: move this elsewhere
       WranglerSubmissions.find(submission_id),
-      WranglerFiles.find({
-        "submission_id": submission_id,
-      }),
+      WranglerFiles.find({ submission_id: submission_id }),
+      WranglerDocuments.find({ submission_id: submission_id }),
       Studies.find({
-        "collaborations.0": { $in: collaborations },
+        "collaborations.0": { $in: collabStrings },
       }),
-      Collaborations.find({
-        "name": { $in: collaborations },
+      Collabs.find({
+        name: { $in: collabStrings },
       }),
     ];
   } catch (e) {
@@ -33,17 +33,6 @@ Meteor.publish("wranglerSubmission", function (submission_id) {
   }
 
   this.ready();
-});
-
-Meteor.publish("addSubmissionDocuments", function (submission_id) {
-  check(submission_id, String);
-
-  try {
-    ensureSubmissionAvailable(this.userId, submission_id);
-    return WranglerDocuments.find({submission_id: submission_id});
-  } catch (e) {
-    this.ready();
-  }
 });
 
 Meteor.publish("specificBlob", function (blob_id) {

@@ -61,51 +61,100 @@
             {{status}}
           {{/if}}
         </span>
+
+        <span class="pull-right">
+          {{#if compare ../status "editing"}}
+            <button class="remove-this-file btn btn-xs btn-warning">
+              <span class="glyphicon glyphicon-trash"></span>
+              <span>Delete</span>
+            </button>
+          {{/if}}
+        </span>
       </span>
 
-      <span class="pull-right">
-        {{#if isEditable}}
-          <button class="remove-this-file btn btn-xs btn-warning">
-            <span class="glyphicon glyphicon-trash"></span>
-            <span>Delete</span>
-          </button>
-        {{/if}}
-      </span>
+
     </div>
     <div class="panel-body">
-      {{#if showUploadBar}}
-        <p class="list-group-item-text">
-          {{print "blob_id:" blob_id}}
-          {{#with FS.GetFile "blobs" blob_id}}
-            {{> FS.UploadProgressBar bootstrap=true
-                class='progress-bar-striped active'
-                showPercent=true}}
-          {{/with}}
-        </p>
-      {{else}}
-        <div class="sometimes-horizontal-scroll">
-          {{! NOTE: it will show line breaks, so keep it on one line }}
-          <samp class="whitespace-pre">{{blob_text_sample}}</samp>
-        </div>
-      {{/if}}
-      <hr>
+      {{> fileInformation}}
+    </div>
+  </div>
+</template>
 
-      {{#if shouldShowDescription}}
-        <div class="alert alert-warning" role="alert">
-          <p class="list-group-item-text blank-glyphicon-to-left">
-            {{error_description}}
-          </p>
-        </div>
-      {{/if}}
+<template name="fileInformation">
+  {{#if compare status "uploading"}}
+    <p class="list-group-item-text">
+      {{print "blob_id:" blob_id}}
+      {{#with FS.GetFile "blobs" blob_id}}
+        {{> FS.UploadProgressBar bootstrap=true
+            class='progress-bar-striped active'
+            showPercent=true}}
+      {{/with}}
+    </p>
+  {{else}}
+    {{#if blob_text_sample}}
+      <div class="sometimes-horizontal-scroll">
+        {{! NOTE: it will show line breaks, so keep it on one line }}
+        <samp class="whitespace-pre">{{blob_text_sample}}</samp><br/>
+        <samp class="not-black">...</samp><br>
+        {{#if blob_line_count}}
+          <samp class="not-black">[{{notShownLines}} lines not shown]</samp>
+        {{/if}}
+      </div>
+    {{else}}
+      <span class="help-block">File preview is loading...</span>
+    {{/if}}
 
-      {{#autoForm id=autoformId collection=WranglerFiles doc=this type="update"
-          autosave=true template="bootstrap3-horizontal"}}
-        {{> afQuickField name="options" firstOption="Auto"
+  {{/if}}
+  <hr>
+
+  {{#if shouldShowDescription}}
+    <div class="alert alert-warning" role="alert">
+      <p class="list-group-item-text blank-glyphicon-to-left">
+        {{error_description}}
+      </p>
+    </div>
+  {{/if}}
+
+  {{#if parsed_options_once_already}}
+    {{#autoForm id=autoformId schema=optionsSchema doc=this.options
+        autosave=true class="edit-wrangler-file"}}
+      {{> afQuickField name="file_type" firstOption="Auto"
+          template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+
+      {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
+      {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
+      {{#if isInSchema "normalization"}}
+        {{> afQuickField name="normalization"
+            firstOption="(Select a normalization)"
             template="bootstrap3-horizontal"
             label-class="col-sm-2 col-xs-3"
             input-col-class="col-sm-10 col-xs-9"}}
-      {{/autoForm}}
+      {{/if}}
 
+      <!-- {{> afQuickFields label-class="col-sm-2 col-xs-3" firstOption="Auto"
+          input-col-class="col-sm-10 col-xs-9"}} -->
+    {{/autoForm}}
+
+    <!-- {{> quickForm id=autoformId schema=optionsSchema doc=this
+        collection=WranglerFiles type="update"
+        autosave=true class="edit-wrangler-file"
+        template="bootstrap3-horizontal"
+        label-class="col-sm-2 col-xs-3"
+        input-col-class="col-sm-10 col-xs-9"}} -->
+    <!-- {{#autoForm id=autoformId schema=optionsSchema doc=this
+        autosave=true class="edit-wrangler-file"
+        template="bootstrap3-horizontal"}}
+      {{> afQuickField name="file_type" firstOption="Auto"
+          template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+    {{/autoForm}} -->
+  {{else}}
+    <div class="help-block">
+      Options will become available after file has been
+      parsed for the first time.
     </div>
-  </div>
+  {{/if}}
 </template>

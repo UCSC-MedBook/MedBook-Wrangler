@@ -1,7 +1,3 @@
-Template.reviewWranglerDocuments.helpers({
-
-});
-
 Template.reviewSuperpathwayDocuments.helpers({
   elementsSelector: function () {
     return {
@@ -25,12 +21,6 @@ Template.reviewMutationDocuments.helpers({
       "collection_name": "mutations",
     };
   },
-});
-
-Template.reviewGeneExpression.onCreated(function () {
-  var instance = this;
-
-  instance.subscribe("addSubmissionDocuments", instance.data._id);
 });
 
 Template.reviewGeneExpression.helpers({
@@ -70,4 +60,11 @@ Template.reviewRectangularGeneExpressionDocuments.helpers({
       "document_type": "gene_label",
     };
   },
+});
+
+Template.submissionTypeNotDefined.helpers({
+  hasDocuments: function () {
+    return Counts.get("all-documents") > 0;
+  },
+  getSubmissionTypes: getSubmissionTypes,
 });

@@ -1,14 +1,17 @@
 exports.command = function(username, password) {
 
   this
-    .waitForElementVisible('#entrySignIn', 1000)
-      .verify.elementPresent("#signInPageEmailInput")
-      .verify.elementPresent("#signInPagePasswordInput")
+    .waitForElementVisible('#login-buttons', 1000)
+    .click("#login-sign-in-link").pause(400)
+      .verify.elementPresent("#login-dropdown-list")
+      .verify.elementPresent("#login-email")
+      .verify.elementPresent("#login-password")
 
-      .setValue("#signInPageEmailInput", username)
-      .setValue("#signInPagePasswordInput", password)
+      .setValue("#login-email", username)
+      .setValue("#login-password", password)
 
-    .click("#signInToAppButton").pause(1000)
+    .click("#login-buttons-password").pause(1000)
+  ;
 
   return this; // allows the command to be chained.
 };

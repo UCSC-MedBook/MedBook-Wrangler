@@ -14,19 +14,6 @@ Template.optionsAndSubmit.helpers({
 
     return null;
   },
-  superpathwaySchema: function () {
-    return new SimpleSchema([
-      sharedSchema,
-      {
-        "update_or_create": {
-          type: String,
-          label: "Update or create",
-          allowedValues: ["update", "create"],
-        },
-      },
-      Superpathways.simpleSchema().pick(['name']),
-    ]);
-  },
   mutationSchema: function () {
     return new SimpleSchema([
       sharedSchema,
@@ -36,14 +23,22 @@ Template.optionsAndSubmit.helpers({
       ]),
     ]);
   },
-  expressionSchema: function () {
-    return new SimpleSchema([
-      sharedSchema,
-      GeneExpression.simpleSchema().pick([
-        "study_label",
-      ]),
-    ]);
+  sharedSchema: function () {
+    return sharedSchema;
   },
+  // superpathwaySchema: function () {
+  //   return new SimpleSchema([
+  //     sharedSchema,
+  //     {
+  //       "update_or_create": {
+  //         type: String,
+  //         label: "Update or create",
+  //         allowedValues: ["update", "create"],
+  //       },
+  //     },
+  //     Superpathways.simpleSchema().pick(['name']),
+  //   ]);
+  // },
 });
 
 var maxErrorsToDisplay = 5;
@@ -70,40 +65,6 @@ Template.submissionOptions.helpers({
   },
 });
 
-function getUpdateOrCreate() {
-  return AutoForm.getFieldValue("update_or_create", "submission-options");
-}
-
-Template.superpathwayFields.helpers({
-  updateCreateSelected: function () {
-    return getUpdateOrCreate() !== undefined;
-  },
-  selectOrText: function () {
-    if (getUpdateOrCreate() === "update") {
-      return "select";
-    } else {
-      return "text";
-    }
-  },
-  superpathwayOptions: function () {
-    var sortedNames = _.pluck(Superpathways.find({}).fetch(), "name").sort();
-
-    var uniqueNames = [];
-    _.each(sortedNames, function (value, index) {
-      if (index === 0 || sortedNames[index - 1] !== value) {
-        uniqueNames.push(value);
-      }
-    });
-
-    return _.map(uniqueNames, function (value) {
-      return {
-        "label": value,
-        "value": value,
-      };
-    });
-  },
-});
-
 Template.sharedFields.helpers({
   studyOptions: function () {
     return Studies.find().map(function (study) {
@@ -114,7 +75,7 @@ Template.sharedFields.helpers({
     });
   },
   collaborationOptions: function () {
-    return Collaborations.find().map(function (collaboration) {
+    return Collabs.find().map(function (collaboration) {
       return {
         label: collaboration.description,
         value: collaboration.name,
@@ -126,7 +87,7 @@ Template.sharedFields.helpers({
 Template.validateAndSubmit.events({
   "click .save-for-later": function (event, instance) {
     event.preventDefault();
-    WranglerSubmissions.update(instance.parent().parent().data._id, {
+    WranglerSubmissions.update(instance.parent(2).data._id, {
       $set: {
         "options": AutoForm.getFormValues("submission-options").insertDoc
       }
@@ -134,7 +95,7 @@ Template.validateAndSubmit.events({
   },
   "click .reset-options": function (event, instance) {
     event.preventDefault();
-    WranglerSubmissions.update(instance.parent().parent().data._id, {
+    WranglerSubmissions.update(instance.parent(2).data._id, {
       $set: {
         "options": {}
       }
@@ -143,8 +104,10 @@ Template.validateAndSubmit.events({
   },
   "click .validate-and-submit": function (event, instance) {
     event.preventDefault();
+
     if (AutoForm.validateForm("submission-options")) {
-      var submission_id = instance.parent().parent().data._id;
+      console.log("instance:", instance);
+      var submission_id = instance.parent(2).data._id;
       WranglerSubmissions.update(submission_id, {
         $set: {
           "options": AutoForm.getFormValues("submission-options").insertDoc
@@ -155,3 +118,37 @@ Template.validateAndSubmit.events({
     }
   },
 });
+
+// function getUpdateOrCreate() {
+//   return AutoForm.getFieldValue("update_or_create", "submission-options");
+// }
+//
+// Template.superpathwayFields.helpers({
+//   updateCreateSelected: function () {
+//     return getUpdateOrCreate() !== undefined;
+//   },
+//   selectOrText: function () {
+//     if (getUpdateOrCreate() === "update") {
+//       return "select";
+//     } else {
+//       return "text";
+//     }
+//   },
+//   superpathwayOptions: function () {
+//     var sortedNames = _.pluck(Superpathways.find({}).fetch(), "name").sort();
+//
+//     var uniqueNames = [];
+//     _.each(sortedNames, function (value, index) {
+//       if (index === 0 || sortedNames[index - 1] !== value) {
+//         uniqueNames.push(value);
+//       }
+//     });
+//
+//     return _.map(uniqueNames, function (value) {
+//       return {
+//         "label": value,
+//         "value": value,
+//       };
+//     });
+//   },
+// });

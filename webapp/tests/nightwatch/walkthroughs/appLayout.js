@@ -10,9 +10,11 @@ module.exports = {
       .signIn("bonjour@meteor.com","bonjour")
 
       .createNewSubmission()
-
-      .signOut()
-      .reviewMainLayout()
+      //
+      //
+      //
+      // .signOut()
+      // .reviewMainLayout()
       .end();
   },
 };

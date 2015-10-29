@@ -18,18 +18,19 @@ cfs:ui
 cfs:data-man
 
 
-aldeed:autoform
 twbs:bootstrap
 sacha:spin
 audit-argument-checks
 less
 momentjs:moment
-aldeed:autoform-select2
 medbook:wrangler-collections
 aldeed:tabular
 tmeasday:publish-counts
 erasaur:meteor-lodash
 mquandalle:jade
 reactive-var
-clinical:active-entry
 clinical:collaborations
+
+npm-container
+aldeed:autoform
+aldeed:template-extension

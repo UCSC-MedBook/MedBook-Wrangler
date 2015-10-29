@@ -1,25 +1,30 @@
 <template name="reviewWranglerDocuments">
   <h2>Review</h2>
 
-  <div class="flex-container">
-    {{#if getPublishedCount "type_superpathway"}}
-      {{> reviewSuperpathwayDocuments}}
-    {{/if}}
+  {{print "editSubmission this:" this}}
+  {{#if classifySubmissionType this._id}}
+    <div class="flex-container">
+      {{#if getPublishedCount "type_superpathway"}}
+        {{> reviewSuperpathwayDocuments}}
+      {{/if}}
 
-    {{#if getPublishedCount "type_mutations"}}
-      {{> reviewMutationDocuments}}
-    {{/if}}
+      {{#if getPublishedCount "type_mutations"}}
+        {{> reviewMutationDocuments}}
+      {{/if}}
 
-    {{#if getPublishedCount "type_gene_expression"}}
-      {{> reviewGeneExpression}}
-    {{/if}}
+      {{#if getPublishedCount "type_gene_expression"}}
+        {{> reviewGeneExpression}}
+      {{/if}}
 
-    {{#if getPublishedCount "type_rectangular_gene_expression"}}
-      {{> reviewRectangularGeneExpressionDocuments}}
-    {{/if}}
+      {{#if getPublishedCount "type_rectangular_gene_expression"}}
+        {{> reviewRectangularGeneExpressionDocuments}}
+      {{/if}}
 
-    {{! else have span plus button to add that type }}
-  </div>
+      {{! else have span plus button to add that type }}
+    </div>
+  {{else}}
+    {{> submissionTypeNotDefined}}
+  {{/if}}
 </template>
 
 <template name="reviewSuperpathwayDocuments">
@@ -157,4 +162,20 @@
       {{name}}: {{type}}
     {{/each}}
   {{/if}} -->
+</template>
+
+<template name="submissionTypeNotDefined">
+  <div class="well">
+    {{#if hasDocuments}}
+      Multiple submission types detected:
+      <ul>
+        {{#each getSubmissionTypes}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      Please submit each type of new document seperately.
+    {{else}}
+      Upload files to continue
+    {{/if}}
+  </div>
 </template>

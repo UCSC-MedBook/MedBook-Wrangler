@@ -77,38 +77,27 @@ Template.uploadNewFiles.events({
 Template.showFile.onCreated(function () {
   var instance = this;
 
-  // subscribe to blobs and make it change to "waiting" when stored
   instance.autorun(function () {
     // subscribe to the blob for this wrangler file
     instance.subscribe("specificBlob", instance.data.blob_id, function () {
-      // switch from uploading to waiting when blob has stored
+      // switch from uploading to processing when blob has stored
       instance.autorun(function () {
         var blob = Blobs.findOne(instance.data.blob_id);
+
+        // update if it's stored
         if (instance.data.status === "uploading" &&
             blob && blob.hasStored("blobs")) {
-          // update it if it's stored
-          WranglerFiles.update(instance.data._id, {
+          // should follow two-phase commit pattern but in untrusted code
+          var updated = WranglerFiles.update(instance.data._id, {
             $set: {
-              status: "waiting",
+              status: "processing",
             }
           });
         }
       });
     });
   });
-
-  AutoForm.addHooks('edit-wrangler-file-' + instance.data._id, {
-    // called whenever the form changes
-    onSuccess: function(formType, result) {
-      console.log("formType:", formType);
-      console.log("result:", result);
-      if (formType === "update" && result === 1) {
-        Meteor.call("reparseWranglerFile", instance.data._id);
-      }
-    },
-  }, true);
 });
-
 
 Template.showFile.helpers({
   panelClass: function () {
@@ -120,32 +109,42 @@ Template.showFile.helpers({
           return "panel-success";
         }
         break;
-      case "creating": case "uploading":
+      case "uploading":
         return "panel-warning";
-      case "processing": case "saving": case "waiting":
+      case "processing":
         return "panel-info";
       case "error":
         return "panel-danger";
     }
     console.log("Error: file contextual class not found");
   },
-  showUploadBar: function () {
-    return this.status === "creating" || this.status === "uploading";
-  },
-  fileTypeSchema: function () {
-    return WranglerFiles.simpleSchema();
-  },
-  fileTypeIsGeneExpression: function () {
-    var fieldValue = AutoForm.getFieldValue("file_type", "edit-file");
-    return fieldValue === "BD2KGeneExpression";
-  },
-  isEditable: function () {
-    return Template.instance().parent().data.status === "editing";
-  },
+});
 
+Template.showFile.events({
+  "click .remove-this-file": function(event, instance) {
+    // wrapping it in Meteor.defer gets rid of a DOM error
+    // https://github.com/meteor/meteor/issues/2981
+    Meteor.defer(function () {
+      Meteor.call("removeWranglerFile", instance.data._id);
+    });
+  },
+});
 
+//
+// Template fileInformation
+//
 
-  // TODO: DO I NEED THIS
+function getOptionsSchema () {
+  return new SimpleSchema([
+    new SimpleSchema({
+      file_type: WranglerFiles.simpleSchema()
+          ._schema["options.file_type"]
+    }),
+    WranglerFileTypeSchemas[this.options.file_type],
+  ]);
+}
+
+Template.fileInformation.helpers({
   shouldShowDescription: function () {
     return this.error_description &&
         (this.status === "error" || this.status === "done");
@@ -156,44 +155,68 @@ Template.showFile.helpers({
   autoformId: function () {
     return "edit-wrangler-file-" + this._id;
   },
-});
-
-Template.showFile.events({
-  // NOTE: keeping just in case
-  // "click .reparse-this-file": function (event, instance) {
-  //   Meteor.call("reparseWranglerFile", this._id);
-  // },
-  "click .remove-this-file": function(event, instance) {
-    var wrangler_file_id = this._id;
-
-    // wrapping it in Meteor.defer gets rid of a DOM error
-    // https://github.com/meteor/meteor/issues/2981
-    Meteor.defer(function () {
-      Meteor.call("removeWranglerFile",
-          instance.parent().data._id, wrangler_file_id);
-    });
+  notShownLines: function () {
+    var lineBreaks;
+    if (this.blob_text_sample) {
+      lineBreaks = this.blob_text_sample.match(/\n/g);
+    }
+    if (!lineBreaks) {
+      lineBreaks = [];
+    }
+    return this.blob_line_count - lineBreaks.length;
+  },
+  optionsSchema: function () {
+    return getOptionsSchema.call(this);
+  },
+  isInSchema: function (field) {
+    var simpleSchema = getOptionsSchema.call(this);
+    return simpleSchema._schema[field];
   },
 });
 
+Template.fileInformation.events({
+  "submit .edit-wrangler-file": function (event, instance) {
+    event.preventDefault();
 
+    var formId = "edit-wrangler-file-" + instance.data._id;
 
+    var oldOptions = instance.data.options;
+    var newOptions = AutoForm.getFormValues(formId, instance).insertDoc;
+    console.log("oldOptions:", oldOptions);
+    console.log("newOptions:", newOptions);
 
-// NOTE: for setting options for a wrangler file
-// Template.editFileOptions.events({
-//   "click .set-file-options": function (event, instance) {
-//     event.preventDefault();
-//     var parentInstance = instance.parentInstance();
-//     if (AutoForm.validateForm("edit-file")) {
-//       var editingFileId = parentInstance.editingFileId.get();
-//       var insertDoc = AutoForm.getFormValues("edit-file").insertDoc;
-//       var oldOptions = WranglerFiles.findOne(editingFileId).options;
-//
-//       if (JSON.stringify(insertDoc) !== JSON.stringify(oldOptions)) {
-//         Meteor.call("reparseWranglerFile", editingFileId, insertDoc);
-//       }
-//
-//       // hide that dialog
-//       parentInstance.editingFileId.set(null);
-//     }
-//   },
-// });
+    // if file_type has changed, reparse the file
+    if (oldOptions.file_type !== newOptions.file_type) {
+      var modifier = {};
+      if (newOptions.file_type) {
+        console.log("set");
+        modifier.$set = { "options.file_type": newOptions.file_type };
+      } else {
+        console.log("UNSET");
+        modifier.$unset = { "options.file_type": true };
+      }
+
+      WranglerFiles.update(instance.data._id, modifier);
+
+      console.log("about to call reparseWranglerFile");
+      Meteor.call("reparseWranglerFile", instance.data._id);
+    }
+
+    // give the autoform some time to update itself (in case file_type changed)
+    Meteor.defer(function () {
+      if (AutoForm.validateForm(formId)) {
+        var setObject = {};
+        for (var index in newOptions) {
+          if (index !== "file_type") { // file_type handled above
+            setObject["options." + index] = newOptions[index];
+          }
+        }
+        if (Object.keys(setObject) > 0) {
+          WranglerFiles.update(instance.data._id, { $set: setObject });
+        }
+      } else {
+        console.log("form not okay");
+      }
+    });
+  }
+});

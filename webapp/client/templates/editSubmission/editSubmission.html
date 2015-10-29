@@ -4,48 +4,31 @@
   {{> submissionFiles}}
   <hr />
 
-  {{#if subscriptionsReallyReady}}
-    {{#if hasDocuments}}
-      {{#if classifySubmissionType this._id}}
-        {{> reviewWranglerDocuments}}
-        <hr />
-        {{> optionsAndSubmit}}
+  {{> reviewWranglerDocuments}}
+  <hr />
+
+  {{> optionsAndSubmit}}
+</template>
+
+<template name="noWranglerDocumentsHelp">
+  <span class="help-block">
+    {{#if hasFiles}}
+      {{#if hasCompletedFile}}
+        You have uploaded a file, but no documents were created...
+        Please select a file to edit options.
       {{else}}
-        <span class="help-block">
-          Multiple submission types detected:
-          <ul>
-            {{#each getSubmissionTypes}}
-              <li>{{this}}</li>
-            {{/each}}
-          </ul>
-          Please submit each type of new document seperately.
-        </span>
+        {{#if hasProcessingFile}}
+          Your files are being processed...
+        {{else}}
+          {{#if hasUploadingFile}}
+            Your files are uploading...
+          {{else}}
+            Specify file options or correct errors to continue.
+          {{/if}}
+        {{/if}}
       {{/if}}
     {{else}}
-      <span class="help-block">
-        {{#if hasFiles}}
-          {{#if hasCompletedFile}}
-            You have uploaded a file, but no documents were created...
-            Please select a file to edit options.
-          {{else}}
-            {{#if hasProcessingFile}}
-              Your files are being processed...
-            {{else}}
-              {{#if hasUploadingFile}}
-                Your files are uploading...
-              {{else}}
-                Specify file options or correct errors to continue.
-              {{/if}}
-            {{/if}}
-          {{/if}}
-        {{else}}
-          Add files or objects to continue
-        {{/if}}
-      </span>
+      Add files or objects to continue
     {{/if}}
-  {{else}}
-    <div class="relative-spinner" style="height: 300px;">
-      {{> spinner}}
-    </div>
-  {{/if}}
+  </span>
 </template>

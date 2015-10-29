@@ -1,46 +1,78 @@
-17:36:19.496 INFO - Launching a standalone server
+11:58:11.855 INFO - Launching a standalone server
 Setting system property webdriver.chrome.driver to /usr/local/lib/node_modules/starrynight/node_modules/chromedriver/bin/chromedriver
-17:36:19.530 INFO - Java: Oracle Corporation 24.75-b04
-17:36:19.531 INFO - OS: Mac OS X 10.11 x86_64
-17:36:19.541 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
-17:36:19.621 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
-17:36:19.655 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-17:36:19.656 INFO - Version Jetty/5.1.x
-17:36:19.656 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
-17:36:19.657 INFO - Started HttpContext[/selenium-server,/selenium-server]
-17:36:19.657 INFO - Started HttpContext[/,/]
-17:36:19.673 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@66d7fef7
-17:36:19.674 INFO - Started HttpContext[/wd,/wd]
-17:36:19.679 INFO - Started SocketListener on 0.0.0.0:4444
-17:36:19.679 INFO - Started org.openqa.jetty.jetty.Server@34a205d1
-17:36:20.103 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]])
-17:36:20.123 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]
-Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 10945
+11:58:11.901 INFO - Java: Oracle Corporation 24.75-b04
+11:58:11.901 INFO - OS: Mac OS X 10.11 x86_64
+11:58:11.914 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
+11:58:12.023 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
+11:58:12.056 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+11:58:12.057 INFO - Version Jetty/5.1.x
+11:58:12.058 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+11:58:12.058 INFO - Started HttpContext[/selenium-server,/selenium-server]
+11:58:12.058 INFO - Started HttpContext[/,/]
+11:58:12.078 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@6ea43ee0
+11:58:12.078 INFO - Started HttpContext[/wd,/wd]
+11:58:12.083 INFO - Started SocketListener on 0.0.0.0:4444
+11:58:12.083 INFO - Started org.openqa.jetty.jetty.Server@792bf755
+11:58:12.413 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]])
+11:58:12.423 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]
+Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 43948
 Only local connections are allowed.
-17:36:22.022 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]]
-17:36:22.031 INFO - Executing: [get: http://localhost:3000/Wrangler])
-17:36:23.364 INFO - Done: [get: http://localhost:3000/Wrangler]
-17:36:23.374 INFO - Executing: [set window size])
-17:36:23.607 INFO - Done: [set window size]
-17:36:24.619 INFO - Executing: [find elements: By.cssSelector: .container])
-17:36:24.663 INFO - Done: [find elements: By.cssSelector: .container]
-17:36:24.667 INFO - Executing: [find elements: By.cssSelector: #top-controls])
-17:36:24.680 INFO - Done: [find elements: By.cssSelector: #top-controls]
-17:36:24.684 INFO - Executing: [find elements: By.cssSelector: #left])
-17:36:24.697 INFO - Done: [find elements: By.cssSelector: #left]
-17:36:24.704 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
-17:36:24.719 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
-17:36:24.722 INFO - Executing: [find elements: By.cssSelector: li.active])
-17:36:24.740 INFO - Done: [find elements: By.cssSelector: li.active]
-17:36:24.748 INFO - Executing: [find elements: By.cssSelector: #center])
-17:36:24.766 INFO - Done: [find elements: By.cssSelector: #center]
-17:36:24.770 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-17:36:24.786 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-17:36:24.793 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
-17:36:24.809 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
-17:36:25.317 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
-17:36:25.332 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
-17:36:25.838 INFO - Executing: [find elements: By.cssSelector: #entrySignIn])
-17:36:25.846 INFO - Done: [find elements: By.cssSelector: #entrySignIn]
-17:36:25.851 INFO - Executing: [delete session: 324caeb8-d462-48d4-afd5-a9a840a703e4])
-17:36:26.471 INFO - Done: [delete session: 324caeb8-d462-48d4-afd5-a9a840a703e4]
+11:58:14.153 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=App Layout}]]
+11:58:14.176 INFO - Executing: [get: http://localhost:3000/Wrangler])
+11:58:15.584 INFO - Done: [get: http://localhost:3000/Wrangler]
+11:58:15.597 INFO - Executing: [set window size])
+11:58:15.827 INFO - Done: [set window size]
+11:58:16.839 INFO - Executing: [find elements: By.cssSelector: .container])
+11:58:16.871 INFO - Done: [find elements: By.cssSelector: .container]
+11:58:16.875 INFO - Executing: [find elements: By.cssSelector: #top-controls])
+11:58:16.889 INFO - Done: [find elements: By.cssSelector: #top-controls]
+11:58:16.893 INFO - Executing: [find elements: By.cssSelector: #left])
+11:58:16.908 INFO - Done: [find elements: By.cssSelector: #left]
+11:58:16.916 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
+11:58:16.936 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
+11:58:16.940 INFO - Executing: [find elements: By.cssSelector: li.active])
+11:58:16.962 INFO - Done: [find elements: By.cssSelector: li.active]
+11:58:16.967 INFO - Executing: [find elements: By.cssSelector: #center])
+11:58:16.982 INFO - Done: [find elements: By.cssSelector: #center]
+11:58:16.987 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+11:58:17.003 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+11:58:17.017 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+11:58:17.039 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+11:58:17.043 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-buttons]])
+11:58:17.056 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-buttons]]
+11:58:17.061 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
+11:58:17.076 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
+11:58:17.080 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-sign-in-link]])
+11:58:17.116 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-sign-in-link]]
+11:58:17.524 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
+11:58:17.540 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
+11:58:17.544 INFO - Executing: [find elements: By.cssSelector: #login-email])
+11:58:17.559 INFO - Done: [find elements: By.cssSelector: #login-email]
+11:58:17.565 INFO - Executing: [find elements: By.cssSelector: #login-password])
+11:58:17.582 INFO - Done: [find elements: By.cssSelector: #login-password]
+11:58:17.588 INFO - Executing: [find element: By.cssSelector: #login-email])
+11:58:17.602 INFO - Done: [find element: By.cssSelector: #login-email]
+11:58:17.607 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-email], [b, o, n, j, o, u, r, @, m, e, t, e, o, r, ., c, o, m]])
+11:58:17.682 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-email], [b, o, n, j, o, u, r, @, m, e, t, e, o, r, ., c, o, m]]
+11:58:17.688 INFO - Executing: [find element: By.cssSelector: #login-password])
+11:58:17.745 INFO - Done: [find element: By.cssSelector: #login-password]
+11:58:17.750 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-password], [b, o, n, j, o, u, r]])
+11:58:17.794 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-password], [b, o, n, j, o, u, r]]
+11:58:17.803 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
+11:58:17.823 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
+11:58:17.825 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-buttons-password]])
+11:58:17.857 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #login-buttons-password]]
+11:58:18.867 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
+11:58:18.881 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
+11:58:18.885 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
+11:58:18.902 INFO - Done: [find element: By.cssSelector: #create-new-submission]
+11:58:18.905 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #create-new-submission]])
+11:58:18.954 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: #create-new-submission]]
+11:58:19.958 INFO - Executing: [get current url])
+11:58:19.963 INFO - Done: [get current url]
+11:58:19.968 INFO - Executing: [find element: By.cssSelector: h2])
+11:58:19.986 INFO - Done: [find element: By.cssSelector: h2]
+11:58:19.989 INFO - Executing: [get text: 13 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: h2]])
+11:58:20.008 INFO - Done: [get text: 13 [[ChromeDriver: chrome on MAC (cd9b21818d0567b95c5ef24a8b906049)] -> css selector: h2]]
+11:58:20.013 INFO - Executing: [delete session: bcdbc737-9231-477a-9b4f-df8052d3b4c3])
+11:58:20.632 INFO - Done: [delete session: bcdbc737-9231-477a-9b4f-df8052d3b4c3]

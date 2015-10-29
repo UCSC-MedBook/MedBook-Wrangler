@@ -9,7 +9,6 @@ var availableCollections = [
   "superpathway_elements",
   "superpathway_interactions",
   "mutations",
-  "gene_expression",
 ];
 
 TabularTables.listSubmissions = new Tabular.Table({

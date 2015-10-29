@@ -3,33 +3,25 @@
 
   <div class="row">
     <div class="col-md-6">
-      {{#if getPublishedCount "type_superpathway"}}
-        {{#submissionOptions schema=superpathwaySchema}}
-          {{> superpathwayFields}}
-        {{/submissionOptions}}
-      {{/if}}
+      {{#if classifySubmissionType this._id}}
+        <!-- {{#if getPublishedCount "type_superpathway"}}
+          {{#submissionOptions schema=superpathwaySchema}}
+            {{> superpathwayFields}}
+          {{/submissionOptions}}
+        {{/if}} -->
 
-      {{#if getPublishedCount "type_mutations"}}
-        {{#submissionOptions schema=mutationSchema}}
-          {{> mutationFields}}
-        {{/submissionOptions}}
-      {{/if}}
+        {{#if getPublishedCount "type_mutations"}}
+          {{#submissionOptions schema=mutationSchema}}
+            {{> mutationFields}}
+          {{/submissionOptions}}
+        {{/if}}
 
-      {{#if getPublishedCount "type_gene_expression"}}
-        {{#submissionOptions schema=expressionSchema}}
-          {{> expressionFields}}
-        {{/submissionOptions}}
-      {{/if}}
-
-      {{#if getPublishedCount "type_rectangular_gene_expression"}}
-        {{#submissionOptions schema=expressionSchema}}
-          {{> expressionFields}}
-        {{/submissionOptions}}
-      {{/if}}
-
-      {{#if getPublishedCount "type_mutation_gene_expression"}}
-        {{#submissionOptions schema=expressionSchema}}
-          {{> expressionFields}}
+        {{#if getPublishedCount "type_gene_expression"}}
+          {{#submissionOptions schema=sharedSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+      {{else}}
+        {{#submissionOptions schema=sharedSchema}}
         {{/submissionOptions}}
       {{/if}}
     </div>
@@ -124,7 +116,7 @@
       options=collaborationOptions firstOption="(Select a collaboration)"}}
 </template>
 
-<template name="superpathwayFields">
+<!-- <template name="superpathwayFields">
   {{! TODO: hide update if there are no superpathways }}
   {{> afQuickField name="update_or_create" options="allowed"
       firstOption="(Create new or update existing superpathway)"}}
@@ -135,15 +127,11 @@
         placeholder="Enter name"
         firstOption="(Select superpathway name)"}}
   {{/if}}
-</template>
+</template> -->
 
 <template name="mutationFields">
   {{> afQuickField name="biological_source" options="allowed"}}
   {{> afQuickField name="mutation_impact_assessor" options="allowed"}}
-</template>
-
-<template name="expressionFields">
-  <!-- {{> afQuickField name="study_label"}} -->
 </template>
 
 <template name="validateAndSubmit">

@@ -7,22 +7,10 @@ Template.editSubmission.onCreated(function () {
 });
 
 Template.editSubmission.helpers({
-  hasDocuments: function () {
-    return Counts.get("all-documents") > 0;
-  },
-  classifySubmissionType: function () {
-    var documentTypes = getSubmissionTypes(this._id);
 
-    if (documentTypes.length === 1) {
-      return documentTypes[0];
-    }
+});
 
-    return null;
-  },
-  getSubmissionTypes: getSubmissionTypes,
-  subscriptionsReallyReady: function () {
-    return Counts.has("all-documents");
-  },
+Template.noWranglerDocumentsHelp.helpers({
   hasFiles: function () {
     return WranglerFiles.find().count() > 0;
   },
@@ -34,14 +22,12 @@ Template.editSubmission.helpers({
   },
   hasProcessingFile: function () {
     return WranglerFiles.find({
-      "status": {$in: ["processing", "waiting"]}
+      status: "processing"
     }).count() > 0;
   },
   hasUploadingFile: function () {
     return WranglerFiles.find({
-      "status": {
-        $in: ["creating", "uploading", "saving"]
-      }
+      "status": "uploading"
     }).count() > 0;
   },
 });

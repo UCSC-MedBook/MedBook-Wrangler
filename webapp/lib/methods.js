@@ -6,7 +6,7 @@ Meteor.methods({
     return WranglerSubmissions.insert({
       "user_id": userId,
       "date_created": new Date(),
-      "status": Meteor.isClient ? "creating" : "editing",
+      "status": "editing",
     });
   },
   deleteSubmission: function (submission_id) {
@@ -55,7 +55,7 @@ Meteor.methods({
       "user_id": submission.user_id,
       "blob_id": blobId,
       "blob_name": blobName,
-      "status": Meteor.isClient ? "creating" : "uploading",
+      "status": "uploading",
     });
 
     if (Meteor.isServer){
@@ -69,27 +69,21 @@ Meteor.methods({
       });
     }
   },
-  removeWranglerFile: function (submission_id, wranglerFileId) {
-    check(submission_id, String);
+  removeWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
+
+    var wranglerFile = WranglerFiles.findOne(wranglerFileId);
+    var submission_id = wranglerFile.submission_id;
+
     ensureSubmissionEditable(makeSureLoggedIn(), submission_id);
 
-    var wranglerFile = WranglerFiles.findOne({
-      "_id": wranglerFileId,
-      "submission_id": submission_id, // security
-    });
-
     WranglerFiles.remove(wranglerFileId);
-
-    this.unblock();
 
     WranglerDocuments.remove({
       "submission_id": submission_id,
       "wrangler_file_id": wranglerFileId,
     });
     Blobs.remove(wranglerFile.blob_id);
-
-    // TODO: call this for everything that is uncompressed from this
   },
   reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
@@ -101,7 +95,7 @@ Meteor.methods({
       ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
       WranglerFiles.update(wranglerFileId, {
-        $set: { status: "waiting" }
+        $set: { status: "processing" }
       });
 
       if (Meteor.isServer) {

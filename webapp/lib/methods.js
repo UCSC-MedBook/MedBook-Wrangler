@@ -74,8 +74,8 @@ Meteor.methods({
 
     var wranglerFile = WranglerFiles.findOne(wranglerFileId);
     var submission_id = wranglerFile.submission_id;
-
-    ensureSubmissionEditable(makeSureLoggedIn(), submission_id);
+    var user_id = makeSureLoggedIn();
+    ensureSubmissionEditable(user_id, submission_id);
 
     WranglerFiles.remove(wranglerFileId);
 
@@ -84,6 +84,15 @@ Meteor.methods({
       "wrangler_file_id": wranglerFileId,
     });
     Blobs.remove(wranglerFile.blob_id);
+
+    Jobs.remove({
+      name: "ParseWranglerFile",
+      user_id: user_id,
+      args: {
+        "wrangler_file_id": wranglerFileId,
+      },
+      status: "waiting",
+    });
   },
   reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);

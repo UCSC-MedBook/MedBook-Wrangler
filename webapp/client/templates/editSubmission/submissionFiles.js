@@ -49,24 +49,26 @@ Template.uploadNewFiles.events({
     event.preventDefault();
 
     var urlInput = event.target.urlInput;
-    // https://github.com/CollectionFS/Meteor-CollectionFS/
-    // wiki/Insert-One-File-From-a-Remote-URL
-    var newFile = new FS.File();
-    newFile.attachData(urlInput.value, function (error) {
-      if (error) {
-        console.log("error:", error);
-        throw error;
-      } else {
-        newFile.metadata = {
-          "user_id": Meteor.userId(),
-          "submission_id": instance.data._id,
-          "uploaded": true,
-        };
-        Blobs.insert(newFile,
-            _.partial(blobsInsertCallback, instance.data._id));
-        urlInput.value = "";
-      }
-    });
+    if (urlInput.value) {
+      // https://github.com/CollectionFS/Meteor-CollectionFS/
+      // wiki/Insert-One-File-From-a-Remote-URL
+      var newFile = new FS.File();
+      newFile.attachData(urlInput.value, function (error) {
+        if (error) {
+          console.log("error:", error);
+          throw error;
+        } else {
+          newFile.metadata = {
+            "user_id": Meteor.userId(),
+            "submission_id": instance.data._id,
+            "uploaded": true,
+          };
+          Blobs.insert(newFile,
+              _.partial(blobsInsertCallback, instance.data._id));
+          urlInput.value = "";
+        }
+      });
+    }
   },
 });
 
@@ -134,26 +136,10 @@ Template.showFile.events({
 // Template fileInformation
 //
 
-function getOptionsSchema () {
-  return new SimpleSchema([
-    new SimpleSchema({
-      file_type: WranglerFiles.simpleSchema()
-          ._schema["options.file_type"]
-    }),
-    WranglerFileTypeSchemas[this.options.file_type],
-  ]);
-}
-
 Template.fileInformation.helpers({
   shouldShowDescription: function () {
     return this.error_description &&
         (this.status === "error" || this.status === "done");
-  },
-  WranglerFiles: function () {
-    return WranglerFiles;
-  },
-  autoformId: function () {
-    return "edit-wrangler-file-" + this._id;
   },
   notShownLines: function () {
     var lineBreaks;
@@ -165,6 +151,26 @@ Template.fileInformation.helpers({
     }
     return this.blob_line_count - lineBreaks.length;
   },
+});
+
+//
+// Template fileOptions
+//
+
+function getOptionsSchema () {
+  return new SimpleSchema([
+    new SimpleSchema({
+      file_type: WranglerFiles.simpleSchema()
+          ._schema["options.file_type"]
+    }),
+    WranglerFileTypeSchemas[this.options.file_type],
+  ]);
+}
+
+Template.fileOptions.helpers({
+  autoformId: function () {
+    return "edit-wrangler-file-" + this._id;
+  },
   optionsSchema: function () {
     return getOptionsSchema.call(this);
   },
@@ -174,7 +180,7 @@ Template.fileInformation.helpers({
   },
 });
 
-Template.fileInformation.events({
+Template.fileOptions.events({
   "submit .edit-wrangler-file": function (event, instance) {
     event.preventDefault();
 

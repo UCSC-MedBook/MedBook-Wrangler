@@ -1,13 +1,21 @@
 <template name="editSubmission">
   {{print "editSubmission this:" this}}
 
-  {{> submissionFiles}}
+  {{! NOTE: ids were added for testing purposes}}
+
+  <div id="submissionFiles">
+    {{> submissionFiles}}
+  </div>
   <hr />
 
-  {{> reviewWranglerDocuments}}
+  <div id="reviewWranglerDocuments">
+    {{> reviewWranglerDocuments}}
+  </div>
   <hr />
 
-  {{> optionsAndSubmit}}
+  <div id="optionsAndSubmit">
+    {{> optionsAndSubmit}}
+  </div>
 </template>
 
 <template name="noWranglerDocumentsHelp">

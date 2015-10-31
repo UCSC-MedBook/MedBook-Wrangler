@@ -4,7 +4,7 @@ var newSubmission = {
   status: "editing"
 };
 
-
+var waitForMongo = 12000;
 
 module.exports = {
   "Upload BD2K gene expression": function (client) {
@@ -30,6 +30,21 @@ module.exports = {
     ;
 
     var urlInputSelector = "form.add-from-web-form input[name='urlInput']";
+    var DTBNormCountsWranglerFile = {
+      blob_line_count: 20501,
+      blob_name: "DTB-999_Baseline.rsem.genes.norm_counts.tab",
+      blob_text_sample:
+        "gene_id DTB-999_Baseline\nA1BG 0\nA1CF 0\nA2BP1 0\nA2LD1 505.412273",
+      options: {
+        file_type: "BD2KGeneExpression",
+        normalization: "counts",
+      },
+      parsed_options_once_already: true,
+      status: "done",
+      submission_id: "dKETrdfjASWrHXJcM",
+      user_id: "yKWxvJi5ouvbjqjRQ",
+      written_to_database: false,
+    };
     client
       .clearValue(urlInputSelector)
       .setValue(urlInputSelector,
@@ -43,24 +58,45 @@ module.exports = {
           parsed_options_once_already: false,
           written_to_database: false,
         })
-      .waitForElementVisible('#blob_line_count', 10000)
+      .waitForElementVisible('.file-options form.edit-wrangler-file', waitForMongo)
+        .reviewSubmissionFile(DTBNormCountsWranglerFile)
+    ;
 
-      .waitForElementVisible('.file-options form.edit-wrangler-file', 5000)
-        .reviewSubmissionFile({
-          blob_line_count: 20501,
-          blob_name: "DTB-999_Baseline.rsem.genes.norm_counts.tab",
-          blob_text_sample:
-            "gene_id DTB-999_Baseline\nA1BG 0\nA1CF 0\nA2BP1 0\nA2LD1 505.412273",
-          options: {
-            file_type: "BD2KGeneExpression",
-            normalization: "counts",
-          },
-          parsed_options_once_already: true,
-          status: "done",
-          submission_id: "dKETrdfjASWrHXJcM",
-          user_id: "yKWxvJi5ouvbjqjRQ",
-          written_to_database: false,
-        })
+    // make sure the "Auto" option works
+    client
+      .click(".panel-body select[name='file_type'] > option:nth-child(1)")
+      .reviewSubmissionFile({
+        blob_name: "DTB-999_Baseline.rsem.genes.norm_counts.tab",
+        status: "processing",
+        blob_line_count: 20501,
+        blob_text_sample:
+          "gene_id DTB-999_Baseline\nA1BG 0\nA1CF 0\nA2BP1 0\nA2LD1 505.412273",
+        written_to_database: false,
+      })
+      .waitForElementVisible('.panel-success', waitForMongo)
+        .reviewSubmissionFile(DTBNormCountsWranglerFile)
+    ;
+
+    // try to say it's other file types
+    client
+      .click(".panel-body select[name='file_type'] option[value='MutationVCF']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "Error parsing .vcf file")
+      .click(".panel-body select[name='file_type'] option[value='BD2KSampleLabelMap']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "No column with header 'Sample_Name'")
+      .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "expected 'Hybridization REF' to start file")
+      // TODO: try to set as clinical
+      // .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+      // .waitForElementVisible('.panel-danger', waitForMongo)
+      //   .verify.containsText(".panel-danger .alert-warning",
+      //       "expected 'Hybridization REF' to start file")
+
     ;
 
     client.end();

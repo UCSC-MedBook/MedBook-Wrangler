@@ -5,9 +5,9 @@
 
   <testsuite name="general"
     errors="0" failures="0" hostname="" id="" package="general" skipped="0"
-    tests="1" time="0.000" timestamp="Fri, 30 Oct 2015 23:24:20 GMT">
+    tests="1" time="0.000" timestamp="Sat, 31 Oct 2015 00:11:27 GMT">
   
-    <testcase name="Upload 100mb file and delete" time="10.16" assertions="40">
+    <testcase name="Upload 100mb file and delete" time="10.01" assertions="40">
 
     
 

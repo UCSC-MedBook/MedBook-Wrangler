@@ -35,7 +35,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, largeFileUrl)
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('div.panel-heading span.badge', 1000)
+      .waitForElementVisible('div.panel-heading span.badge', 2000)
       .verify.value(urlInput, "")
       .reviewSubmissionFile({
         blob_name: "100MB.bin",

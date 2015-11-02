@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="0"
+            failures="1"
             tests="1">
 
   <testsuite name="BD2KGeneExpression"
-    errors="0" failures="0" hostname="" id="" package="BD2KGeneExpression" skipped="0"
-    tests="1" time="0.000" timestamp="Sat, 31 Oct 2015 00:11:17 GMT">
+    errors="0" failures="1" hostname="" id="" package="BD2KGeneExpression" skipped="0"
+    tests="1" time="0.000" timestamp="Mon, 02 Nov 2015 22:24:59 GMT">
   
-    <testcase name="Upload BD2K gene expression" time="57.57" assertions="76">
+    <testcase name="BD2KGeneExpression upload and other stuff" time="37.74" assertions="87">
 
     
 
@@ -150,6 +150,38 @@
     
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;#blob_line_count&gt; contains text: &quot;96&quot;.">    at Object.exports.command (/Users/mokolodi1/work/medbook/wrangler/webapp/tests/nightwatch/commands/components/reviewSubmissionFile.js:37:15)
+    at Object.F.command (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/api.js:274:31)
+    at Object.commandFn (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/api.js:287:24)
+    at AsyncTree.runCommand (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:157:30)
+    at AsyncTree.runChildNode (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:117:8)
+    at AsyncTree.walkDown (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:83:10)
+    at AsyncTree.walkUp (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:100:8)
+    at AsyncTree.walkDown (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:93:12)
+    at AsyncTree.traverse (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:71:10)
+    at F.onCommandComplete (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:134:12)
+    at F.g (events.js:180:16)</failure>
 
     
 

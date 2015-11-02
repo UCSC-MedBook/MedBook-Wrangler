@@ -4,10 +4,10 @@ var newSubmission = {
   status: "editing"
 };
 
-var waitForMongo = 12000;
+var waitForMongo = 15000;
 
 module.exports = {
-  "Upload BD2K gene expression": function (client) {
+  "BD2KGeneExpression upload and other stuff": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
@@ -41,8 +41,6 @@ module.exports = {
       },
       parsed_options_once_already: true,
       status: "done",
-      submission_id: "dKETrdfjASWrHXJcM",
-      user_id: "yKWxvJi5ouvbjqjRQ",
       written_to_database: false,
     };
     client
@@ -77,26 +75,59 @@ module.exports = {
         .reviewSubmissionFile(DTBNormCountsWranglerFile)
     ;
 
-    // try to say it's other file types
-    client
-      .click(".panel-body select[name='file_type'] option[value='MutationVCF']")
-      .waitForElementVisible('.panel-danger', waitForMongo)
-        .verify.containsText(".panel-danger .alert-warning",
-            "Error parsing .vcf file")
-      .click(".panel-body select[name='file_type'] option[value='BD2KSampleLabelMap']")
-      .waitForElementVisible('.panel-danger', waitForMongo)
-        .verify.containsText(".panel-danger .alert-warning",
-            "No column with header 'Sample_Name'")
-      .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
-      .waitForElementVisible('.panel-danger', waitForMongo)
-        .verify.containsText(".panel-danger .alert-warning",
-            "expected 'Hybridization REF' to start file")
-      // TODO: try to set as clinical
-      // .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
-      // .waitForElementVisible('.panel-danger', waitForMongo)
-      //   .verify.containsText(".panel-danger .alert-warning",
-      //       "expected 'Hybridization REF' to start file")
+    // // try to say it's other file types
+    // client
+    //   .click(".panel-body select[name='file_type'] option[value='MutationVCF']")
+    //   .waitForElementVisible('.panel-danger', waitForMongo)
+    //     .verify.containsText(".panel-danger .alert-warning",
+    //         "Error parsing .vcf file")
+    //   .click(".panel-body select[name='file_type'] option[value='BD2KSampleLabelMap']")
+    //   .waitForElementVisible('.panel-danger', waitForMongo)
+    //     .verify.containsText(".panel-danger .alert-warning",
+    //         "No column with header 'Sample_Name'")
+    //   .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+    //   .waitForElementVisible('.panel-danger', waitForMongo)
+    //     .verify.containsText(".panel-danger .alert-warning",
+    //         "expected 'Hybridization REF' to start file")
+    //   // TODO: try to set as clinical
+    //   // .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+    //   // .waitForElementVisible('.panel-danger', waitForMongo)
+    //   //   .verify.containsText(".panel-danger .alert-warning",
+    //   //       "expected 'Hybridization REF' to start file")
+    // ;
 
+    // delete the file
+    client
+      .click(".remove-this-file").pause(200)
+      .verify.elementNotPresent(".panel-title .ellipsis-out-before-badge")
+    ;
+
+    var mutationVCF = {
+      blob_line_count: 96, // not actually, but sample text has two less '\n's
+      blob_name: "DTB-BC-999.anno.fix.vcf",
+      blob_text_sample:
+        "##contig=<ID=chr1,length=249250621,assembly=hg19>\n" +
+        "##contig=<ID=chr10,length=135534747,assembly=hg19>\n" +
+        "##contig=<ID=chr11,length=135006516,assembly=hg19>",
+      options: {
+        file_type: "MutationVCF",
+      },
+      parsed_options_once_already: true,
+      status: "done",
+      written_to_database: false,
+    };
+    client
+      .clearValue(urlInputSelector)
+      .setValue(urlInputSelector,
+          "http://localhost:3000/DTB-BC-999.anno.fix.vcf")
+      .click("form.add-from-web-form button[type='submit']")
+      .waitForElementVisible('.panel-info', 3000)
+        .verify.value(urlInputSelector, "")
+      .waitForElementVisible('.file-options form.edit-wrangler-file', waitForMongo)
+        .reviewSubmissionFile(mutationVCF)
+        .verify.elementPresent(".dataTables_wrapper")
+        .verify.elementPresent('select[name="biological_source"')
+        .verify.elementPresent('select[name="mutation_impact_assessor"]')
     ;
 
     client.end();

@@ -56,7 +56,7 @@ module.exports = {
           parsed_options_once_already: false,
           written_to_database: false,
         })
-      .waitForElementVisible('.file-options form.edit-wrangler-file', waitForMongo)
+      .waitForElementVisible('#submissionFiles .panel-success', waitForMongo)
         .reviewSubmissionFile(DTBNormCountsWranglerFile)
     ;
 
@@ -75,26 +75,26 @@ module.exports = {
         .reviewSubmissionFile(DTBNormCountsWranglerFile)
     ;
 
-    // // try to say it's other file types
-    // client
-    //   .click(".panel-body select[name='file_type'] option[value='MutationVCF']")
-    //   .waitForElementVisible('.panel-danger', waitForMongo)
-    //     .verify.containsText(".panel-danger .alert-warning",
-    //         "Error parsing .vcf file")
-    //   .click(".panel-body select[name='file_type'] option[value='BD2KSampleLabelMap']")
-    //   .waitForElementVisible('.panel-danger', waitForMongo)
-    //     .verify.containsText(".panel-danger .alert-warning",
-    //         "No column with header 'Sample_Name'")
-    //   .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
-    //   .waitForElementVisible('.panel-danger', waitForMongo)
-    //     .verify.containsText(".panel-danger .alert-warning",
-    //         "expected 'Hybridization REF' to start file")
-    //   // TODO: try to set as clinical
-    //   // .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
-    //   // .waitForElementVisible('.panel-danger', waitForMongo)
-    //   //   .verify.containsText(".panel-danger .alert-warning",
-    //   //       "expected 'Hybridization REF' to start file")
-    // ;
+    // try to say it's other file types
+    client
+      .click(".panel-body select[name='file_type'] option[value='MutationVCF']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "Error parsing .vcf file")
+      .click(".panel-body select[name='file_type'] option[value='BD2KSampleLabelMap']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "No column with header 'Sample_Name'")
+      .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+      .waitForElementVisible('.panel-danger', waitForMongo)
+        .verify.containsText(".panel-danger .alert-warning",
+            "expected 'Hybridization REF' to start file")
+      // TODO: try to set as clinical
+      // .click(".panel-body select[name='file_type'] option[value='TCGAGeneExpression']")
+      // .waitForElementVisible('.panel-danger', waitForMongo)
+      //   .verify.containsText(".panel-danger .alert-warning",
+      //       "expected 'Hybridization REF' to start file")
+    ;
 
     // delete the file
     client

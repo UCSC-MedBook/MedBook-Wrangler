@@ -52,7 +52,7 @@
               written
             {{else}}
               {{#if error_description}}
-                need info
+                problem
               {{else}}
                 processed
               {{/if}}
@@ -83,7 +83,6 @@
 <template name="fileInformation">
   {{#if compare status "uploading"}}
     <p class="list-group-item-text">
-      {{print "blob_id:" blob_id}}
       {{#with FS.GetFile "blobs" blob_id}}
         {{> FS.UploadProgressBar bootstrap=true
             class='progress-bar-striped active'
@@ -91,6 +90,7 @@
       {{/with}}
     </p>
   {{else}}
+    <h4 style="margin-top: 0px;">Preview</h4>
     {{#if blob_text_sample}}
       <div class="sometimes-horizontal-scroll">
         {{! NOTE: it will show line breaks, so keep it on one line }}
@@ -104,9 +104,9 @@
     {{else}}
       <span class="help-block">File preview is loading...</span>
     {{/if}}
-
   {{/if}}
-  <hr>
+
+  <hr> {{! always shows something above}}
 
   {{#if shouldShowDescription}}
     <div class="alert alert-warning" role="alert">
@@ -114,6 +114,7 @@
         {{error_description}}
       </p>
     </div>
+    <!-- <hr> -->
   {{/if}}
 
   {{> fileOptions}}

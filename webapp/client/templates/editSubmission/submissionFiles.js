@@ -188,23 +188,18 @@ Template.fileOptions.events({
 
     var oldOptions = instance.data.options;
     var newOptions = AutoForm.getFormValues(formId, instance).insertDoc;
-    console.log("oldOptions:", oldOptions);
-    console.log("newOptions:", newOptions);
 
     // if file_type has changed, reparse the file
     if (oldOptions.file_type !== newOptions.file_type) {
       var modifier = {};
       if (newOptions.file_type) {
-        console.log("set");
         modifier.$set = { "options.file_type": newOptions.file_type };
       } else {
-        console.log("UNSET");
         modifier.$unset = { "options.file_type": true };
       }
 
       WranglerFiles.update(instance.data._id, modifier);
 
-      console.log("about to call reparseWranglerFile");
       Meteor.call("reparseWranglerFile", instance.data._id);
     }
 

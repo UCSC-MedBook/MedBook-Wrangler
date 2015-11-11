@@ -95,6 +95,8 @@
 </template>
 
 <template name="submissionOptions">
+  {{! TODO: save the currentOptions on load: this will fix the bug where the
+      options are deleted when the submission is modified }}
   {{#autoForm id="submission-options" schema=schema
       doc=currentOptions type=readonlyIfNotEditing}}
     {{> sharedFields}}

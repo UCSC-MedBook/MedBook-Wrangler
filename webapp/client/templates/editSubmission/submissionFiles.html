@@ -64,6 +64,10 @@
 
         <span class="pull-right">
           {{#if compare ../status "editing"}}
+            <button class="reparse-this-file btn btn-xs btn-info">
+              <span class="glyphicon glyphicon-refresh"></span>
+              <span>Reparse</span>
+            </button>
             <button class="remove-this-file btn btn-xs btn-warning">
               <span class="glyphicon glyphicon-trash"></span>
               <span>Delete</span>

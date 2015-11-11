@@ -130,6 +130,13 @@ Template.showFile.events({
       Meteor.call("removeWranglerFile", instance.data._id);
     });
   },
+  "click .reparse-this-file": function(event, instance) {
+    // wrapping it in Meteor.defer gets rid of a DOM error
+    // https://github.com/meteor/meteor/issues/2981
+    Meteor.defer(function () {
+      Meteor.call("reparseWranglerFile", instance.data._id);
+    });
+  },
 });
 
 //

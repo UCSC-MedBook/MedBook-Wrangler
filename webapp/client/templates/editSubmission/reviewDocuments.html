@@ -117,7 +117,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Sample label</th>
+                <th>Original sample label</th>
+                <th>Wrangled sample label</th>
                 <th>Sample UUID</th>
               </tr>
             </thead>
@@ -125,7 +126,8 @@
               {{#each sampleLabelMaps}}
                 {{#with contents}}
                   <tr>
-                    <th scope="row">{{sample_label}}</th>
+                    <th scope="row">{{original_sample_label}}</th>
+                    <td>{{sample_label}}</td>
                     <td>{{sample_uuid}}</td>
                   </tr>
                 {{/with}}

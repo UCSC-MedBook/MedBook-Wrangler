@@ -1,4 +1,6 @@
 exports.command = function(wranglerFile) {
+  console.log("Don't use me anymore!");
+
   // check stuff that should always be there
   this
     .verify.elementPresent(".panel-title .glyphicon-file")

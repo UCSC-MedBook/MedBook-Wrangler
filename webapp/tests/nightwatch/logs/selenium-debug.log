@@ -1,126 +1,158 @@
-20:03:46.705 INFO - Launching a standalone server
+15:13:55.012 INFO - Launching a standalone server
 Setting system property webdriver.chrome.driver to /usr/local/lib/node_modules/starrynight/node_modules/chromedriver/bin/chromedriver
-20:03:46.771 INFO - Java: Oracle Corporation 24.75-b04
-20:03:46.771 INFO - OS: Mac OS X 10.11 x86_64
-20:03:46.790 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
-20:03:46.927 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
-20:03:46.994 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-20:03:46.995 INFO - Version Jetty/5.1.x
-20:03:46.997 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
-20:03:46.998 INFO - Started HttpContext[/selenium-server,/selenium-server]
-20:03:46.998 INFO - Started HttpContext[/,/]
-20:03:47.114 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@66d7fef7
-20:03:47.114 INFO - Started HttpContext[/wd,/wd]
-20:03:47.121 INFO - Started SocketListener on 0.0.0.0:4444
-20:03:47.121 INFO - Started org.openqa.jetty.jetty.Server@34a205d1
-20:03:47.687 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]])
-20:03:47.705 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]
-Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 24095
+15:13:55.048 INFO - Java: Oracle Corporation 24.75-b04
+15:13:55.049 INFO - OS: Mac OS X 10.11 x86_64
+15:13:55.060 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
+15:13:55.137 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
+15:13:55.172 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+15:13:55.173 INFO - Version Jetty/5.1.x
+15:13:55.173 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+15:13:55.174 INFO - Started HttpContext[/selenium-server,/selenium-server]
+15:13:55.174 INFO - Started HttpContext[/,/]
+15:13:55.201 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@611c1cdf
+15:13:55.201 INFO - Started HttpContext[/wd,/wd]
+15:13:55.206 INFO - Started SocketListener on 0.0.0.0:4444
+15:13:55.206 INFO - Started org.openqa.jetty.jetty.Server@357b2b99
+15:13:55.656 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]])
+15:13:55.674 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]
+Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 11742
 Only local connections are allowed.
-20:03:49.809 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@49a3a85d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]]
-20:03:49.820 INFO - Executing: [get: http://localhost:3000/Wrangler])
-20:03:51.160 INFO - Done: [get: http://localhost:3000/Wrangler]
-20:03:51.167 INFO - Executing: [set window size])
-20:03:51.395 INFO - Done: [set window size]
-20:03:52.406 INFO - Executing: [find elements: By.cssSelector: .container])
-20:03:52.448 INFO - Done: [find elements: By.cssSelector: .container]
-20:03:52.453 INFO - Executing: [find elements: By.cssSelector: #top-controls])
-20:03:52.468 INFO - Done: [find elements: By.cssSelector: #top-controls]
-20:03:52.472 INFO - Executing: [find elements: By.cssSelector: #left])
-20:03:52.486 INFO - Done: [find elements: By.cssSelector: #left]
-20:03:52.490 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
-20:03:52.510 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
-20:03:52.514 INFO - Executing: [find elements: By.cssSelector: li.active])
-20:03:52.539 INFO - Done: [find elements: By.cssSelector: li.active]
-20:03:52.544 INFO - Executing: [find elements: By.cssSelector: #center])
-20:03:52.608 INFO - Done: [find elements: By.cssSelector: #center]
-20:03:52.618 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-20:03:52.642 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-20:03:52.656 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-20:03:52.674 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-20:03:52.679 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-buttons]])
-20:03:52.705 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-buttons]]
-20:03:52.710 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
-20:03:52.724 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
-20:03:52.727 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-sign-in-link]])
-20:03:52.761 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-sign-in-link]]
-20:03:53.170 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
-20:03:53.185 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
-20:03:53.188 INFO - Executing: [find elements: By.cssSelector: #login-email])
-20:03:53.206 INFO - Done: [find elements: By.cssSelector: #login-email]
-20:03:53.213 INFO - Executing: [find elements: By.cssSelector: #login-password])
-20:03:53.238 INFO - Done: [find elements: By.cssSelector: #login-password]
-20:03:53.244 INFO - Executing: [find element: By.cssSelector: #login-email])
-20:03:53.259 INFO - Done: [find element: By.cssSelector: #login-email]
-20:03:53.263 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-email], [b, o, n, j, o, u, r, @, m, e, t, e, o, r, ., c, o, m]])
-20:03:53.338 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-email], [b, o, n, j, o, u, r, @, m, e, t, e, o, r, ., c, o, m]]
-20:03:53.342 INFO - Executing: [find element: By.cssSelector: #login-password])
-20:03:53.402 INFO - Done: [find element: By.cssSelector: #login-password]
-20:03:53.409 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-password], [b, o, n, j, o, u, r]])
-20:03:53.454 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-password], [b, o, n, j, o, u, r]]
-20:03:53.462 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
-20:03:53.482 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
-20:03:53.484 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-buttons-password]])
-20:03:53.518 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #login-buttons-password]]
-20:03:54.528 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
-20:03:54.546 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
-20:03:54.549 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
-20:03:54.565 INFO - Done: [find element: By.cssSelector: #create-new-submission]
-20:03:54.568 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #create-new-submission]])
-20:03:54.618 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #create-new-submission]]
-20:03:55.632 INFO - Executing: [get current url])
-20:03:55.638 INFO - Done: [get current url]
-20:03:55.642 INFO - Executing: [find elements: By.cssSelector: .well.insert-file-well])
-20:03:55.657 INFO - Done: [find elements: By.cssSelector: .well.insert-file-well]
-20:03:55.661 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[type=file]])
-20:03:55.674 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[type=file]]
-20:03:55.678 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]])
-20:03:55.698 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]]
-20:03:55.703 INFO - Executing: [find elements: By.cssSelector: .insert-file-button .add-from-web-form])
-20:03:55.717 INFO - Done: [find elements: By.cssSelector: .insert-file-button .add-from-web-form]
-20:03:55.721 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']])
-20:03:55.738 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']]
-20:03:55.741 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']])
-20:03:55.757 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']]
-20:03:55.760 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']])
-20:03:55.775 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']]
-20:03:55.778 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options])
-20:03:55.796 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options]
-20:03:55.800 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later])
-20:03:55.815 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later]
-20:03:55.819 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit])
-20:03:55.835 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit]
-20:03:55.838 INFO - Executing: [find elements: By.cssSelector: .panel-heading])
-20:03:55.853 INFO - Done: [find elements: By.cssSelector: .panel-heading]
-20:03:55.856 INFO - Executing: [find elements: By.cssSelector: .panel-body])
-20:03:55.870 INFO - Done: [find elements: By.cssSelector: .panel-body]
-20:03:55.876 INFO - Executing: [find elements: By.cssSelector: #reviewWranglerDocuments div.well])
-20:03:55.893 INFO - Done: [find elements: By.cssSelector: #reviewWranglerDocuments div.well]
-20:03:55.901 INFO - Executing: [find element: By.cssSelector: #reviewWranglerDocuments div.well])
-20:03:55.915 INFO - Done: [find element: By.cssSelector: #reviewWranglerDocuments div.well]
-20:03:55.917 INFO - Executing: [get text: 25 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #reviewWranglerDocuments div.well]])
-20:03:55.938 INFO - Done: [get text: 25 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: #reviewWranglerDocuments div.well]]
-20:03:55.941 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-20:03:55.957 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-20:03:55.959 INFO - Executing: [clear: 15 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: .insert-file-button input[name="urlInput"]]])
-20:03:55.979 INFO - Done: [clear: 15 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: .insert-file-button input[name="urlInput"]]]
-20:03:55.983 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-20:03:56.007 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-20:03:56.014 INFO - Executing: [send keys: 15 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, s, :, /, /, a, z, s, p, w, e, s, t, u, s, ., b, l, o, b, ., c, o, r, e, ., w, i, n, d, o, w, s, ., n, e, t, /, a, z, u, r, e, s, p, e, e, d, /, 1, 0, 0, M, B, ., b, i, n]])
-20:03:56.120 INFO - Done: [send keys: 15 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, s, :, /, /, a, z, s, p, w, e, s, t, u, s, ., b, l, o, b, ., c, o, r, e, ., w, i, n, d, o, w, s, ., n, e, t, /, a, z, u, r, e, s, p, e, e, d, /, 1, 0, 0, M, B, ., b, i, n]]
-20:03:56.124 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form button[type='submit']])
-20:03:56.229 INFO - Done: [find element: By.cssSelector: form.add-from-web-form button[type='submit']]
-20:03:56.233 INFO - Executing: [click: 26 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: form.add-from-web-form button[type='submit']]])
-20:03:56.263 INFO - Done: [click: 26 [[ChromeDriver: chrome on MAC (316c896aa67e628f62712fc9a5fe0ac9)] -> css selector: form.add-from-web-form button[type='submit']]]
-20:03:56.267 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-20:03:56.287 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-20:03:56.796 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-20:03:56.810 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-20:03:57.317 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-20:03:57.325 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-20:03:57.829 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-20:03:57.836 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-20:03:58.341 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-20:03:58.349 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-20:03:58.353 INFO - Executing: [delete session: f8061385-8dac-450a-9616-398a1eee9d98])
-20:03:58.941 INFO - Done: [delete session: f8061385-8dac-450a-9616-398a1eee9d98]
+15:13:57.684 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7ea4461e, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]]
+15:13:57.697 INFO - Executing: [get: http://localhost:3000/Wrangler])
+15:13:58.998 INFO - Done: [get: http://localhost:3000/Wrangler]
+15:13:59.005 INFO - Executing: [set window size])
+15:13:59.228 INFO - Done: [set window size]
+15:14:00.238 INFO - Executing: [find elements: By.cssSelector: .container])
+15:14:00.286 INFO - Done: [find elements: By.cssSelector: .container]
+15:14:00.290 INFO - Executing: [find elements: By.cssSelector: #top-controls])
+15:14:00.305 INFO - Done: [find elements: By.cssSelector: #top-controls]
+15:14:00.309 INFO - Executing: [find elements: By.cssSelector: #left])
+15:14:00.323 INFO - Done: [find elements: By.cssSelector: #left]
+15:14:00.327 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
+15:14:00.342 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
+15:14:00.346 INFO - Executing: [find elements: By.cssSelector: li.active])
+15:14:00.367 INFO - Done: [find elements: By.cssSelector: li.active]
+15:14:00.370 INFO - Executing: [find elements: By.cssSelector: #center])
+15:14:00.386 INFO - Done: [find elements: By.cssSelector: #center]
+15:14:00.390 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+15:14:00.406 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+15:14:00.419 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+15:14:00.433 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+15:14:00.437 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-buttons]])
+15:14:00.458 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-buttons]]
+15:14:00.464 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
+15:14:00.483 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
+15:14:00.486 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-sign-in-link]])
+15:14:00.517 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-sign-in-link]]
+15:14:00.923 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
+15:14:00.939 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
+15:14:00.943 INFO - Executing: [find elements: By.cssSelector: #login-email])
+15:14:00.960 INFO - Done: [find elements: By.cssSelector: #login-email]
+15:14:00.966 INFO - Executing: [find elements: By.cssSelector: #login-password])
+15:14:00.985 INFO - Done: [find elements: By.cssSelector: #login-password]
+15:14:00.990 INFO - Executing: [find element: By.cssSelector: #login-email])
+15:14:01.008 INFO - Done: [find element: By.cssSelector: #login-email]
+15:14:01.015 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]])
+15:14:01.094 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]]
+15:14:01.098 INFO - Executing: [find element: By.cssSelector: #login-password])
+15:14:01.149 INFO - Done: [find element: By.cssSelector: #login-password]
+15:14:01.153 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-password], [t, e, s, t, i, n, g]])
+15:14:01.198 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-password], [t, e, s, t, i, n, g]]
+15:14:01.202 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
+15:14:01.222 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
+15:14:01.224 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-buttons-password]])
+15:14:01.255 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #login-buttons-password]]
+15:14:02.263 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
+15:14:02.279 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
+15:14:02.282 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
+15:14:02.296 INFO - Done: [find element: By.cssSelector: #create-new-submission]
+15:14:02.300 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #create-new-submission]])
+15:14:02.335 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #create-new-submission]]
+15:14:03.348 INFO - Executing: [get current url])
+15:14:03.355 INFO - Done: [get current url]
+15:14:03.359 INFO - Executing: [find elements: By.cssSelector: .well.insert-file-well])
+15:14:03.374 INFO - Done: [find elements: By.cssSelector: .well.insert-file-well]
+15:14:03.378 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[type=file]])
+15:14:03.393 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[type=file]]
+15:14:03.397 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]])
+15:14:03.417 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]]
+15:14:03.424 INFO - Executing: [find elements: By.cssSelector: .insert-file-button .add-from-web-form])
+15:14:03.439 INFO - Done: [find elements: By.cssSelector: .insert-file-button .add-from-web-form]
+15:14:03.443 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']])
+15:14:03.459 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']]
+15:14:03.463 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']])
+15:14:03.480 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']]
+15:14:03.485 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']])
+15:14:03.499 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']]
+15:14:03.503 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options])
+15:14:03.521 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options]
+15:14:03.526 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later])
+15:14:03.546 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later]
+15:14:03.550 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit])
+15:14:03.564 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit]
+15:14:03.569 INFO - Executing: [find elements: By.cssSelector: .panel-heading])
+15:14:03.584 INFO - Done: [find elements: By.cssSelector: .panel-heading]
+15:14:03.591 INFO - Executing: [find elements: By.cssSelector: .panel-body])
+15:14:03.610 INFO - Done: [find elements: By.cssSelector: .panel-body]
+15:14:03.615 INFO - Executing: [find elements: By.cssSelector: #reviewWranglerDocuments div.well])
+15:14:03.632 INFO - Done: [find elements: By.cssSelector: #reviewWranglerDocuments div.well]
+15:14:03.639 INFO - Executing: [find element: By.cssSelector: #reviewWranglerDocuments div.well])
+15:14:03.653 INFO - Done: [find element: By.cssSelector: #reviewWranglerDocuments div.well]
+15:14:03.656 INFO - Executing: [get text: 25 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #reviewWranglerDocuments div.well]])
+15:14:03.675 INFO - Done: [get text: 25 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: #reviewWranglerDocuments div.well]]
+15:14:03.683 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
+15:14:03.704 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
+15:14:03.707 INFO - Executing: [clear: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]]])
+15:14:03.728 INFO - Done: [clear: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]]]
+15:14:03.733 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
+15:14:03.750 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
+15:14:03.756 INFO - Executing: [send keys: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, :, /, /, d, o, w, n, l, o, a, d, ., t, h, i, n, k, b, r, o, a, d, b, a, n, d, ., c, o, m, /, 5, 0, M, B, ., z, i, p]])
+15:14:03.842 INFO - Done: [send keys: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, :, /, /, d, o, w, n, l, o, a, d, ., t, h, i, n, k, b, r, o, a, d, b, a, n, d, ., c, o, m, /, 5, 0, M, B, ., z, i, p]]
+15:14:03.845 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form button[type='submit']])
+15:14:03.912 INFO - Done: [find element: By.cssSelector: form.add-from-web-form button[type='submit']]
+15:14:03.914 INFO - Executing: [click: 26 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: form.add-from-web-form button[type='submit']]])
+15:14:03.946 INFO - Done: [click: 26 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: form.add-from-web-form button[type='submit']]]
+15:14:03.950 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
+15:14:03.967 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
+15:14:04.472 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
+15:14:04.487 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
+15:14:04.992 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
+15:14:05.001 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
+15:14:05.004 INFO - Executing: [is displayed: 27 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: div.panel-heading span.badge]])
+15:14:05.017 INFO - Done: [is displayed: 27 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: div.panel-heading span.badge]]
+15:14:05.021 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
+15:14:05.029 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
+15:14:05.031 INFO - Executing: [get element attribute: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]], value])
+15:14:05.041 INFO - Done: [get element attribute: 15 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .insert-file-button input[name="urlInput"]], value]
+15:14:05.046 INFO - Executing: [find elements: By.cssSelector: .panel-title .glyphicon-file])
+15:14:05.063 INFO - Done: [find elements: By.cssSelector: .panel-title .glyphicon-file]
+15:14:05.067 INFO - Executing: [find element: By.cssSelector: .panel-title .ellipsis-out-before-badge])
+15:14:05.088 INFO - Done: [find element: By.cssSelector: .panel-title .ellipsis-out-before-badge]
+15:14:05.094 INFO - Executing: [get text: 29 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .ellipsis-out-before-badge]])
+15:14:05.112 INFO - Done: [get text: 29 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .ellipsis-out-before-badge]]
+15:14:05.117 INFO - Executing: [find elements: By.cssSelector: .panel-title .badge])
+15:14:05.131 INFO - Done: [find elements: By.cssSelector: .panel-title .badge]
+15:14:05.136 INFO - Executing: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file])
+15:14:05.161 INFO - Done: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file]
+15:14:05.165 INFO - Executing: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file .glyphicon-trash])
+15:14:05.184 INFO - Done: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file .glyphicon-trash]
+15:14:05.188 INFO - Executing: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file])
+15:14:05.205 INFO - Done: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file]
+15:14:05.209 INFO - Executing: [get text: 30 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .pull-right .remove-this-file]])
+15:14:05.232 INFO - Done: [get text: 30 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .pull-right .remove-this-file]]
+15:14:05.236 INFO - Executing: [find elements: By.cssSelector: .panel-warning])
+15:14:05.254 INFO - Done: [find elements: By.cssSelector: .panel-warning]
+15:14:05.261 INFO - Executing: [find elements: By.cssSelector: .panel-body .progress])
+15:14:05.278 INFO - Done: [find elements: By.cssSelector: .panel-body .progress]
+15:14:05.282 INFO - Executing: [find element: By.cssSelector: .panel-title .badge])
+15:14:05.300 INFO - Done: [find element: By.cssSelector: .panel-title .badge]
+15:14:05.303 INFO - Executing: [get text: 27 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: div.panel-heading span.badge]])
+15:14:05.325 INFO - Done: [get text: 27 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: div.panel-heading span.badge]]
+15:14:05.329 INFO - Executing: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file])
+15:14:05.346 INFO - Done: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file]
+15:14:05.349 INFO - Executing: [click: 30 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .pull-right .remove-this-file]])
+15:14:05.391 INFO - Done: [click: 30 [[ChromeDriver: chrome on MAC (d9186efee48c6704a8d7d1bd1da535a1)] -> css selector: .panel-title .pull-right .remove-this-file]]
+15:14:05.597 INFO - Executing: [find elements: By.cssSelector: .ellipsis-out-before-badge])
+15:14:05.612 INFO - Done: [find elements: By.cssSelector: .ellipsis-out-before-badge]
+15:14:05.616 INFO - Executing: [delete session: 9d527728-44c4-4878-a897-97e44fd595b1])
+15:14:06.186 INFO - Done: [delete session: 9d527728-44c4-4878-a897-97e44fd595b1]

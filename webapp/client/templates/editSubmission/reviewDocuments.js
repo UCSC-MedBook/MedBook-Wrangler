@@ -1,3 +1,21 @@
+// Template.geneExpressionReview
+
+Template.geneExpressionReview.onCreated(function () {
+  var instance = this;
+
+  // Keep track of which panels are shown so that if none are shown, we can
+  // still say something. This is important because sometimes the client will
+  // know that the submission type is gene_expression but nothing will show
+  // up because no wrangler documents have been added yet.
+  instance.shownPanels = new ReactiveVar({});
+
+  instance.setPanelStatus = function (name, status) {
+    var lastPanels = instance.shownPanels.get();
+    lastPanels[name] = status;
+    instance.shownPanels.set(lastPanels);
+  };
+});
+
 Template.geneExpressionReview.helpers({
   reviewPanels: function () {
     return [
@@ -34,8 +52,21 @@ Template.geneExpressionReview.helpers({
           { heading: 'Normalization', attribute: 'normalization_description' },
           { heading: 'Genes defined', attribute: 'gene_count' },
         ],
-      }
+      },
     ];
+  },
+  noPanelsShown: function () {
+    // NOTE: to test this, remove all of the panel definitions in the
+    // reviewPanels helper. This will simulate none of the panels being
+    // shown. If you want to really be sure, add a panel with a fake name
+    // so that it actually does a subscribe before disappearing (because of
+    // lack of wrangler documents) and showing this panel instead.
+    var shownPanels = Template.instance().shownPanels.get();
+
+    // if all of them are false (none are shown), return true
+    return ! _.some(Object.keys(shownPanels), function (value, key) {
+      return shownPanels[value];
+    });
   },
 });
 
@@ -77,8 +108,16 @@ Template.reviewPanel.onCreated(function () {
 Template.reviewPanel.helpers({
   shouldShowPanel: function () {
     var instance = Template.instance();
-    return instance.loaded.get() === 0 || // haven't loaded any data
-        (instance.loaded.get() !== 0 && instance.rowCursor().count !== 0);
+    showIt = instance.loaded.get() === 0 || // haven't loaded any data
+        (instance.loaded.get() !== 0 && instance.rowCursor().count() !== 0);
+
+    // put in nonreactive to avoid infinite loop
+    var self = this;
+    Tracker.nonreactive(function () {
+      instance.parent().setPanelStatus(self.name, showIt);
+    });
+
+    return showIt;
   },
   getWranglerDocuments: function () {
     return Template.instance().rowCursor();

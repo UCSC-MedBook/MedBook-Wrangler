@@ -15,6 +15,12 @@
   {{#each reviewPanels}}
     {{> reviewPanel this}}
   {{/each}}
+
+  {{#if noPanelsShown}}
+    <div class="well">
+      Please wait while the review data from your gene expression file(s) load.
+    </div>
+  {{/if}}
 </template>
 
 <template name="reviewPanel">

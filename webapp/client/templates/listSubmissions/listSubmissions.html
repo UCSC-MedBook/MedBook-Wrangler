@@ -36,6 +36,7 @@
 
 <template name="submissionActions">
   <span class="pull-right">
+    <span class="badge">{{status}}</span>
     <a href="{{pathFor 'editSubmission' submission_id=_id}}"
         class="btn btn-xs btn-primary">
       <span class="glyphicon glyphicon-edit"></span>

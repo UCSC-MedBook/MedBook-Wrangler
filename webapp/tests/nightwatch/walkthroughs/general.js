@@ -3,12 +3,12 @@ var newSubmission = {
 };
 
 module.exports = {
-  "Upload 100mb file and delete": function (client) {
+  "Upload large file and delete": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
       .reviewMainLayout()
-      .signIn("bonjour@meteor.com","bonjour")
+      .signIn("testing@meteor.com", "testing")
     ;
 
     // Create a new submission
@@ -37,12 +37,15 @@ module.exports = {
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 2000)
       .verify.value(urlInput, "")
-      .reviewSubmissionFile({
-        blob_name: "100MB.bin",
-        parsed_options_once_already: false,
-        status: "uploading",
-        written_to_database: false,
-      })
+      .verify.elementPresent(".panel-title .glyphicon-file")
+      .verify.containsText(".panel-title .ellipsis-out-before-badge",  '50MB.zip')
+      .verify.elementPresent(".panel-title .badge")
+      .verify.elementPresent(".panel-title .pull-right .remove-this-file")
+      .verify.elementPresent(".panel-title .pull-right .remove-this-file .glyphicon-trash")
+      .verify.containsText(".panel-title .pull-right .remove-this-file", "Delete")
+      .verify.elementPresent(".panel-warning")
+      .verify.elementPresent(".panel-body .progress")
+      .verify.containsText(".panel-title .badge",  "uploading")
     ;
 
     // delete the large file

@@ -26,22 +26,18 @@ Template.registerHelper('count', function (first) {
   return first.count();
 });
 
-// for validating against a schema and listing invalid keys
+Template.registerHelper('getSubmissionType', function () {
+  var filtered = getSubmissionTypes(this._id)
+    .filter(function (value) {
+      return value !== undefined;
+    });
 
-function getValidationContext(data) {
-  return getCollectionByName(data.document_type)
-      .simpleSchema()
-      .namedContext(data._id);
-}
-
-Template.registerHelper("isValid", function (){
-  return getValidationContext(this).validate(this.contents);
+  if (filtered.length === 1) {
+    return filtered[0];
+  }
 });
 
-Template.registerHelper("invalidKeys", function (){
-  return getValidationContext(this).invalidKeys();
-});
-
+// TODO: remove this?
 Template.registerHelper("classifySubmissionType", function (submission_id) {
   var documentTypes = getSubmissionTypes(submission_id);
 

@@ -85,14 +85,16 @@ Meteor.methods({
     });
     Blobs.remove(wranglerFile.blob_id);
 
-    Jobs.remove({
-      name: "ParseWranglerFile",
-      user_id: user_id,
-      args: {
-        "wrangler_file_id": wranglerFileId,
-      },
-      status: "waiting",
-    });
+    if (Meteor.isServer) {
+      Jobs.remove({
+        name: "ParseWranglerFile",
+        user_id: user_id,
+        args: {
+          "wrangler_file_id": wranglerFileId,
+        },
+        status: "waiting",
+      });
+    }
   },
   reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
@@ -126,19 +128,38 @@ Meteor.methods({
       throw new Meteor.Error("document-does-not-exist");
     }
   },
+  submitSubmission: function (submission_id) {
+    check(submission_id, String);
 
-  // // TODO: DEBUG REMOVE BEFORE PRODUCTION
-  // clean: function() {
-  //   // only allow Teo's user id
-  //   if (Meteor.isServer) {
-  //     Blobs.remove({});
-  //     WranglerSubmissions.remove({});
-  //     WranglerFiles.remove({});
-  //     WranglerDocuments.remove({});
-  //     Jobs.remove({});
-  //     console.log("Teo removed all the wrangler data");
-  //   } else {
-  //     console.log("you're not the server, silly stub");
-  //   }
-  // },
+    var userId = makeSureLoggedIn();
+    var submission = ensureSubmissionEditable(userId, submission_id);
+
+    WranglerSubmissions.update(submission_id, {$set: {"status": "validating"}});
+
+    if (Meteor.isServer) {
+      var jobId = Jobs.insert({
+        "name": "SubmitWranglerSubmission",
+        user_id: userId,
+        "date_created": new Date(),
+        "args": {
+          "submission_id": submission_id,
+        },
+      });
+    }
+  },
+
+  // XXX: DEBUG REMOVE BEFORE PRODUCTION
+  clean: function() {
+    // only allow Teo's user id
+    if (Meteor.isServer) {
+      Blobs.remove({});
+      WranglerSubmissions.remove({});
+      WranglerFiles.remove({});
+      WranglerDocuments.remove({});
+      Jobs.remove({});
+      console.log("Teo removed all the wrangler data");
+    } else {
+      console.log("you're not the server, silly stub");
+    }
+  },
 });

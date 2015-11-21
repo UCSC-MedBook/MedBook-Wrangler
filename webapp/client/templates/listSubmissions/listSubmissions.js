@@ -1,6 +1,6 @@
 Template.listSubmissions.helpers({
-  hasCreatedSubmission: function () {
-    return WranglerSubmissions.find({}).count() > 0;
+  submissions: function () {
+    return WranglerSubmissions.find();
   },
 });
 

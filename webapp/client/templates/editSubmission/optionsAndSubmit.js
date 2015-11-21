@@ -5,15 +5,6 @@ var sharedSchema = new SimpleSchema({
 });
 
 Template.optionsAndSubmit.helpers({
-  classifySubmissionType: function () {
-    var documentTypes = getSubmissionTypes(this._id);
-
-    if (documentTypes.length === 1) {
-      return documentTypes[0];
-    }
-
-    return null;
-  },
   mutationSchema: function () {
     return new SimpleSchema([
       sharedSchema,
@@ -26,6 +17,7 @@ Template.optionsAndSubmit.helpers({
   sharedSchema: function () {
     return sharedSchema;
   },
+
   // superpathwaySchema: function () {
   //   return new SimpleSchema([
   //     sharedSchema,
@@ -56,7 +48,12 @@ Template.submissionStatus.helpers({
 
 Template.submissionOptions.helpers({
   currentOptions: function () {
-    return Template.instance().parent().data.options;
+    // wrap in nonreactive so that it doesn't delete filled-in
+    // stuff when the submission object is updated in an
+    // unrelated way
+    return Tracker.nonreactive(function () {
+      return Template.instance().parent().data.options;
+    });
   },
   readonlyIfNotEditing: function () {
     if (Template.instance().parent().data.status !== "editing") {

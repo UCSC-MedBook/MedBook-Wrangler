@@ -4,23 +4,18 @@
   <div class="row">
     <div class="col-md-6">
       {{#if classifySubmissionType this._id}}
-        <!-- {{#if getPublishedCount "type_superpathway"}}
-          {{#submissionOptions schema=superpathwaySchema}}
-            {{> superpathwayFields}}
-          {{/submissionOptions}}
-        {{/if}} -->
-
-        {{#if getPublishedCount "type_mutations"}}
-          {{#submissionOptions schema=mutationSchema}}
-            {{> mutationFields}}
-          {{/submissionOptions}}
-        {{/if}}
-
-        {{#if getPublishedCount "type_gene_expression"}}
+        {{#if compare getSubmissionType 'gene_expression'}}
           {{#submissionOptions schema=sharedSchema}}
           {{/submissionOptions}}
         {{/if}}
+
+        <!-- {{#if compare getSubmissionType 'mutation'}}
+          {{#submissionOptions schema=mutationSchema}}
+            {{> mutationFields}}
+          {{/submissionOptions}}
+        {{/if}} -->
       {{else}}
+        {{print 'sharedSchema one'}}
         {{#submissionOptions schema=sharedSchema}}
         {{/submissionOptions}}
       {{/if}}
@@ -95,8 +90,6 @@
 </template>
 
 <template name="submissionOptions">
-  {{! TODO: save the currentOptions on load: this will fix the bug where the
-      options are deleted when the submission is modified }}
   {{#autoForm id="submission-options" schema=schema
       doc=currentOptions type=readonlyIfNotEditing}}
     {{> sharedFields}}

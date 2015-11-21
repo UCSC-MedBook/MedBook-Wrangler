@@ -20,14 +20,10 @@ cfs:data-man
 
 twbs:bootstrap
 sacha:spin
-audit-argument-checks
 less
 momentjs:moment
 medbook:wrangler-collections
-aldeed:tabular
-tmeasday:publish-counts
 erasaur:meteor-lodash
-mquandalle:jade
 reactive-var
 clinical:collaborations
 

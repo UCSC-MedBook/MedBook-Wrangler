@@ -33,29 +33,8 @@ ensureSubmissionEditable = function (user_id, submission_id) {
 };
 
 getSubmissionTypes = function (submission_id) {
-
-  function getSubmissionTypeCount(submission_type) {
-    if (Meteor.isClient) {
-      return Counts.get("type_" + submission_type);
-    } else {
-      return WranglerDocuments.find({
-        "submission_id": submission_id,
-        "submission_type": submission_type,
-      }).count();
-    }
-  }
-
-  var submissionTypes = [];
-  var possibleTypes = WranglerDocuments.simpleSchema()
-      .schema()
-      .submission_type
-      .allowedValues;
-
-  _.each(possibleTypes, function (submission_type) {
-    if (getSubmissionTypeCount(submission_type) > 0) {
-      submissionTypes.push(submission_type);
-    }
-  });
+  var wranglerFiles = WranglerFiles.find().fetch();
+  var submissionTypes = _.pluck(wranglerFiles, 'submission_type');
 
   return submissionTypes;
 };

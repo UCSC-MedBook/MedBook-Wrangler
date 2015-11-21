@@ -170,7 +170,7 @@ function getOptionsSchema () {
       file_type: WranglerFiles.simpleSchema()
           ._schema["options.file_type"]
     }),
-    WranglerFileTypeSchemas[this.options.file_type],
+    Wrangler.fileTypes[this.options.file_type].schema,
   ]);
 }
 

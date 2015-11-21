@@ -1,15 +1,3 @@
-Template.editSubmission.onCreated(function () {
-  var instance = this;
-
-  this.autorun(function () {
-    instance.subscribe("documentCounts", instance.data._id);
-  });
-});
-
-Template.editSubmission.helpers({
-
-});
-
 Template.noWranglerDocumentsHelp.helpers({
   hasFiles: function () {
     return WranglerFiles.find().count() > 0;

@@ -26,10 +26,10 @@ module.exports = {
     ;
 
     // add a file using the URL option
-    // This is a 100mb test file hosted by Azrue.
+    // This is a 50mb test file hosted by thinkbroadband.com
     // I'm using such a large file so I can check the uploading UI.
     var largeFileUrl =
-        "https://azspwestus.blob.core.windows.net/azurespeed/100MB.bin";
+        "http://download.thinkbroadband.com/50MB.zip";
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)

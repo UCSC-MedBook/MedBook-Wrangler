@@ -2,168 +2,75 @@
   <h2>Review</h2>
 
   {{print "editSubmission this:" this}}
-  {{#if classifySubmissionType this._id}}
-    <div class="flex-container">
-      {{#if getPublishedCount "type_superpathway"}}
-        {{> reviewSuperpathwayDocuments}}
-      {{/if}}
-
-      {{#if getPublishedCount "type_mutations"}}
-        {{> reviewMutationDocuments}}
-      {{/if}}
-
-      {{#if getPublishedCount "type_gene_expression"}}
-        {{> reviewGeneExpression}}
-      {{/if}}
-
-      {{#if getPublishedCount "type_rectangular_gene_expression"}}
-        {{> reviewRectangularGeneExpressionDocuments}}
-      {{/if}}
-
-      {{! else have span plus button to add that type }}
-    </div>
+  {{#if getSubmissionType}}
+    {{#if compare getSubmissionType 'gene_expression'}}
+      {{> geneExpressionReview}}
+    {{/if}}
   {{else}}
     {{> submissionTypeNotDefined}}
   {{/if}}
 </template>
 
-<template name="reviewSuperpathwayDocuments">
-  <div class="documents-from-collection">
-    <h4>Elements</h4>
-    {{> tabular table=TabularTables.superpathway_elements
-        selector=elementsSelector
-        class="table table-striped table-bordered table-condensed"}}
-  </div>
-
-  <div class="documents-from-collection">
-    <h4>Interactions</h4>
-    {{> tabular table=TabularTables.superpathway_interactions
-        selector=interactionsSelector
-        class="table table-striped table-bordered table-condensed"}}
-  </div>
+<template name="geneExpressionReview">
+  {{#each reviewPanels}}
+    {{> reviewPanel this}}
+  {{/each}}
 </template>
 
-<template name="reviewMutationDocuments">
-  <div class="documents-from-collection">
-    <h4>Mutations</h4>
-    {{> tabular table=TabularTables.mutations
-        selector=mutationsSelector
-        class="table table-striped table-bordered table-condensed"}}
-  </div>
-</template>
+<template name="reviewPanel">
+  {{#if shouldShowPanel}}
+    <div class="panel {{css_class}} reviewPanel">
+      <div class="panel-heading">{{title}}</div>
 
-<template name="reviewGeneExpression">
-  <div class="documents-from-collection">
-    {{#if Template.subscriptionsReady}}
-      <div class="panel panel-default">
-        <div class="panel-heading">Gene expression data</div>
-        {{#if count sampleNormalization}}
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Sample label</th>
-                <th>Normalization</th>
-                <th>Gene count</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each sampleNormalization}}
-                {{#with contents}}
-                  <tr>
-                    <th scope="row">{{sample_label}}</th>
-                    <td>{{normalization}}</td>
-                    <td>{{gene_count}}</td>
-                  </tr>
-                {{/with}}
-              {{/each}}
-            </tbody>
-          </table>
-        {{else}}
-          <div class="panel-body">
-            <p>No data</p>
-          </div>
+      {{#if description}}
+        <div class="panel-body">
+          <p>{{description}}</p>
+        </div>
+      {{/if}}
+
+      <table class="table">
+        <thead>
+          <tr>
+            {{#each columns}}
+              <th>{{heading}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each getWranglerDocuments}}
+            {{#with contents}}
+              {{> panelRow}}
+            {{/with}}
+          {{/each}}
+        </tbody>
+      </table>
+
+      {{#if Template.subscriptionsReady}}
+        {{#if hasMoreRows}}
+          <a href="#">
+            <div class="panel-footer loadMore">
+              Load More
+            </div>
+          </a>
         {{/if}}
-      </div>
-
-      {{#if count geneLabelMaps}}
-        <div class="panel panel-default">
-          <div class="panel-heading">Gene label mapping</div>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Used gene label</th>
-                <th>Global gene label</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each geneLabelMaps}}
-                {{#with contents}}
-                  <tr>
-                    <th scope="row">{{old_label}}</th>
-                    <td>{{new_label}}</td>
-                  </tr>
-                {{/with}}
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
+      {{else}}
+        {{! TODO: make sure this looks good}}
+        <div class="relative-spinner">{{>spinner}}</div>
       {{/if}}
-
-      {{#if count sampleLabelMaps}}
-        <div class="panel panel-default">
-          <div class="panel-heading">Sample label mapping</div>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Original sample label</th>
-                <th>Wrangled sample label</th>
-                <th>Sample UUID</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each sampleLabelMaps}}
-                {{#with contents}}
-                  <tr>
-                    <th scope="row">{{original_sample_label}}</th>
-                    <td>{{sample_label}}</td>
-                    <td>{{sample_uuid}}</td>
-                  </tr>
-                {{/with}}
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
-      {{/if}}
-    {{else}}
-      {{> spinner}}
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 </template>
 
-<template name="reviewRectangularGeneExpressionDocuments">
-  <div class="documents-from-collection">
-    <h4>Sample labels</h4>
-    {{> tabular table=TabularTables.sample_labels
-        selector=sampleLabelSelector
-        class="table table-striped table-bordered table-condensed"}}
-    <h4>Gene labels</h4>
-    {{> tabular table=TabularTables.gene_labels
-        selector=geneLabelSelector
-        class="table table-striped table-bordered table-condensed"}}
-  </div>
-</template>
-
-<template name="rowValidation">
-  <!-- ellipsis "rowValidation this:" this}} -->
-  <!-- {{#if isValid}}
-    OK
-  {{else}}
-    {{#each invalidKeys}}
-      {{name}}: {{type}}
+<template name="panelRow">
+  <tr>
+    {{#each panelColumns}}
+      {{#if header_of_row}}
+        <th scope="row">{{cellData}}</th>
+      {{else}}
+        <td>{{cellData}}</td>
+      {{/if}}
     {{/each}}
-  {{/if}} -->
+  </tr>
 </template>
 
 <template name="submissionTypeNotDefined">

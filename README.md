@@ -2,7 +2,7 @@
 
 ## Testing
 
-Testing for Wrangler requires the users created in the code block below.
+Testing for Wrangler requires the following code to be run.
 
 ```javascript
 Accounts.createUser({
@@ -11,5 +11,15 @@ Accounts.createUser({
   profile: {
     collaborations: ['testing']
   }
+});
+
+Collaborations.upsert({
+  name: 'testing',
+  description: 'A testing collaboration. All data here is fake',
+  isUnlisted: true,
+  collaborators: [],
+  administrators: [
+    'testing@meteor.com'
+  ],
 });
 ```

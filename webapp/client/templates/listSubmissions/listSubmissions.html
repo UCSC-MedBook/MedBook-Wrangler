@@ -6,35 +6,45 @@
       Create a new submission
     </a>
     {{#each submissions}}
-      <div class="list-group-item">
-        <h4 class="list-group-item-heading">List group item heading</h4>
-        <p class="list-group-item-text">...</p>
-      </div>
+      {{> submissionListItem}}
     {{/each}}
   </div>
 </template>
 
+<template name="submissionListItem">
+  <div class="list-group-item">
+    <h4 class="list-group-item-heading">
+      {{sinceCreated}}
+      {{> submissionActions}}
+    </h4>
+    <p class="list-group-item-text">
+      {{#if Template.subscriptionsReady}}
+        {{#if count wranglerFiles}}
+          <h5>Files</h5>
+          {{#each wranglerFiles}}
+            <span>{{blob_name}}</span>
+          {{/each}}
+        {{else}}
+          No files
+        {{/if}}
+      {{else}}
+        <div class="relative-spinner">{{>spinner}}</div>
+      {{/if}}
+    </p>
+  </div>
+</template>
+
 <template name="submissionActions">
-  {{#if compare status "editing"}}
-    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
-      Edit
+  <span class="pull-right">
+    <a href="{{pathFor 'editSubmission' submission_id=_id}}"
+        class="btn btn-xs btn-primary">
+      <span class="glyphicon glyphicon-edit"></span>
+      {{editOrView}}
     </a>
-    <a href="#" class="delete-submission">Delete</a>
-  {{/if}}
-  {{#if compare status "validating"}}
-    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
-      View
-    </a>
-    <a href="#" class="cancel-validation">Cancel validation</a>
-  {{/if}}
-  {{#if compare status "writing"}}
-    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
-      View
-    </a>
-  {{/if}}
-  {{#if compare status "done"}}
-    <a href="{{pathFor 'editSubmission' submission_id=_id}}">
-      View
-    </a>
-  {{/if}}
+    {{#if compare status "editing"}}
+      <a href="#" class="delete-submission btn btn-xs btn-warning">
+        Delete
+      </a>
+    {{/if}}
+  </span>
 </template>

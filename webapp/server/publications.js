@@ -50,3 +50,9 @@ Meteor.publish('wranglerDocuments',
     document_type: document_type,
   }, options);
 });
+
+Meteor.publish('wranglerFiles', function (submission_id) {
+  return WranglerFiles.find({
+    submission_id: submission_id
+  });
+});

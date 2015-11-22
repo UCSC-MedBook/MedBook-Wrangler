@@ -1,7 +1,3 @@
-var newSubmission = {
-  status: "editing"
-};
-
 module.exports = {
   "Upload large file and delete": function (client) {
     client
@@ -15,7 +11,23 @@ module.exports = {
     client
       .verify.elementPresent("#create-new-submission")
       .click('#create-new-submission').pause(1000)
-      .reviewEditSubmission(newSubmission)
+        .verify.elementPresent(".well.insert-file-well")
+        .verify.elementPresent(".insert-file-button input[type=file]") // left button
+        // right button
+        .verify.elementPresent('.insert-file-button input[name="urlInput"]')
+        .verify.elementPresent(".insert-file-button .add-from-web-form")
+
+        // #optionsAndSubmit
+        .verify.elementPresent("#optionsAndSubmit textarea[name='description']")
+        .verify.elementPresent("#optionsAndSubmit select[name='study_label']")
+        .verify.elementPresent("#optionsAndSubmit select[name='collaboration_label']")
+        .verify.elementPresent("#optionsAndSubmit button.reset-options")
+        .verify.elementPresent("#optionsAndSubmit button.save-for-later")
+        .verify.elementPresent("#optionsAndSubmit button.validate-and-submit")
+
+        // at the bottom...
+        .verify.elementPresent(".panel-heading", "Editing")
+        .verify.elementPresent(".panel-body", "Click validate and submit to continue")
     ;
 
     // review empty Review section
@@ -36,22 +48,43 @@ module.exports = {
       .setValue(urlInput, largeFileUrl)
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 2000)
-      .verify.value(urlInput, "")
-      .verify.elementPresent(".panel-title .glyphicon-file")
-      .verify.containsText(".panel-title .ellipsis-out-before-badge",  '50MB.zip')
-      .verify.elementPresent(".panel-title .badge")
-      .verify.elementPresent(".panel-title .pull-right .remove-this-file")
-      .verify.elementPresent(".panel-title .pull-right .remove-this-file .glyphicon-trash")
-      .verify.containsText(".panel-title .pull-right .remove-this-file", "Delete")
-      .verify.elementPresent(".panel-warning")
-      .verify.elementPresent(".panel-body .progress")
-      .verify.containsText(".panel-title .badge",  "uploading")
+        .verify.value(urlInput, "")
+        .verify.elementPresent(".panel-title .glyphicon-file")
+        .verify.containsText(".panel-title .ellipsis-out-before-badge",  '50MB.zip')
+        .verify.elementPresent(".panel-title .badge")
+        .verify.elementPresent(".panel-title .pull-right .remove-this-file")
+        .verify.elementPresent(".panel-title .pull-right .remove-this-file .glyphicon-trash")
+        .verify.containsText(".panel-title .pull-right .remove-this-file", "Delete")
+        .verify.elementPresent(".panel-warning")
+        .verify.elementPresent(".panel-body .progress")
+        .verify.containsText(".panel-title .badge",  "uploading")
     ;
 
-    // delete the large file
+    // go back to the submissions list page and look at that
+    var submissionListItem = 'div.list-group > div:nth-child(2)';
     client
-      .click(".panel-title .pull-right .remove-this-file").pause(200)
-      .verify.elementNotPresent(".ellipsis-out-before-badge")
+      .click('#left > ol > li:nth-child(1) > a').pause(300)
+        .verify.containsText(submissionListItem + ' > h4', 'a few seconds ago')
+        .verify.containsText(submissionListItem + ' .badge', 'editing')
+        .verify.containsText(submissionListItem + ' .btn-primary', 'Edit')
+        .verify.containsText(submissionListItem + ' .btn-warning', 'Delete')
+        .verify.containsText(submissionListItem + ' > p > h5', 'Files')
+        .verify.containsText(submissionListItem + ' > p > span', '50MB.zip')
+    ;
+
+    // click the edit button and make sure it's still there
+    client
+      .click(submissionListItem + ' .btn-primary').pause(300)
+        .verify.containsText('.ellipsis-out-before-badge', '50MB.zip')
+
+        // delete the file
+        .click(".panel-title .pull-right .remove-this-file").pause(200)
+          .verify.elementNotPresent(".ellipsis-out-before-badge")
+
+        // go back to the list submissions page and delete it
+        .click('#left > ol > li:nth-child(1) > a').pause(300)
+          .verify.containsText(submissionListItem + ' > p', 'No files')
+          .click(submissionListItem + ' .btn-warning')
     ;
 
     client.end();

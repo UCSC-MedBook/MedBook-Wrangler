@@ -56,3 +56,17 @@ Meteor.publish('wranglerFiles', function (submission_id) {
     submission_id: submission_id
   });
 });
+
+// publications specifically for testing
+
+Meteor.publish('geneExpressionTesting', function (options) {
+  var user = Meteor.users.findOne(makeSureLoggedIn());
+
+  if (user.profile.collaborations.indexOf('testing')) {
+    return GeneExpression.find({
+      collaborations: 'testing'
+    }, options);
+  }
+
+  this.ready();
+});

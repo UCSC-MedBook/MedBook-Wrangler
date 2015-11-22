@@ -30,4 +30,13 @@ Router.map(function() {
       return submission;
     },
   });
+
+  // testing routes
+  this.route('removeTestingData', {
+    path: '/Wrangler/testing/removeTestingData'
+  });
+
+  this.route('geneExpressionTesting', {
+    path: '/Wrangler/testing/geneExpressionTesting'
+  });
 });

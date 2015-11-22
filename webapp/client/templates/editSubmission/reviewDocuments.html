@@ -25,7 +25,7 @@
 
 <template name="reviewPanel">
   {{#if shouldShowPanel}}
-    <div class="panel {{css_class}} reviewPanel">
+    <div class="panel {{css_class}} reviewPanel" id="review-{{name}}">
       <div class="panel-heading">{{title}}</div>
 
       {{#if description}}

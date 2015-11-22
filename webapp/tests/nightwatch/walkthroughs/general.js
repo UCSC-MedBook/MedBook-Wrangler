@@ -38,10 +38,12 @@ module.exports = {
     ;
 
     // add a file using the URL option
-    // This is a 50mb test file hosted by thinkbroadband.com
-    // I'm using such a large file so I can check the uploading UI.
+    // This is a picture test file hosted by copy.com
+    // In case you're wondering it's a picture of Teo's friends
+    // Tanguy and Ilann working at 42.
     var largeFileUrl =
-        "http://download.thinkbroadband.com/50MB.zip";
+        "https://copy.com/qkYYWLwEdPrZmNTf/Tanguy%20and%20Ilann.jpg?download=1";
+    var fileName = 'Tanguy%20and%20Ilann.jpg';
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)
@@ -50,7 +52,7 @@ module.exports = {
       .waitForElementVisible('div.panel-heading span.badge', 2000)
         .verify.value(urlInput, "")
         .verify.elementPresent(".panel-title .glyphicon-file")
-        .verify.containsText(".panel-title .ellipsis-out-before-badge",  '50MB.zip')
+        .verify.containsText(".panel-title .ellipsis-out-before-badge", fileName)
         .verify.elementPresent(".panel-title .badge")
         .verify.elementPresent(".panel-title .pull-right .remove-this-file")
         .verify.elementPresent(".panel-title .pull-right .remove-this-file .glyphicon-trash")
@@ -69,13 +71,13 @@ module.exports = {
         .verify.containsText(submissionListItem + ' .btn-primary', 'Edit')
         .verify.containsText(submissionListItem + ' .btn-warning', 'Delete')
         .verify.containsText(submissionListItem + ' > p > h5', 'Files')
-        .verify.containsText(submissionListItem + ' > p > span', '50MB.zip')
+        .verify.containsText(submissionListItem + ' > p > span', fileName)
     ;
 
     // click the edit button and make sure it's still there
     client
       .click(submissionListItem + ' .btn-primary').pause(300)
-        .verify.containsText('.ellipsis-out-before-badge', '50MB.zip')
+        .verify.containsText('.ellipsis-out-before-badge', fileName)
 
         // delete the file
         .click(".panel-title .pull-right .remove-this-file").pause(200)

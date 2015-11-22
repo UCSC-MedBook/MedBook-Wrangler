@@ -55,7 +55,7 @@ Template.uploadNewFiles.events({
       var newFile = new FS.File();
       newFile.attachData(urlInput.value, function (error) {
         if (error) {
-          console.log("error:", error);
+          
           throw error;
         } else {
           newFile.metadata = {

@@ -30,12 +30,16 @@ Template.removeTestingData.helpers({
 Template.geneExpressionTesting.onCreated(function () {
   var instance = this;
 
-  instance.subscribe('geneExpressionTesting', {
+  instance.options = {
     sort: { gene_label: 1 },
     limit: 100,
-  });
+  };
+  instance.subscribe('geneExpressionTesting', instance.options);
 });
 
 Template.geneExpressionTesting.helpers({
+  getGeneExpression: function () {
+    return GeneExpression.find({}, Template.instance().options);
+  },
   stringify: JSON.stringify,
 });

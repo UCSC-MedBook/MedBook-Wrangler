@@ -40,6 +40,40 @@ module.exports = {
       .verify.elementNotPresent('#review-sample_normalization .loadMore')
     ;
 
+    // remove testing data
+    // check to see that testing data has "No data" in '#data'
+    client
+      .url('http://localhost:3000/Wrangler/testing/removeTestingData')
+        .waitForElementVisible('#done', 5000)
+      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
+        .waitForElementVisible('#data', 2000)
+        .verify.containsText('#data', 'No data')
+    ;
+
+
+    // go back to '/Wrangler', click on first 'Edit' button
+    var descriptionTextArea = '#submission-options > div:nth-child(1) > textarea';
+    var studyLabel = '#submission-options > div:nth-child(2) > select';
+    var collaborationLabel = '#submission-options > div:nth-child(3) > select';
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 2000)
+      .click('h4.list-group-item-heading a.btn-primary')
+        .waitForElementVisible(descriptionTextArea, 2000)
+        .clearValue(descriptionTextArea)
+        .setValue(descriptionTextArea, 'asdf')
+        .click(studyLabel + ' > option:nth-child(2)').pause(200)
+      .click('.validate-and-submit').pause(1000)
+        .verify.containsText('#submission-options > div.form-group.has-error > span',
+            'Collaboration label is required')
+        .click(collaborationLabel + ' > option:nth-child(2)')
+        .click('.save-for-later')
+      .refresh()
+        .click('.validate-and-submit')
+        .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 15000)
+
+    ;
+
     client.end();
   },
 };

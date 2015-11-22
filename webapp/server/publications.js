@@ -60,9 +60,9 @@ Meteor.publish('wranglerFiles', function (submission_id) {
 // publications specifically for testing
 
 Meteor.publish('geneExpressionTesting', function (options) {
-  var user = Meteor.users.findOne(makeSureLoggedIn());
+  var user = Meteor.users.findOne(this.userId);
 
-  if (user.profile.collaborations.indexOf('testing')) {
+  if (user.profile.collaborations.indexOf('testing') !== -1) {
     return GeneExpression.find({
       collaborations: 'testing'
     }, options);

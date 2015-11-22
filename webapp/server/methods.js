@@ -5,7 +5,7 @@ Meteor.methods({
     if (user.profile.collaborations.indexOf('testing') !== -1) {
       console.log("removing GeneExpression testing data");
       GeneExpression.remove({
-        collaborations: ['testing'],
+        collaborations: 'testing',
       });
       return "done";
     }

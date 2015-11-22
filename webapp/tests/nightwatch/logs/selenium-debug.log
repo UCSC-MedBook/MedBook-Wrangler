@@ -1,469 +1,410 @@
-15:11:21.428 INFO - Launching a standalone server
+15:57:06.638 INFO - Launching a standalone server
 Setting system property webdriver.chrome.driver to /usr/local/lib/node_modules/starrynight/node_modules/chromedriver/bin/chromedriver
-15:11:21.463 INFO - Java: Oracle Corporation 24.75-b04
-15:11:21.463 INFO - OS: Mac OS X 10.11 x86_64
-15:11:21.474 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
-15:11:21.552 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
-15:11:21.581 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
-15:11:21.582 INFO - Version Jetty/5.1.x
-15:11:21.582 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
-15:11:21.583 INFO - Started HttpContext[/selenium-server,/selenium-server]
-15:11:21.583 INFO - Started HttpContext[/,/]
-15:11:21.612 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@6ea43ee0
-15:11:21.612 INFO - Started HttpContext[/wd,/wd]
-15:11:21.617 INFO - Started SocketListener on 0.0.0.0:4444
-15:11:21.617 INFO - Started org.openqa.jetty.jetty.Server@792bf755
-15:11:21.900 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]])
-15:11:21.909 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]
-Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 38496
+15:57:06.678 INFO - Java: Oracle Corporation 24.75-b04
+15:57:06.678 INFO - OS: Mac OS X 10.11 x86_64
+15:57:06.689 INFO - v2.45.0, with Core v2.45.0. Built from revision 5017cb8
+15:57:06.768 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
+15:57:06.800 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+15:57:06.800 INFO - Version Jetty/5.1.x
+15:57:06.801 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+15:57:06.802 INFO - Started HttpContext[/selenium-server,/selenium-server]
+15:57:06.802 INFO - Started HttpContext[/,/]
+15:57:06.833 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@594b86d
+15:57:06.834 INFO - Started HttpContext[/wd,/wd]
+15:57:06.839 INFO - Started SocketListener on 0.0.0.0:4444
+15:57:06.839 INFO - Started org.openqa.jetty.jetty.Server@1cc05d95
+15:57:07.187 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@5a310a6d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]])
+15:57:07.197 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@5a310a6d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]
+Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 35681
 Only local connections are allowed.
-15:11:23.510 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@17829770, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=General}]]
-15:11:23.522 INFO - Executing: [get: http://localhost:3000/Wrangler])
-15:11:24.839 INFO - Done: [get: http://localhost:3000/Wrangler]
-15:11:24.844 INFO - Executing: [set window size])
-15:11:25.077 INFO - Done: [set window size]
-15:11:26.092 INFO - Executing: [find elements: By.cssSelector: .container])
-15:11:26.122 INFO - Done: [find elements: By.cssSelector: .container]
-15:11:26.126 INFO - Executing: [find elements: By.cssSelector: #top-controls])
-15:11:26.140 INFO - Done: [find elements: By.cssSelector: #top-controls]
-15:11:26.144 INFO - Executing: [find elements: By.cssSelector: #left])
-15:11:26.157 INFO - Done: [find elements: By.cssSelector: #left]
-15:11:26.161 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
-15:11:26.176 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
-15:11:26.181 INFO - Executing: [find elements: By.cssSelector: li.active])
-15:11:26.200 INFO - Done: [find elements: By.cssSelector: li.active]
-15:11:26.204 INFO - Executing: [find elements: By.cssSelector: #center])
-15:11:26.224 INFO - Done: [find elements: By.cssSelector: #center]
-15:11:26.229 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-15:11:26.243 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-15:11:26.251 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-15:11:26.266 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-15:11:26.269 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-buttons]])
-15:11:26.289 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-buttons]]
-15:11:26.293 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
-15:11:26.309 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
-15:11:26.313 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-sign-in-link]])
-15:11:26.349 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-sign-in-link]]
-15:11:26.760 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
-15:11:26.775 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
-15:11:26.778 INFO - Executing: [find elements: By.cssSelector: #login-email])
-15:11:26.793 INFO - Done: [find elements: By.cssSelector: #login-email]
-15:11:26.799 INFO - Executing: [find elements: By.cssSelector: #login-password])
-15:11:26.818 INFO - Done: [find elements: By.cssSelector: #login-password]
-15:11:26.824 INFO - Executing: [find element: By.cssSelector: #login-email])
-15:11:26.840 INFO - Done: [find element: By.cssSelector: #login-email]
-15:11:26.843 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]])
-15:11:26.923 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]]
-15:11:26.927 INFO - Executing: [find element: By.cssSelector: #login-password])
-15:11:26.978 INFO - Done: [find element: By.cssSelector: #login-password]
-15:11:26.982 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-password], [t, e, s, t, i, n, g]])
-15:11:27.024 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-password], [t, e, s, t, i, n, g]]
-15:11:27.027 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
-15:11:27.047 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
-15:11:27.049 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-buttons-password]])
-15:11:27.078 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #login-buttons-password]]
-15:11:28.085 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
-15:11:28.103 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
-15:11:28.107 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
-15:11:28.120 INFO - Done: [find element: By.cssSelector: #create-new-submission]
-15:11:28.123 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #create-new-submission]])
-15:11:28.167 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #create-new-submission]]
-15:11:29.180 INFO - Executing: [find elements: By.cssSelector: .well.insert-file-well])
-15:11:29.197 INFO - Done: [find elements: By.cssSelector: .well.insert-file-well]
-15:11:29.200 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[type=file]])
-15:11:29.214 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[type=file]]
-15:11:29.217 INFO - Executing: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]])
-15:11:29.231 INFO - Done: [find elements: By.cssSelector: .insert-file-button input[name="urlInput"]]
-15:11:29.236 INFO - Executing: [find elements: By.cssSelector: .insert-file-button .add-from-web-form])
-15:11:29.252 INFO - Done: [find elements: By.cssSelector: .insert-file-button .add-from-web-form]
-15:11:29.262 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']])
-15:11:29.282 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit textarea[name='description']]
-15:11:29.286 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']])
-15:11:29.307 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='study_label']]
-15:11:29.313 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']])
-15:11:29.335 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit select[name='collaboration_label']]
-15:11:29.338 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options])
-15:11:29.369 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.reset-options]
-15:11:29.372 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later])
-15:11:29.388 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.save-for-later]
-15:11:29.393 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit])
-15:11:29.414 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit button.validate-and-submit]
-15:11:29.418 INFO - Executing: [find elements: By.cssSelector: .panel-heading])
-15:11:29.441 INFO - Done: [find elements: By.cssSelector: .panel-heading]
-15:11:29.446 INFO - Executing: [find elements: By.cssSelector: .panel-body])
-15:11:29.460 INFO - Done: [find elements: By.cssSelector: .panel-body]
-15:11:29.464 INFO - Executing: [find elements: By.cssSelector: #reviewWranglerDocuments div.well])
-15:11:29.479 INFO - Done: [find elements: By.cssSelector: #reviewWranglerDocuments div.well]
-15:11:29.483 INFO - Executing: [find element: By.cssSelector: #reviewWranglerDocuments div.well])
-15:11:29.505 INFO - Done: [find element: By.cssSelector: #reviewWranglerDocuments div.well]
-15:11:29.508 INFO - Executing: [get text: 25 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #reviewWranglerDocuments div.well]])
-15:11:29.528 INFO - Done: [get text: 25 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #reviewWranglerDocuments div.well]]
-15:11:29.532 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-15:11:29.550 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-15:11:29.552 INFO - Executing: [clear: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]]])
-15:11:29.572 INFO - Done: [clear: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]]]
-15:11:29.577 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-15:11:29.593 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-15:11:29.599 INFO - Executing: [send keys: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, s, :, /, /, c, o, p, y, ., c, o, m, /, q, k, Y, Y, W, L, w, E, d, P, r, Z, m, N, T, f, /, T, a, n, g, u, y, %, 2, 0, a, n, d, %, 2, 0, I, l, a, n, n, ., j, p, g, ?, d, o, w, n, l, o, a, d, =, 1]])
-15:11:29.717 INFO - Done: [send keys: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]], [h, t, t, p, s, :, /, /, c, o, p, y, ., c, o, m, /, q, k, Y, Y, W, L, w, E, d, P, r, Z, m, N, T, f, /, T, a, n, g, u, y, %, 2, 0, a, n, d, %, 2, 0, I, l, a, n, n, ., j, p, g, ?, d, o, w, n, l, o, a, d, =, 1]]
-15:11:29.721 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form button[type='submit']])
-15:11:29.846 INFO - Done: [find element: By.cssSelector: form.add-from-web-form button[type='submit']]
-15:11:29.849 INFO - Executing: [click: 26 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: form.add-from-web-form button[type='submit']]])
-15:11:29.879 INFO - Done: [click: 26 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: form.add-from-web-form button[type='submit']]]
-15:11:29.883 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-15:11:29.901 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-15:11:30.408 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-15:11:30.423 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-15:11:30.932 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-15:11:30.939 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-15:11:31.444 INFO - Executing: [find elements: By.cssSelector: div.panel-heading span.badge])
-15:11:31.452 INFO - Done: [find elements: By.cssSelector: div.panel-heading span.badge]
-15:11:31.455 INFO - Executing: [is displayed: 27 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.panel-heading span.badge]])
-15:11:31.468 INFO - Done: [is displayed: 27 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.panel-heading span.badge]]
-15:11:31.474 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-15:11:31.481 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-15:11:31.483 INFO - Executing: [get element attribute: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]], value])
-15:11:31.492 INFO - Done: [get element attribute: 15 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .insert-file-button input[name="urlInput"]], value]
-15:11:31.496 INFO - Executing: [find elements: By.cssSelector: .panel-title .glyphicon-file])
-15:11:31.511 INFO - Done: [find elements: By.cssSelector: .panel-title .glyphicon-file]
-15:11:31.516 INFO - Executing: [find element: By.cssSelector: .panel-title .ellipsis-out-before-badge])
-15:11:31.535 INFO - Done: [find element: By.cssSelector: .panel-title .ellipsis-out-before-badge]
-15:11:31.539 INFO - Executing: [get text: 29 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .ellipsis-out-before-badge]])
-15:11:31.560 INFO - Done: [get text: 29 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .ellipsis-out-before-badge]]
-15:11:31.564 INFO - Executing: [find elements: By.cssSelector: .panel-title .badge])
-15:11:31.582 INFO - Done: [find elements: By.cssSelector: .panel-title .badge]
-15:11:31.587 INFO - Executing: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file])
-15:11:31.603 INFO - Done: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file]
-15:11:31.610 INFO - Executing: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file .glyphicon-trash])
-15:11:31.629 INFO - Done: [find elements: By.cssSelector: .panel-title .pull-right .remove-this-file .glyphicon-trash]
-15:11:31.633 INFO - Executing: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file])
-15:11:31.650 INFO - Done: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file]
-15:11:31.653 INFO - Executing: [get text: 30 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .pull-right .remove-this-file]])
-15:11:31.681 INFO - Done: [get text: 30 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .pull-right .remove-this-file]]
-15:11:31.685 INFO - Executing: [find elements: By.cssSelector: .panel-warning])
-15:11:31.707 INFO - Done: [find elements: By.cssSelector: .panel-warning]
-15:11:31.711 INFO - Executing: [find elements: By.cssSelector: .panel-body .progress])
-15:11:31.729 INFO - Done: [find elements: By.cssSelector: .panel-body .progress]
-15:11:31.735 INFO - Executing: [find element: By.cssSelector: .panel-title .badge])
-15:11:31.754 INFO - Done: [find element: By.cssSelector: .panel-title .badge]
-15:11:31.758 INFO - Executing: [get text: 27 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.panel-heading span.badge]])
-15:11:31.781 INFO - Done: [get text: 27 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.panel-heading span.badge]]
-15:11:31.785 INFO - Executing: [find element: By.cssSelector: #left > ol > li:nth-child(1) > a])
-15:11:31.802 INFO - Done: [find element: By.cssSelector: #left > ol > li:nth-child(1) > a]
-15:11:31.805 INFO - Executing: [click: 34 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #left > ol > li:nth-child(1) > a]])
-15:11:31.845 INFO - Done: [click: 34 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #left > ol > li:nth-child(1) > a]]
-15:11:32.157 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) > h4])
-15:11:32.183 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) > h4]
-15:11:32.185 INFO - Executing: [get text: 35 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > h4]])
-15:11:32.209 INFO - Done: [get text: 35 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > h4]]
-15:11:32.214 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) .badge])
-15:11:32.234 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) .badge]
-15:11:32.237 INFO - Executing: [get text: 36 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .badge]])
-15:11:32.257 INFO - Done: [get text: 36 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .badge]]
-15:11:32.260 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-primary])
-15:11:32.281 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-primary]
-15:11:32.284 INFO - Executing: [get text: 37 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-primary]])
-15:11:32.303 INFO - Done: [get text: 37 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-primary]]
-15:11:32.307 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-warning])
-15:11:32.328 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-warning]
-15:11:32.331 INFO - Executing: [get text: 38 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-warning]])
-15:11:32.356 INFO - Done: [get text: 38 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-warning]]
-15:11:32.361 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p > h5])
-15:11:32.378 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p > h5]
-15:11:32.380 INFO - Executing: [get text: 39 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p > h5]])
-15:11:32.398 INFO - Done: [get text: 39 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p > h5]]
-15:11:32.402 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p > span])
-15:11:32.419 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p > span]
-15:11:32.422 INFO - Executing: [get text: 40 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p > span]])
-15:11:32.451 INFO - Done: [get text: 40 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p > span]]
-15:11:32.454 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-primary])
-15:11:32.482 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-primary]
-15:11:32.485 INFO - Executing: [click: 37 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-primary]])
-15:11:32.527 INFO - Done: [click: 37 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-primary]]
-15:11:32.837 INFO - Executing: [find element: By.cssSelector: .ellipsis-out-before-badge])
-15:11:32.862 INFO - Done: [find element: By.cssSelector: .ellipsis-out-before-badge]
-15:11:32.868 INFO - Executing: [get text: 41 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .ellipsis-out-before-badge]])
-15:11:32.907 INFO - Done: [get text: 41 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .ellipsis-out-before-badge]]
-15:11:32.911 INFO - Executing: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file])
-15:11:32.962 INFO - Done: [find element: By.cssSelector: .panel-title .pull-right .remove-this-file]
-15:11:32.970 INFO - Executing: [click: 42 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .pull-right .remove-this-file]])
-15:11:33.053 INFO - Done: [click: 42 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: .panel-title .pull-right .remove-this-file]]
-15:11:33.261 INFO - Executing: [find elements: By.cssSelector: .ellipsis-out-before-badge])
-15:11:33.276 INFO - Done: [find elements: By.cssSelector: .ellipsis-out-before-badge]
-15:11:33.280 INFO - Executing: [find element: By.cssSelector: #left > ol > li:nth-child(1) > a])
-15:11:33.293 INFO - Done: [find element: By.cssSelector: #left > ol > li:nth-child(1) > a]
-15:11:33.295 INFO - Executing: [click: 43 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #left > ol > li:nth-child(1) > a]])
-15:11:33.326 INFO - Done: [click: 43 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: #left > ol > li:nth-child(1) > a]]
-15:11:33.631 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p])
-15:11:33.649 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) > p]
-15:11:33.651 INFO - Executing: [get text: 44 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p]])
-15:11:33.670 INFO - Done: [get text: 44 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) > p]]
-15:11:33.673 INFO - Executing: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-warning])
-15:11:33.681 INFO - Done: [find element: By.cssSelector: div.list-group > div:nth-child(2) .btn-warning]
-15:11:33.683 INFO - Executing: [click: 45 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-warning]])
-15:11:33.716 INFO - Done: [click: 45 [[ChromeDriver: chrome on MAC (e95f3878cfabfaed1d54edc0b330a741)] -> css selector: div.list-group > div:nth-child(2) .btn-warning]]
-15:11:33.727 INFO - Executing: [delete session: 686a8787-73fa-4fe6-b58a-aa17154f1247])
-15:11:34.305 INFO - Done: [delete session: 686a8787-73fa-4fe6-b58a-aa17154f1247]
-15:11:34.437 INFO - Executing: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@42413d9, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]])
-15:11:34.437 INFO - Creating a new session for Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@42413d9, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]
-Starting ChromeDriver 2.15.322455 (ae8db840dac8d0c453355d3d922c91adfb61df8f) on port 7073
-Only local connections are allowed.
-15:11:35.742 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@42413d9, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]]
-15:11:35.745 INFO - Executing: [get: http://localhost:3000/Wrangler])
-15:11:37.076 INFO - Done: [get: http://localhost:3000/Wrangler]
-15:11:37.082 INFO - Executing: [set window size])
-15:11:37.289 INFO - Done: [set window size]
-15:11:38.302 INFO - Executing: [find elements: By.cssSelector: .container])
-15:11:38.317 INFO - Done: [find elements: By.cssSelector: .container]
-15:11:38.321 INFO - Executing: [find elements: By.cssSelector: #top-controls])
-15:11:38.334 INFO - Done: [find elements: By.cssSelector: #top-controls]
-15:11:38.337 INFO - Executing: [find elements: By.cssSelector: #left])
-15:11:38.352 INFO - Done: [find elements: By.cssSelector: #left]
-15:11:38.356 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
-15:11:38.372 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
-15:11:38.375 INFO - Executing: [find elements: By.cssSelector: li.active])
-15:11:38.390 INFO - Done: [find elements: By.cssSelector: li.active]
-15:11:38.397 INFO - Executing: [find elements: By.cssSelector: #center])
-15:11:38.411 INFO - Done: [find elements: By.cssSelector: #center]
-15:11:38.414 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-15:11:38.428 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-15:11:38.435 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
-15:11:38.454 INFO - Done: [find elements: By.cssSelector: #login-buttons]
-15:11:38.456 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-buttons]])
-15:11:38.471 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-buttons]]
-15:11:38.474 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
-15:11:38.489 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
-15:11:38.491 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-sign-in-link]])
-15:11:38.525 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-sign-in-link]]
-15:11:38.934 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
-15:11:38.949 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
-15:11:38.952 INFO - Executing: [find elements: By.cssSelector: #login-email])
-15:11:38.966 INFO - Done: [find elements: By.cssSelector: #login-email]
-15:11:38.969 INFO - Executing: [find elements: By.cssSelector: #login-password])
-15:11:38.982 INFO - Done: [find elements: By.cssSelector: #login-password]
-15:11:38.985 INFO - Executing: [find element: By.cssSelector: #login-email])
-15:11:38.999 INFO - Done: [find element: By.cssSelector: #login-email]
-15:11:39.004 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]])
-15:11:39.069 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]]
-15:11:39.072 INFO - Executing: [find element: By.cssSelector: #login-password])
-15:11:39.122 INFO - Done: [find element: By.cssSelector: #login-password]
-15:11:39.126 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-password], [t, e, s, t, i, n, g]])
-15:11:39.163 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-password], [t, e, s, t, i, n, g]]
-15:11:39.166 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
-15:11:39.186 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
-15:11:39.188 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-buttons-password]])
-15:11:39.217 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #login-buttons-password]]
-15:11:40.226 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
-15:11:40.244 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
-15:11:40.247 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
-15:11:40.260 INFO - Done: [find element: By.cssSelector: #create-new-submission]
-15:11:40.262 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #create-new-submission]])
-15:11:40.295 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #create-new-submission]]
-15:11:41.301 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-15:11:41.319 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-15:11:41.321 INFO - Executing: [clear: 13 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form input[name='urlInput']]])
-15:11:41.338 INFO - Done: [clear: 13 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form input[name='urlInput']]]
-15:11:41.341 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
-15:11:41.356 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
-15:11:41.360 INFO - Executing: [send keys: 13 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form input[name='urlInput']], [h, t, t, p, :, /, /, l, o, c, a, l, h, o, s, t, :, 3, 0, 0, 0, /, D, T, B, -, 9, 9, 9, _, B, a, s, e, l, i, n, e, ., r, s, e, m, ., g, e, n, e, s, ., n, o, r, m, _, c, o, u, n, t, s, ., t, a, b]])
-15:11:41.461 INFO - Done: [send keys: 13 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form input[name='urlInput']], [h, t, t, p, :, /, /, l, o, c, a, l, h, o, s, t, :, 3, 0, 0, 0, /, D, T, B, -, 9, 9, 9, _, B, a, s, e, l, i, n, e, ., r, s, e, m, ., g, e, n, e, s, ., n, o, r, m, _, c, o, u, n, t, s, ., t, a, b]]
-15:11:41.464 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form button[type='submit']])
-15:11:41.552 INFO - Done: [find element: By.cssSelector: form.add-from-web-form button[type='submit']]
-15:11:41.554 INFO - Executing: [click: 14 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form button[type='submit']]])
-15:11:41.582 INFO - Done: [click: 14 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: form.add-from-web-form button[type='submit']]]
-15:11:41.587 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:41.601 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:42.107 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:42.127 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:42.633 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:42.639 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:43.145 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:43.152 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:43.660 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:43.668 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:44.179 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:44.186 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:44.696 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:44.704 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:45.212 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:45.221 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:45.725 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:45.733 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:46.239 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:46.246 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:46.754 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:46.761 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:47.269 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:47.275 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:47.779 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:47.786 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:48.291 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:48.299 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:48.803 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:48.810 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:49.319 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:49.335 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:49.841 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:49.848 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:50.352 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
-15:11:50.412 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
-15:11:50.416 INFO - Executing: [is displayed: 15 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submissionFiles .panel-success]])
-15:11:50.452 INFO - Done: [is displayed: 15 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submissionFiles .panel-success]]
-15:11:50.459 INFO - Executing: [find element: By.cssSelector: .whitespace-pre])
-15:11:50.478 INFO - Done: [find element: By.cssSelector: .whitespace-pre]
-15:11:50.480 INFO - Executing: [get text: 16 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .whitespace-pre]])
-15:11:50.498 INFO - Done: [get text: 16 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .whitespace-pre]]
-15:11:50.502 INFO - Executing: [find element: By.cssSelector: #blob_line_count])
-15:11:50.516 INFO - Done: [find element: By.cssSelector: #blob_line_count]
-15:11:50.518 INFO - Executing: [get text: 17 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #blob_line_count]])
-15:11:50.539 INFO - Done: [get text: 17 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #blob_line_count]]
-15:11:50.542 INFO - Executing: [find elements: By.cssSelector: .edit-wrangler-file select[name="file_type"]])
-15:11:50.556 INFO - Done: [find elements: By.cssSelector: .edit-wrangler-file select[name="file_type"]]
-15:11:50.560 INFO - Executing: [find elements: By.cssSelector: .edit-wrangler-file select[name="normalization"]])
-15:11:50.587 INFO - Done: [find elements: By.cssSelector: .edit-wrangler-file select[name="normalization"]]
-15:11:50.595 INFO - Executing: [find elements: By.cssSelector: #review-ignored_genes])
-15:11:50.610 INFO - Done: [find elements: By.cssSelector: #review-ignored_genes]
-15:11:50.613 INFO - Executing: [find element: By.cssSelector: #review-ignored_genes > table > tbody > tr > td])
-15:11:50.628 INFO - Done: [find element: By.cssSelector: #review-ignored_genes > table > tbody > tr > td]
-15:11:50.631 INFO - Executing: [get text: 21 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-ignored_genes > table > tbody > tr > td]])
-15:11:50.649 INFO - Done: [get text: 21 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-ignored_genes > table > tbody > tr > td]]
-15:11:50.652 INFO - Executing: [find elements: By.cssSelector: #review-mapped_genes])
-15:11:50.668 INFO - Done: [find elements: By.cssSelector: #review-mapped_genes]
-15:11:50.672 INFO - Executing: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(1)])
-15:11:50.685 INFO - Done: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(1)]
-15:11:50.687 INFO - Executing: [get text: 23 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(1)]])
-15:11:50.703 INFO - Done: [get text: 23 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(1)]]
-15:11:50.707 INFO - Executing: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(2)])
-15:11:50.727 INFO - Done: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(2)]
-15:11:50.729 INFO - Executing: [get text: 24 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(2)]])
-15:11:50.746 INFO - Done: [get text: 24 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(4) > td:nth-child(2)]]
-15:11:50.750 INFO - Executing: [find elements: By.cssSelector: #review-sample_normalization])
-15:11:50.770 INFO - Done: [find elements: By.cssSelector: #review-sample_normalization]
-15:11:50.774 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > th ])
-15:11:50.794 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > th ]
-15:11:50.796 INFO - Executing: [get text: 26 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > th ]])
-15:11:50.811 INFO - Done: [get text: 26 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > th ]]
-15:11:50.814 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)])
-15:11:50.828 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]
-15:11:50.830 INFO - Executing: [get text: 27 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]])
-15:11:50.847 INFO - Done: [get text: 27 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]]
-15:11:50.851 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)])
-15:11:50.869 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]
-15:11:50.872 INFO - Executing: [get text: 28 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]])
-15:11:50.887 INFO - Done: [get text: 28 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]]
-15:11:50.892 INFO - Executing: [find elements: By.cssSelector: #review-sample_normalization .loadMore])
-15:11:50.905 INFO - Done: [find elements: By.cssSelector: #review-sample_normalization .loadMore]
-15:11:50.907 INFO - Executing: [get: http://localhost:3000/Wrangler/testing/removeTestingData])
-15:11:51.613 INFO - Done: [get: http://localhost:3000/Wrangler/testing/removeTestingData]
-15:11:51.617 INFO - Executing: [find elements: By.cssSelector: #done])
-15:11:51.638 INFO - Done: [find elements: By.cssSelector: #done]
-15:11:52.144 INFO - Executing: [find elements: By.cssSelector: #done])
-15:11:52.159 INFO - Done: [find elements: By.cssSelector: #done]
-15:11:52.161 INFO - Executing: [is displayed: 29 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #done]])
-15:11:52.171 INFO - Done: [is displayed: 29 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #done]]
-15:11:52.174 INFO - Executing: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting])
-15:11:52.732 INFO - Done: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting]
-15:11:52.735 INFO - Executing: [find elements: By.cssSelector: #data])
-15:11:52.759 INFO - Done: [find elements: By.cssSelector: #data]
-15:11:53.263 INFO - Executing: [find elements: By.cssSelector: #data])
-15:11:53.280 INFO - Done: [find elements: By.cssSelector: #data]
-15:11:53.282 INFO - Executing: [is displayed: 30 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #data]])
-15:11:53.294 INFO - Done: [is displayed: 30 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #data]]
-15:11:53.298 INFO - Executing: [find element: By.cssSelector: #data])
-15:11:53.312 INFO - Done: [find element: By.cssSelector: #data]
-15:11:53.315 INFO - Executing: [get text: 30 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #data]])
-15:11:53.331 INFO - Done: [get text: 30 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #data]]
-15:11:53.334 INFO - Executing: [get: http://localhost:3000/Wrangler])
-15:11:53.783 INFO - Done: [get: http://localhost:3000/Wrangler]
-15:11:53.786 INFO - Executing: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary])
-15:11:53.905 INFO - Done: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]
-15:11:53.910 INFO - Executing: [is displayed: 31 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]])
-15:11:53.976 INFO - Done: [is displayed: 31 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]]
-15:11:53.979 INFO - Executing: [find element: By.cssSelector: h4.list-group-item-heading a.btn-primary])
-15:11:53.993 INFO - Done: [find element: By.cssSelector: h4.list-group-item-heading a.btn-primary]
-15:11:53.996 INFO - Executing: [click: 31 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]])
-15:11:54.089 INFO - Done: [click: 31 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]]
-15:11:54.094 INFO - Executing: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
-15:11:54.112 INFO - Done: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
-15:11:54.621 INFO - Executing: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
-15:11:54.636 INFO - Done: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
-15:11:54.639 INFO - Executing: [is displayed: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea]])
-15:11:54.650 INFO - Done: [is displayed: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea]]
-15:11:54.653 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
-15:11:54.666 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
-15:11:54.669 INFO - Executing: [clear: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea]])
-15:11:54.684 INFO - Done: [clear: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea]]
-15:11:54.689 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
-15:11:54.706 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
-15:11:54.710 INFO - Executing: [send keys: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea], [a, s, d, f]])
-15:11:54.754 INFO - Done: [send keys: 32 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(1) > textarea], [a, s, d, f]]
-15:11:54.757 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(2) > select > option:nth-child(2)])
-15:11:54.780 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]
-15:11:54.783 INFO - Executing: [click: 33 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]])
-15:11:54.817 INFO - Done: [click: 33 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]]
-15:11:55.024 INFO - Executing: [find element: By.cssSelector: .validate-and-submit])
-15:11:55.039 INFO - Done: [find element: By.cssSelector: .validate-and-submit]
-15:11:55.042 INFO - Executing: [click: 34 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .validate-and-submit]])
-15:11:55.071 INFO - Done: [click: 34 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .validate-and-submit]]
-15:11:56.078 INFO - Executing: [find element: By.cssSelector: #submission-options > div.form-group.has-error > span])
-15:11:56.093 INFO - Done: [find element: By.cssSelector: #submission-options > div.form-group.has-error > span]
-15:11:56.095 INFO - Executing: [get text: 35 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div.form-group.has-error > span]])
-15:11:56.113 INFO - Done: [get text: 35 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div.form-group.has-error > span]]
-15:11:56.116 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(3) > select > option:nth-child(2)])
-15:11:56.128 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]
-15:11:56.131 INFO - Executing: [click: 36 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]])
-15:11:56.163 INFO - Done: [click: 36 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]]
-15:11:56.169 INFO - Executing: [find element: By.cssSelector: .save-for-later])
-15:11:56.190 INFO - Done: [find element: By.cssSelector: .save-for-later]
-15:11:56.194 INFO - Executing: [click: 37 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .save-for-later]])
-15:11:56.234 INFO - Done: [click: 37 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .save-for-later]]
-15:11:56.239 INFO - Executing: [refresh])
-15:11:56.892 INFO - Done: [refresh]
-15:11:56.895 INFO - Executing: [find element: By.cssSelector: .validate-and-submit])
-15:11:57.087 INFO - Done: [find element: By.cssSelector: .validate-and-submit]
-15:11:57.089 INFO - Executing: [click: 38 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .validate-and-submit]])
-15:11:57.194 INFO - Done: [click: 38 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: .validate-and-submit]]
-15:11:57.197 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:57.233 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:11:57.741 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:57.757 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:11:58.261 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:58.268 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:11:58.776 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:58.786 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:11:59.291 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:59.297 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:11:59.803 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:11:59.809 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:00.314 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:00.321 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:00.824 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:00.832 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:01.337 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:01.345 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:01.852 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:01.859 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:02.367 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:02.374 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:02.881 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:02.888 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:03.394 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:03.401 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:03.907 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:03.914 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:04.421 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:04.428 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:04.934 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:04.941 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:05.449 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:05.456 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:05.964 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:05.971 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:06.477 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:06.484 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:06.991 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
-15:12:06.999 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
-15:12:07.002 INFO - Executing: [is displayed: 39 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]])
-15:12:07.014 INFO - Done: [is displayed: 39 [[ChromeDriver: chrome on MAC (11263daad9f624a59974c55354db623c)] -> css selector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]]
-15:12:07.017 INFO - Executing: [delete session: 682903ba-b517-4624-94f4-b63931458766])
-15:12:07.600 INFO - Done: [delete session: 682903ba-b517-4624-94f4-b63931458766]
+15:57:08.876 INFO - Done: [new session: Capabilities [{loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@5a310a6d, platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, name=Specific}]]
+15:57:08.888 INFO - Executing: [get: http://localhost:3000/Wrangler])
+15:57:10.173 INFO - Done: [get: http://localhost:3000/Wrangler]
+15:57:10.179 INFO - Executing: [set window size])
+15:57:10.399 INFO - Done: [set window size]
+15:57:11.413 INFO - Executing: [find elements: By.cssSelector: .container])
+15:57:11.443 INFO - Done: [find elements: By.cssSelector: .container]
+15:57:11.447 INFO - Executing: [find elements: By.cssSelector: #top-controls])
+15:57:11.462 INFO - Done: [find elements: By.cssSelector: #top-controls]
+15:57:11.466 INFO - Executing: [find elements: By.cssSelector: #left])
+15:57:11.480 INFO - Done: [find elements: By.cssSelector: #left]
+15:57:11.484 INFO - Executing: [find elements: By.cssSelector: .breadcrumb])
+15:57:11.500 INFO - Done: [find elements: By.cssSelector: .breadcrumb]
+15:57:11.505 INFO - Executing: [find elements: By.cssSelector: li.active])
+15:57:11.531 INFO - Done: [find elements: By.cssSelector: li.active]
+15:57:11.536 INFO - Executing: [find elements: By.cssSelector: #center])
+15:57:11.551 INFO - Done: [find elements: By.cssSelector: #center]
+15:57:11.556 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+15:57:11.577 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+15:57:11.587 INFO - Executing: [find elements: By.cssSelector: #login-buttons])
+15:57:11.602 INFO - Done: [find elements: By.cssSelector: #login-buttons]
+15:57:11.605 INFO - Executing: [is displayed: 6 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-buttons]])
+15:57:11.620 INFO - Done: [is displayed: 6 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-buttons]]
+15:57:11.626 INFO - Executing: [find element: By.cssSelector: #login-sign-in-link])
+15:57:11.644 INFO - Done: [find element: By.cssSelector: #login-sign-in-link]
+15:57:11.648 INFO - Executing: [click: 7 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-sign-in-link]])
+15:57:11.681 INFO - Done: [click: 7 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-sign-in-link]]
+15:57:12.090 INFO - Executing: [find elements: By.cssSelector: #login-dropdown-list])
+15:57:12.105 INFO - Done: [find elements: By.cssSelector: #login-dropdown-list]
+15:57:12.109 INFO - Executing: [find elements: By.cssSelector: #login-email])
+15:57:12.124 INFO - Done: [find elements: By.cssSelector: #login-email]
+15:57:12.130 INFO - Executing: [find elements: By.cssSelector: #login-password])
+15:57:12.154 INFO - Done: [find elements: By.cssSelector: #login-password]
+15:57:12.160 INFO - Executing: [find element: By.cssSelector: #login-email])
+15:57:12.181 INFO - Done: [find element: By.cssSelector: #login-email]
+15:57:12.185 INFO - Executing: [send keys: 9 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]])
+15:57:12.256 INFO - Done: [send keys: 9 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-email], [t, e, s, t, i, n, g, @, m, e, t, e, o, r, ., c, o, m]]
+15:57:12.260 INFO - Executing: [find element: By.cssSelector: #login-password])
+15:57:12.310 INFO - Done: [find element: By.cssSelector: #login-password]
+15:57:12.314 INFO - Executing: [send keys: 10 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-password], [t, e, s, t, i, n, g]])
+15:57:12.353 INFO - Done: [send keys: 10 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-password], [t, e, s, t, i, n, g]]
+15:57:12.357 INFO - Executing: [find element: By.cssSelector: #login-buttons-password])
+15:57:12.374 INFO - Done: [find element: By.cssSelector: #login-buttons-password]
+15:57:12.377 INFO - Executing: [click: 11 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-buttons-password]])
+15:57:12.409 INFO - Done: [click: 11 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #login-buttons-password]]
+15:57:13.419 INFO - Executing: [find elements: By.cssSelector: #create-new-submission])
+15:57:13.442 INFO - Done: [find elements: By.cssSelector: #create-new-submission]
+15:57:13.445 INFO - Executing: [find element: By.cssSelector: #create-new-submission])
+15:57:13.459 INFO - Done: [find element: By.cssSelector: #create-new-submission]
+15:57:13.462 INFO - Executing: [click: 12 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #create-new-submission]])
+15:57:13.502 INFO - Done: [click: 12 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #create-new-submission]]
+15:57:14.514 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
+15:57:14.532 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
+15:57:14.535 INFO - Executing: [clear: 13 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form input[name='urlInput']]])
+15:57:14.558 INFO - Done: [clear: 13 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form input[name='urlInput']]]
+15:57:14.563 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']])
+15:57:14.578 INFO - Done: [find element: By.cssSelector: form.add-from-web-form input[name='urlInput']]
+15:57:14.585 INFO - Executing: [send keys: 13 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form input[name='urlInput']], [h, t, t, p, :, /, /, l, o, c, a, l, h, o, s, t, :, 3, 0, 0, 0, /, D, T, B, -, 9, 9, 9, _, B, a, s, e, l, i, n, e, ., r, s, e, m, ., g, e, n, e, s, ., n, o, r, m, _, c, o, u, n, t, s, ., t, a, b]])
+15:57:14.696 INFO - Done: [send keys: 13 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form input[name='urlInput']], [h, t, t, p, :, /, /, l, o, c, a, l, h, o, s, t, :, 3, 0, 0, 0, /, D, T, B, -, 9, 9, 9, _, B, a, s, e, l, i, n, e, ., r, s, e, m, ., g, e, n, e, s, ., n, o, r, m, _, c, o, u, n, t, s, ., t, a, b]]
+15:57:14.700 INFO - Executing: [find element: By.cssSelector: form.add-from-web-form button[type='submit']])
+15:57:14.786 INFO - Done: [find element: By.cssSelector: form.add-from-web-form button[type='submit']]
+15:57:14.788 INFO - Executing: [click: 14 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form button[type='submit']]])
+15:57:14.817 INFO - Done: [click: 14 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: form.add-from-web-form button[type='submit']]]
+15:57:14.822 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:14.838 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:15.347 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:15.362 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:15.867 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:15.873 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:16.377 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:16.383 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:16.889 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:16.896 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:17.405 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:17.412 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:17.918 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:17.925 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:18.431 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:18.438 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:18.943 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:18.951 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:19.460 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:19.467 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:19.972 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:19.980 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:20.487 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:20.494 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:20.998 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:21.006 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:21.516 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:21.523 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:22.027 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:22.034 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:22.540 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:22.547 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:23.057 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:23.064 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:23.568 INFO - Executing: [find elements: By.cssSelector: #submissionFiles .panel-success])
+15:57:23.621 INFO - Done: [find elements: By.cssSelector: #submissionFiles .panel-success]
+15:57:23.626 INFO - Executing: [is displayed: 15 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submissionFiles .panel-success]])
+15:57:23.662 INFO - Done: [is displayed: 15 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submissionFiles .panel-success]]
+15:57:23.668 INFO - Executing: [find element: By.cssSelector: .whitespace-pre])
+15:57:23.686 INFO - Done: [find element: By.cssSelector: .whitespace-pre]
+15:57:23.688 INFO - Executing: [get text: 16 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .whitespace-pre]])
+15:57:23.705 INFO - Done: [get text: 16 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .whitespace-pre]]
+15:57:23.709 INFO - Executing: [find element: By.cssSelector: #blob_line_count])
+15:57:23.730 INFO - Done: [find element: By.cssSelector: #blob_line_count]
+15:57:23.734 INFO - Executing: [get text: 17 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #blob_line_count]])
+15:57:23.795 INFO - Done: [get text: 17 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #blob_line_count]]
+15:57:23.805 INFO - Executing: [find elements: By.cssSelector: .edit-wrangler-file select[name="file_type"]])
+15:57:23.828 INFO - Done: [find elements: By.cssSelector: .edit-wrangler-file select[name="file_type"]]
+15:57:23.832 INFO - Executing: [find elements: By.cssSelector: .edit-wrangler-file select[name="normalization"]])
+15:57:23.848 INFO - Done: [find elements: By.cssSelector: .edit-wrangler-file select[name="normalization"]]
+15:57:23.851 INFO - Executing: [find elements: By.cssSelector: #review-ignored_genes])
+15:57:23.870 INFO - Done: [find elements: By.cssSelector: #review-ignored_genes]
+15:57:23.875 INFO - Executing: [find element: By.cssSelector: #review-ignored_genes > table > tbody > tr > td])
+15:57:23.889 INFO - Done: [find element: By.cssSelector: #review-ignored_genes > table > tbody > tr > td]
+15:57:23.892 INFO - Executing: [get text: 21 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-ignored_genes > table > tbody > tr > td]])
+15:57:23.909 INFO - Done: [get text: 21 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-ignored_genes > table > tbody > tr > td]]
+15:57:23.915 INFO - Executing: [find elements: By.cssSelector: #review-mapped_genes])
+15:57:23.934 INFO - Done: [find elements: By.cssSelector: #review-mapped_genes]
+15:57:23.938 INFO - Executing: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(1)])
+15:57:23.952 INFO - Done: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(1)]
+15:57:23.955 INFO - Executing: [get text: 23 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(1)]])
+15:57:23.974 INFO - Done: [get text: 23 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(1)]]
+15:57:23.979 INFO - Executing: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)])
+15:57:23.997 INFO - Done: [find element: By.cssSelector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)]
+15:57:24.000 INFO - Executing: [get text: 24 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)]])
+15:57:24.031 INFO - Done: [get text: 24 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)]]
+15:57:24.035 INFO - Executing: [find elements: By.cssSelector: #review-sample_normalization])
+15:57:24.053 INFO - Done: [find elements: By.cssSelector: #review-sample_normalization]
+15:57:24.060 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > th ])
+15:57:24.075 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > th ]
+15:57:24.078 INFO - Executing: [get text: 26 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > th ]])
+15:57:24.095 INFO - Done: [get text: 26 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > th ]]
+15:57:24.099 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)])
+15:57:24.119 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]
+15:57:24.122 INFO - Executing: [get text: 27 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]])
+15:57:24.138 INFO - Done: [get text: 27 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(2)]]
+15:57:24.144 INFO - Executing: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)])
+15:57:24.170 INFO - Done: [find element: By.cssSelector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]
+15:57:24.174 INFO - Executing: [get text: 28 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]])
+15:57:24.201 INFO - Done: [get text: 28 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #review-sample_normalization > table > tbody > tr > td:nth-child(3)]]
+15:57:24.205 INFO - Executing: [find elements: By.cssSelector: #review-sample_normalization .loadMore])
+15:57:24.219 INFO - Done: [find elements: By.cssSelector: #review-sample_normalization .loadMore]
+15:57:24.223 INFO - Executing: [get: http://localhost:3000/Wrangler/testing/removeTestingData])
+15:57:24.883 INFO - Done: [get: http://localhost:3000/Wrangler/testing/removeTestingData]
+15:57:24.887 INFO - Executing: [find elements: By.cssSelector: #done])
+15:57:24.913 INFO - Done: [find elements: By.cssSelector: #done]
+15:57:25.418 INFO - Executing: [find elements: By.cssSelector: #done])
+15:57:25.427 INFO - Done: [find elements: By.cssSelector: #done]
+15:57:25.430 INFO - Executing: [is displayed: 29 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #done]])
+15:57:25.444 INFO - Done: [is displayed: 29 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #done]]
+15:57:25.447 INFO - Executing: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting])
+15:57:26.011 INFO - Done: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting]
+15:57:26.016 INFO - Executing: [find elements: By.cssSelector: #data])
+15:57:26.064 INFO - Done: [find elements: By.cssSelector: #data]
+15:57:26.569 INFO - Executing: [find elements: By.cssSelector: #data])
+15:57:26.584 INFO - Done: [find elements: By.cssSelector: #data]
+15:57:26.587 INFO - Executing: [is displayed: 30 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]])
+15:57:26.599 INFO - Done: [is displayed: 30 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]]
+15:57:26.602 INFO - Executing: [find element: By.cssSelector: #data])
+15:57:26.615 INFO - Done: [find element: By.cssSelector: #data]
+15:57:26.617 INFO - Executing: [get text: 30 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]])
+15:57:26.634 INFO - Done: [get text: 30 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]]
+15:57:26.637 INFO - Executing: [get: http://localhost:3000/Wrangler])
+15:57:27.107 INFO - Done: [get: http://localhost:3000/Wrangler]
+15:57:27.113 INFO - Executing: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary])
+15:57:27.140 INFO - Done: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]
+15:57:27.647 INFO - Executing: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary])
+15:57:27.670 INFO - Done: [find elements: By.cssSelector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]
+15:57:27.672 INFO - Executing: [is displayed: 31 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]])
+15:57:27.684 INFO - Done: [is displayed: 31 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]]
+15:57:27.687 INFO - Executing: [find element: By.cssSelector: h4.list-group-item-heading a.btn-primary])
+15:57:27.699 INFO - Done: [find element: By.cssSelector: h4.list-group-item-heading a.btn-primary]
+15:57:27.701 INFO - Executing: [click: 31 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]])
+15:57:27.730 INFO - Done: [click: 31 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary]]
+15:57:27.735 INFO - Executing: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
+15:57:27.779 INFO - Done: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
+15:57:28.284 INFO - Executing: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
+15:57:28.299 INFO - Done: [find elements: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
+15:57:28.301 INFO - Executing: [is displayed: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea]])
+15:57:28.313 INFO - Done: [is displayed: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea]]
+15:57:28.316 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
+15:57:28.331 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
+15:57:28.335 INFO - Executing: [clear: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea]])
+15:57:28.353 INFO - Done: [clear: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea]]
+15:57:28.361 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea])
+15:57:28.380 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(1) > textarea]
+15:57:28.385 INFO - Executing: [send keys: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea], [a, s, d, f]])
+15:57:28.428 INFO - Done: [send keys: 32 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(1) > textarea], [a, s, d, f]]
+15:57:28.433 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(2) > select > option:nth-child(2)])
+15:57:28.455 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]
+15:57:28.459 INFO - Executing: [click: 33 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]])
+15:57:28.494 INFO - Done: [click: 33 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(2) > select > option:nth-child(2)]]
+15:57:28.697 INFO - Executing: [find element: By.cssSelector: .validate-and-submit])
+15:57:28.713 INFO - Done: [find element: By.cssSelector: .validate-and-submit]
+15:57:28.715 INFO - Executing: [click: 34 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .validate-and-submit]])
+15:57:28.744 INFO - Done: [click: 34 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .validate-and-submit]]
+15:57:29.250 INFO - Executing: [find element: By.cssSelector: #submission-options > div.form-group.has-error > span])
+15:57:29.264 INFO - Done: [find element: By.cssSelector: #submission-options > div.form-group.has-error > span]
+15:57:29.267 INFO - Executing: [get text: 35 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div.form-group.has-error > span]])
+15:57:29.285 INFO - Done: [get text: 35 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div.form-group.has-error > span]]
+15:57:29.288 INFO - Executing: [find element: By.cssSelector: #submission-options > div:nth-child(3) > select > option:nth-child(2)])
+15:57:29.301 INFO - Done: [find element: By.cssSelector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]
+15:57:29.303 INFO - Executing: [click: 36 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]])
+15:57:29.334 INFO - Done: [click: 36 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #submission-options > div:nth-child(3) > select > option:nth-child(2)]]
+15:57:29.338 INFO - Executing: [find element: By.cssSelector: .save-for-later])
+15:57:29.361 INFO - Done: [find element: By.cssSelector: .save-for-later]
+15:57:29.366 INFO - Executing: [click: 37 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .save-for-later]])
+15:57:29.408 INFO - Done: [click: 37 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .save-for-later]]
+15:57:29.410 INFO - Executing: [refresh])
+15:57:29.993 INFO - Done: [refresh]
+15:57:29.995 INFO - Executing: [find element: By.cssSelector: .validate-and-submit])
+15:57:30.141 INFO - Done: [find element: By.cssSelector: .validate-and-submit]
+15:57:30.144 INFO - Executing: [click: 38 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .validate-and-submit]])
+15:57:30.226 INFO - Done: [click: 38 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: .validate-and-submit]]
+15:57:30.230 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:30.268 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:30.774 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:30.788 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:31.296 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:31.304 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:31.812 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:31.820 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:32.324 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:32.332 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:32.838 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:32.844 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:33.351 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:33.358 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:33.864 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:33.871 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:34.375 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:34.382 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:34.889 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:34.896 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:35.400 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:35.407 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:35.914 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:35.922 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:36.428 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:36.435 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:36.941 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:36.950 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:37.459 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:37.468 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:37.971 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:37.978 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:38.487 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:38.494 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:39.003 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:39.010 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:39.518 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:39.526 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:40.031 INFO - Executing: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success])
+15:57:40.116 INFO - Done: [find elements: By.cssSelector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]
+15:57:40.118 INFO - Executing: [is displayed: 39 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]])
+15:57:40.136 INFO - Done: [is displayed: 39 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #optionsAndSubmit > div > div:nth-child(2) > div.panel-success]]
+15:57:40.140 INFO - Executing: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting])
+15:57:40.636 INFO - Done: [get: http://localhost:3000/Wrangler/testing/geneExpressionTesting]
+15:57:40.645 INFO - Executing: [find elements: By.cssSelector: #data])
+15:57:40.668 INFO - Done: [find elements: By.cssSelector: #data]
+15:57:41.177 INFO - Executing: [find elements: By.cssSelector: #data])
+15:57:41.185 INFO - Done: [find elements: By.cssSelector: #data]
+15:57:41.188 INFO - Executing: [is displayed: 40 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]])
+15:57:41.200 INFO - Done: [is displayed: 40 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data]]
+15:57:41.208 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(1)])
+15:57:41.221 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(1)]
+15:57:41.223 INFO - Executing: [get text: 41 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(1)]])
+15:57:41.239 INFO - Done: [get text: 41 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(1)]]
+15:57:41.243 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(2)])
+15:57:41.259 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(2)]
+15:57:41.262 INFO - Executing: [get text: 42 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(2)]])
+15:57:41.287 INFO - Done: [get text: 42 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(2)]]
+15:57:41.291 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(3)])
+15:57:41.308 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(3)]
+15:57:41.312 INFO - Executing: [get text: 43 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(3)]])
+15:57:41.333 INFO - Done: [get text: 43 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(3)]]
+15:57:41.337 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(4)])
+15:57:41.357 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(4)]
+15:57:41.359 INFO - Executing: [get text: 44 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(4)]])
+15:57:41.383 INFO - Done: [get text: 44 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(4)]]
+15:57:41.387 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(5)])
+15:57:41.404 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(5)]
+15:57:41.407 INFO - Executing: [get text: 45 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(5)]])
+15:57:41.432 INFO - Done: [get text: 45 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(5)]]
+15:57:41.437 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(6)])
+15:57:41.453 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(6)]
+15:57:41.456 INFO - Executing: [get text: 46 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(6)]])
+15:57:41.475 INFO - Done: [get text: 46 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(6)]]
+15:57:41.481 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(7)])
+15:57:41.504 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(7)]
+15:57:41.506 INFO - Executing: [get text: 47 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(7)]])
+15:57:41.524 INFO - Done: [get text: 47 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(7)]]
+15:57:41.529 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(8)])
+15:57:41.545 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(8)]
+15:57:41.548 INFO - Executing: [get text: 48 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(8)]])
+15:57:41.566 INFO - Done: [get text: 48 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(8)]]
+15:57:41.569 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(9)])
+15:57:41.589 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(9)]
+15:57:41.592 INFO - Executing: [get text: 49 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(9)]])
+15:57:41.611 INFO - Done: [get text: 49 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(9)]]
+15:57:41.619 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(10)])
+15:57:41.632 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(1) > td:nth-child(10)]
+15:57:41.634 INFO - Executing: [get text: 50 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(10)]])
+15:57:41.651 INFO - Done: [get text: 50 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(1) > td:nth-child(10)]]
+15:57:41.659 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(1)])
+15:57:41.677 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(1)]
+15:57:41.689 INFO - Executing: [get text: 51 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(1)]])
+15:57:41.707 INFO - Done: [get text: 51 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(1)]]
+15:57:41.711 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(2)])
+15:57:41.726 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(2)]
+15:57:41.728 INFO - Executing: [get text: 52 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(2)]])
+15:57:41.754 INFO - Done: [get text: 52 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(2)]]
+15:57:41.760 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(3)])
+15:57:41.778 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(3)]
+15:57:41.780 INFO - Executing: [get text: 53 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(3)]])
+15:57:41.803 INFO - Done: [get text: 53 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(3)]]
+15:57:41.806 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(4)])
+15:57:41.833 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(4)]
+15:57:41.836 INFO - Executing: [get text: 54 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(4)]])
+15:57:41.854 INFO - Done: [get text: 54 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(4)]]
+15:57:41.858 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(5)])
+15:57:41.873 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(5)]
+15:57:41.876 INFO - Executing: [get text: 55 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(5)]])
+15:57:41.896 INFO - Done: [get text: 55 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(5)]]
+15:57:41.901 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(6)])
+15:57:41.922 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(6)]
+15:57:41.924 INFO - Executing: [get text: 56 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(6)]])
+15:57:41.954 INFO - Done: [get text: 56 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(6)]]
+15:57:41.960 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(7)])
+15:57:41.987 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(7)]
+15:57:41.989 INFO - Executing: [get text: 57 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(7)]])
+15:57:42.013 INFO - Done: [get text: 57 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(7)]]
+15:57:42.017 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(8)])
+15:57:42.041 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(8)]
+15:57:42.045 INFO - Executing: [get text: 58 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(8)]])
+15:57:42.064 INFO - Done: [get text: 58 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(8)]]
+15:57:42.069 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(9)])
+15:57:42.083 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(9)]
+15:57:42.085 INFO - Executing: [get text: 59 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(9)]])
+15:57:42.102 INFO - Done: [get text: 59 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(9)]]
+15:57:42.105 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(10)])
+15:57:42.119 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(6) > td:nth-child(10)]
+15:57:42.122 INFO - Executing: [get text: 60 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(10)]])
+15:57:42.145 INFO - Done: [get text: 60 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(6) > td:nth-child(10)]]
+15:57:42.166 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(1)])
+15:57:42.187 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(1)]
+15:57:42.189 INFO - Executing: [get text: 61 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(1)]])
+15:57:42.209 INFO - Done: [get text: 61 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(1)]]
+15:57:42.211 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(2)])
+15:57:42.226 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(2)]
+15:57:42.228 INFO - Executing: [get text: 62 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(2)]])
+15:57:42.252 INFO - Done: [get text: 62 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(2)]]
+15:57:42.255 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(3)])
+15:57:42.275 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(3)]
+15:57:42.277 INFO - Executing: [get text: 63 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(3)]])
+15:57:42.295 INFO - Done: [get text: 63 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(3)]]
+15:57:42.299 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(4)])
+15:57:42.317 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(4)]
+15:57:42.319 INFO - Executing: [get text: 64 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(4)]])
+15:57:42.337 INFO - Done: [get text: 64 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(4)]]
+15:57:42.340 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(5)])
+15:57:42.359 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(5)]
+15:57:42.361 INFO - Executing: [get text: 65 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(5)]])
+15:57:42.378 INFO - Done: [get text: 65 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(5)]]
+15:57:42.381 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(6)])
+15:57:42.396 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(6)]
+15:57:42.398 INFO - Executing: [get text: 66 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(6)]])
+15:57:42.420 INFO - Done: [get text: 66 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(6)]]
+15:57:42.423 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(7)])
+15:57:42.436 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(7)]
+15:57:42.439 INFO - Executing: [get text: 67 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(7)]])
+15:57:42.456 INFO - Done: [get text: 67 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(7)]]
+15:57:42.461 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(8)])
+15:57:42.478 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(8)]
+15:57:42.480 INFO - Executing: [get text: 68 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(8)]])
+15:57:42.495 INFO - Done: [get text: 68 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(8)]]
+15:57:42.498 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(9)])
+15:57:42.512 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(9)]
+15:57:42.514 INFO - Executing: [get text: 69 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(9)]])
+15:57:42.536 INFO - Done: [get text: 69 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(9)]]
+15:57:42.539 INFO - Executing: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(10)])
+15:57:42.560 INFO - Done: [find element: By.cssSelector: #data > table > tbody > tr:nth-child(7) > td:nth-child(10)]
+15:57:42.562 INFO - Executing: [get text: 70 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(10)]])
+15:57:42.580 INFO - Done: [get text: 70 [[ChromeDriver: chrome on MAC (eefd549c23eb44ca1d799fcdded196d0)] -> css selector: #data > table > tbody > tr:nth-child(7) > td:nth-child(10)]]
+15:57:42.583 INFO - Executing: [find elements: By.cssSelector: #data > table > tbody > tr:nth-child(8)])
+15:57:42.600 INFO - Done: [find elements: By.cssSelector: #data > table > tbody > tr:nth-child(8)]
+15:57:42.611 INFO - Executing: [delete session: 261b6e7a-bcd4-424b-9bef-3b6b9054a608])
+15:57:43.194 INFO - Done: [delete session: 261b6e7a-bcd4-424b-9bef-3b6b9054a608]

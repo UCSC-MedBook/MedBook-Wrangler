@@ -12,9 +12,38 @@
   {{#if Template.subscriptionsReady}}
     <div id="data">
       {{#if count getGeneExpression}}
-        {{#each getGeneExpression}}
-          {{stringify this}}
-        {{/each}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>gene_label</th>
+              <th>study_label</th>
+              <th>collaborations</th>
+              <th>sample_label</th>
+              <th>baseline_progression</th>
+              <th>quantile_counts</th>
+              <th>quantile_counts_log</th>
+              <th>raw_counts</th>
+              <th>tpm</th>
+              <th>fpkm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getGeneExpression}}
+              <tr>
+                <td>{{gene_label}}</td>
+                <td>{{study_label}}</td>
+                <td>{{collaborations}}</td>
+                <td>{{sample_label}}</td>
+                <td>{{baseline_progression}}</td>
+                <td>{{values.quantile_counts}}</td>
+                <td>{{values.quantile_counts_log}}</td>
+                <td>{{values.raw_counts}}</td>
+                <td>{{values.tpm}}</td>
+                <td>{{values.fpkm}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       {{else}}
         No data
       {{/if}}

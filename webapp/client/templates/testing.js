@@ -41,5 +41,4 @@ Template.geneExpressionTesting.helpers({
   getGeneExpression: function () {
     return GeneExpression.find({}, Template.instance().options);
   },
-  stringify: JSON.stringify,
 });

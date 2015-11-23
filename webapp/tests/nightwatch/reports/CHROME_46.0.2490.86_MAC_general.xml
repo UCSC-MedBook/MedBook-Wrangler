@@ -5,9 +5,9 @@
 
   <testsuite name="general"
     errors="0" failures="0" hostname="" id="" package="general" skipped="0"
-    tests="1" time="0.000" timestamp="Sun, 22 Nov 2015 23:15:05 GMT">
+    tests="1" time="0.000" timestamp="Mon, 23 Nov 2015 00:34:25 GMT">
   
-    <testcase name="Upload large file and delete" time="12.88" assertions="46">
+    <testcase name="Upload large file and delete" time="13.57" assertions="46">
 
     
 
@@ -101,10 +101,6 @@
 
     
     </testcase>
-      <system-err>
-        Unable to locate element: &quot;#review-mapped_genes &gt; table &gt; tbody &gt; tr:nth-child(4) &gt; td:nth-child(1)&quot; using: css selector
-Unable to locate element: &quot;#review-mapped_genes &gt; table &gt; tbody &gt; tr:nth-child(4) &gt; td:nth-child(2)&quot; using: css selector
-      </system-err>
   
   
   </testsuite>

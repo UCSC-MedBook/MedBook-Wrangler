@@ -41,4 +41,10 @@ Template.geneExpressionTesting.helpers({
   getGeneExpression: function () {
     return GeneExpression.find({}, Template.instance().options);
   },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return 'undefined';
+    }
+    return text;
+  },
 });

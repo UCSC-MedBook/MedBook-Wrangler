@@ -35,11 +35,11 @@
                 <td>{{collaborations}}</td>
                 <td>{{sample_label}}</td>
                 <td>{{baseline_progression}}</td>
-                <td>{{values.quantile_counts}}</td>
-                <td>{{values.quantile_counts_log}}</td>
-                <td>{{values.raw_counts}}</td>
-                <td>{{values.tpm}}</td>
-                <td>{{values.fpkm}}</td>
+                <td>{{checkUndefined values.quantile_counts}}</td>
+                <td>{{checkUndefined values.quantile_counts_log}}</td>
+                <td>{{checkUndefined values.raw_counts}}</td>
+                <td>{{checkUndefined values.tpm}}</td>
+                <td>{{checkUndefined values.fpkm}}</td>
               </tr>
             {{/each}}
           </tbody>

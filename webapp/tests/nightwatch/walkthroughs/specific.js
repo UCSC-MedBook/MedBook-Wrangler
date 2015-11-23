@@ -61,7 +61,7 @@ module.exports = {
       .click('h4.list-group-item-heading a.btn-primary')
         .waitForElementVisible(descriptionTextArea, 2000)
         .clearValue(descriptionTextArea)
-        .setValue(descriptionTextArea, 'asdf')
+        .setValue(descriptionTextArea, 'quantile counts testing')
         .click(studyLabel + ' > option:nth-child(2)').pause(200)
       .click('.validate-and-submit').pause(500)
         .verify.containsText('#submission-options > div.form-group.has-error > span',
@@ -69,15 +69,15 @@ module.exports = {
         .click(collaborationLabel + ' > option:nth-child(2)')
         .click('.save-for-later')
       .refresh()
+        .waitForElementVisible('.validate-and-submit', 2000)
         .click('.validate-and-submit')
         .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 15000)
     ;
 
     // make sure the data are there :)
-
     client
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000)
+        .waitForElementVisible('#data', 2000).pause(200)
         .reviewGeneExpression(1, {
           "study_label" : "prad_tcga",
           "collaborations" : [
@@ -118,6 +118,77 @@ module.exports = {
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(8)')
+    ;
+
+    // add another BD2K file (tpm this time)
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('#create-new-submission', 2000)
+      .click('#create-new-submission').pause(1000)
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
+      // check some random stuff
+      .verify.containsText('#blob_line_count', '[3 lines not shown]')
+      .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
+      .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '6')
+      // fill in the bottom stuff
+      .clearValue(descriptionTextArea)
+      .setValue(descriptionTextArea, 'tpm testing')
+      .click(studyLabel + ' > option:nth-child(2)')
+      .click(collaborationLabel + ' > option:nth-child(2)')
+      .click('.validate-and-submit')
+      .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 15000)
+    ;
+
+    // make sure the data have merged correctly
+    client
+      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
+        .waitForElementVisible('#data', 2000).pause(200)
+        .reviewGeneExpression(1, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "baseline_progression" : "baseline",
+          "values" : {
+            "quantile_counts" : 1387.2800050000000738,
+            "quantile_counts_log" : 10.4390828620049518
+            // NOTE:tpm undefined
+          }
+        })
+        .reviewGeneExpression(6, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AARS2",
+          "sample_label" : "DTB-999",
+          "baseline_progression" : "baseline",
+          "values" : {
+            "tpm" : 177.5104972000000032
+            // NOTE: quantile_counts undefined
+          }
+        })
+        .reviewGeneExpression(7, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "GGACT",
+          "sample_label" : "DTB-999",
+          "baseline_progression" : "baseline",
+          "values" : {
+            "quantile_counts" : 505.4122730000000274,
+            "quantile_counts_log" : 8.9841685589597766,
+            "tpm": 236.6878328
+          }
+        })
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
     ;
 
     client.end();

@@ -24,7 +24,6 @@ Template.submissionListItem.onCreated(function () {
 
 Template.submissionListItem.helpers({
   sinceCreated: function () {
-    console.log("this:", this);
     return moment(this.date_created).fromNow();
   },
   wranglerFiles: function () {

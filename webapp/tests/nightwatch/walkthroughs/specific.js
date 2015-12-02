@@ -24,10 +24,21 @@ module.exports = {
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
+    // remove testing data
+    // check to see that testing data has "No data" in '#data'
+    client
+      .url('http://localhost:3000/Wrangler/testing/removeTestingData')
+        .waitForElementVisible('#done', 5000)
+      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
+        .waitForElementVisible('#data', 2000)
+        .verify.containsText('#data', 'No data')
+    ;
+
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     var geneCountsPanel = '#review-sample_normalization > table > tbody';
     client
+      .url("http://localhost:3000/Wrangler")
       .verify.elementPresent("#create-new-submission")
       .click('#create-new-submission').pause(1000)
       .clearValue(urlInput)
@@ -55,16 +66,9 @@ module.exports = {
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(2)', 'Quantile normalized counts')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '7')
       .verify.elementNotPresent('#review-sample_normalization .loadMore')
-    ;
 
-    // remove testing data
-    // check to see that testing data has "No data" in '#data'
-    client
-      .url('http://localhost:3000/Wrangler/testing/removeTestingData')
-        .waitForElementVisible('#done', 5000)
-      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000)
-        .verify.containsText('#data', 'No data')
+      // make sure we're not going to overwrite any data
+      .assert.elementNotPresent("#review-gene_expression_data_exists")
     ;
 
 
@@ -151,6 +155,7 @@ module.exports = {
       .verify.containsText('#blob_line_count', '[3 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '6')
+      .verify.elementNotPresent("#review-gene_expression_data_exists")
       // fill in the bottom stuff
       .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, 'tpm testing')
@@ -206,6 +211,26 @@ module.exports = {
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
+    ;
+
+    // try to upload the tpm file again and make sure we get an error
+    var firstDelete = "body > div > div.list-group > div:nth-child(2) > h4 > span > a.delete-submission";
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('#create-new-submission', 2000)
+      .click('#create-new-submission').pause(1000)
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
+      .verify.elementPresent("#review-gene_expression_data_exists")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(1)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(2)", "DTB-999")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(3)", "TPM (Transcripts Per Million)")
+      .click("#left > ol > li:nth-child(1) > a") // go back to submissions page
+      .waitForElementVisible(firstDelete, 2000)
+      .click(firstDelete) // delete it
     ;
 
     client.end();

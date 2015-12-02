@@ -20,37 +20,50 @@ Template.geneExpressionReview.helpers({
   reviewPanels: function () {
     return [
       {
-        name: 'ignored_genes',
-        title: 'Invalid genes',
-        description: 'The following genes were found to be invalid and will be ignored.',
-        css_class: 'panel-warning',
+        name: "ignored_genes",
+        title: "Invalid genes",
+        description: "The following genes were found to be invalid and will be ignored.",
+        css_class: "panel-warning",
         columns: [
-          { heading: 'Gene', attribute: 'gene' },
+          { heading: "Gene", attribute: "gene" },
         ],
       },
       {
-        name: 'mapped_genes',
-        title: 'Mapped genes',
-        description: 'These genes are valid but are going to be mapped ' +
-            'into MedBook gene namespace.',
-        css_class: 'panel-default',
+        name: "mapped_genes",
+        title: "Mapped genes",
+        description: "These genes are valid but are going to be mapped " +
+            "into MedBook gene namespace.",
+        css_class: "panel-default",
         columns: [
-          { heading: 'Gene in file', attribute: 'gene_in_file' },
-          { heading: 'MedBook gene name', attribute: 'mapped_gene' },
+          { heading: "Gene in file", attribute: "gene_in_file" },
+          { heading: "MedBook gene name", attribute: "mapped_gene" },
         ],
       },
       {
-        name: 'sample_normalization',
-        title: 'Gene counts',
-        css_class: 'panel-default',
+        name: "sample_normalization",
+        title: "Gene counts",
+        css_class: "panel-default",
         columns: [
           {
-            heading: 'Sample label',
-            attribute: 'sample_label',
+            heading: "Sample label",
+            attribute: "sample_label",
             header_of_row: true
           },
-          { heading: 'Normalization', attribute: 'normalization_description' },
-          { heading: 'Genes defined', attribute: 'gene_count' },
+          { heading: "Normalization", attribute: "normalization_description" },
+          { heading: "Genes defined", attribute: "gene_count" },
+        ],
+      },
+      {
+        name: "gene_expression_data_exists",
+        title: "Data already exists",
+        description: "The following samples already have gene expression " +
+            "data in MedBook. It's possible you don't have access to their " +
+            "data because you are not in the correct collaborations.",
+        css_class: "panel-danger",
+        columns: [
+          { heading: "File name", attribute: "file_name" },
+          { heading: "Sample", attribute: "sample_label" },
+          { heading: "Normalization", attribute: "normalization" },
         ],
       },
     ];

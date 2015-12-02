@@ -4,7 +4,24 @@ module.exports = {
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
       .reviewMainLayout()
-      .signIn("testing@meteor.com", "testing")
+    ;
+
+    // make sure user exists and log in
+    client
+      .timeoutsAsyncScript(1000)
+      .executeAsync(function(data, done){
+        Accounts.createUser({
+          email: 'testing@medbook.ucsc.edu',
+          password: 'testing',
+          profile: {
+            collaborations: ['testing']
+          }
+        }, done);
+      })
+      .executeAsync(function(data, done) {
+        Meteor.logout(done);
+      })
+      .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
     // Create a new submission

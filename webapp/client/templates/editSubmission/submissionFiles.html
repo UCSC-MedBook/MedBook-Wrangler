@@ -2,9 +2,7 @@
   <h2>Files</h2>
 
   {{#if compare status "editing"}}
-    <div class="well insert-file-well">
-      {{> uploadNewFiles}}
-    </div>
+    {{> uploadNewFiles}}
   {{/if}}
 
   {{#each getFiles}}
@@ -13,28 +11,30 @@
 </template>
 
 <template name="uploadNewFiles">
-  <div class="row">
-    {{! upload local files}}
-    <div class="col-md-6 insert-file-button">
-      <span class="btn btn-default btn-file fill-width">
-        Upload local files
-        <input id="upload-files-input" type="file" multiple>
-      </span>
-    </div>
+  <div class="well insert-file-well">
+    <div class="row">
+      {{! upload local files}}
+      <div class="col-md-6 insert-file-button">
+        <span class="btn btn-default btn-file fill-width">
+          Upload local files
+          <input id="upload-files-input" type="file" multiple>
+        </span>
+      </div>
 
-    {{! add from the web}}
-    <div class="col-md-6 insert-file-button">
-      <form class="add-from-web-form">
-        <div class="input-group">
-          <input name="urlInput" type="text" class="form-control"
-              placeholder="Enter URL">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">
-              Add
-            </button>
-          </span>
-        </div>
-      </form>
+      {{! add from the web}}
+      <div class="col-md-6 insert-file-button">
+        <form class="add-from-web-form">
+          <div class="input-group">
+            <input name="urlInput" type="text" class="form-control"
+                placeholder="Enter URL">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">
+                Add
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

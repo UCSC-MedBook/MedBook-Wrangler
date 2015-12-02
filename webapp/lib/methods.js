@@ -147,19 +147,4 @@ Meteor.methods({
       });
     }
   },
-
-  // XXX: DEBUG REMOVE BEFORE PRODUCTION
-  clean: function() {
-    // only allow Teo's user id
-    if (Meteor.isServer) {
-      Blobs.remove({});
-      WranglerSubmissions.remove({});
-      WranglerFiles.remove({});
-      WranglerDocuments.remove({});
-      Jobs.remove({});
-      console.log("Teo removed all the wrangler data");
-    } else {
-      console.log("you're not the server, silly stub");
-    }
-  },
 });

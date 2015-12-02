@@ -17,26 +17,3 @@
     {{> optionsAndSubmit}}
   </div>
 </template>
-
-<template name="noWranglerDocumentsHelp">
-  <span class="help-block">
-    {{#if hasFiles}}
-      {{#if hasCompletedFile}}
-        You have uploaded a file, but no documents were created...
-        Please select a file to edit options.
-      {{else}}
-        {{#if hasProcessingFile}}
-          Your files are being processed...
-        {{else}}
-          {{#if hasUploadingFile}}
-            Your files are uploading...
-          {{else}}
-            Specify file options or correct errors to continue.
-          {{/if}}
-        {{/if}}
-      {{/if}}
-    {{else}}
-      Add files or objects to continue
-    {{/if}}
-  </span>
-</template>

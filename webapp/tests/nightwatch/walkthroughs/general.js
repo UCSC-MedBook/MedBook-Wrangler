@@ -4,7 +4,24 @@ module.exports = {
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
       .reviewMainLayout()
-      .signIn("testing@meteor.com", "testing")
+    ;
+
+    // make sure user exists and log in
+    client
+      .timeoutsAsyncScript(1000)
+      .executeAsync(function(data, done){
+        Accounts.createUser({
+          email: 'testing@medbook.ucsc.edu',
+          password: 'testing',
+          profile: {
+            collaborations: ['testing']
+          }
+        }, done);
+      })
+      .executeAsync(function(data, done) {
+        Meteor.logout(done);
+      })
+      .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
     // Create a new submission
@@ -84,7 +101,8 @@ module.exports = {
           .verify.elementNotPresent(".ellipsis-out-before-badge")
 
         // go back to the list submissions page and delete it
-        .click('#left > ol > li:nth-child(1) > a').pause(300)
+        .click('#left > ol > li:nth-child(1) > a')
+          .waitForElementNotPresent(".relative-spinner", 2000)
           .verify.containsText(submissionListItem + ' > p', 'No files')
           .click(submissionListItem + ' .btn-warning')
     ;

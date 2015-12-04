@@ -4,7 +4,7 @@ _ = lodash;
 // Meteor methods
 //
 
-makeSureLoggedIn = function() {
+ensureLoggedIn = function() {
   var user_id = Meteor.user() && Meteor.user()._id;
   if (!user_id) {
     throw new Meteor.Error(403, "not-logged-in", "Log in to proceed");
@@ -12,7 +12,7 @@ makeSureLoggedIn = function() {
   return user_id;
 };
 
-ensureSubmissionAvailable = function (user_id, submission_id) {
+ensureSubmissionOwnership = function (user_id, submission_id) {
   var submission = WranglerSubmissions.findOne(submission_id);
 
   if (submission && submission.user_id === user_id) {
@@ -23,7 +23,7 @@ ensureSubmissionAvailable = function (user_id, submission_id) {
 };
 
 ensureSubmissionEditable = function (user_id, submission_id) {
-  var submission = ensureSubmissionAvailable(user_id, submission_id);
+  var submission = ensureSubmissionOwnership(user_id, submission_id);
 
   if (submission.status === "editing") {
     return submission;

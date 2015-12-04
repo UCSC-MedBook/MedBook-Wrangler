@@ -7,31 +7,25 @@ Meteor.publish("listSubmissions", function () {
 Meteor.publish("wranglerSubmission", function (submission_id) {
   check(submission_id, String);
 
-  try {
-    ensureSubmissionAvailable(this.userId, submission_id);
+  ensureSubmissionOwnership(this.userId, submission_id);
 
-    var collabStrings = ['public'];
-    var user = Meteor.users.findOne(this.userId);
-    if (user && user.profile && user.profile.collaborations) {
-      collabStrings = collabStrings.concat(user.profile.collaborations);
-    }
-
-    return [
-      Superpathways.find({}), // TODO: move this elsewhere
-      WranglerSubmissions.find(submission_id),
-      WranglerFiles.find({ submission_id: submission_id }),
-      Studies.find({
-        "collaborations.0": { $in: collabStrings },
-      }),
-      Collabs.find({
-        name: { $in: collabStrings },
-      }),
-    ];
-  } catch (e) {
-    console.log("e:", e);
+  var collabStrings = ['public'];
+  var user = Meteor.users.findOne(this.userId);
+  if (user && user.profile && user.profile.collaborations) {
+    collabStrings = collabStrings.concat(user.profile.collaborations);
   }
 
-  this.ready();
+  return [
+    Superpathways.find({}), // TODO: move this elsewhere
+    WranglerSubmissions.find(submission_id),
+    WranglerFiles.find({ submission_id: submission_id }),
+    Studies.find({
+      "collaborations.0": { $in: collabStrings },
+    }),
+    Collabs.find({
+      name: { $in: collabStrings },
+    }),
+  ];
 });
 
 Meteor.publish("specificBlob", function (blob_id) {
@@ -45,6 +39,10 @@ Meteor.publish("specificBlob", function (blob_id) {
 
 Meteor.publish('wranglerDocuments',
     function(submission_id, document_type, options) {
+  check([submission_id, document_type], [String]);
+  check(options, Object); // TODO: can they do anything fancy here?
+  ensureSubmissionOwnership(this.userId, submission_id);
+
   return WranglerDocuments.find({
     submission_id: submission_id,
     document_type: document_type,
@@ -52,6 +50,9 @@ Meteor.publish('wranglerDocuments',
 });
 
 Meteor.publish('wranglerFiles', function (submission_id) {
+  check(submission_id, String);
+  ensureSubmissionOwnership(this.userId, submission_id);
+
   return WranglerFiles.find({
     submission_id: submission_id
   });
@@ -60,9 +61,10 @@ Meteor.publish('wranglerFiles', function (submission_id) {
 // publications specifically for testing
 
 Meteor.publish('geneExpressionTesting', function (options) {
-  var user = Meteor.users.findOne(this.userId);
+  check(options, Object); // TODO: can they do anything fancy here?
 
-  if (user.profile.collaborations.indexOf('testing') !== -1) {
+  var user = Meteor.users.findOne(this.userId);
+  if (user.profile.collaborations.indexOf('testing') >= 0) {
     return GeneExpression.find({
       collaborations: 'testing'
     }, options);

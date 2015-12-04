@@ -8,7 +8,7 @@ Template.listSubmissions.helpers({
 
 Template.listSubmissions.events({
   "click #create-new-submission": function (event, instance){
-    Meteor.call("createSubmission", function (error, result) {
+    Meteor.call("addSubmission", function (error, result) {
       Router.go('editSubmission', { "submission_id": result });
     });
   }
@@ -49,6 +49,6 @@ Template.submissionActions.helpers({
 
 Template.submissionActions.events({
   "click .delete-submission": function (event, instance) {
-    Meteor.call("deleteSubmission", instance.data._id);
+    Meteor.call("removeSubmission", instance.data._id);
   },
 });

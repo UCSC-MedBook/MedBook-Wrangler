@@ -34,7 +34,6 @@ ensureSubmissionEditable = function (user_id, submission_id) {
 
 getSubmissionTypes = function (submission_id) {
   var wranglerFiles = WranglerFiles.find().fetch();
-  var submissionTypes = _.pluck(wranglerFiles, 'submission_type');
 
-  return submissionTypes;
+  return _.uniq(_.pluck(wranglerFiles, 'submission_type'));
 };

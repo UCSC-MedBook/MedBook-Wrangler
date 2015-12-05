@@ -61,9 +61,25 @@ Template.geneExpressionReview.helpers({
             "data because you are not in the correct collaborations.",
         css_class: "panel-danger",
         columns: [
-          { heading: "File name", attribute: "file_name" },
-          { heading: "Sample", attribute: "sample_label" },
+          { heading: "Sample", attribute: "sample_label", header_of_row: true },
           { heading: "Normalization", attribute: "normalization" },
+          { heading: "File name", attribute: "file_name" },
+        ],
+      },
+      {
+        name: "sample_label_map",
+        title: "Sample label mapping",
+        description: "The following sample labels will be mapped from " +
+            "UUIDs to sample labels.",
+        css_class: "panel-default",
+        columns: [
+          {
+            heading: "MedBook sample label",
+            attribute: "sample_label",
+            header_of_row: true
+          },
+          { heading: "Original sample label", attribute: "original_sample_label" },
+          { heading: "Sample UUID", attribute: "sample_uuid" },
         ],
       },
     ];

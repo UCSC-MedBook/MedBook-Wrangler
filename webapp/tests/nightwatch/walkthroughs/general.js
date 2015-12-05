@@ -102,7 +102,7 @@ module.exports = {
 
         // go back to the list submissions page and delete it
         .click('#left > ol > li:nth-child(1) > a')
-          .waitForElementNotPresent(".relative-spinner", 2000)
+          .waitForElementNotPresent(".relative-spinner", 5000)
           .verify.containsText(submissionListItem + ' > p', 'No files')
           .click(submissionListItem + ' .btn-warning')
     ;

@@ -75,8 +75,6 @@
           {{/if}}
         </span>
       </span>
-
-
     </div>
     <div class="panel-body">
       {{> fileInformation}}
@@ -99,10 +97,12 @@
       <div class="sometimes-horizontal-scroll">
         {{! NOTE: it will show line breaks, so keep it on one line }}
         <samp class="whitespace-pre">{{blob_text_sample}}</samp><br/>
-        <samp class="not-black">...</samp><br>
-        {{#if blob_line_count}}
-          <samp id="blob_line_count"
-              class="not-black">[{{notShownLines}} lines not shown]</samp>
+        {{#if notShownLines}}
+          <samp class="not-black">...</samp><br>
+          {{#if blob_line_count}}
+            <samp id="blob_line_count"
+                class="not-black">[{{notShownLines}} lines not shown]</samp>
+          {{/if}}
         {{/if}}
       </div>
     {{else}}

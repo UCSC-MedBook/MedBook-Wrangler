@@ -48,7 +48,7 @@ module.exports = {
       .waitForElementVisible('#submissionFiles .panel-success', 15000)
       .verify.containsText('.whitespace-pre',
         'gene_id DTB-999_Baseline\nA2BP1 0\nA2LD1 505.412273\nAAAS 1387.280005\nAADAT 1677.433726')
-      .verify.containsText('#blob_line_count', '[5 lines not shown]')
+      .verify.containsText('#blob_line_count', '[4 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="file_type"]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
 
@@ -98,7 +98,7 @@ module.exports = {
     // make sure the data are there :)
     client
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(7)', 5000).pause(200)
         .reviewGeneExpression(1, {
           "study_label" : "prad_tcga",
           "collaborations" : [
@@ -152,7 +152,7 @@ module.exports = {
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 15000)
       // check some random stuff
-      .verify.containsText('#blob_line_count', '[3 lines not shown]')
+      .verify.containsText('#blob_line_count', '[2 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '6')
       .verify.elementNotPresent("#review-gene_expression_data_exists")
@@ -168,7 +168,7 @@ module.exports = {
     // make sure the data have merged correctly
     client
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(8)', 5000).pause(200)
         .reviewGeneExpression(1, {
           "study_label" : "prad_tcga",
           "collaborations" : [
@@ -225,12 +225,113 @@ module.exports = {
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 15000)
       .verify.elementPresent("#review-gene_expression_data_exists")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(1)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(2)", "DTB-999")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(3)", "TPM (Transcripts Per Million)")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > th", "DTB-999")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
+      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
       .click("#left > ol > li:nth-child(1) > a") // go back to submissions page
       .waitForElementVisible(firstDelete, 2000)
       .click(firstDelete) // delete it
+    ;
+
+    // add a file with a UUID
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('#create-new-submission', 2000)
+      .click('#create-new-submission').pause(1000)
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles .panel-warning', 15000)
+      .verify.containsText("#submissionFiles div.alert.alert-warning > p",
+          "could not parse sample label from header line or file name")
+
+      // add the testing file
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-warning', 15000)
+      .verify.containsText("#submissionFiles > div:nth-child(4) div.alert.alert-warning > p",
+          "File type could not be inferred. Please manually select a file type")
+      .click("#submissionFiles > div:nth-child(4) select > option:nth-child(3)")
+      .verify.elementPresent("#submissionFiles > div.panel.panel-info") // reparsing
+      .waitForElementVisible("#submissionFiles > div.panel.panel-success", 15000)
+      .verify.elementPresent("#review-sample_label_map")
+      .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
+      .verify.elementPresent("#submissionFiles > div.panel.panel-warning") // still there?
+      .click("#submissionFiles > div.panel.panel-warning .reparse-this-file")
+      .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 15000)
+      .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(2)",
+          "RPKM (Reads Per Kilobase of transcript per Million mapped reads)")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
+
+      // set the options and submit it
+      .setValue(descriptionTextArea, 'testing a UUID with FPKM')
+      .click(studyLabel + ' > option:nth-child(2)')
+      .click(collaborationLabel + ' > option:nth-child(2)')
+      .click('.validate-and-submit')
+      .waitForElementVisible("#optionsAndSubmit .panel-success", 20000)
+
+      // make sure the data are there :)
+      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 2000).pause(200)
+        .reviewGeneExpression(1, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "baseline_progression" : "baseline",
+          "values" : {
+            "quantile_counts" : 1387.2800050000000738,
+            "quantile_counts_log" : 10.4390828620049518
+            // NOTE:tpm undefined
+          }
+        })
+        .reviewGeneExpression(2, {
+            "study_label" : "prad_tcga",
+            "collaborations" : [
+                "testing"
+            ],
+            "gene_label" : "AAAS",
+            "sample_label" : "DTB-998Dup",
+            "baseline_progression" : "baseline",
+            "values" : {
+                "fpkm" : 12475
+            }
+        })
+        .reviewGeneExpression(12, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "GGACT",
+          "sample_label" : "DTB-999",
+          "baseline_progression" : "baseline",
+          "values" : {
+            "quantile_counts" : 505.4122730000000274,
+            "quantile_counts_log" : 8.9841685589597766,
+            "tpm": 236.6878328
+          }
+        })
+        .reviewGeneExpression(13, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+              "testing"
+          ],
+          "gene_label" : "GGACT",
+          "sample_label" : "DTB-998Dup",
+          "baseline_progression" : "baseline",
+          "values" : {
+              "fpkm" : 364
+          }
+      })
+      .verify.elementNotPresent('#data > table > tbody > tr:nth-child(16)')
     ;
 
     client.end();

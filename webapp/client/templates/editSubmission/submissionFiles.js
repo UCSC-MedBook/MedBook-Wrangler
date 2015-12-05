@@ -55,7 +55,7 @@ Template.uploadNewFiles.events({
       var newFile = new FS.File();
       newFile.attachData(urlInput.value, function (error) {
         if (error) {
-          
+
           throw error;
         } else {
           newFile.metadata = {
@@ -149,14 +149,15 @@ Template.fileInformation.helpers({
         (this.status === "error" || this.status === "done");
   },
   notShownLines: function () {
-    var lineBreaks;
-    if (this.blob_text_sample) {
-      lineBreaks = this.blob_text_sample.match(/\n/g);
+    if (!this.blob_line_count) {
+      return true; // so that it shows "..." until it loads
     }
+
+    var lineBreaks = this.blob_text_sample.match(/\n/g);
     if (!lineBreaks) {
       lineBreaks = [];
     }
-    return this.blob_line_count - lineBreaks.length;
+    return this.blob_line_count - lineBreaks.length - 1;
   },
 });
 
@@ -165,12 +166,19 @@ Template.fileInformation.helpers({
 //
 
 function getOptionsSchema () {
+  var fileType = Wrangler.fileTypes[this.options.file_type];
+
+  var fileTypeSchema;
+  if (fileType) {
+    fileTypeSchema = fileType.schema;
+  }
+
   return new SimpleSchema([
     new SimpleSchema({
       file_type: WranglerFiles.simpleSchema()
           ._schema["options.file_type"]
     }),
-    Wrangler.fileTypes[this.options.file_type].schema,
+    fileTypeSchema,
   ]);
 }
 

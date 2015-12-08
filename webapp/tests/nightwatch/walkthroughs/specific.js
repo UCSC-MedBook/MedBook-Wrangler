@@ -233,45 +233,52 @@ module.exports = {
       .click(firstDelete) // delete it
     ;
 
-    // add a file with a UUID, make sure we couldn't parse sample label
+    // add a file with an undefined sample label, make sure it doesn't work
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
       .click('#create-new-submission').pause(1000)
       .clearValue(urlInput)
-      .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
+      .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-warning', 15000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "Could not parse sample label from header line or file name")
+      .click("#submissionFiles .remove-this-file") // delete the file
+    ;
 
+    // add a file with a UUID, make sure we couldn't parse sample label
+    // (reuse submission)
+    client
       // add the label mapping file
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed, make sure file type couldn't be inferred
-      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-warning', 15000)
-      .verify.containsText("#submissionFiles > div:nth-child(4) div.alert.alert-warning > p",
+      .waitForElementVisible('#submissionFiles > .panel-warning', 15000)
+      .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
-      .click("#submissionFiles > div:nth-child(4) select > option:nth-child(3)")
+      .click("#submissionFiles select > option:nth-child(3)")
       .verify.elementPresent("#submissionFiles > div.panel.panel-info") // reparsing
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 15000)
-      .waitForElementPresent("#review-sample_label_map", 1000)
 
-      // make sure label mapping file loaded right
-      .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
-      .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
-      .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
-
-      // make sure original file is still doing poorly up on top, reparse it
-      .verify.elementPresent("#submissionFiles > div.panel.panel-warning")
-      .click("#submissionFiles > div.panel.panel-warning .reparse-this-file")
+      // add UUID file
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
+      .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 15000)
+      .waitForElementVisible("#review-sample_normalization", 15000)
       .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(2)",
           "RPKM (Reads Per Kilobase of transcript per Million mapped reads)")
       .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
+
+      // make sure label mapping file loaded right
+      .waitForElementPresent("#review-sample_label_map", 1000)
+      .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
 
       // set the options and submit it
       .setValue(descriptionTextArea, 'testing a UUID with FPKM')

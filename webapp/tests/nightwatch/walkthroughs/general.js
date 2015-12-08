@@ -93,7 +93,8 @@ module.exports = {
 
     // click the edit button and make sure it's still there
     client
-      .click(submissionListItem + ' .btn-primary').pause(300)
+      .click(submissionListItem + ' .btn-primary')
+        .waitForElementVisible(".ellipsis-out-before-badge", 2000)
         .verify.containsText('.ellipsis-out-before-badge', fileName)
 
         // delete the file
@@ -102,7 +103,7 @@ module.exports = {
 
         // go back to the list submissions page and delete it
         .click('#left > ol > li:nth-child(1) > a')
-          .waitForElementNotPresent(".relative-spinner", 5000)
+          .waitForElementNotPresent(".relative-spinner", 10000)
           .verify.containsText(submissionListItem + ' > p', 'No files')
           .click(submissionListItem + ' .btn-warning')
     ;

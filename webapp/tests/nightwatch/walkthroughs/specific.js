@@ -233,7 +233,7 @@ module.exports = {
       .click(firstDelete) // delete it
     ;
 
-    // add a file with a UUID
+    // add a file with a UUID, make sure we couldn't parse sample label
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
@@ -244,24 +244,28 @@ module.exports = {
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-warning', 15000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
-          "could not parse sample label from header line or file name")
+          "Could not parse sample label from header line or file name")
 
-      // add the testing file
+      // add the label mapping file
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
       .click("form.add-from-web-form button[type='submit']")
-      // wait for it to be parsed
+      // wait for it to be parsed, make sure file type couldn't be inferred
       .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-warning', 15000)
       .verify.containsText("#submissionFiles > div:nth-child(4) div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles > div:nth-child(4) select > option:nth-child(3)")
       .verify.elementPresent("#submissionFiles > div.panel.panel-info") // reparsing
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 15000)
-      .verify.elementPresent("#review-sample_label_map")
+      .waitForElementPresent("#review-sample_label_map", 1000)
+
+      // make sure label mapping file loaded right
       .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
-      .verify.elementPresent("#submissionFiles > div.panel.panel-warning") // still there?
+
+      // make sure original file is still doing poorly up on top, reparse it
+      .verify.elementPresent("#submissionFiles > div.panel.panel-warning")
       .click("#submissionFiles > div.panel.panel-warning .reparse-this-file")
       .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 15000)
       .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
@@ -332,6 +336,31 @@ module.exports = {
           }
       })
       .verify.elementNotPresent('#data > table > tbody > tr:nth-child(16)')
+    ;
+
+    // verify we can get to label mappings from a previous submission
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('#create-new-submission', 2000)
+      .click('#create-new-submission').pause(1000)
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
+      // make sure label mapping file loaded right
+      .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
+      .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
+
+      // go back to the submissions page and delete it
+      .click("#left > ol > li:nth-child(1) > a")
+      .waitForElementNotPresent(".relative-spinner", 10000)
+      .click("body > div > div.list-group > div:nth-child(2) .delete-submission")
+
+      // make sure we deleted it
+      .verify.containsText("body > div > div.list-group > div:nth-child(2) > p > span:nth-child(2)",
+          "123456789.rsem.genes.norm_fpkm.tab")
     ;
 
     client.end();

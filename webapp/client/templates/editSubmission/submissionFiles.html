@@ -114,39 +114,20 @@
 
   {{#if shouldShowDescription}}
     <div class="alert alert-warning" role="alert">
-      <p class="list-group-item-text blank-glyphicon-to-left">
-        {{error_description}}
+      <p class="list-group-item-text">
+        {{#if needSchemaCorrection}}
+          Please correct the errors below.
+        {{else}}
+          {{error_description}}
+        {{/if}}
       </p>
     </div>
     <!-- <hr> -->
   {{/if}}
 
-  {{> fileOptions}}
-</template>
-
-<template name="fileOptions">
   <div class="file-options">
     {{#if parsed_options_once_already}}
-      {{#autoForm id=autoformId schema=optionsSchema doc=this.options
-          autosave=true class="edit-wrangler-file"}}
-        {{> afQuickField name="file_type" firstOption="Auto"
-            template="bootstrap3-horizontal"
-            label-class="col-sm-2 col-xs-3"
-            input-col-class="col-sm-10 col-xs-9"}}
-
-        {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
-        {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
-        {{#if isInSchema "normalization"}}
-          {{> afQuickField name="normalization"
-              firstOption="(Select a normalization)"
-              template="bootstrap3-horizontal"
-              label-class="col-sm-2 col-xs-3"
-              input-col-class="col-sm-10 col-xs-9"}}
-        {{/if}}
-
-        <!-- {{> afQuickFields label-class="col-sm-2 col-xs-3" firstOption="Auto"
-            input-col-class="col-sm-10 col-xs-9"}} -->
-      {{/autoForm}}
+      {{> fileOptions}}
     {{else}}
       <span class="help-block">
         Options will become available after file has been
@@ -154,4 +135,30 @@
       </span>
     {{/if}}
   </div>
+</template>
+
+<template name="fileOptions">
+  {{#autoForm id=autoformId schema=optionsSchema doc=this.options
+      autosave=true class="edit-wrangler-file"}}
+    {{> afQuickField name="file_type" firstOption="Auto"
+        template="bootstrap3-horizontal"
+        label-class="col-sm-2 col-xs-3"
+        input-col-class="col-sm-10 col-xs-9"}}
+
+    {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
+    {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
+    {{#if isInSchema "normalization"}}
+      {{> afQuickField name="normalization"
+          firstOption="(Select a normalization)"
+          template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+    {{/if}}
+
+    {{#if isInSchema "network_name"}}
+      {{> afQuickField name="network_name" template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+    {{/if}}
+  {{/autoForm}}
 </template>

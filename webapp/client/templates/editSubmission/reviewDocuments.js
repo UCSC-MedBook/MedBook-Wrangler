@@ -1,44 +1,32 @@
-// Template.geneExpressionReview
+var ignoredGenesPanel = {
+  name: "ignored_genes",
+  title: "Invalid genes",
+  description: "The following genes were found to be invalid and will be ignored.",
+  css_class: "panel-warning",
+  columns: [
+    { heading: "Gene", attribute: "gene" },
+  ],
+};
 
-Template.geneExpressionReview.onCreated(function () {
-  var instance = this;
+var mappedGenesPanel = {
+  name: "mapped_genes",
+  title: "Mapped genes",
+  description: "These genes are valid but are going to be mapped " +
+      "into MedBook gene namespace.",
+  css_class: "panel-default",
+  columns: [
+    { heading: "Gene in file", attribute: "gene_in_file" },
+    { heading: "MedBook gene name", attribute: "mapped_gene" },
+  ],
+};
 
-  // Keep track of which panels are shown so that if none are shown, we can
-  // still say something. This is important because sometimes the client will
-  // know that the submission type is gene_expression but nothing will show
-  // up because no wrangler documents have been added yet.
-  instance.shownPanels = new ReactiveVar({});
+// Template.reviewWranglerDocuments
 
-  instance.setPanelStatus = function (name, status) {
-    var lastPanels = instance.shownPanels.get();
-    lastPanels[name] = status;
-    instance.shownPanels.set(lastPanels);
-  };
-});
-
-Template.geneExpressionReview.helpers({
-  reviewPanels: function () {
+Template.reviewWranglerDocuments.helpers({
+  geneExpressionPanels: function () {
     return [
-      {
-        name: "ignored_genes",
-        title: "Invalid genes",
-        description: "The following genes were found to be invalid and will be ignored.",
-        css_class: "panel-warning",
-        columns: [
-          { heading: "Gene", attribute: "gene" },
-        ],
-      },
-      {
-        name: "mapped_genes",
-        title: "Mapped genes",
-        description: "These genes are valid but are going to be mapped " +
-            "into MedBook gene namespace.",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Gene in file", attribute: "gene_in_file" },
-          { heading: "MedBook gene name", attribute: "mapped_gene" },
-        ],
-      },
+      ignoredGenesPanel,
+      mappedGenesPanel,
       {
         name: "sample_normalization",
         title: "Gene counts",
@@ -84,6 +72,59 @@ Template.geneExpressionReview.helpers({
       },
     ];
   },
+  networkPanels: function () {
+    return [
+      ignoredGenesPanel,
+      mappedGenesPanel,
+      {
+        name: "new_network",
+        title: "New networks",
+        description: "I need to write a description",
+        css_class: "panel-default",
+        columns: [
+          { heading: "Network name", attribute: "name", header_of_row: true },
+          { heading: "Version", attribute: "version" },
+          { heading: "File name", attribute: "file_name" },
+        ],
+      },
+      {
+        name: "source_level_interactions",
+        title: "Gene interactions",
+        description: "I need to write a description",
+        css_class: "panel-default",
+        columns: [
+          { heading: "Source gene", attribute: "source_label", header_of_row: true },
+          { heading: "Target count", attribute: "target_count" },
+          { heading: "Minimum weight", attribute: "min_weight" },
+          { heading: "Maximum weight", attribute: "max_weight" },
+          { heading: "Average weight", attribute: "mean_weight" },
+          { heading: "Network name", attribute: "network_name" },
+          { heading: "Network version", attribute: "network_version" },
+        ],
+      },
+    ];
+  },
+});
+
+// Template.showReviewPanels
+
+Template.showReviewPanels.onCreated(function () {
+  var instance = this;
+
+  // Keep track of which panels are shown so that if none are shown, we can
+  // still say something. This is important because sometimes the client will
+  // know that the submission type is gene_expression but nothing will show
+  // up because no wrangler documents have been added yet.
+  instance.shownPanels = new ReactiveVar({});
+
+  instance.setPanelStatus = function (name, status) {
+    var lastPanels = instance.shownPanels.get();
+    lastPanels[name] = status;
+    instance.shownPanels.set(lastPanels);
+  };
+});
+
+Template.showReviewPanels.helpers({
   noPanelsShown: function () {
     // NOTE: to test this, remove all of the panel definitions in the
     // reviewPanels helper. This will simulate none of the panels being
@@ -120,8 +161,8 @@ Template.reviewPanel.onCreated(function () {
     var options = getOptions();
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('wranglerDocuments',
-        instance.parent().data._id, instance.data.name,
+    instance.subscribe('wranglerDocuments',
+        instance.parent(2).data._id, instance.data.name,
         options, function () {
       instance.loaded.set(options.limit);
     });

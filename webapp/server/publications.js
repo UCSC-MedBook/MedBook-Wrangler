@@ -16,7 +16,6 @@ Meteor.publish("wranglerSubmission", function (submission_id) {
   }
 
   return [
-    Superpathways.find({}), // TODO: move this elsewhere
     WranglerSubmissions.find(submission_id),
     WranglerFiles.find({ submission_id: submission_id }),
     Studies.find({

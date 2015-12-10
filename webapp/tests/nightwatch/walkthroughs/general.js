@@ -1,5 +1,5 @@
 module.exports = {
-  "Upload large file and delete": function (client) {
+  "General tests, error testing for switching file type": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
@@ -108,6 +108,59 @@ module.exports = {
           .waitForElementNotPresent(".relative-spinner", 10000)
           .verify.containsText(submissionListItem + ' > p', 'No files')
           .click(submissionListItem + ' .btn-warning')
+    ;
+
+    // do some fun stuff with changing the file type, etc.
+    var warningText = "#submissionFiles div.alert.alert-warning > p";
+    client
+      .verify.elementPresent("#create-new-submission")
+      .click('#create-new-submission').pause(1000)
+      .clearValue(urlInput)
+      .setValue(urlInput, "http://localhost:3000/hello.txt")
+      .click("form.add-from-web-form button[type='submit']")
+      .waitForElementVisible("#submissionFiles > div.panel.panel-warning", 15000)
+      .verify.containsText(warningText,
+          "File type could not be inferred. Please manually select a file type")
+      // select BD2KGeneExpression
+      .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KGeneExpression']")
+      .pause(1000)
+      .verify.containsText(warningText, "Please correct the errors below.")
+      .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
+          "Normalization is required")
+      .click(".edit-wrangler-file select[name='normalization'] > option:nth-child(2)") // select normalization
+      .waitForElementPresent(".panel-info", 1000)
+      .verify.elementNotPresent(warningText)
+      .waitForElementPresent(".panel-warning", 15000)
+      .verify.containsText(warningText, "Expected 2 column tab file, got 1 column tab file")
+
+      // select BD2KSampleLabelMap
+      .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KSampleLabelMap']")
+      .waitForElementPresent(".panel-info", 1000)
+      .verify.elementNotPresent(".edit-wrangler-file select[name='normalization']")
+      .waitForElementPresent(".panel-warning", 15000)
+      .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
+
+      // select ArachneRegulon
+      .click(".edit-wrangler-file select[name='file_type'] > option[value='ArachneRegulon']")
+      .pause(1000)
+      .verify.containsText(warningText, "Please correct the errors below.")
+      .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
+          "Network name is required")
+
+      // set network name
+      .setValue(".edit-wrangler-file input", "HelloWorld")
+      .click("#submissionFiles") // deselect field, trigger submit
+      .waitForElementPresent(".panel-info", 1000)
+      .waitForElementPresent(".panel-warning", 15000)
+      .verify.containsText(warningText, "No interactions specified for source gene hello")
+
+      // go back to the list submissions page and delete it
+      .click('#left > ol > li:nth-child(1) > a')
+        // deleting the file while it's uploading sometimes causes the
+        // app to crash, so wait for a long enough time for it to reboot
+        .waitForElementNotPresent(".relative-spinner", 10000)
+        .click(submissionListItem + ' .btn-warning')
+        .verify.elementPresent("body") // so that it actually clicks
     ;
 
     client.end();

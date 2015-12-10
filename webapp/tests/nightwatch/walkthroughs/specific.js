@@ -260,7 +260,7 @@ module.exports = {
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option:nth-child(3)")
-      .verify.elementPresent("#submissionFiles > div.panel.panel-info") // reparsing
+      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 1000)
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 15000)
 
       // add UUID file

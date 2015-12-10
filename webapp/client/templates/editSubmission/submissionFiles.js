@@ -1,6 +1,4 @@
-//
-// Template submissionFiles
-//
+// Template.submissionFiles
 
 Template.submissionFiles.helpers({
   getFiles: function () {
@@ -8,9 +6,7 @@ Template.submissionFiles.helpers({
   },
 });
 
-//
-// Template uploadNewFiles
-//
+// Template.uploadNewFiles
 
 // defined out here because it's used in two helpers
 // (_.partial used within the functions)
@@ -72,9 +68,7 @@ Template.uploadNewFiles.events({
   },
 });
 
-//
-// Template showFile
-//
+// Template.showFile
 
 Template.showFile.onCreated(function () {
   var instance = this;
@@ -139,14 +133,21 @@ Template.showFile.events({
   },
 });
 
-//
-// Template fileInformation
-//
+// Template.fileInformation
+
+Template.fileInformation.onCreated(function () {
+  var instance = this;
+  instance.needSchemaCorrection = new ReactiveVar(false);
+});
 
 Template.fileInformation.helpers({
+  needSchemaCorrection: function () {
+    return Template.instance().needSchemaCorrection.get();
+  },
   shouldShowDescription: function () {
-    return this.error_description &&
+    var errorDescription = this.error_description &&
         (this.status === "error" || this.status === "done");
+    return errorDescription || Template.instance().needSchemaCorrection.get();
   },
   notShownLines: function () {
     if (!this.blob_line_count) {
@@ -161,9 +162,7 @@ Template.fileInformation.helpers({
   },
 });
 
-//
-// Template fileOptions
-//
+// Template.fileOptions
 
 function getOptionsSchema () {
   var fileType = Wrangler.fileTypes[this.options.file_type];
@@ -176,63 +175,69 @@ function getOptionsSchema () {
   return new SimpleSchema([
     new SimpleSchema({
       file_type: WranglerFiles.simpleSchema()
-          ._schema["options.file_type"]
+          .schema()["options.file_type"]
     }),
     fileTypeSchema,
   ]);
 }
 
+function autoformId () {
+  return "edit-wrangler-file-" + this._id;
+}
+
+function validateLater (instance) {
+  Meteor.clearTimeout(instance.validateTimeout);
+
+  instance.validateTimeout = Meteor.setTimeout(function () {
+    if (AutoForm.validateForm(autoformId.call(instance.data))) {
+      instance.parent().needSchemaCorrection.set(false);
+      Meteor.call("reparseWranglerFile", instance.data._id);
+    } else {
+      instance.parent().needSchemaCorrection.set(true);
+    }
+  }, 200);
+}
+
+Template.fileOptions.onRendered(function () {
+  var instance = this;
+  var fileType = instance.$(
+    ".edit-wrangler-file > div:nth-child(1) > div > select[name=file_type]");
+
+  fileType.change(function (event) {
+    WranglerFiles.update(instance.data._id, {
+      $set: {
+        "options.file_type": event.target.value
+      }
+    });
+    validateLater(instance);
+  });
+});
+
 Template.fileOptions.helpers({
-  autoformId: function () {
-    return "edit-wrangler-file-" + this._id;
-  },
+  autoformId: autoformId,
   optionsSchema: function () {
     return getOptionsSchema.call(this);
   },
   isInSchema: function (field) {
     var simpleSchema = getOptionsSchema.call(this);
-    return simpleSchema._schema[field];
+    return simpleSchema.schema()[field];
   },
+  WranglerFiles: WranglerFiles,
 });
 
 Template.fileOptions.events({
   "submit .edit-wrangler-file": function (event, instance) {
     event.preventDefault();
 
-    var formId = "edit-wrangler-file-" + instance.data._id;
-
-    var oldOptions = instance.data.options;
+    var formId = autoformId.call(instance.data);
     var newOptions = AutoForm.getFormValues(formId, instance).insertDoc;
 
-    // if file_type has changed, reparse the file
-    if (oldOptions.file_type !== newOptions.file_type) {
-      var modifier = {};
-      if (newOptions.file_type) {
-        modifier.$set = { "options.file_type": newOptions.file_type };
-      } else {
-        modifier.$unset = { "options.file_type": true };
-      }
-
-      WranglerFiles.update(instance.data._id, modifier);
-
-      Meteor.call("reparseWranglerFile", instance.data._id);
-    }
-
-    // give the autoform some time to update itself (in case file_type changed)
-    Meteor.defer(function () {
-      if (AutoForm.validateForm(formId)) {
-        var setObject = {};
-        for (var index in newOptions) {
-          if (index !== "file_type") { // file_type handled above
-            setObject["options." + index] = newOptions[index];
-          }
-        }
-        if (Object.keys(setObject) > 0) {
-          WranglerFiles.update(instance.data._id, { $set: setObject });
-        }
-      } else {
-        console.log("form not okay");
+    WranglerFiles.update(instance.data._id, {
+      $set: {
+        options: newOptions
       }
     });
+
+    validateLater(instance);
   }
 });

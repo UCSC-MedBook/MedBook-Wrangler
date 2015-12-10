@@ -4,21 +4,25 @@
   {{print "editSubmission this:" this}}
   {{#if getSubmissionType}}
     {{#if compare getSubmissionType 'gene_expression'}}
-      {{> geneExpressionReview}}
+      {{> showReviewPanels geneExpressionPanels}}
+    {{/if}}
+
+    {{#if compare getSubmissionType 'network'}}
+      {{> showReviewPanels networkPanels}}
     {{/if}}
   {{else}}
     {{> submissionTypeNotDefined}}
   {{/if}}
 </template>
 
-<template name="geneExpressionReview">
-  {{#each reviewPanels}}
+<template name="showReviewPanels">
+  {{#each this}}
     {{> reviewPanel this}}
   {{/each}}
 
   {{#if noPanelsShown}}
     <div class="well">
-      Please wait while the review data from your gene expression file(s) load.
+      Please wait while the review data from your file(s) load.
     </div>
   {{/if}}
 </template>

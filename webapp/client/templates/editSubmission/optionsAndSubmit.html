@@ -9,6 +9,11 @@
           {{/submissionOptions}}
         {{/if}}
 
+        {{#if compare getSubmissionType 'network'}}
+          {{#submissionOptions schema=sharedSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+
         <!-- {{#if compare getSubmissionType 'mutation'}}
           {{#submissionOptions schema=mutationSchema}}
             {{> mutationFields}}

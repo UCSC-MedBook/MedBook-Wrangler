@@ -37,7 +37,7 @@ before_install:
 
   - "export TRAVIS=true"
 
-  - "export ROOT_URL=http://localhost/CRF/"
+  - "export ROOT_URL=http://localhost/Wrangler/"
 
 
 

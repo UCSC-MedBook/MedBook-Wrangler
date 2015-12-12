@@ -25,9 +25,9 @@ before_install:
   # - "npm install -g nightwatch"
 
   # install starrynight, so we can launch nightwatch and selenium
-  - "npm install -g starrynight"
+  - "npm install -g starrynight@3.5.3"
 
-  # npm install -g selenium-server-standalone-jar"
+  # npm install -g selenium-server-standalone-jar@2.45.0"
 
   #- "which node"
   #- "which starrynight"

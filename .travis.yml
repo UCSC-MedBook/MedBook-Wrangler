@@ -75,7 +75,7 @@ before_install:
   - "cd webapp"
   - "MONGO_URL='mongodb://localhost:27017/MedBook' ~/.meteor/meteor --port 3003 &"
   - "sleep 90"
-  - "cd .."
+  - "cd ../.."
 
   # start Wrangler
   - "cd webapp"

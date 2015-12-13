@@ -55,12 +55,28 @@ before_install:
   - "sleep 5"
   - "npm view starrynight version"
   - "starrynight fetch"
-
   - "sleep 20"
+
   - "starrynight generate --autoconfig"
-
-
   - "sleep 5"
+
+  # clone mongo testing data, start mongo
+  - "git clone https://github.com/UCSC-MedBook/MedBook-mongo-testing/"
+  - "cd MedBook-mongo-testing"
+  - "./restart_db.sh > /dev/null &" # start mongo in background
+  - "sleep 5"
+  - "./load_testing_data.sh"
+  - "cd .."
+
+  # clone JobRunner, start
+  - "git clone https://github.com/UCSC-MedBook/MedBook-JobRunner"
+  - "cd MedBook-JobRunner/webapp"
+  - "git checkout development"
+  - "~/.meteor/meteor &"
+  - "sleep 90"
+  - "cd .."
+
+  # start Wrangler
   - "cd webapp"
   - "~/.meteor/meteor &"
 

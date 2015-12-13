@@ -70,15 +70,16 @@ before_install:
 
   # clone JobRunner, start
   - "git clone https://github.com/UCSC-MedBook/MedBook-JobRunner"
-  - "cd MedBook-JobRunner/webapp"
+  - "cd MedBook-JobRunner"
   - "git checkout development"
-  - "~/.meteor/meteor &"
+  - "cd webapp"
+  - "MONGO_URL="mongodb://localhost:27017/MedBook" ~/.meteor/meteor --port 3003 &"
   - "sleep 90"
   - "cd .."
 
   # start Wrangler
   - "cd webapp"
-  - "~/.meteor/meteor &"
+  - "MONGO_URL="mongodb://localhost:27017/MedBook" ~/.meteor/meteor &"
 
 
   - "sleep 90"

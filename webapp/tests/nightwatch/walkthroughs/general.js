@@ -77,6 +77,9 @@ module.exports = {
         .verify.elementPresent(".panel-warning")
         .verify.elementPresent(".panel-body .progress")
         .verify.containsText(".panel-title .badge",  "uploading")
+
+        // wait for the file to be done
+        .waitForElementNotPresent(".panel-body .progress", 10000)
     ;
 
     // go back to the submissions list page and look at that
@@ -118,7 +121,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/hello.txt")
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible("#submissionFiles > div.panel.panel-warning", 15000)
+      .waitForElementVisible(warningText, 15000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
       // select BD2KGeneExpression

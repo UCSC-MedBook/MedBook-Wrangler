@@ -39,4 +39,8 @@ Router.map(function() {
   this.route('geneExpressionTesting', {
     path: '/Wrangler/testing/geneExpressionTesting'
   });
+
+  this.route('expression2Testing', {
+    path: '/Wrangler/testing/expression2Testing'
+  });
 });

@@ -5,9 +5,9 @@
 
   <testsuite name="specific"
     errors="0" failures="0" hostname="" id="" package="specific" skipped="0"
-    tests="1" time="0.000" timestamp="Thu, 10 Dec 2015 00:29:27 GMT">
+    tests="1" time="0.000" timestamp="Fri, 11 Dec 2015 19:22:44 GMT">
   
-    <testcase name="Upload some BD2KGeneExpression files" time="148.6" assertions="180">
+    <testcase name="Upload some BD2KGeneExpression files" time="141.4" assertions="180">
 
     
 

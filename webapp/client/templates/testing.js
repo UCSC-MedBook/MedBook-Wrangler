@@ -48,3 +48,27 @@ Template.geneExpressionTesting.helpers({
     return text;
   },
 });
+
+// Template.expression2Testing
+
+Template.expression2Testing.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: { gene: 1 },
+    limit: 100,
+  };
+  instance.subscribe('expression2Testing', instance.options);
+});
+
+Template.expression2Testing.helpers({
+  getGeneExpression: function () {
+    return GeneExpression.find({}, Template.instance().options);
+  },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return 'undefined';
+    }
+    return text;
+  },
+});

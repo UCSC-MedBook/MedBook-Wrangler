@@ -1,8 +1,8 @@
-# MedBook-Wrangler
+# Wrangler [![Build Status](https://travis-ci.org/UCSC-MedBook/MedBook-Wrangler.svg)](https://travis-ci.org/UCSC-MedBook/MedBook-Wrangler)
 
 ## Testing
 
-Testing for Wrangler requires the following code to be run.
+Running the tests will create the following user.
 
 ```javascript
 Accounts.createUser({
@@ -11,15 +11,5 @@ Accounts.createUser({
   profile: {
     collaborations: ['testing']
   }
-});
-
-Collaborations.upsert({
-  name: 'testing',
-  description: 'A testing collaboration. All data here is fake',
-  isUnlisted: true,
-  collaborators: [],
-  administrators: [
-    'testing@meteor.com'
-  ],
 });
 ```

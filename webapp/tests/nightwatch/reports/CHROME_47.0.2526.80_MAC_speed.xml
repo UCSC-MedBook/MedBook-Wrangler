@@ -5,9 +5,9 @@
 
   <testsuite name="speed"
     errors="0" failures="0" hostname="" id="" package="speed" skipped="0"
-    tests="1" time="0.000" timestamp="Mon, 14 Dec 2015 01:55:04 GMT">
+    tests="1" time="0.000" timestamp="Mon, 14 Dec 2015 03:36:29 GMT">
   
-    <testcase name="Speed test for full BD2KGeneExpression files" time="455.0" assertions="22">
+    <testcase name="Speed test for full BD2KGeneExpression files" time="434.8" assertions="22">
 
     
 

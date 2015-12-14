@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="1">
+
+  <testsuite name="appLayout"
+    errors="0" failures="1" hostname="" id="" package="appLayout" skipped="0"
+    tests="1" time="0.000" timestamp="Mon, 26 Oct 2015 18:58:20 GMT">
+  
+    <testcase name="Create a submission" time="8.403" assertions="14">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;h2&gt; contains text: &quot;Add files&quot;.">    at Object.exports.command (/Users/mokolodi1/git/medbook/wrangler/webapp/tests/nightwatch/commands/actions/createNewSubmission.js:8:13)
+    at Object.F.command (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/api.js:274:31)
+    at Object.commandFn (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/api.js:287:24)
+    at AsyncTree.runCommand (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:157:30)
+    at AsyncTree.runChildNode (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:117:8)
+    at AsyncTree.walkDown (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:83:10)
+    at AsyncTree.walkUp (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:100:8)
+    at AsyncTree.walkDown (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:93:12)
+    at AsyncTree.walkUp (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:100:8)
+    at AsyncTree.walkDown (/usr/local/lib/node_modules/starrynight/node_modules/nightwatch/lib/core/queue.js:93:12)</failure>
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

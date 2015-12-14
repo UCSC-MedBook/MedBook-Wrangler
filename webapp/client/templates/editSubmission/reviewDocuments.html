@@ -1,0 +1,100 @@
+<template name="reviewWranglerDocuments">
+  <h2>Review</h2>
+
+  {{print "editSubmission this:" this}}
+  {{#if getSubmissionType}}
+    {{#if compare getSubmissionType 'gene_expression'}}
+      {{> showReviewPanels geneExpressionPanels}}
+    {{/if}}
+
+    {{#if compare getSubmissionType 'network'}}
+      {{> showReviewPanels networkPanels}}
+    {{/if}}
+  {{else}}
+    {{> submissionTypeNotDefined}}
+  {{/if}}
+</template>
+
+<template name="showReviewPanels">
+  {{#each this}}
+    {{> reviewPanel this}}
+  {{/each}}
+
+  {{#if noPanelsShown}}
+    <div class="well">
+      Please wait while the review data from your file(s) load.
+    </div>
+  {{/if}}
+</template>
+
+<template name="reviewPanel">
+  {{#if shouldShowPanel}}
+    <div class="panel {{css_class}} reviewPanel" id="review-{{name}}">
+      <div class="panel-heading">{{title}}</div>
+
+      {{#if description}}
+        <div class="panel-body">
+          <p>{{description}}</p>
+        </div>
+      {{/if}}
+
+      <table class="table">
+        <thead>
+          <tr>
+            {{#each columns}}
+              <th>{{heading}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each getWranglerDocuments}}
+            {{#with contents}}
+              {{> panelRow}}
+            {{/with}}
+          {{/each}}
+        </tbody>
+      </table>
+
+      {{#if Template.subscriptionsReady}}
+        {{#if hasMoreRows}}
+          <a href="#">
+            <div class="panel-footer loadMore">
+              Load More
+            </div>
+          </a>
+        {{/if}}
+      {{else}}
+        {{! TODO: make sure this looks good}}
+        <div class="relative-spinner">{{>spinner}}</div>
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="panelRow">
+  <tr>
+    {{#each panelColumns}}
+      {{#if header_of_row}}
+        <th scope="row">{{cellData}}</th>
+      {{else}}
+        <td>{{cellData}}</td>
+      {{/if}}
+    {{/each}}
+  </tr>
+</template>
+
+<template name="submissionTypeNotDefined">
+  <div class="well">
+    {{#if hasDocuments}}
+      Multiple submission types detected:
+      <ul>
+        {{#each getSubmissionTypes}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      Please submit each type of new document seperately.
+    {{else}}
+      Upload files to continue
+    {{/if}}
+  </div>
+</template>

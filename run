@@ -1,4 +1,0 @@
-# export NODE_OPTIONS='--debug'
-export MONGO_URL=mongodb://localhost:27017/MedBook
-export ROOT_URL=http://localhost/data/
-meteor  --port 10012

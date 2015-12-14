@@ -1,0 +1,164 @@
+<template name="submissionFiles">
+  <h2>Files</h2>
+
+  {{#if compare status "editing"}}
+    {{> uploadNewFiles}}
+  {{/if}}
+
+  {{#each getFiles}}
+    {{> showFile}}
+  {{/each}}
+</template>
+
+<template name="uploadNewFiles">
+  <div class="well insert-file-well">
+    <div class="row">
+      {{! upload local files}}
+      <div class="col-md-6 insert-file-button">
+        <span class="btn btn-default btn-file fill-width">
+          Upload local files
+          <input id="upload-files-input" type="file" multiple>
+        </span>
+      </div>
+
+      {{! add from the web}}
+      <div class="col-md-6 insert-file-button">
+        <form class="add-from-web-form">
+          <div class="input-group">
+            <input name="urlInput" type="text" class="form-control"
+                placeholder="Enter URL">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">
+                Add
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="showFile">
+  <div class="panel {{panelClass}}">
+    <div class="panel-heading">
+      <span class="panel-title">
+        <span class="glyphicon glyphicon-file"></span>
+        <span class="ellipsis-out-before-badge">{{blob_name}}</span>
+
+        <span class="badge">
+          {{#if compare status "done"}}
+            {{#if written_to_database}}
+              written
+            {{else}}
+              {{#if error_description}}
+                problem
+              {{else}}
+                processed
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{status}}
+          {{/if}}
+        </span>
+
+        <span class="pull-right">
+          {{#if compare ../status "editing"}}
+            <button class="reparse-this-file btn btn-xs btn-info">
+              <span class="glyphicon glyphicon-refresh"></span>
+              <span>Reparse</span>
+            </button>
+            <button class="remove-this-file btn btn-xs btn-warning">
+              <span class="glyphicon glyphicon-trash"></span>
+              <span>Delete</span>
+            </button>
+          {{/if}}
+        </span>
+      </span>
+    </div>
+    <div class="panel-body">
+      {{> fileInformation}}
+    </div>
+  </div>
+</template>
+
+<template name="fileInformation">
+  {{#if compare status "uploading"}}
+    <p class="list-group-item-text">
+      {{#with FS.GetFile "blobs" blob_id}}
+        {{> FS.UploadProgressBar bootstrap=true
+            class='progress-bar-striped active'
+            showPercent=true}}
+      {{/with}}
+    </p>
+  {{else}}
+    <h4 style="margin-top: 0px;">Preview</h4>
+    {{#if blob_text_sample}}
+      <div class="sometimes-horizontal-scroll">
+        {{! NOTE: it will show line breaks, so keep it on one line }}
+        <samp class="whitespace-pre">{{blob_text_sample}}</samp><br/>
+        {{#if notShownLines}}
+          <samp class="not-black">...</samp><br>
+          {{#if blob_line_count}}
+            <samp id="blob_line_count"
+                class="not-black">[{{notShownLines}} lines not shown]</samp>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{else}}
+      <span class="help-block">File preview is loading...</span>
+    {{/if}}
+  {{/if}}
+
+  <hr> {{! always shows something above}}
+
+  {{#if shouldShowDescription}}
+    <div class="alert alert-warning" role="alert">
+      <p class="list-group-item-text">
+        {{#if needSchemaCorrection}}
+          Please correct the errors below.
+        {{else}}
+          {{error_description}}
+        {{/if}}
+      </p>
+    </div>
+    <!-- <hr> -->
+  {{/if}}
+
+  <div class="file-options">
+    {{#if parsed_options_once_already}}
+      {{> fileOptions}}
+    {{else}}
+      <span class="help-block">
+        Options will become available after file has been
+        parsed for the first time.
+      </span>
+    {{/if}}
+  </div>
+</template>
+
+<template name="fileOptions">
+  {{#autoForm id=autoformId schema=optionsSchema doc=this.options
+      autosave=true class="edit-wrangler-file"}}
+    {{> afQuickField name="file_type" firstOption="Auto"
+        template="bootstrap3-horizontal"
+        label-class="col-sm-2 col-xs-3"
+        input-col-class="col-sm-10 col-xs-9"}}
+
+    {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
+    {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
+    {{#if isInSchema "normalization"}}
+      {{> afQuickField name="normalization"
+          firstOption="(Select a normalization)"
+          template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+    {{/if}}
+
+    {{#if isInSchema "network_name"}}
+      {{> afQuickField name="network_name" template="bootstrap3-horizontal"
+          label-class="col-sm-2 col-xs-3"
+          input-col-class="col-sm-10 col-xs-9"}}
+    {{/if}}
+  {{/autoForm}}
+</template>

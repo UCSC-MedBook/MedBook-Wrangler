@@ -1,0 +1,162 @@
+// general
+*:focus {
+  outline: 0;
+}
+
+// for appBody
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+div#top-controls {
+  height: 40px;
+}
+div#left {
+  float: left;
+  width: 200px;
+}
+div#center {
+  margin-top: 0px;
+  margin: auto;
+  width: 200px;
+
+  #login-buttons {
+    display: table;
+    margin: 0 auto;
+  }
+}
+
+.control-label::after {
+  content: ": ";
+}
+
+// submissionFiles
+.ellipsis-out-before-badge {
+  // less gets rid of calc... ~ escapes the string
+  width: ~"calc(100% - 150px)";
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+// blob_text_sample
+.sometimes-horizontal-scroll {
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+.whitespace-pre {
+  white-space: pre;
+}
+.not-black {
+  color: #737373;
+}
+
+// getting the well around the insert buttons to resize correctly
+.insert-file-well {
+  padding-bottom: 0px;
+}
+.insert-file-button {
+  padding-bottom: 19px;
+}
+
+
+
+
+// .blank-glyphicon-to-left {
+//   margin-left: 18px;
+// }
+// .progress {
+//   .blank-glyphicon-to-left;
+//   margin-top: 15px;
+//   margin-right: 25px;
+//   margin-bottom: 5px;
+// }
+
+
+// buttons at bottom of file list
+.display-block {
+  display: block;
+}
+.fill-width {
+  width: 100%;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+// list files
+.center-text {
+  text-align: center;
+}
+
+// review data
+.reviewPanel {
+  margin: 20px;
+  margin-top: 10px;
+}
+.loadMore {
+  text-align: center;
+}
+
+// BELOW: don't know where to put this stuff / not gone through
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.component-box {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
+  border: 1px solid #000;
+  align-self: flex-start;
+}
+  .component-box h3 {
+    margin-top: 10px;
+  }
+
+.relative-spinner .spinner-container {
+  position: relative;
+  height: 100px;
+}
+
+span.error-description {
+  color: red;
+}
+
+
+
+.reactive-table-navigation .form-group {
+  margin-bottom: 0px;
+}
+
+// weird float value in @media for bootstrap
+.table {
+  float: inherit;
+}
+
+#top-part {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

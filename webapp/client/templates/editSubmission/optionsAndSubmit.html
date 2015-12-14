@@ -1,0 +1,149 @@
+<template name="optionsAndSubmit">
+  <h2>Options</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      {{#if classifySubmissionType this._id}}
+        {{#if compare getSubmissionType 'gene_expression'}}
+          {{#submissionOptions schema=sharedSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+
+        {{#if compare getSubmissionType 'network'}}
+          {{#submissionOptions schema=sharedSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+
+        <!-- {{#if compare getSubmissionType 'mutation'}}
+          {{#submissionOptions schema=mutationSchema}}
+            {{> mutationFields}}
+          {{/submissionOptions}}
+        {{/if}} -->
+      {{else}}
+        {{#submissionOptions schema=sharedSchema}}
+        {{/submissionOptions}}
+      {{/if}}
+    </div>
+    <div class="col-md-6">
+      {{> submissionStatus}}
+    </div>
+  </div>
+</template>
+
+<template name="submissionStatus">
+  {{#if compare status "editing"}}
+    {{#if hasErrors}}
+      <div class="panel panel-danger">
+        <div class="panel-heading">Error</div>
+
+        <ul class="list-group">
+          {{#each firstCoupleErrors}}
+            <li class="list-group-item">
+              {{this}}
+            </li>
+          {{/each}}
+        </ul>
+
+        {{#if tooManyErrors}}
+          <div class="panel-footer">Too many errors to display</div>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="panel panel-default">
+        <div class="panel-heading">Editing</div>
+        <div class="panel-body">
+          Click validate and submit to continue.
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+
+  {{#if compare status "validating"}}
+    <div class="panel panel-info">
+      <div class="panel-heading">Validating</div>
+      <div class="panel-body">
+        <p>
+          Submission is being validated...
+        </p>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if compare status "writing"}}
+    <div class="panel panel-info">
+      <div class="panel-heading">Writing</div>
+      <div class="panel-body">
+        <p>
+          The objects were validated and are being written to the database.
+        </p>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if compare status "done"}}
+    <div class="panel panel-success">
+      <div class="panel-heading">Done</div>
+      <div class="panel-body">
+        <p>
+          The objects have been added to the MedBook database.
+        </p>
+      </div>
+    </div>
+  {{/if}}
+
+</template>
+
+<template name="submissionOptions">
+  {{#autoForm id="submission-options" schema=schema
+      doc=currentOptions type=readonlyIfNotEditing}}
+    {{> sharedFields}}
+
+    {{> Template.contentBlock}}
+
+    {{#if compare ../../status "editing"}}
+      {{> validateAndSubmit}}
+    {{/if}}
+  {{/autoForm}}
+</template>
+
+<template name="sharedFields">
+  {{> afQuickField name="description" type="textarea" rows=3
+      placeholder="Where did the data come from?"}}
+  {{> afQuickField name="study_label" type="select"
+      options=studyOptions firstOption="(Select a study)"}}
+  {{> afQuickField name="collaboration_label" type="select"
+      options=collaborationOptions firstOption="(Select a collaboration)"}}
+</template>
+
+<!-- <template name="superpathwayFields">
+  {{! TODO: hide update if there are no superpathways }}
+  {{> afQuickField name="update_or_create" options="allowed"
+      firstOption="(Create new or update existing superpathway)"}}
+  {{#if updateCreateSelected}}
+    {{! has options for both text and select }}
+    {{> afQuickField name="name" type=selectOrText
+        options=superpathwayOptions
+        placeholder="Enter name"
+        firstOption="(Select superpathway name)"}}
+  {{/if}}
+</template> -->
+
+<template name="mutationFields">
+  {{> afQuickField name="biological_source" options="allowed"}}
+  {{> afQuickField name="mutation_impact_assessor" options="allowed"}}
+</template>
+
+<template name="validateAndSubmit">
+  {{! TODO: only show in blue if every file is done processing }}
+  <div class="form-group">
+    <button class="btn btn-warning reset-options">
+      Reset options
+    </button>
+    <button class="btn btn-info save-for-later">
+      Save
+    </button>
+    <button class="btn btn-primary validate-and-submit">
+      Validate and submit
+    </button>
+  </div>
+</template>

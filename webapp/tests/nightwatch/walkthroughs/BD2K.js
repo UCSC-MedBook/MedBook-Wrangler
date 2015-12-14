@@ -3,13 +3,13 @@ module.exports = {
   "Upload some BD2KGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
-      .resizeWindow(1024, 768).pause(1000)
+      .resizeWindow(1024, 768).pause(2000)
       .reviewMainLayout()
     ;
 
     // make sure user exists and log in
     client
-      .timeoutsAsyncScript(1000)
+      .timeoutsAsyncScript(2000)
       .executeAsync(function(data, done){
         Accounts.createUser({
           email: 'testing@medbook.ucsc.edu',
@@ -40,9 +40,9 @@ module.exports = {
     var geneCountsPanel = '#review-sample_normalization > table > tbody';
     client
       .url("http://localhost:3000/Wrangler")
-      .waitForElementVisible("#create-new-submission", 1000)
+      .waitForElementVisible("#create-new-submission", 2000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 1000)
+      .waitForElementVisible(urlInput, 2000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -148,7 +148,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 1000)
+      .waitForElementVisible(urlInput, 2000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -222,7 +222,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 1000)
+      .waitForElementVisible(urlInput, 2000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -242,7 +242,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 1000)
+      .waitForElementVisible(urlInput, 2000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -265,7 +265,7 @@ module.exports = {
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option:nth-child(3)")
-      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 1000)
+      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 2000)
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 25000)
 
       // add UUID file
@@ -280,7 +280,7 @@ module.exports = {
       .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
 
       // make sure label mapping file loaded right
-      .waitForElementPresent("#review-sample_label_map", 1000)
+      .waitForElementPresent("#review-sample_label_map", 2000)
       .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
@@ -355,7 +355,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 1000)
+      .waitForElementVisible(urlInput, 2000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -368,7 +368,7 @@ module.exports = {
 
       // go back to the submissions page and delete it
       .click("#left > ol > li:nth-child(1) > a")
-      .waitForElementNotPresent(".relative-spinner", 10000)
+      .waitForElementNotPresent(".relative-spinner", 20000)
       .click("body > div > div.list-group > div:nth-child(2) .delete-submission")
 
       // make sure we deleted it

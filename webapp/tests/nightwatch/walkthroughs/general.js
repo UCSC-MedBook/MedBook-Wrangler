@@ -1,4 +1,5 @@
 module.exports = {
+  tags: ["travis"],
   "General tests, error testing for switching file type": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
@@ -67,6 +68,9 @@ module.exports = {
       .setValue(urlInput, largeFileUrl)
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 2000)
+        .verify.elementPresent(".panel-warning")
+        .verify.elementPresent(".panel-body .progress")
+        .verify.containsText(".panel-title .badge",  "uploading")
         .verify.value(urlInput, "")
         .verify.elementPresent(".panel-title .glyphicon-file")
         .verify.containsText(".panel-title .ellipsis-out-before-badge", fileName)
@@ -74,9 +78,6 @@ module.exports = {
         .verify.elementPresent(".panel-title .pull-right .remove-this-file")
         .verify.elementPresent(".panel-title .pull-right .remove-this-file .glyphicon-trash")
         .verify.containsText(".panel-title .pull-right .remove-this-file", "Delete")
-        .verify.elementPresent(".panel-warning")
-        .verify.elementPresent(".panel-body .progress")
-        .verify.containsText(".panel-title .badge",  "uploading")
 
         // wait for the file to be done
         .waitForElementNotPresent(".panel-body .progress", 10000)
@@ -131,14 +132,14 @@ module.exports = {
       .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
           "Normalization is required")
       .click(".edit-wrangler-file select[name='normalization'] > option:nth-child(2)") // select normalization
-      .waitForElementPresent(".panel-info", 1000)
+      .waitForElementPresent(".panel-info", 1500)
       .verify.elementNotPresent(warningText)
       .waitForElementPresent(".panel-warning", 20000)
       .verify.containsText(warningText, "Expected 2 column tab file, got 1 column tab file")
 
       // select BD2KSampleLabelMap
       .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KSampleLabelMap']")
-      .waitForElementPresent(".panel-info", 1000)
+      .waitForElementPresent(".panel-info", 1500)
       .verify.elementNotPresent(".edit-wrangler-file select[name='normalization']")
       .waitForElementPresent(".panel-warning", 20000)
       .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
@@ -153,7 +154,7 @@ module.exports = {
       // set network name
       .setValue(".edit-wrangler-file input", "HelloWorld")
       .click("#submissionFiles") // deselect field, trigger submit
-      .waitForElementPresent(".panel-info", 1000)
+      .waitForElementPresent(".panel-info", 1500)
       .waitForElementPresent(".panel-warning", 20000)
       .verify.containsText(warningText, "No interactions specified for source gene hello")
 

@@ -1,4 +1,5 @@
 module.exports = {
+  tags: ["BD2K"],
   "Upload some BD2KGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
@@ -39,13 +40,14 @@ module.exports = {
     var geneCountsPanel = '#review-sample_normalization > table > tbody';
     client
       .url("http://localhost:3000/Wrangler")
-      .verify.elementPresent("#create-new-submission")
-      .click('#create-new-submission').pause(1000)
+      .waitForElementVisible("#create-new-submission", 1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 1000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-success', 150000)
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
       .verify.containsText('.whitespace-pre',
         'gene_id DTB-999_Baseline\nA2BP1 0\nA2LD1 505.412273\nAAAS 1387.280005\nAADAT 1677.433726')
       .verify.containsText('#blob_line_count', '[4 lines not shown]')
@@ -92,7 +94,7 @@ module.exports = {
       .refresh()
         .waitForElementVisible('.validate-and-submit', 2000)
         .click('.validate-and-submit')
-        .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 150000)
+        .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 15000)
     ;
 
     // make sure the data are there :)
@@ -150,7 +152,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-success', 150000)
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
       // check some random stuff
       .verify.containsText('#blob_line_count', '[2 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
@@ -162,7 +164,7 @@ module.exports = {
       .click(studyLabel + ' > option:nth-child(2)')
       .click(collaborationLabel + ' > option:nth-child(2)')
       .click('.validate-and-submit')
-      .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 150000)
+      .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 15000)
     ;
 
     // make sure the data have merged correctly
@@ -223,7 +225,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-success', 150000)
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
       .verify.elementPresent("#review-gene_expression_data_exists")
       .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > th", "DTB-999")
       .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
@@ -242,7 +244,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-warning', 150000)
+      .waitForElementVisible('#submissionFiles .panel-warning', 15000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "Could not parse sample label from header line or file name")
       .click("#submissionFiles .remove-this-file") // delete the file
@@ -256,19 +258,19 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed, make sure file type couldn't be inferred
-      .waitForElementVisible('#submissionFiles > .panel-warning', 150000)
+      .waitForElementVisible('#submissionFiles > .panel-warning', 15000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option:nth-child(3)")
       .waitForElementVisible("#submissionFiles > div.panel.panel-info", 1000)
-      .waitForElementVisible("#submissionFiles > div.panel.panel-success", 150000)
+      .waitForElementVisible("#submissionFiles > div.panel.panel-success", 15000)
 
       // add UUID file
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 150000)
-      .waitForElementVisible("#review-sample_normalization", 150000)
+      .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 15000)
+      .waitForElementVisible("#review-sample_normalization", 15000)
       .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(2)",
           "RPKM (Reads Per Kilobase of transcript per Million mapped reads)")
@@ -354,7 +356,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-success', 150000)
+      .waitForElementVisible('#submissionFiles .panel-success', 15000)
       // make sure label mapping file loaded right
       .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")

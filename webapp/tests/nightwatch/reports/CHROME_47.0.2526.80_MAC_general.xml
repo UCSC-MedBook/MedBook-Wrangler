@@ -5,9 +5,9 @@
 
   <testsuite name="general"
     errors="0" failures="0" hostname="" id="" package="general" skipped="0"
-    tests="1" time="0.000" timestamp="Mon, 14 Dec 2015 03:29:14 GMT">
+    tests="1" time="0.000" timestamp="Mon, 14 Dec 2015 23:46:29 GMT">
   
-    <testcase name="General tests, error testing for switching file type" time="60.18" assertions="69">
+    <testcase name="General tests, error testing for switching file type" time="49.88" assertions="69">
 
     
 

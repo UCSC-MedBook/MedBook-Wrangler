@@ -109,7 +109,7 @@ module.exports = {
         .click('#left > ol > li:nth-child(1) > a')
           // deleting the file while it's uploading sometimes causes the
           // app to crash, so wait for a long enough time for it to reboot
-          .waitForElementNotPresent(".relative-spinner", 10000)
+          .waitForElementNotPresent(".relative-spinner", 10000).pause(250)
           .verify.containsText(submissionListItem + ' > p', 'No files')
           .click(submissionListItem + ' .btn-warning')
     ;

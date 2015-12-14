@@ -1,4 +1,5 @@
 module.exports = {
+  tags: ["speed"],
   "Speed test for full BD2KGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")

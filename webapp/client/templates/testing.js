@@ -54,24 +54,50 @@ Template.geneExpressionTesting.helpers({
 
 // Template.expression2Testing
 
-// Template.expression2Testing.onCreated(function () {
-//   var instance = this;
-//
-//   instance.options = {
-//     sort: { gene: 1 },
-//     limit: 100,
-//   };
-//   instance.subscribe('expression2Testing', instance.options);
-// });
-//
-// Template.expression2Testing.helpers({
-//   getGeneExpression: function () {
-//     return GeneExpression.find({}, Template.instance().options);
-//   },
-//   checkUndefined: function (text) {
-//     if (text === undefined) {
-//       return 'undefined';
-//     }
-//     return text;
-//   },
-// });
+Template.expression2Testing.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: { gene: 1 },
+    limit: 100,
+  };
+  instance.subscribe('expression2Testing', instance.options);
+});
+
+Template.expression2Testing.helpers({
+  getExpression2: function () {
+    var data = Expression2.find({}, Template.instance().options).fetch();
+
+    console.log("data[data.length - 1]:", data[data.length - 1]);
+
+    var transformed = [];
+    data.forEach(function (expressionDoc) {
+      var sampleLabels = Object.keys(expressionDoc.samples);
+      sampleLabels.sort().reverse();
+      for (var index in sampleLabels) {
+        var sample_label = sampleLabels[index];
+        transformed.push({
+          gene_label: expressionDoc.gene,
+          study_label: expressionDoc.Study_ID,
+          collaborations: expressionDoc.Collaborations,
+          sample_label: sample_label,
+          values: {
+            quantile_counts: expressionDoc.samples[sample_label].quantile_counts,
+            quantile_counts_log: expressionDoc.samples[sample_label].rsem_quan_log2,
+            raw_counts: expressionDoc.samples[sample_label].raw_counts,
+            tpm: expressionDoc.samples[sample_label].tpm,
+            fpkm: expressionDoc.samples[sample_label].fpkm,
+          }
+        });
+      }
+    });
+
+    return transformed;
+  },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return 'undefined';
+    }
+    return text;
+  },
+});

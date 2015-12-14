@@ -19,7 +19,7 @@
     </h4>
     <p class="list-group-item-text">
       {{#if Template.subscriptionsReady}}
-        {{#if count wranglerFiles}}
+        {{#if length wranglerFiles}}
           <h5>Files</h5>
           {{#each wranglerFiles}}
             <span>{{blob_name}}</span><br />

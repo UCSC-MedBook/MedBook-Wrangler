@@ -141,6 +141,45 @@ module.exports = {
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(8)')
+      .url('http://localhost:3000/Wrangler/testing/expression2Testing')
+        .waitForElementVisible("#data > table > tbody > tr:nth-child(8)", 5000).pause(200)
+        .reviewExpression2(1, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A2BP1",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 0,
+            "quantile_counts_log" : 0
+          }
+        })
+        .reviewExpression2(3, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 1387.2800050000000738,
+            "quantile_counts_log" : 10.4390828620049518
+          }
+        })
+        .reviewExpression2(8, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "NOTAGENE",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 300,
+            "quantile_counts_log" : 8.233619676759702
+          }
+        })
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
     ;
 
     // add another BD2K file (tpm this time)
@@ -211,9 +250,64 @@ module.exports = {
             "quantile_counts" : 505.4122730000000274,
             "quantile_counts_log" : 8.9841685589597766,
             "tpm": 236.6878328
+            // NOTE: both defined
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
+      .url('http://localhost:3000/Wrangler/testing/expression2Testing')
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(9)', 5000).pause(200)
+        .reviewExpression2(2, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A2LD1",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 505.4122730000000274,
+            "quantile_counts_log" : 8.9841685589597766,
+            "tpm": 236.6878328
+            // NOTE: both defined
+          }
+        })
+        .reviewExpression2(3, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 1387.2800050000000738,
+            "quantile_counts_log" : 10.4390828620049518
+            // NOTE:tpm undefined
+          }
+        })
+        .reviewExpression2(8, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AARS2",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "tpm" : 177.5104972000000032
+            // NOTE: quantile_counts undefined
+          }
+        })
+        .reviewExpression2(9, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "NOTAGENE",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 300,
+            "quantile_counts_log" : 8.233619676759702
+          }
+        })
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(10)')
     ;
 
     // try to upload the tpm file again and make sure we get an error
@@ -294,7 +388,7 @@ module.exports = {
 
       // make sure the data are there :)
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 2000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 5000).pause(200)
         .reviewGeneExpression(1, {
           "study_label" : "prad_tcga",
           "collaborations" : [
@@ -348,6 +442,57 @@ module.exports = {
           }
       })
       .verify.elementNotPresent('#data > table > tbody > tr:nth-child(16)')
+    .url('http://localhost:3000/Wrangler/testing/expression2Testing')
+      .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(200)
+      .reviewExpression2(5, {
+        "study_label" : "prad_tcga",
+        "collaborations" : [
+          "testing"
+        ],
+        "gene_label" : "AAAS",
+        "sample_label" : "DTB-999",
+        "values" : {
+          "quantile_counts" : 1387.2800050000000738,
+          "quantile_counts_log" : 10.4390828620049518
+          // NOTE:tpm undefined
+        }
+      })
+      .reviewExpression2(6, {
+          "study_label" : "prad_tcga",
+          "collaborations" : [
+              "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-998Dup",
+          "values" : {
+              "fpkm" : 12475
+          }
+      })
+      .reviewExpression2(3, {
+        "study_label" : "prad_tcga",
+        "collaborations" : [
+          "testing"
+        ],
+        "gene_label" : "A2LD1",
+        "sample_label" : "DTB-999",
+        "values" : {
+          "quantile_counts" : 505.4122730000000274,
+          "quantile_counts_log" : 8.9841685589597766,
+          "tpm": 236.6878328
+        }
+      })
+      .reviewExpression2(4, {
+        "study_label" : "prad_tcga",
+        "collaborations" : [
+            "testing"
+        ],
+        "gene_label" : "A2LD1",
+        "sample_label" : "DTB-998Dup",
+        "values" : {
+            "fpkm" : 364
+        }
+    })
+    .verify.elementNotPresent('#data > table > tbody > tr:nth-child(17)')
     ;
 
     // verify we can get to label mappings from a previous submission

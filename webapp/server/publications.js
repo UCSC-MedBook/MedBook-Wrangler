@@ -71,3 +71,16 @@ Meteor.publish('geneExpressionTesting', function (options) {
 
   this.ready();
 });
+
+Meteor.publish('expression2Testing', function (options) {
+  check(options, Object); // TODO: can they do anything fancy here?
+
+  var user = Meteor.users.findOne(this.userId);
+  if (user.profile.collaborations.indexOf('testing') >= 0) {
+    return Expression2.find({
+      Collaborations: 'testing'
+    }, options);
+  }
+
+  this.ready();
+});

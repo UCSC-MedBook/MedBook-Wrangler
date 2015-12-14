@@ -10,7 +10,7 @@ Meteor.methods({
       });
 
       Expression2.remove({
-        collaborations: 'testing',
+        Collaborations: 'testing',
       });
 
       return "done";

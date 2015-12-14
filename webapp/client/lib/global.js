@@ -22,8 +22,16 @@ Template.registerHelper('isDefined', function (first) {
   return first !== undefined;
 });
 
-Template.registerHelper('count', function (first) {
-  return first.count();
+Template.registerHelper('length', function (first) {
+  if (first.count) {
+    return first.count();
+  }
+
+  if (first.length !== undefined) {
+    return first.length;
+  }
+
+  console.log("length cannot be calculated for", first);
 });
 
 Template.registerHelper('getSubmissionType', function () {

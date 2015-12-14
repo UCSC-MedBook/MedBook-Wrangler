@@ -122,7 +122,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/hello.txt")
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible(warningText, 20000)
+      .waitForElementVisible(warningText, 40000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
       // select BD2KGeneExpression

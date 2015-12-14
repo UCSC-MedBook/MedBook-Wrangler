@@ -147,7 +147,8 @@ module.exports = {
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 1000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -220,7 +221,8 @@ module.exports = {
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 1000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -239,12 +241,13 @@ module.exports = {
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 1000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
-      .waitForElementVisible('#submissionFiles .panel-warning', 25000)
+      .waitForElementVisible("#submissionFiles div.alert.alert-warning > p", 25000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "Could not parse sample label from header line or file name")
       .click("#submissionFiles .remove-this-file") // delete the file
@@ -258,7 +261,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed, make sure file type couldn't be inferred
-      .waitForElementVisible('#submissionFiles > .panel-warning', 25000)
+      .waitForElementVisible("#submissionFiles div.alert.alert-warning > p", 25000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option:nth-child(3)")
@@ -351,7 +354,8 @@ module.exports = {
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('#create-new-submission', 2000)
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 1000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
       .click("form.add-from-web-form button[type='submit']")

@@ -31,7 +31,10 @@ Template.geneExpressionTesting.onCreated(function () {
   var instance = this;
 
   instance.options = {
-    sort: { gene_label: 1 },
+    sort: {
+      gene_label: 1,
+      sample_label: -1, // wrote my tests like this. sorry.
+    },
     limit: 100,
   };
   instance.subscribe('geneExpressionTesting', instance.options);

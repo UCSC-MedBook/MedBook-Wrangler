@@ -122,7 +122,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/hello.txt")
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible(warningText, 40000)
+      .waitForElementVisible(warningText, 60000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
       // select BD2KGeneExpression
@@ -134,14 +134,14 @@ module.exports = {
       .click(".edit-wrangler-file select[name='normalization'] > option:nth-child(2)") // select normalization
       .waitForElementPresent(".panel-info", 1500)
       .verify.elementNotPresent(warningText)
-      .waitForElementPresent(".panel-warning", 20000)
+      .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Expected 2 column tab file, got 1 column tab file")
 
       // select BD2KSampleLabelMap
       .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KSampleLabelMap']")
       .waitForElementPresent(".panel-info", 1500)
       .verify.elementNotPresent(".edit-wrangler-file select[name='normalization']")
-      .waitForElementPresent(".panel-warning", 20000)
+      .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
 
       // select ArachneRegulon
@@ -155,7 +155,7 @@ module.exports = {
       .setValue(".edit-wrangler-file input", "HelloWorld")
       .click("#submissionFiles") // deselect field, trigger submit
       .waitForElementPresent(".panel-info", 1500)
-      .waitForElementPresent(".panel-warning", 20000)
+      .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "No interactions specified for source gene hello")
 
       // go back to the list submissions page and delete it

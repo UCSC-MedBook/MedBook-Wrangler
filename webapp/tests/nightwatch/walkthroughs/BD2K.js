@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ["BD2K"],
+  tags: ["BD2K", "travis"],
   "Upload some BD2KGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")

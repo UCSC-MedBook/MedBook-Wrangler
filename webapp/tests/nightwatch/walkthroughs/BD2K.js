@@ -102,7 +102,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
         .waitForElementVisible('#data > table > tbody > tr:nth-child(7)', 5000).pause(200)
         .reviewGeneExpression(1, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -115,7 +115,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(6, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -128,7 +128,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(7, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -144,7 +144,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/expression2Testing')
         .waitForElementVisible("#data > table > tbody > tr:nth-child(8)", 5000).pause(200)
         .reviewExpression2(1, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -156,7 +156,7 @@ module.exports = {
           }
         })
         .reviewExpression2(3, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -168,7 +168,7 @@ module.exports = {
           }
         })
         .reviewExpression2(8, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -212,7 +212,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
         .waitForElementVisible('#data > table > tbody > tr:nth-child(8)', 5000).pause(200)
         .reviewGeneExpression(1, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -226,7 +226,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(6, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -239,7 +239,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(7, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -257,7 +257,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/expression2Testing')
         .waitForElementVisible('#data > table > tbody > tr:nth-child(9)', 5000).pause(200)
         .reviewExpression2(2, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -271,7 +271,7 @@ module.exports = {
           }
         })
         .reviewExpression2(3, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -284,7 +284,7 @@ module.exports = {
           }
         })
         .reviewExpression2(8, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -296,7 +296,7 @@ module.exports = {
           }
         })
         .reviewExpression2(9, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -390,7 +390,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
         .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 5000).pause(200)
         .reviewGeneExpression(1, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -404,7 +404,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(2, {
-            "study_label" : "prad_tcga",
+            "study_label" : "prad_test",
             "collaborations" : [
                 "testing"
             ],
@@ -416,7 +416,7 @@ module.exports = {
             }
         })
         .reviewGeneExpression(12, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
             "testing"
           ],
@@ -430,7 +430,7 @@ module.exports = {
           }
         })
         .reviewGeneExpression(13, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
               "testing"
           ],
@@ -445,7 +445,7 @@ module.exports = {
     .url('http://localhost:3000/Wrangler/testing/expression2Testing')
       .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(200)
       .reviewExpression2(5, {
-        "study_label" : "prad_tcga",
+        "study_label" : "prad_test",
         "collaborations" : [
           "testing"
         ],
@@ -458,7 +458,7 @@ module.exports = {
         }
       })
       .reviewExpression2(6, {
-          "study_label" : "prad_tcga",
+          "study_label" : "prad_test",
           "collaborations" : [
               "testing"
           ],
@@ -469,7 +469,7 @@ module.exports = {
           }
       })
       .reviewExpression2(3, {
-        "study_label" : "prad_tcga",
+        "study_label" : "prad_test",
         "collaborations" : [
           "testing"
         ],
@@ -482,7 +482,7 @@ module.exports = {
         }
       })
       .reviewExpression2(4, {
-        "study_label" : "prad_tcga",
+        "study_label" : "prad_test",
         "collaborations" : [
             "testing"
         ],

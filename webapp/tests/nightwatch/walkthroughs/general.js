@@ -25,7 +25,7 @@ module.exports = {
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
-    // Create a new submission
+    // create a new submission
     client
       .verify.elementPresent("#create-new-submission")
       .click('#create-new-submission')
@@ -119,7 +119,8 @@ module.exports = {
     // do some fun stuff with changing the file type, etc.
     var warningText = "#submissionFiles div.alert.alert-warning > p";
     client
-      .verify.elementPresent("#create-new-submission")
+      .url("http://localhost:3000/Wrangler")
+      .waitForElementPresent("#create-new-submission", 2000)
       .click('#create-new-submission')
       .waitForElementVisible(urlInput, 10000)
       .clearValue(urlInput)

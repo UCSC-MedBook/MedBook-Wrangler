@@ -76,13 +76,12 @@ Meteor.methods({
 
     WranglerFiles.remove(wranglerFileId);
 
-    var updateReturn = WranglerDocuments.update({
+    WranglerDocuments.update({
       "submission_id": submission_id,
       "wrangler_file_ids": wranglerFileId,
     }, {
       $pull: { wrangler_file_ids: wranglerFileId }
     }, {multi: true});
-    console.log("updateReturn:", updateReturn);
     WranglerDocuments.remove({
       "submission_id": submission_id,
       "wrangler_file_ids": {$size: 0},

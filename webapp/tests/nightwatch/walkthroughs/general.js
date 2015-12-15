@@ -88,7 +88,7 @@ module.exports = {
     var submissionListItem = 'div.list-group > div:nth-child(2)';
     client
       .click('#left > ol > li:nth-child(1) > a')
-        .waitForElementVisible(submissionListItem + ' > h4', 'a few seconds ago', 2000)
+        .waitForElementVisible(submissionListItem + ' > h4', 2000)
         .verify.containsText(submissionListItem + ' > h4', 'a few seconds ago')
         .verify.containsText(submissionListItem + ' .badge', 'editing')
         .verify.containsText(submissionListItem + ' .btn-primary', 'Edit')

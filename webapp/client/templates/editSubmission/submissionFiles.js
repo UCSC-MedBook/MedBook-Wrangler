@@ -83,12 +83,7 @@ Template.showFile.onCreated(function () {
         // update if it's stored
         if (instance.data.status === "uploading" &&
             blob && blob.hasStored("blobs")) {
-          // should follow two-phase commit pattern but in untrusted code
-          var updated = WranglerFiles.update(instance.data._id, {
-            $set: {
-              status: "processing",
-            }
-          });
+          Meteor.call("fileToProcessing", instance.data._id);
         }
       });
     });

@@ -102,33 +102,28 @@ Meteor.methods({
   },
   reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
-    // check newOptions down below
 
+    var userId = ensureLoggedIn();
     var wranglerFile = WranglerFiles.findOne(wranglerFileId);
-    if (wranglerFile) {
-      var userId = ensureLoggedIn();
-      ensureSubmissionEditable(userId, wranglerFile.submission_id);
+    ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
-      WranglerFiles.update(wranglerFileId, {
-        $set: { status: "processing" }
-      });
+    WranglerFiles.update(wranglerFileId, {
+      $set: { status: "processing" }
+    });
 
-      var newJob = {
-        name: "ParseWranglerFile",
-        user_id: userId,
-        args: {
-          wrangler_file_id: wranglerFileId,
-        },
-        status: "waiting",
-      };
+    var newJob = {
+      name: "ParseWranglerFile",
+      user_id: userId,
+      args: {
+        wrangler_file_id: wranglerFileId,
+      },
+      status: "waiting",
+    };
 
-      // only add the new job if it's not already there
-      // TODO: can this be changed to an upsert?
-      if (!Jobs.findOne(newJob)) {
-        Jobs.insert(newJob);
-      }
-    } else {
-      throw new Meteor.Error("document-does-not-exist");
+    // only add the new job if it's not already there
+    // TODO: can this be changed to an upsert?
+    if (!Jobs.findOne(newJob)) {
+      Jobs.insert(newJob);
     }
   },
   submitSubmission: function (submission_id) {
@@ -148,6 +143,27 @@ Meteor.methods({
       "args": {
         "submission_id": submission_id,
       },
+    });
+  },
+
+  // other
+  fileToProcessing: function (wranglerFileId) {
+    check(wranglerFileId, String);
+
+    var userId = ensureLoggedIn();
+    var wranglerFile = WranglerFiles.findOne(wranglerFileId);
+    ensureSubmissionEditable(userId, wranglerFile.submission_id);
+
+    // must be here because client can only update by _id
+    WranglerFiles.update({
+      _id: wranglerFileId,
+      // so it doesn't overwrite status if done on server but not yet
+      // propigated on client
+      status: "uploading",
+    }, {
+      $set: {
+        status: "processing",
+      }
     });
   },
 });

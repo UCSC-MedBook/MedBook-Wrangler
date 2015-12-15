@@ -1,9 +1,9 @@
 module.exports = {
-  tags: ["travis"],
+  tags: ["travis", "general"],
   "General tests, error testing for switching file type": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
-      .resizeWindow(1024, 768).pause(1000)
+      .resizeWindow(1024, 768)
       .reviewMainLayout()
     ;
 
@@ -100,27 +100,28 @@ module.exports = {
     // click the edit button and make sure it's still there
     client
       .click(submissionListItem + ' .btn-primary')
-        .waitForElementVisible(".ellipsis-out-before-badge", 3000)
-        .verify.containsText('.ellipsis-out-before-badge', fileName)
+      .waitForElementVisible(".ellipsis-out-before-badge", 3000)
+      .verify.containsText('.ellipsis-out-before-badge', fileName)
 
-        // delete the file
-        .click(".panel-title .pull-right .remove-this-file").pause(200)
-          .verify.elementNotPresent(".ellipsis-out-before-badge")
+      // delete the file
+      .click(".panel-title .pull-right .remove-this-file").pause(200)
+        .verify.elementNotPresent(".ellipsis-out-before-badge")
 
-        // go back to the list submissions page and delete it
-        .click('#left > ol > li:nth-child(1) > a')
-          // deleting the file while it's uploading sometimes causes the
-          // app to crash, so wait for a long enough time for it to reboot
-          .waitForElementNotPresent(".relative-spinner", 10000).pause(250)
-          .verify.containsText(submissionListItem + ' > p', 'No files')
-          .click(submissionListItem + ' .btn-warning')
+      // go back to the list submissions page and delete it
+      .click('#left > ol > li:nth-child(1) > a')
+        // deleting the file while it's uploading sometimes causes the
+        // app to crash, so wait for a long enough time for it to reboot
+        .waitForElementNotPresent(".relative-spinner", 10000).pause(250)
+        .verify.containsText(submissionListItem + ' > p', 'No files')
+        .click(submissionListItem + ' .btn-warning')
     ;
 
     // do some fun stuff with changing the file type, etc.
     var warningText = "#submissionFiles div.alert.alert-warning > p";
     client
       .verify.elementPresent("#create-new-submission")
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 10000)
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/hello.txt")
       .click("form.add-from-web-form button[type='submit']")
@@ -159,6 +160,68 @@ module.exports = {
       .waitForElementPresent(".panel-info", 2000)
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "No interactions specified for source gene hello")
+
+      // go back to the list submissions page and delete it
+      .click('#left > ol > li:nth-child(1) > a')
+        // deleting the file while it's uploading sometimes causes the
+        // app to crash, so wait for a long enough time for it to reboot
+        .waitForElementNotPresent(".relative-spinner", 10000)
+        .click(submissionListItem + ' .btn-warning')
+        .verify.elementPresent("body") // so that it actually clicks
+    ;
+
+    // make sure the wrangler documents are being correctly linked to multiple
+    // files and deleted right
+    client
+      .url("http://localhost:3000/Wrangler")
+      .waitForElementVisible("#create-new-submission", 10000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 10000)
+
+      // add norm_counts
+      .clearValue(urlInput)
+      .setValue(urlInput, "http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab")
+      .click("form.add-from-web-form button[type='submit']")
+      .waitForElementVisible(".panel-success", 60000)
+      .verify.containsText("#review-ignored_genes > table > tbody > tr > td", "NOTAGENE")
+      .verify.containsText("#review-mapped_genes > table > tbody > tr:nth-child(1) > td:nth-child(1)", "A2BP1")
+      .verify.containsText("#review-mapped_genes > table > tbody > tr:nth-child(1) > td:nth-child(2)", "RBFOX1")
+      .verify.containsText("#review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(1)", "A2LD1")
+      .verify.containsText("#review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)", "GGACT")
+      .verify.elementNotPresent("#review-mapped_genes > table > tbody > tr:nth-child(3)")
+
+      // add fpkm
+      .clearValue(urlInput)
+      .setValue(urlInput, "http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_fpkm.tab")
+      .click("form.add-from-web-form button[type='submit']")
+      .waitForElementVisible("#submissionFiles > div:nth-child(4).panel-success", 60000)
+      .verify.containsText("#review-ignored_genes tbody > tr > td", "NOTAGENE")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(1)", "A2BP1")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(2)", "RBFOX1")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(2) > td:nth-child(1)", "A2LD1")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(2) > td:nth-child(2)", "GGACT")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(3) > td:nth-child(1)", "PTS2R")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(3) > td:nth-child(2)", "PEX7")
+      .verify.elementNotPresent("#review-mapped_genes tbody > tr:nth-child(4)")
+
+      // remove norm_counts
+      .click("#submissionFiles > div:nth-child(3) .remove-this-file")
+      .waitForElementNotPresent("#review-mapped_genes tbody > tr:nth-child(3)", 2500)
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(1)", "A2LD1")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(2)", "GGACT")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(2) > td:nth-child(1)", "PTS2R")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(2) > td:nth-child(2)", "PEX7")
+      .verify.elementNotPresent("#review-ignored_genes")
+
+      // delete all files and add a different one (to make sure they're really gone)
+      .click("#submissionFiles > div:nth-child(3) .remove-this-file")
+      .clearValue(urlInput)
+      .setValue(urlInput, "http://localhost:3000/DTB-999_Baseline.rsem.genes.raw_counts.tab")
+      .click("form.add-from-web-form button[type='submit']")
+      .waitForElementVisible(".panel-success", 60000)
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(1)", "DIC5")
+      .verify.containsText("#review-mapped_genes tbody > tr:nth-child(1) > td:nth-child(2)", "WDR34")
+      .verify.elementNotPresent("#review-mapped_genes tbody > tr:nth-child(2)")
 
       // go back to the list submissions page and delete it
       .click('#left > ol > li:nth-child(1) > a')

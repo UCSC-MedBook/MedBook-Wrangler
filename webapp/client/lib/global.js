@@ -22,18 +22,6 @@ Template.registerHelper('isDefined', function (first) {
   return first !== undefined;
 });
 
-Template.registerHelper('length', function (first) {
-  if (first.count) {
-    return first.count();
-  }
-
-  if (first.length !== undefined) {
-    return first.length;
-  }
-
-  console.log("length cannot be calculated for", first);
-});
-
 Template.registerHelper('getSubmissionType', function () {
   var filtered = getSubmissionTypes(this._id)
     .filter(function (value) {

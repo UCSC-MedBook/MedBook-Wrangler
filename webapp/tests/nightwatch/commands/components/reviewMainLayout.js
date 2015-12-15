@@ -1,5 +1,6 @@
 exports.command = function(username, password) {
   this
+    .waitForElementVisible(".container", 2000)
     .verify.elementPresent(".container")
       .verify.elementPresent("#top-controls")
         .verify.elementPresent("#left")

@@ -28,7 +28,8 @@ module.exports = {
     // Create a new submission
     client
       .verify.elementPresent("#create-new-submission")
-      .click('#create-new-submission').pause(1000)
+      .click('#create-new-submission')
+        .waitForElementVisible(".well.insert-file-well", 2000)
         .verify.elementPresent(".well.insert-file-well")
         .verify.elementPresent(".insert-file-button input[type=file]") // left button
         // right button
@@ -67,7 +68,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, largeFileUrl)
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('div.panel-heading span.badge', 2000)
+      .waitForElementVisible('div.panel-heading span.badge', 3000)
         .verify.elementPresent(".panel-warning")
         .verify.elementPresent(".panel-body .progress")
         .verify.containsText(".panel-title .badge",  "uploading")
@@ -86,7 +87,8 @@ module.exports = {
     // go back to the submissions list page and look at that
     var submissionListItem = 'div.list-group > div:nth-child(2)';
     client
-      .click('#left > ol > li:nth-child(1) > a').pause(300)
+      .click('#left > ol > li:nth-child(1) > a')
+        .waitForElementVisible(submissionListItem + ' > h4', 'a few seconds ago', 2000)
         .verify.containsText(submissionListItem + ' > h4', 'a few seconds ago')
         .verify.containsText(submissionListItem + ' .badge', 'editing')
         .verify.containsText(submissionListItem + ' .btn-primary', 'Edit')
@@ -98,7 +100,7 @@ module.exports = {
     // click the edit button and make sure it's still there
     client
       .click(submissionListItem + ' .btn-primary')
-        .waitForElementVisible(".ellipsis-out-before-badge", 2000)
+        .waitForElementVisible(".ellipsis-out-before-badge", 3000)
         .verify.containsText('.ellipsis-out-before-badge', fileName)
 
         // delete the file
@@ -132,14 +134,14 @@ module.exports = {
       .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
           "Normalization is required")
       .click(".edit-wrangler-file select[name='normalization'] > option:nth-child(2)") // select normalization
-      .waitForElementPresent(".panel-info", 1500)
+      .waitForElementPresent(".panel-info", 2000)
       .verify.elementNotPresent(warningText)
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Expected 2 column tab file, got 1 column tab file")
 
       // select BD2KSampleLabelMap
       .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KSampleLabelMap']")
-      .waitForElementPresent(".panel-info", 1500)
+      .waitForElementPresent(".panel-info", 2000)
       .verify.elementNotPresent(".edit-wrangler-file select[name='normalization']")
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
@@ -154,7 +156,7 @@ module.exports = {
       // set network name
       .setValue(".edit-wrangler-file input", "HelloWorld")
       .click("#submissionFiles") // deselect field, trigger submit
-      .waitForElementPresent(".panel-info", 1500)
+      .waitForElementPresent(".panel-info", 2000)
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "No interactions specified for source gene hello")
 

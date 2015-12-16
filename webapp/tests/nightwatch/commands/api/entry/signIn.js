@@ -10,7 +10,8 @@ exports.command = function(username, password) {
       .setValue("#login-email", username)
       .setValue("#login-password", password)
 
-    .click("#login-buttons-password").pause(1000)
+    .click("#login-buttons-password")
+    .waitForElementVisible("#login-name-link", 1000)
   ;
 
   return this; // allows the command to be chained.

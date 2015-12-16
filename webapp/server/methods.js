@@ -13,6 +13,15 @@ Meteor.methods({
         Collaborations: 'testing',
       });
 
+      Studies.update({
+        collaborations: "testing",
+      }, {
+        $set: {
+          Sample_IDs: [],
+          Patient_IDs: [],
+        }
+      });
+
       return "done";
     }
 

@@ -5,9 +5,29 @@
 
   <testsuite name="BD2K"
     errors="0" failures="0" hostname="" id="" package="BD2K" skipped="0"
-    tests="1" time="0.000" timestamp="Tue, 15 Dec 2015 23:13:53 GMT">
+    tests="1" time="0.000" timestamp="Wed, 16 Dec 2015 00:30:40 GMT">
   
-    <testcase name="Upload some BD2KGeneExpression files" time="152.3" assertions="291">
+    <testcase name="Upload some BD2KGeneExpression files" time="154.8" assertions="301">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 

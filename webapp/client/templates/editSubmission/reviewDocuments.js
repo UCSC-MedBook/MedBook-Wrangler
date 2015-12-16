@@ -25,8 +25,6 @@ var mappedGenesPanel = {
 Template.reviewWranglerDocuments.helpers({
   geneExpressionPanels: function () {
     return [
-      ignoredGenesPanel,
-      mappedGenesPanel,
       {
         name: "sample_normalization",
         title: "Gene counts",
@@ -39,6 +37,19 @@ Template.reviewWranglerDocuments.helpers({
           },
           { heading: "Normalization", attribute: "normalization_description" },
           { heading: "Genes defined", attribute: "gene_count" },
+        ],
+      },
+      {
+        name: "new_sample_for_study",
+        title: "New sample label",
+        description: "The selected study currently has no record of the "+
+            "following samples. They will be added to the study's list of " +
+            "sample labels.",
+        columns: [
+          // TODO
+          { heading: "Sample", attribute: "sample_label", header_of_row: true },
+          { heading: "Normalization", attribute: "normalization" },
+          { heading: "File name", attribute: "file_name" },
         ],
       },
       {
@@ -70,6 +81,8 @@ Template.reviewWranglerDocuments.helpers({
           { heading: "Sample UUID", attribute: "sample_uuid" },
         ],
       },
+      ignoredGenesPanel,
+      mappedGenesPanel,
     ];
   },
   networkPanels: function () {

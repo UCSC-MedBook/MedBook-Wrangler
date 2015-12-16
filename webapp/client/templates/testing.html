@@ -101,3 +101,38 @@
     </div>
   {{/if}}
 </template>
+
+<template name="studyTesting">
+  <h1>This route is to show Studies testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+    <div id="data">
+      {{#if length getStudies}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Sample_IDs</th>
+              <th>Patient_IDs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getStudies}}
+              <tr>
+                <td>{{id}}</td>
+                <td>{{Sample_IDs}}</td>
+                <td>{{Patient_IDs}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        No data
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>

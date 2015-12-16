@@ -180,6 +180,10 @@ module.exports = {
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
+      .url('http://localhost:3000/Wrangler/testing/studyTesting')
+        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999")
     ;
 
     // add another BD2K file (tpm this time)
@@ -308,6 +312,10 @@ module.exports = {
           }
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(10)')
+      .url('http://localhost:3000/Wrangler/testing/studyTesting')
+        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999")
     ;
 
     // try to upload the tpm file again and make sure we get an error
@@ -442,57 +450,61 @@ module.exports = {
           }
       })
       .verify.elementNotPresent('#data > table > tbody > tr:nth-child(16)')
-    .url('http://localhost:3000/Wrangler/testing/expression2Testing')
-      .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(200)
-      .reviewExpression2(5, {
-        "study_label" : "prad_test",
-        "collaborations" : [
-          "testing"
-        ],
-        "gene_label" : "AAAS",
-        "sample_label" : "DTB-999",
-        "values" : {
-          "quantile_counts" : 1387.2800050000000738,
-          "quantile_counts_log" : 10.4390828620049518
-          // NOTE:tpm undefined
-        }
-      })
-      .reviewExpression2(6, {
+      .url('http://localhost:3000/Wrangler/testing/expression2Testing')
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(200)
+        .reviewExpression2(5, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 1387.2800050000000738,
+            "quantile_counts_log" : 10.4390828620049518
+            // NOTE:tpm undefined
+          }
+        })
+        .reviewExpression2(6, {
+            "study_label" : "prad_test",
+            "collaborations" : [
+                "testing"
+            ],
+            "gene_label" : "AAAS",
+            "sample_label" : "DTB-998Dup",
+            "values" : {
+                "fpkm" : 12475
+            }
+        })
+        .reviewExpression2(3, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A2LD1",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 505.4122730000000274,
+            "quantile_counts_log" : 8.9841685589597766,
+            "tpm": 236.6878328
+          }
+        })
+        .reviewExpression2(4, {
           "study_label" : "prad_test",
           "collaborations" : [
               "testing"
           ],
-          "gene_label" : "AAAS",
+          "gene_label" : "A2LD1",
           "sample_label" : "DTB-998Dup",
           "values" : {
-              "fpkm" : 12475
+              "fpkm" : 364
           }
-      })
-      .reviewExpression2(3, {
-        "study_label" : "prad_test",
-        "collaborations" : [
-          "testing"
-        ],
-        "gene_label" : "A2LD1",
-        "sample_label" : "DTB-999",
-        "values" : {
-          "quantile_counts" : 505.4122730000000274,
-          "quantile_counts_log" : 8.9841685589597766,
-          "tpm": 236.6878328
-        }
-      })
-      .reviewExpression2(4, {
-        "study_label" : "prad_test",
-        "collaborations" : [
-            "testing"
-        ],
-        "gene_label" : "A2LD1",
-        "sample_label" : "DTB-998Dup",
-        "values" : {
-            "fpkm" : 364
-        }
-    })
-    .verify.elementNotPresent('#data > table > tbody > tr:nth-child(17)')
+        })
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(17)')
+      .url('http://localhost:3000/Wrangler/testing/studyTesting')
+        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999,DTB-998Dup")
     ;
 
     // verify we can get to label mappings from a previous submission

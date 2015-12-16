@@ -71,19 +71,20 @@ Template.uploadNewFiles.events({
 // Template.showFile
 
 Template.showFile.onCreated(function () {
-  var instance = this;
+  var instance = this; // not
 
   instance.autorun(function () {
+    newInstance = Template.instance();
     // subscribe to the blob for this wrangler file
-    instance.subscribe("specificBlob", instance.data.blob_id, function () {
+    instance.subscribe("specificBlob", newInstance.data.blob_id, function () {
       // switch from uploading to processing when blob has stored
       instance.autorun(function () {
-        var blob = Blobs.findOne(instance.data.blob_id);
+        var blob = Blobs.findOne(newInstance.data.blob_id);
 
         // update if it's stored
-        if (instance.data.status === "uploading" &&
+        if (newInstance.data.status === "uploading" &&
             blob && blob.hasStored("blobs")) {
-          Meteor.call("fileToProcessing", instance.data._id);
+          Meteor.call("fileToProcessing", Template.instance().data._id);
         }
       });
     });

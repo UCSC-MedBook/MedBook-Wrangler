@@ -84,7 +84,7 @@ Template.showFile.onCreated(function () {
         // update if it's stored
         if (newInstance.data.status === "uploading" &&
             blob && blob.hasStored("blobs")) {
-          Meteor.call("fileToProcessing", Template.instance().data._id);
+          Meteor.call("fileToProcessing", newInstance.data._id);
         }
       });
     });

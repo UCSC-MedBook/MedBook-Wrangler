@@ -116,10 +116,24 @@ Template.studyTesting.helpers({
       sort: { id: 1 }
     });
   },
+  getClinicalInfo: function () {
+    return CRFs.find({
+      CRF: "Clinical_Info",
+    }, {
+      sort: {
+        Patient_ID: 1,
+        Sample_ID: 1,
+      }
+    });
+  },
   checkUndefined: function (text) {
     if (text === undefined) {
       return 'undefined';
     }
     return text;
+  },
+  sorted: function (thing) {
+    thing.sort();
+    return thing;
   },
 });

@@ -3,7 +3,7 @@ Meteor.methods({
     var user = Meteor.users.findOne(ensureLoggedIn());
 
     if (user.profile.collaborations.indexOf('testing') >= 0) {
-      console.log("removing gene expression testing data");
+      console.log("removing testing data");
 
       GeneExpression.remove({
         collaborations: 'testing',
@@ -20,6 +20,11 @@ Meteor.methods({
           Sample_IDs: [],
           Patient_IDs: [],
         }
+      });
+
+      CRFs.remove({
+        CRF: "Clinical_Info",
+        Study_ID: "prad_test",
       });
 
       return "done";

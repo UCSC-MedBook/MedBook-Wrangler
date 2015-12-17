@@ -106,21 +106,46 @@
 
   {{#if Template.subscriptionsReady}}
     <div id="data">
+      <h3>Studies</h3>
       {{#if length getStudies}}
-        <table class="table">
+        <table id="studies" class="table">
           <thead>
             <tr>
               <th>id</th>
-              <th>Sample_IDs</th>
               <th>Patient_IDs</th>
+              <th>Sample_IDs</th>
             </tr>
           </thead>
           <tbody>
             {{#each getStudies}}
               <tr>
                 <td>{{id}}</td>
-                <td>{{Sample_IDs}}</td>
-                <td>{{Patient_IDs}}</td>
+                <td>{{sorted Patient_IDs}}</td>
+                <td>{{sorted Sample_IDs}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        No data
+      {{/if}}
+
+      <h3>Clinical_Info</h3>
+      {{#if length getClinicalInfo}}
+        <table id="Clinical_Info" class="table">
+          <thead>
+            <tr>
+              <th>Study_ID</th>
+              <th>Patient_ID</th>
+              <th>Sample_ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getClinicalInfo}}
+              <tr>
+                <td>{{Study_ID}}</td>
+                <td>{{Patient_ID}}</td>
+                <td>{{Sample_ID}}</td>
               </tr>
             {{/each}}
           </tbody>

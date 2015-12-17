@@ -88,9 +88,15 @@ Meteor.publish('expression2Testing', function (options) {
 Meteor.publish("studyTesting", function () {
   var user = Meteor.users.findOne(this.userId);
   if (user.profile.collaborations.indexOf('testing') >= 0) {
-    return Studies.find({
-      collaborations: { $in: ['testing', 'public'] }
-    });
+    return [
+      Studies.find({
+        collaborations: { $in: ['testing', 'public'] }
+      }),
+      CRFs.find({
+        CRF: "Clinical_Info",
+        Study_ID: "prad_test",
+      }),
+    ];
   }
 
   this.ready();

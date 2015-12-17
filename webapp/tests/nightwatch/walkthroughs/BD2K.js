@@ -178,9 +178,9 @@ module.exports = {
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
       .url('http://localhost:3000/Wrangler/testing/studyTesting')
-        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999")
+      .reviewStudy("prad_test", [
+        { patient_label: "DTB-999", sample_label: "DTB-999" },
+      ])
     ;
 
     // add another BD2K file (tpm this time)
@@ -307,9 +307,9 @@ module.exports = {
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(10)')
       .url('http://localhost:3000/Wrangler/testing/studyTesting')
-        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999")
+      .reviewStudy("prad_test", [
+        { patient_label: "DTB-999", sample_label: "DTB-999" },
+      ])
     ;
 
     // try to upload the tpm file again and make sure we get an error
@@ -492,9 +492,10 @@ module.exports = {
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(17)')
       .url('http://localhost:3000/Wrangler/testing/studyTesting')
-        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999,DTB-998Dup")
+      .reviewStudy("prad_test", [
+        { patient_label: "DTB-998", sample_label: "DTB-998Dup" },
+        { patient_label: "DTB-999", sample_label: "DTB-999" },
+      ])
     ;
 
     // verify we can get to label mappings from a previous submission
@@ -673,9 +674,12 @@ module.exports = {
           }
         })
       .url('http://localhost:3000/Wrangler/testing/studyTesting')
-        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
-        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999,DTB-998Dup,DTB-141,DTB-143")
+      .reviewStudy("prad_test", [
+        { patient_label: "DTB-141", sample_label: "DTB-141" },
+        { patient_label: "DTB-143", sample_label: "DTB-143" },
+        { patient_label: "DTB-998", sample_label: "DTB-998Dup" },
+        { patient_label: "DTB-999", sample_label: "DTB-999" },
+      ])
     ;
 
     client.end();

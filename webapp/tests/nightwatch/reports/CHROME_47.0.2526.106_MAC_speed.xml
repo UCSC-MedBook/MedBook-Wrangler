@@ -5,9 +5,9 @@
 
   <testsuite name="speed"
     errors="0" failures="0" hostname="" id="" package="speed" skipped="0"
-    tests="1" time="0.000" timestamp="Thu, 17 Dec 2015 07:39:11 GMT">
+    tests="1" time="0.000" timestamp="Thu, 17 Dec 2015 21:27:58 GMT">
   
-    <testcase name="Speed test for full RectangularGeneExpression files" time="420.4" assertions="24">
+    <testcase name="Speed test for full RectangularGeneExpression files" time="273.3" assertions="24">
 
     
 

@@ -40,7 +40,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-127_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > .panel-success', 32000) // 32 seconds
+      .waitForElementVisible('#submissionFiles > .panel-success', 30000) // 32 seconds
 
       // set the options and submit it
       .setValue(descriptionTextArea, 'testing speed')
@@ -60,26 +60,26 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-127_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(3).panel-success', 32000) // 32 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(3).panel-success', 30000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-128_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-success', 32000) // 32 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-success', 30000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-129_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(5).panel-success', 32000) // 32 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(5).panel-success', 30000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-130_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(6).panel-success', 32000) // 32 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(6).panel-success', 30000) // 32 seconds
 
       // set the options and submit it
       .setValue(descriptionTextArea, 'testing speed multiple files')
       .click(studyLabel + ' > option:nth-child(2)')
       .click(collaborationLabel + ' > option:nth-child(2)')
       .click('.validate-and-submit')
-      .waitForElementVisible("#optionsAndSubmit .panel-success", 6 * 60 * 1000) // 6 minutes
+      .waitForElementVisible("#optionsAndSubmit .panel-success", 3 * 60 * 1000) // 3 minutes
     ;
   },
 };

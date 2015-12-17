@@ -130,8 +130,8 @@ module.exports = {
       .waitForElementVisible(warningText, 60000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
-      // select BD2KGeneExpression
-      .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KGeneExpression']")
+      // select RectangularGeneExpression
+      .click(".edit-wrangler-file select[name='file_type'] > option[value='RectangularGeneExpression']")
       .pause(1000)
       .verify.containsText(warningText, "Please correct the errors below.")
       .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
@@ -140,7 +140,7 @@ module.exports = {
       .waitForElementPresent(".panel-info", 2000)
       .verify.elementNotPresent(warningText)
       .waitForElementPresent(".panel-warning", 30000)
-      .verify.containsText(warningText, "Expected 2 column tab file, got 1 column tab file")
+      .verify.containsText(warningText, "Expected 2+ column tab file, got 1 column tab file")
 
       // select BD2KSampleLabelMap
       .click(".edit-wrangler-file select[name='file_type'] > option[value='BD2KSampleLabelMap']")

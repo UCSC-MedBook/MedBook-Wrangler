@@ -54,17 +54,6 @@ Meteor.methods({
       "blob_name": blobName,
       "status": "uploading",
     });
-
-    if (Meteor.isServer){
-      Jobs.insert({
-        "name": "ParseWranglerFile",
-        "user_id": userId,
-        "date_created": new Date(),
-        "args": {
-          "wrangler_file_id": wranglerFileId,
-        },
-      });
-    }
   },
   removeWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
@@ -143,27 +132,6 @@ Meteor.methods({
       "args": {
         "submission_id": submission_id,
       },
-    });
-  },
-
-  // other
-  fileToProcessing: function (wranglerFileId) {
-    check(wranglerFileId, String);
-
-    var userId = ensureLoggedIn();
-    var wranglerFile = WranglerFiles.findOne(wranglerFileId);
-    ensureSubmissionEditable(userId, wranglerFile.submission_id);
-
-    // must be here because client can only update by _id
-    WranglerFiles.update({
-      _id: wranglerFileId,
-      // so it doesn't overwrite status if done on server but not yet
-      // propigated on client
-      status: "uploading",
-    }, {
-      $set: {
-        status: "processing",
-      }
     });
   },
 });

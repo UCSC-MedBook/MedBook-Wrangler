@@ -73,6 +73,7 @@ Template.uploadNewFiles.events({
 Template.showFile.onCreated(function () {
   var instance = this; // not
 
+  var needToStartJob = instance.data.status === "uploading";
   instance.autorun(function () {
     newInstance = Template.instance();
     // subscribe to the blob for this wrangler file
@@ -82,9 +83,9 @@ Template.showFile.onCreated(function () {
         var blob = Blobs.findOne(newInstance.data.blob_id);
 
         // update if it's stored
-        if (newInstance.data.status === "uploading" &&
-            blob && blob.hasStored("blobs")) {
-          Meteor.call("fileToProcessing", newInstance.data._id);
+        if (needToStartJob && blob && blob.hasStored("blobs")) {
+          Meteor.call("reparseWranglerFile", newInstance.data._id);
+          needToStartJob = false;
         }
       });
     });

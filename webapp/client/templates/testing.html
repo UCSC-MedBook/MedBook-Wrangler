@@ -6,6 +6,7 @@
   </h4>
 </template>
 
+<!-- TODO: combine geneExpressionTesting and expression2Testing -->
 <template name="geneExpressionTesting">
   <h1>This route is to show GeneExpression testing data</h1>
 
@@ -19,7 +20,6 @@
               <th>study_label</th>
               <th>collaborations</th>
               <th>sample_label</th>
-              <th>baseline_progression</th>
               <th>quantile_counts</th>
               <th>quantile_counts_log</th>
               <th>raw_counts</th>
@@ -34,7 +34,6 @@
                 <td>{{study_label}}</td>
                 <td>{{collaborations}}</td>
                 <td>{{sample_label}}</td>
-                <td>{{baseline_progression}}</td>
                 <td>{{checkUndefined values.quantile_counts}}</td>
                 <td>{{checkUndefined values.quantile_counts_log}}</td>
                 <td>{{checkUndefined values.raw_counts}}</td>

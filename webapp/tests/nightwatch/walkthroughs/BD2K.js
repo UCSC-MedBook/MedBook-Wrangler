@@ -1,6 +1,6 @@
 module.exports = {
   tags: ["BD2K", "travis"],
-  "Upload some BD2KGeneExpression files": function (client) {
+  "Upload some RectangularGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(2000)
@@ -85,7 +85,7 @@ module.exports = {
         .waitForElementVisible(descriptionTextArea, 2000)
         .clearValue(descriptionTextArea)
         .setValue(descriptionTextArea, 'quantile counts testing')
-        .click(studyLabel + ' > option:nth-child(2)').pause(200)
+        .click(studyLabel + ' > option:nth-child(2)').pause(500)
       .click('.validate-and-submit').pause(500)
         .verify.containsText('#submission-options > div.form-group.has-error > span',
             'Collaboration label is required')
@@ -100,7 +100,7 @@ module.exports = {
     // make sure the data are there :)
     client
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(7)', 5000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(7)', 5000).pause(500)
         .reviewGeneExpression(1, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -108,7 +108,6 @@ module.exports = {
           ],
           "gene_label" : "AAAS",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 1387.2800050000000738,
             "quantile_counts_log" : 10.4390828620049518
@@ -121,7 +120,6 @@ module.exports = {
           ],
           "gene_label" : "GGACT",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 505.4122730000000274,
             "quantile_counts_log" : 8.9841685589597766
@@ -134,7 +132,6 @@ module.exports = {
           ],
           "gene_label" : "RBFOX1",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 0,
             "quantile_counts_log" : 0
@@ -142,7 +139,7 @@ module.exports = {
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(8)')
       .url('http://localhost:3000/Wrangler/testing/expression2Testing')
-        .waitForElementVisible("#data > table > tbody > tr:nth-child(8)", 5000).pause(200)
+        .waitForElementVisible("#data > table > tbody > tr:nth-child(8)", 5000).pause(500)
         .reviewExpression2(1, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -214,7 +211,7 @@ module.exports = {
     // make sure the data have merged correctly
     client
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(8)', 5000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(8)', 5000).pause(500)
         .reviewGeneExpression(1, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -222,7 +219,6 @@ module.exports = {
           ],
           "gene_label" : "AAAS",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 1387.2800050000000738,
             "quantile_counts_log" : 10.4390828620049518
@@ -236,7 +232,6 @@ module.exports = {
           ],
           "gene_label" : "AARS2",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "tpm" : 177.5104972000000032
             // NOTE: quantile_counts undefined
@@ -249,7 +244,6 @@ module.exports = {
           ],
           "gene_label" : "GGACT",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 505.4122730000000274,
             "quantile_counts_log" : 8.9841685589597766,
@@ -259,7 +253,7 @@ module.exports = {
         })
         .verify.elementNotPresent('#data > table > tbody > tr:nth-child(9)')
       .url('http://localhost:3000/Wrangler/testing/expression2Testing')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(9)', 5000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(9)', 5000).pause(500)
         .reviewExpression2(2, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -396,7 +390,7 @@ module.exports = {
 
       // make sure the data are there :)
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 5000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(15)', 5000).pause(500)
         .reviewGeneExpression(1, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -404,7 +398,6 @@ module.exports = {
           ],
           "gene_label" : "AAAS",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 1387.2800050000000738,
             "quantile_counts_log" : 10.4390828620049518
@@ -418,7 +411,6 @@ module.exports = {
             ],
             "gene_label" : "AAAS",
             "sample_label" : "DTB-998Dup",
-            "baseline_progression" : "baseline",
             "values" : {
                 "fpkm" : 12475
             }
@@ -430,7 +422,6 @@ module.exports = {
           ],
           "gene_label" : "GGACT",
           "sample_label" : "DTB-999",
-          "baseline_progression" : "baseline",
           "values" : {
             "quantile_counts" : 505.4122730000000274,
             "quantile_counts_log" : 8.9841685589597766,
@@ -444,14 +435,13 @@ module.exports = {
           ],
           "gene_label" : "GGACT",
           "sample_label" : "DTB-998Dup",
-          "baseline_progression" : "baseline",
           "values" : {
               "fpkm" : 364
           }
       })
       .verify.elementNotPresent('#data > table > tbody > tr:nth-child(16)')
       .url('http://localhost:3000/Wrangler/testing/expression2Testing')
-        .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(200)
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(16)', 5000).pause(500)
         .reviewExpression2(5, {
           "study_label" : "prad_test",
           "collaborations" : [
@@ -531,6 +521,161 @@ module.exports = {
       // make sure we deleted it
       .verify.containsText("body > div > div.list-group > div:nth-child(2) > p > span:nth-child(2)",
           "123456789.rsem.genes.norm_fpkm.tab")
+    ;
+
+    // upload a file with 2 columns (rectangular matrix)
+    // add another BD2K file (tpm this time)
+    // var urlInput = "form.add-from-web-form input[name='urlInput']";
+    // var descriptionTextArea = '#submission-options > div:nth-child(1) > textarea';
+    // var studyLabel = '#submission-options > div:nth-child(2) > select';
+    // var collaborationLabel = '#submission-options > div:nth-child(3) > select';
+    client
+      .url('http://localhost:3000/Wrangler')
+      .waitForElementVisible('#create-new-submission', 2000)
+      .click('#create-new-submission')
+      .waitForElementVisible(urlInput, 2000)
+      .clearValue(urlInput)
+      .setValue(urlInput, 'http://localhost:3000/two_samples.rsem.genes.norm_counts.tab')
+      .click("form.add-from-web-form button[type='submit']")
+      // wait for it to be parsed
+      .waitForElementVisible('#submissionFiles .panel-success', 35000)
+      // check the review panel
+      .verify.elementPresent("#review-sample_normalization")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > th", "DTB-141")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(3)", "2")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > th", "DTB-143")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(3)", "2")
+      // fill in the bottom stuff
+      .clearValue(descriptionTextArea)
+      .setValue(descriptionTextArea, 'rectangular matrix` testing')
+      .click(studyLabel + ' > option:nth-child(2)')
+      .click(collaborationLabel + ' > option:nth-child(2)')
+      .click('.validate-and-submit')
+      .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 35000)
+    ;
+
+    // make sure the data have merged correctly
+    client
+      .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(19)', 5000).pause(500)
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(20)')
+        .reviewGeneExpression(1, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A1CF",
+          "sample_label" : "DTB-143",
+          "values" : {
+            "quantile_counts" : 0,
+            "quantile_counts_log" : 0
+          }
+        })
+        .reviewGeneExpression(2, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A1CF",
+          "sample_label" : "DTB-141",
+          "values" : {
+            "quantile_counts" : 0,
+            "quantile_counts_log" : 0
+          }
+        })
+        .reviewGeneExpression(3, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-999",
+          "values" : {
+            "quantile_counts" : 1387.280005,
+            "quantile_counts_log" : 10.439082862004952
+          }
+        })
+        .reviewGeneExpression(5, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-143",
+          "values" : {
+            "quantile_counts" : 28.3271,
+            "quantile_counts_log" : 4.874162512641988
+          }
+        })
+        .reviewGeneExpression(6, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-141",
+          "values" : {
+            "quantile_counts" : 2.8774,
+            "quantile_counts_log" : 1.9550895739462244
+          }
+        })
+      .url('http://localhost:3000/Wrangler/testing/expression2Testing')
+        .waitForElementVisible('#data > table > tbody > tr:nth-child(20)', 5000).pause(500)
+        .verify.elementNotPresent('#data > table > tbody > tr:nth-child(21)')
+        .reviewGeneExpression(1, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A1CF",
+          "sample_label" : "DTB-143",
+          "values" : {
+            "quantile_counts" : 0,
+            "quantile_counts_log" : 0
+          }
+        })
+        .reviewGeneExpression(2, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "A1CF",
+          "sample_label" : "DTB-141",
+          "values" : {
+            "quantile_counts" : 0,
+            "quantile_counts_log" : 0
+          }
+        })
+        .reviewGeneExpression(9, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-143",
+          "values" : {
+            "quantile_counts" : 28.3271,
+            "quantile_counts_log" : 4.874162512641988
+          }
+        })
+        .reviewGeneExpression(10, {
+          "study_label" : "prad_test",
+          "collaborations" : [
+            "testing"
+          ],
+          "gene_label" : "AAAS",
+          "sample_label" : "DTB-141",
+          "values" : {
+            "quantile_counts" : 2.8774,
+            "quantile_counts_log" : 1.9550895739462244
+          }
+        })
+      .url('http://localhost:3000/Wrangler/testing/studyTesting')
+        .waitForElementVisible("#data > table > tbody > tr > td:nth-child(1)", 10000)
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(1)", "prad_test")
+        .verify.containsText("#data > table > tbody > tr > td:nth-child(2)", "DTB-999,DTB-998Dup,DTB-141,DTB-143")
     ;
 
     client.end();

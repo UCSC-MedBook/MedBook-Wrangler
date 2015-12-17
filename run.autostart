@@ -9,4 +9,4 @@ export MONGO_URL=mongodb://localhost:27017/MedBook
 export ROOT_URL=https://su2c-dev.ucsc.edu/Wrangler/
 export ROOT_URL_PATH_PREFIX=Wrangler
 echo $MONGO_URL $ROOT_URL $ROOT_URL_PATH_PREFIX
-meteor  --port $PORT >& ../logs/log.wrangler.$$
+meteor  --port $PORT 

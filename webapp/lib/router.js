@@ -43,4 +43,8 @@ Router.map(function() {
   this.route('expression2Testing', {
     path: '/Wrangler/testing/expression2Testing'
   });
+
+  this.route('studyTesting', {
+    path: '/Wrangler/testing/studyTesting'
+  });
 });

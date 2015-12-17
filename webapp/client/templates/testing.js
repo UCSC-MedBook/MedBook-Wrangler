@@ -101,3 +101,25 @@ Template.expression2Testing.helpers({
     return text;
   },
 });
+
+// Template.studyTesting
+
+Template.studyTesting.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe('studyTesting');
+});
+
+Template.studyTesting.helpers({
+  getStudies: function () {
+    return Studies.find({}, {
+      sort: { id: 1 }
+    });
+  },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return 'undefined';
+    }
+    return text;
+  },
+});

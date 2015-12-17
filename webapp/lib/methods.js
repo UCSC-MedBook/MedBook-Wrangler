@@ -54,17 +54,6 @@ Meteor.methods({
       "blob_name": blobName,
       "status": "uploading",
     });
-
-    if (Meteor.isServer){
-      Jobs.insert({
-        "name": "ParseWranglerFile",
-        "user_id": userId,
-        "date_created": new Date(),
-        "args": {
-          "wrangler_file_id": wranglerFileId,
-        },
-      });
-    }
   },
   removeWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
@@ -76,13 +65,12 @@ Meteor.methods({
 
     WranglerFiles.remove(wranglerFileId);
 
-    var updateReturn = WranglerDocuments.update({
+    WranglerDocuments.update({
       "submission_id": submission_id,
       "wrangler_file_ids": wranglerFileId,
     }, {
       $pull: { wrangler_file_ids: wranglerFileId }
     }, {multi: true});
-    console.log("updateReturn:", updateReturn);
     WranglerDocuments.remove({
       "submission_id": submission_id,
       "wrangler_file_ids": {$size: 0},
@@ -103,33 +91,28 @@ Meteor.methods({
   },
   reparseWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
-    // check newOptions down below
 
+    var userId = ensureLoggedIn();
     var wranglerFile = WranglerFiles.findOne(wranglerFileId);
-    if (wranglerFile) {
-      var userId = ensureLoggedIn();
-      ensureSubmissionEditable(userId, wranglerFile.submission_id);
+    ensureSubmissionEditable(userId, wranglerFile.submission_id);
 
-      WranglerFiles.update(wranglerFileId, {
-        $set: { status: "processing" }
-      });
+    WranglerFiles.update(wranglerFileId, {
+      $set: { status: "processing" }
+    });
 
-      var newJob = {
-        name: "ParseWranglerFile",
-        user_id: userId,
-        args: {
-          wrangler_file_id: wranglerFileId,
-        },
-        status: "waiting",
-      };
+    var newJob = {
+      name: "ParseWranglerFile",
+      user_id: userId,
+      args: {
+        wrangler_file_id: wranglerFileId,
+      },
+      status: "waiting",
+    };
 
-      // only add the new job if it's not already there
-      // TODO: can this be changed to an upsert?
-      if (!Jobs.findOne(newJob)) {
-        Jobs.insert(newJob);
-      }
-    } else {
-      throw new Meteor.Error("document-does-not-exist");
+    // only add the new job if it's not already there
+    // TODO: can this be changed to an upsert?
+    if (!Jobs.findOne(newJob)) {
+      Jobs.insert(newJob);
     }
   },
   submitSubmission: function (submission_id) {

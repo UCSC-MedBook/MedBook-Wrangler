@@ -1,6 +1,14 @@
 # this travis.yml file is for the leaderboard-nightwatch example, when run standalone
 language: node_js
 
+notifications:
+    email:
+        recipients:
+            - baertsch@soe.ucsc.edu
+            - mokolodi1@gmail.com
+        on_success: [always|never|change] # default: change
+        on_failure: [always|never|change] # default: always
+
 node_js:
   - "4.1"
 

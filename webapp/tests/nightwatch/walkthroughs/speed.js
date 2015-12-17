@@ -1,6 +1,6 @@
 module.exports = {
   tags: ["speed"],
-  "Speed test for full BD2KGeneExpression files": function (client) {
+  "Speed test for full RectangularGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(1000)
@@ -40,7 +40,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-127_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > .panel-success', 25000) // 25 seconds
+      .waitForElementVisible('#submissionFiles > .panel-success', 32000) // 32 seconds
 
       // set the options and submit it
       .setValue(descriptionTextArea, 'testing speed')
@@ -60,19 +60,19 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-127_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(3).panel-success', 25000) // 25 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(3).panel-success', 32000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-128_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-success', 25000) // 25 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(4).panel-success', 32000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-129_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(5).panel-success', 25000) // 25 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(5).panel-success', 32000) // 32 seconds
 
       .setValue(urlInput, 'http://localhost:3000/DTB-130_dummy_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles > div:nth-child(6).panel-success', 25000) // 25 seconds
+      .waitForElementVisible('#submissionFiles > div:nth-child(6).panel-success', 32000) // 32 seconds
 
       // set the options and submit it
       .setValue(descriptionTextArea, 'testing speed multiple files')

@@ -71,24 +71,21 @@ Template.uploadNewFiles.events({
 // Template.showFile
 
 Template.showFile.onCreated(function () {
-  var instance = this;
+  var instance = this; // not
 
+  var needToStartJob = instance.data.status === "uploading";
   instance.autorun(function () {
+    newInstance = Template.instance();
     // subscribe to the blob for this wrangler file
-    instance.subscribe("specificBlob", instance.data.blob_id, function () {
+    instance.subscribe("specificBlob", newInstance.data.blob_id, function () {
       // switch from uploading to processing when blob has stored
       instance.autorun(function () {
-        var blob = Blobs.findOne(instance.data.blob_id);
+        var blob = Blobs.findOne(newInstance.data.blob_id);
 
         // update if it's stored
-        if (instance.data.status === "uploading" &&
-            blob && blob.hasStored("blobs")) {
-          // should follow two-phase commit pattern but in untrusted code
-          var updated = WranglerFiles.update(instance.data._id, {
-            $set: {
-              status: "processing",
-            }
-          });
+        if (needToStartJob && blob && blob.hasStored("blobs")) {
+          Meteor.call("reparseWranglerFile", newInstance.data._id);
+          needToStartJob = false;
         }
       });
     });

@@ -20,6 +20,51 @@ var mappedGenesPanel = {
   ],
 };
 
+var newSampleForStudy = {
+  name: "new_sample_for_study",
+  title: "New sample label",
+  description: "The selected study currently has no record of the "+
+      "following samples. They will be added to the study's list of " +
+      "sample labels.",
+  columns: [
+    // TODO
+    { heading: "Sample", attribute: "sample_label", header_of_row: true },
+    { heading: "Normalization", attribute: "normalization" },
+    { heading: "File name", attribute: "file_name" },
+  ],
+};
+
+var expressionDataExists = {
+  name: "expression_data_exists",
+  title: "Data already exists",
+  description: "The following samples already have expression " +
+      "data in MedBook. It's possible you don't have access to their " +
+      "data because you are not in the correct collaborations.",
+  css_class: "panel-danger",
+  columns: [
+    { heading: "Sample", attribute: "sample_label", header_of_row: true },
+    { heading: "Normalization", attribute: "normalization" },
+    { heading: "File name", attribute: "file_name" },
+  ],
+};
+
+var sampleLabelMap = {
+  name: "sample_label_map",
+  title: "Sample label mapping",
+  description: "The following sample labels will be mapped from " +
+      "UUIDs to sample labels.",
+  css_class: "panel-default",
+  columns: [
+    {
+      heading: "MedBook sample label",
+      attribute: "sample_label",
+      header_of_row: true
+    },
+    { heading: "Original sample label", attribute: "original_sample_label" },
+    { heading: "Sample UUID", attribute: "sample_uuid" },
+  ],
+};
+
 // Template.reviewWranglerDocuments
 
 Template.reviewWranglerDocuments.helpers({
@@ -36,59 +81,60 @@ Template.reviewWranglerDocuments.helpers({
             header_of_row: true
           },
           { heading: "Normalization", attribute: "normalization_description" },
-          { heading: "Genes defined", attribute: "gene_count" },
+          { heading: "Genes defined", attribute: "line_count" },
         ],
       },
+      newSampleForStudy,
+      expressionDataExists,
+      sampleLabelMap,
+      ignoredGenesPanel,
+      mappedGenesPanel,
+    ];
+  },
+  isoformExpressionPanels: function () {
+    return [
       {
-        name: "new_sample_for_study",
-        title: "New sample label",
-        description: "The selected study currently has no record of the "+
-            "following samples. They will be added to the study's list of " +
-            "sample labels.",
-        columns: [
-          // TODO
-          { heading: "Sample", attribute: "sample_label", header_of_row: true },
-          { heading: "Normalization", attribute: "normalization" },
-          { heading: "File name", attribute: "file_name" },
-        ],
-      },
-      {
-        name: "gene_expression_data_exists",
-        title: "Data already exists",
-        description: "The following samples already have gene expression " +
-            "data in MedBook. It's possible you don't have access to their " +
-            "data because you are not in the correct collaborations.",
-        css_class: "panel-danger",
-        columns: [
-          { heading: "Sample", attribute: "sample_label", header_of_row: true },
-          { heading: "Normalization", attribute: "normalization" },
-          { heading: "File name", attribute: "file_name" },
-        ],
-      },
-      {
-        name: "sample_label_map",
-        title: "Sample label mapping",
-        description: "The following sample labels will be mapped from " +
-            "UUIDs to sample labels.",
+        name: "sample_normalization",
+        title: "Isoform counts",
         css_class: "panel-default",
         columns: [
           {
-            heading: "MedBook sample label",
+            heading: "Sample label",
             attribute: "sample_label",
             header_of_row: true
           },
-          { heading: "Original sample label", attribute: "original_sample_label" },
-          { heading: "Sample UUID", attribute: "sample_uuid" },
+          { heading: "Normalization", attribute: "normalization_description" },
+          { heading: "Isoforms defined", attribute: "line_count" },
         ],
       },
-      ignoredGenesPanel,
+      newSampleForStudy,
+      expressionDataExists,
+      sampleLabelMap,
+      {
+        name: "ignored_transcript",
+        title: "Ignored transcripts",
+        css_class: "panel-default",
+        columns: [
+          { heading: "Transcript", attribute: "transcript_id" },
+          { heading: "Gene name", attribute: "gene_label" },
+          { heading: "Gene known?", attribute: "gene_known" },
+        ],
+      },
+      {
+        name: "transcript_version_mismatch",
+        title: "Transcript version mismatch",
+        css_class: "panel-default",
+        columns: [
+          { heading: "Transcript label", attribute: "transcript_label" },
+          { heading: "Original (in file)", attribute: "version_in_file" },
+          { heading: "MedBook version", attribute: "transcript_version" },
+        ]
+      },
       mappedGenesPanel,
     ];
   },
   networkPanels: function () {
     return [
-      ignoredGenesPanel,
-      mappedGenesPanel,
       {
         name: "new_network",
         title: "New networks",
@@ -115,6 +161,13 @@ Template.reviewWranglerDocuments.helpers({
           { heading: "Network version", attribute: "network_version" },
         ],
       },
+      ignoredGenesPanel,
+      mappedGenesPanel,
+    ];
+  },
+  metadataPanels: function () {
+    return [
+      sampleLabelMap,
     ];
   },
 });

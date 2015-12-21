@@ -64,7 +64,6 @@ Meteor.methods({
     ensureSubmissionEditable(user_id, submission_id);
 
     WranglerFiles.remove(wranglerFileId);
-
     WranglerDocuments.update({
       "submission_id": submission_id,
       "wrangler_file_ids": wranglerFileId,
@@ -110,7 +109,7 @@ Meteor.methods({
     };
 
     // only add the new job if it's not already there
-    // TODO: can this be changed to an upsert?
+    // this could be changed to an insert but the schema makes it annoying
     if (!Jobs.findOne(newJob)) {
       Jobs.insert(newJob);
     }

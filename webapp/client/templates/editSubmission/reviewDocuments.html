@@ -7,11 +7,21 @@
       {{> showReviewPanels geneExpressionPanels}}
     {{/if}}
 
+    {{#if compare getSubmissionType 'isoform_expression'}}
+      {{> showReviewPanels isoformExpressionPanels}}
+    {{/if}}
+
     {{#if compare getSubmissionType 'network'}}
       {{> showReviewPanels networkPanels}}
     {{/if}}
+
+    {{#if compare getSubmissionType 'metadata'}}
+      {{> showReviewPanels metadataPanels}}
+    {{/if}}
   {{else}}
-    {{> submissionTypeNotDefined}}
+    <div class="well">
+      Upload files to continue
+    </div>
   {{/if}}
 </template>
 
@@ -81,20 +91,4 @@
       {{/if}}
     {{/each}}
   </tr>
-</template>
-
-<template name="submissionTypeNotDefined">
-  <div class="well">
-    {{#if hasDocuments}}
-      Multiple submission types detected:
-      <ul>
-        {{#each getSubmissionTypes}}
-          <li>{{this}}</li>
-        {{/each}}
-      </ul>
-      Please submit each type of new document seperately.
-    {{else}}
-      Upload files to continue
-    {{/if}}
-  </div>
 </template>

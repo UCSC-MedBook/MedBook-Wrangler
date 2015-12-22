@@ -9,19 +9,7 @@ module.exports = {
 
     // make sure user exists and log in
     client
-      .timeoutsAsyncScript(2000)
-      .executeAsync(function(data, done){
-        Accounts.createUser({
-          email: 'testing@medbook.ucsc.edu',
-          password: 'testing',
-          profile: {
-            collaborations: ['testing']
-          }
-        }, done);
-      })
-      .executeAsync(function(data, done) {
-        Meteor.logout(done);
-      })
+      .createTestingUser()
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 

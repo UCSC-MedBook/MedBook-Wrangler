@@ -8,18 +8,6 @@ var ignoredGenesPanel = {
   ],
 };
 
-var mappedGenesPanel = {
-  name: "mapped_genes",
-  title: "Mapped genes",
-  description: "These genes are valid but are going to be mapped " +
-      "into MedBook gene namespace.",
-  css_class: "panel-default",
-  columns: [
-    { heading: "Gene in file", attribute: "gene_in_file" },
-    { heading: "MedBook gene name", attribute: "mapped_gene" },
-  ],
-};
-
 var newSampleForStudy = {
   name: "new_sample_for_study",
   title: "New sample label",
@@ -88,7 +76,17 @@ Template.reviewWranglerDocuments.helpers({
       expressionDataExists,
       sampleLabelMap,
       ignoredGenesPanel,
-      mappedGenesPanel,
+      {
+        name: "mapped_genes",
+        title: "Mapped genes",
+        description: "These genes are valid but are going to be mapped " +
+            "into MedBook gene namespace.",
+        css_class: "panel-default",
+        columns: [
+          { heading: "Gene in file", attribute: "gene_in_file" },
+          { heading: "MedBook gene name", attribute: "mapped_gene" },
+        ],
+      },
     ];
   },
   isoformExpressionPanels: function () {
@@ -111,26 +109,16 @@ Template.reviewWranglerDocuments.helpers({
       expressionDataExists,
       sampleLabelMap,
       {
-        name: "ignored_transcript",
-        title: "Ignored transcripts",
+        name: "mapped_genes",
+        title: "Mapped genes",
+        description: "After mapping from transcript ID to gene name, these" +
+            " genes will be renamed for consistancy within MedBook.",
         css_class: "panel-default",
         columns: [
-          { heading: "Transcript", attribute: "transcript_id" },
-          { heading: "Gene name", attribute: "gene_label" },
-          { heading: "Gene known?", attribute: "gene_known" },
+          { heading: "Gene in file", attribute: "gene_in_file" },
+          { heading: "MedBook gene name", attribute: "mapped_gene" },
         ],
       },
-      {
-        name: "transcript_version_mismatch",
-        title: "Transcript version mismatch",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Transcript label", attribute: "transcript_label" },
-          { heading: "Original (in file)", attribute: "version_in_file" },
-          { heading: "MedBook version", attribute: "transcript_version" },
-        ]
-      },
-      mappedGenesPanel,
     ];
   },
   networkPanels: function () {

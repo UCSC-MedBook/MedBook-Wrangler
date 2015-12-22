@@ -13,6 +13,10 @@ Meteor.methods({
         Collaborations: 'testing',
       });
 
+      IsoformExpression.remove({
+        collaborations: 'testing',
+      });
+
       Studies.update({
         collaborations: "testing",
       }, {

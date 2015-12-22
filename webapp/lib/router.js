@@ -44,6 +44,10 @@ Router.map(function() {
     path: '/Wrangler/testing/expression2Testing'
   });
 
+  this.route('isoformExpressionTesting', {
+    path: '/Wrangler/testing/isoformExpressionTesting'
+  });
+
   this.route('studyTesting', {
     path: '/Wrangler/testing/studyTesting'
   });

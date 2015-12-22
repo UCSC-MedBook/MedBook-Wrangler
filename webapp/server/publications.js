@@ -85,6 +85,19 @@ Meteor.publish('expression2Testing', function (options) {
   this.ready();
 });
 
+Meteor.publish('isoformExpressionTesting', function (options) {
+  check(options, Object); // TODO: can they do anything fancy here?
+
+  var user = Meteor.users.findOne(this.userId);
+  if (user.profile.collaborations.indexOf('testing') >= 0) {
+    return IsoformExpression.find({
+      collaborations: 'testing'
+    }, options);
+  }
+
+  this.ready();
+});
+
 Meteor.publish("studyTesting", function () {
   var user = Meteor.users.findOne(this.userId);
   if (user.profile.collaborations.indexOf('testing') >= 0) {

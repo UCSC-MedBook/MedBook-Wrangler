@@ -137,3 +137,30 @@ Template.studyTesting.helpers({
     return thing;
   },
 });
+
+// Template.isoformExpressionTesting
+
+Template.isoformExpressionTesting.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: {
+      transcript_label: 1,
+      sample_label: -1, // wrote my tests like this. sorry.
+    },
+    limit: 100,
+  };
+  instance.subscribe('isoformExpressionTesting', instance.options);
+});
+
+Template.isoformExpressionTesting.helpers({
+  getIsoformExpression: function () {
+    return IsoformExpression.find({}, Template.instance().options);
+  },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return 'undefined';
+    }
+    return text;
+  },
+});

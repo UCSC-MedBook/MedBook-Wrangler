@@ -149,19 +149,19 @@ module.exports = {
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
 
-      // select ArachneRegulon
-      .click(".edit-wrangler-file select[name='file_type'] > option[value='ArachneRegulon']")
-      .pause(1000)
-      .verify.containsText(warningText, "Please correct the errors below.")
-      .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
-          "Network name is required")
-
-      // set network name
-      .setValue(".edit-wrangler-file input", "HelloWorld")
-      .click("#submissionFiles") // deselect field, trigger submit
-      .waitForElementPresent(".panel-info", 2000)
-      .waitForElementPresent(".panel-warning", 30000)
-      .verify.containsText(warningText, "No interactions specified for source gene hello")
+      // // select ArachneRegulon
+      // .click(".edit-wrangler-file select[name='file_type'] > option[value='ArachneRegulon']")
+      // .pause(1000)
+      // .verify.containsText(warningText, "Please correct the errors below.")
+      // .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
+      //     "Network name is required")
+      //
+      // // set network name
+      // .setValue(".edit-wrangler-file input", "HelloWorld")
+      // .click("#submissionFiles") // deselect field, trigger submit
+      // .waitForElementPresent(".panel-info", 2000)
+      // .waitForElementPresent(".panel-warning", 30000)
+      // .verify.containsText(warningText, "No interactions specified for source gene hello")
 
       // go back to the list submissions page and delete it
       .click('#left > ol > li:nth-child(1) > a')

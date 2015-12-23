@@ -19,7 +19,7 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/removeTestingData')
         .waitForElementVisible('#done', 5000)
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000)
+        .waitForElementVisible('#data', 5000)
         .verify.containsText('#data', 'No data')
     ;
 
@@ -28,9 +28,9 @@ module.exports = {
     var geneCountsPanel = '#review-sample_normalization > table > tbody';
     client
       .url("http://localhost:3000/Wrangler")
-      .waitForElementVisible("#create-new-submission", 2000)
+      .waitForElementVisible("#create-new-submission", 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -68,9 +68,9 @@ module.exports = {
     var collaborationLabel = '#submission-options > div:nth-child(3) > select';
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 2000)
+      .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 5000)
       .click('h4.list-group-item-heading a.btn-primary')
-        .waitForElementVisible(descriptionTextArea, 2000)
+        .waitForElementVisible(descriptionTextArea, 5000)
         .clearValue(descriptionTextArea)
         .setValue(descriptionTextArea, 'quantile counts testing')
         .click(studyLabel + ' > option:nth-child(2)').pause(500)
@@ -80,7 +80,7 @@ module.exports = {
         .click(collaborationLabel + ' > option:nth-child(2)')
         .click('.save-for-later')
       .refresh()
-        .waitForElementVisible('.validate-and-submit', 2000)
+        .waitForElementVisible('.validate-and-submit', 5000)
         .click('.validate-and-submit')
         .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 35000)
     ;
@@ -174,9 +174,9 @@ module.exports = {
     // add another BD2K file (tpm this time)
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -304,9 +304,9 @@ module.exports = {
     var firstDelete = "body > div > div.list-group > div:nth-child(2) > h4 > span > a.delete-submission";
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -317,16 +317,16 @@ module.exports = {
       .verify.containsText("#review-expression_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
       .verify.containsText("#review-expression_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
       .click("#left > ol > li:nth-child(1) > a") // go back to submissions page
-      .waitForElementVisible(firstDelete, 2000)
+      .waitForElementVisible(firstDelete, 5000)
       .click(firstDelete) // delete it
     ;
 
     // add a file with an undefined sample label, make sure it doesn't work
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -349,7 +349,7 @@ module.exports = {
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option[value='BD2KSampleLabelMap']")
-      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 2000)
+      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 5000)
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 35000)
 
       // add UUID file
@@ -364,7 +364,7 @@ module.exports = {
       .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
 
       // make sure label mapping file loaded right
-      .waitForElementPresent("#review-sample_label_map", 2000)
+      .waitForElementPresent("#review-sample_label_map", 5000)
       .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
@@ -489,9 +489,9 @@ module.exports = {
     // verify we can get to label mappings from a previous submission
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -520,9 +520,9 @@ module.exports = {
     // var collaborationLabel = '#submission-options > div:nth-child(3) > select';
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/two_samples.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")

@@ -1,6 +1,6 @@
 module.exports = {
   tags: ["metadata", "travis"],
-  "Upload some RectangularGeneExpression files": function (client) {
+  "Upload only sample label mapping file": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768).pause(2000)

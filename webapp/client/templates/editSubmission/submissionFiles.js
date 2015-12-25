@@ -71,24 +71,22 @@ Template.uploadNewFiles.events({
 // Template.showFile
 
 Template.showFile.onCreated(function () {
-  var instance = this; // not
+  var instance = this;
 
+  // subscribe to the blob for this wrangler file
+  instance.subscribe("specificBlob", instance.data.blob_id);
+
+  // NOTE: instance.data does not seem to be reactive
   var needToStartJob = instance.data.status === "uploading";
   instance.autorun(function () {
-    newInstance = Template.instance();
-    // subscribe to the blob for this wrangler file
-    instance.subscribe("specificBlob", newInstance.data.blob_id, function () {
-      // switch from uploading to processing when blob has stored
-      instance.autorun(function () {
-        var blob = Blobs.findOne(newInstance.data.blob_id);
+    // NOTE: blob will be null at first
+    var blob = Blobs.findOne(instance.data.blob_id);
 
-        // update if it's stored
-        if (needToStartJob && blob && blob.hasStored("blobs")) {
-          Meteor.call("reparseWranglerFile", newInstance.data._id);
-          needToStartJob = false;
-        }
-      });
-    });
+    // update if it's stored
+    if (needToStartJob && blob && blob.hasStored("blobs")) {
+      Meteor.call("reparseWranglerFile", instance.data._id);
+      needToStartJob = false;
+    }
   });
 });
 

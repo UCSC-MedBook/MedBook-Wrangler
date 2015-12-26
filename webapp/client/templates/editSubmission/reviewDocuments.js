@@ -60,7 +60,7 @@ Template.reviewPanel.onCreated(function () {
 
   var submission_id = instance.parent(2).data._id;
   var document_type = instance.data.name;
-  instance.subscribe("wranglerDocumentCounts", submission_id, document_type);
+  // instance.subscribe("wranglerDocumentCounts", submission_id, document_type);
 
   instance.autorun(function () {
     var options = getOptions();

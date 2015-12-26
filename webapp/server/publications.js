@@ -48,22 +48,22 @@ Meteor.publish('wranglerDocuments',
   }, options);
 });
 
-Meteor.publish("wranglerDocumentCounts",
-    function (submission_id, document_type) {
-  check([submission_id, document_type], [String]);
-  ensureSubmissionOwnership(this.userId, submission_id);
-
-  // NOTE: seperate publish so it doesn't rereun every time they ask for more
-  Counts.publish(this, document_type, WranglerDocuments.find({
-    submission_id: submission_id,
-    document_type: document_type,
-  }));
-});
-
-Moko.ensureIndex(WranglerDocuments, {
-  submission_id: 1,
-  document_type: 1,
-});
+// Meteor.publish("wranglerDocumentCounts",
+//     function (submission_id, document_type) {
+//   check([submission_id, document_type], [String]);
+//   ensureSubmissionOwnership(this.userId, submission_id);
+//
+//   // NOTE: seperate publish so it doesn't rereun every time they ask for more
+//   Counts.publish(this, document_type, WranglerDocuments.find({
+//     submission_id: submission_id,
+//     document_type: document_type,
+//   }));
+// });
+//
+// Moko.ensureIndex(WranglerDocuments, {
+//   submission_id: 1,
+//   document_type: 1,
+// });
 
 Meteor.publish('wranglerFiles', function (submission_id) {
   check(submission_id, String);

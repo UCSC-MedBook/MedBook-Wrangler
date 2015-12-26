@@ -57,12 +57,10 @@ module.exports = {
     ;
 
     // add a file using the URL option
-    // This is a picture test file hosted by copy.com
-    // In case you're wondering it's a picture of Teo's friends
-    // Tanguy and Ilann working at 42.
+    // rando image from http://imgur.com/gallery/qZMQD
     var largeFileUrl =
-        "https://copy.com/qkYYWLwEdPrZmNTf/Tanguy%20and%20Ilann.jpg?download=1";
-    var fileName = 'Tanguy%20and%20Ilann.jpg';
+        "http://i.imgur.com/i3BsFyU.jpg";
+    var fileName = 'i3BsFyU.jpg';
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)

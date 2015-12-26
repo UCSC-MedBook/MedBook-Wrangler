@@ -1,162 +1,9 @@
-var ignoredGenesPanel = {
-  name: "ignored_genes",
-  title: "Invalid genes",
-  description: "The following genes were found to be invalid and will be ignored.",
-  css_class: "panel-warning",
-  columns: [
-    { heading: "Gene", attribute: "gene" },
-  ],
-};
-
-var newSampleForStudy = {
-  name: "new_sample_for_study",
-  title: "New sample label",
-  description: "The selected study currently has no record of the "+
-      "following samples. They will be added to the study's list of " +
-      "sample labels.",
-  columns: [
-    // TODO
-    { heading: "Sample", attribute: "sample_label", header_of_row: true },
-    { heading: "Normalization", attribute: "normalization" },
-    { heading: "File name", attribute: "file_name" },
-  ],
-};
-
-var expressionDataExists = {
-  name: "expression_data_exists",
-  title: "Data already exists",
-  description: "The following samples already have expression " +
-      "data in MedBook. It's possible you don't have access to their " +
-      "data because you are not in the correct collaborations.",
-  css_class: "panel-danger",
-  columns: [
-    { heading: "Sample", attribute: "sample_label", header_of_row: true },
-    { heading: "Normalization", attribute: "normalization" },
-    { heading: "File name", attribute: "file_name" },
-  ],
-};
-
-var sampleLabelMap = {
-  name: "sample_label_map",
-  title: "Sample label mapping",
-  description: "The following sample labels will be mapped from " +
-      "UUIDs to sample labels.",
-  css_class: "panel-default",
-  columns: [
-    {
-      heading: "MedBook sample label",
-      attribute: "sample_label",
-      header_of_row: true
-    },
-    { heading: "Original sample label", attribute: "original_sample_label" },
-    { heading: "Sample UUID", attribute: "sample_uuid" },
-  ],
-};
-
 // Template.reviewWranglerDocuments
 
 Template.reviewWranglerDocuments.helpers({
-  geneExpressionPanels: function () {
-    return [
-      {
-        name: "sample_normalization",
-        title: "Gene counts",
-        css_class: "panel-default",
-        columns: [
-          {
-            heading: "Sample label",
-            attribute: "sample_label",
-            header_of_row: true
-          },
-          { heading: "Normalization", attribute: "normalization_description" },
-          { heading: "Genes defined", attribute: "line_count" },
-        ],
-      },
-      newSampleForStudy,
-      expressionDataExists,
-      sampleLabelMap,
-      ignoredGenesPanel,
-      {
-        name: "mapped_genes",
-        title: "Mapped genes",
-        description: "These genes are valid but are going to be mapped " +
-            "into MedBook gene namespace.",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Gene in file", attribute: "gene_in_file" },
-          { heading: "MedBook gene name", attribute: "mapped_gene" },
-        ],
-      },
-    ];
-  },
-  isoformExpressionPanels: function () {
-    return [
-      {
-        name: "sample_normalization",
-        title: "Isoform counts",
-        css_class: "panel-default",
-        columns: [
-          {
-            heading: "Sample label",
-            attribute: "sample_label",
-            header_of_row: true
-          },
-          { heading: "Normalization", attribute: "normalization_description" },
-          { heading: "Isoforms defined", attribute: "line_count" },
-        ],
-      },
-      newSampleForStudy,
-      expressionDataExists,
-      sampleLabelMap,
-      {
-        name: "mapped_genes",
-        title: "Mapped genes",
-        description: "After mapping from transcript ID to gene name, these" +
-            " genes will be renamed for consistancy within MedBook.",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Gene in file", attribute: "gene_in_file" },
-          { heading: "MedBook gene name", attribute: "mapped_gene" },
-        ],
-      },
-    ];
-  },
-  networkPanels: function () {
-    return [
-      {
-        name: "new_network",
-        title: "New networks",
-        description: "I need to write a description",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Network name", attribute: "name", header_of_row: true },
-          { heading: "Version", attribute: "version" },
-          { heading: "File name", attribute: "file_name" },
-        ],
-      },
-      {
-        name: "source_level_interactions",
-        title: "Gene interactions",
-        description: "I need to write a description",
-        css_class: "panel-default",
-        columns: [
-          { heading: "Source gene", attribute: "source_label", header_of_row: true },
-          { heading: "Target count", attribute: "target_count" },
-          { heading: "Minimum weight", attribute: "min_weight" },
-          { heading: "Maximum weight", attribute: "max_weight" },
-          { heading: "Average weight", attribute: "mean_weight" },
-          { heading: "Network name", attribute: "network_name" },
-          { heading: "Network version", attribute: "network_version" },
-        ],
-      },
-      ignoredGenesPanel,
-      mappedGenesPanel,
-    ];
-  },
-  metadataPanels: function () {
-    return [
-      sampleLabelMap,
-    ];
+  getPanels: function () {
+    var submission_type = getSubmissionTypes(this._id)[0];
+    return Wrangler.reviewPanels[submission_type];
   },
 });
 
@@ -200,7 +47,7 @@ Template.reviewPanel.onCreated(function () {
   var instance = this;
 
   instance.loaded = new ReactiveVar(0);
-  instance.limit = new ReactiveVar(5);
+  instance.limit = new ReactiveVar(3);
 
   var sort = {};
   sort['contents.' + instance.data.columns[0].attribute] = 1;
@@ -211,12 +58,16 @@ Template.reviewPanel.onCreated(function () {
     };
   }
 
+  var submission_id = instance.parent(2).data._id;
+  var document_type = instance.data.name;
+  instance.subscribe("wranglerDocumentCounts", submission_id, document_type);
+
   instance.autorun(function () {
     var options = getOptions();
 
     // subscribe to the posts publication
     instance.subscribe('wranglerDocuments',
-        instance.parent(2).data._id, instance.data.name,
+        submission_id, document_type,
         options, function () {
       instance.loaded.set(options.limit);
     });
@@ -248,12 +99,26 @@ Template.reviewPanel.helpers({
   },
   hasMoreRows: function () {
     return Template.instance().rowCursor().count() >= Template.instance().limit.get();
-  }
+  },
+  documentCount: function () {
+    return Counts.get(Template.instance().data.name);
+  },
+  downloadQuery: function () {
+    return "submission_type=" + getSubmissionTypes(this._id)[0] +
+        "&document_type=" + Template.instance().data.name;
+  },
+  submission_id: function () {
+    return Template.instance().parent(3).data._id;
+  },
+  existsAndBig: function () {
+    return Counts.has(this.name) &&
+        Counts.get(this.name) > Template.instance().loaded.get();
+  },
 });
 
 Template.reviewPanel.events({
   'click .loadMore': function (event, instance) {
-    instance.limit.set(instance.limit.get() + 5);
+    instance.limit.set(instance.limit.get() + 3);
   }
 });
 

@@ -3,21 +3,10 @@
 
   {{print "editSubmission this:" this}}
   {{#if getSubmissionType}}
-    {{#if compare getSubmissionType 'gene_expression'}}
-      {{> showReviewPanels geneExpressionPanels}}
-    {{/if}}
-
-    {{#if compare getSubmissionType 'isoform_expression'}}
-      {{> showReviewPanels isoformExpressionPanels}}
-    {{/if}}
-
-    {{#if compare getSubmissionType 'network'}}
-      {{> showReviewPanels networkPanels}}
-    {{/if}}
-
-    {{#if compare getSubmissionType 'metadata'}}
-      {{> showReviewPanels metadataPanels}}
-    {{/if}}
+    {{! NOTE: I decided to call showReviewPanels with an argument back when
+              I switched out that argument with #ifs. I'm too lazy to change
+              it without needing to.}}
+    {{> showReviewPanels getPanels}}
   {{else}}
     <div class="well">
       Upload files to continue
@@ -27,7 +16,9 @@
 
 <template name="showReviewPanels">
   {{#each this}}
-    {{> reviewPanel this}}
+    <div class="panel-group">
+      {{> reviewPanel this}}
+    </div>
   {{/each}}
 
   {{#if noPanelsShown}}
@@ -39,8 +30,23 @@
 
 <template name="reviewPanel">
   {{#if shouldShowPanel}}
-    <div class="panel {{css_class}} reviewPanel" id="review-{{name}}">
-      <div class="panel-heading">{{title}}</div>
+    <div class="panel {{css_class}}" id="review-{{name}}">
+      <div class="panel-heading">
+        <span class="h4">{{title}}</span>
+        <!-- <h3>{{title}}</h3> -->
+
+        <a href="{{pathFor 'downloadWranglerDocuments' submission_id=submission_id query=downloadQuery}}"
+            class="pull-right btn btn-xs btn-primary" download="asdf.txt">
+          <span class="glyphicon glyphicon-download-alt"></span>
+          {{! TODO: hasPublishedCounts}}
+          <span>
+            Download
+            {{#if existsAndBig}}
+              all {{getPublishedCount name}}
+            {{/if}}
+          </span>
+        </a>
+      </div>
 
       {{#if description}}
         <div class="panel-body">
@@ -68,8 +74,8 @@
       {{#if Template.subscriptionsReady}}
         {{#if hasMoreRows}}
           <a href="#">
-            <div class="panel-footer loadMore">
-              Load More
+            <div class="panel-footer loadMore text-center">
+              <span>Load more</span>
             </div>
           </a>
         {{/if}}

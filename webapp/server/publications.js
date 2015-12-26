@@ -60,6 +60,11 @@ Meteor.publish("wranglerDocumentCounts",
   }));
 });
 
+Moko.ensureIndex(WranglerDocuments, {
+  submission_id: 1,
+  document_type: 1,
+});
+
 Meteor.publish('wranglerFiles', function (submission_id) {
   check(submission_id, String);
   ensureSubmissionOwnership(this.userId, submission_id);

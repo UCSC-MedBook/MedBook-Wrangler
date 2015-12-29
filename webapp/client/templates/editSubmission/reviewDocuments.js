@@ -100,16 +100,6 @@ Template.reviewPanel.helpers({
   hasMoreRows: function () {
     return Template.instance().rowCursor().count() >= Template.instance().limit.get();
   },
-  documentCount: function () {
-    return Counts.get(Template.instance().data.name);
-  },
-  downloadQuery: function () {
-    return "submission_type=" + getSubmissionTypes(this._id)[0] +
-        "&document_type=" + Template.instance().data.name;
-  },
-  submission_id: function () {
-    return Template.instance().parent(3).data._id;
-  },
   existsAndBig: function () {
     return Counts.has(this.name) &&
         Counts.get(this.name) > Template.instance().loaded.get();
@@ -119,7 +109,15 @@ Template.reviewPanel.helpers({
 Template.reviewPanel.events({
   'click .loadMore': function (event, instance) {
     instance.limit.set(instance.limit.get() + 3);
-  }
+  },
+  "click .download-as-file": function (event, instance) {
+    console.log("instance:", instance);
+    var query = "submission_type=" + getSubmissionTypes(this._id)[0] +
+        "&document_type=" + Template.instance().data.name;
+    window.open("/Wrangler/editSubmission/" + instance.parent(3).data._id +
+        "/download?" + query);
+    // {{pathFor 'downloadWranglerDocuments' submission_id=submission_id query=downloadQuery}}
+  },
 });
 
 // Template.panelRow

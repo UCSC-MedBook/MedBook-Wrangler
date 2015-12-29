@@ -35,10 +35,8 @@
         <span class="h4">{{title}}</span>
         <!-- <h3>{{title}}</h3> -->
 
-        <a href="{{pathFor 'downloadWranglerDocuments' submission_id=submission_id query=downloadQuery}}"
-            class="pull-right btn btn-xs btn-primary" download="asdf.txt">
+        <a href="#" class="download-as-file pull-right btn btn-xs btn-primary">
           <span class="glyphicon glyphicon-download-alt"></span>
-          {{! TODO: hasPublishedCounts}}
           <span>
             Download
             {{#if existsAndBig}}

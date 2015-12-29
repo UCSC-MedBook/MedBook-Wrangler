@@ -58,19 +58,22 @@ module.exports = {
 
     // add a file using the URL option
     // rando image from http://imgur.com/gallery/qZMQD
+    // var largeFileUrl =
+    //     "http://i.imgur.com/i3BsFyU.jpg";
+    // var fileName = 'i3BsFyU.jpg';
     var largeFileUrl =
-        "http://i.imgur.com/i3BsFyU.jpg";
-    var fileName = 'i3BsFyU.jpg';
+        "http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab";
+    var fileName = 'DTB-999_Baseline.rsem.genes.norm_counts.tab';
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)
       .setValue(urlInput, largeFileUrl)
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 3000)
-        .verify.elementPresent(".panel-warning")
-        .verify.elementPresent(".panel-body .progress")
-        .verify.containsText(".panel-title .badge",  "uploading")
-        .verify.value(urlInput, "")
+        // .verify.elementPresent(".panel-warning")
+        // .verify.elementPresent(".panel-body .progress")
+        // .verify.containsText(".panel-title .badge",  "uploading")
+        // .verify.value(urlInput, "")
         .verify.elementPresent(".panel-title .glyphicon-file")
         .verify.containsText(".panel-title .ellipsis-out-before-badge", fileName)
         .verify.elementPresent(".panel-title .badge")
@@ -128,6 +131,7 @@ module.exports = {
       .waitForElementVisible(warningText, 60000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
+      
       // select RectangularGeneExpression
       .click(".edit-wrangler-file select[name='file_type'] > option[value='RectangularGeneExpression']")
       .pause(1000)

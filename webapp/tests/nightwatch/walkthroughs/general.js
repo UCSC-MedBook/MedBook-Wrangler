@@ -5,23 +5,9 @@ module.exports = {
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768)
       .reviewMainLayout()
-    ;
 
-    // make sure user exists and log in
-    client
-      .timeoutsAsyncScript(1000)
-      .executeAsync(function(data, done){
-        Accounts.createUser({
-          email: 'testing@medbook.ucsc.edu',
-          password: 'testing',
-          profile: {
-            collaborations: ['testing']
-          }
-        }, done);
-      })
-      .executeAsync(function(data, done) {
-        Meteor.logout(done);
-      })
+      // make sure user exists and log in
+      .createTestingUser()
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
@@ -61,13 +47,13 @@ module.exports = {
     // var largeFileUrl =
     //     "http://i.imgur.com/i3BsFyU.jpg";
     // var fileName = 'i3BsFyU.jpg';
-    var largeFileUrl =
-        "http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab";
-    var fileName = 'DTB-999_Baseline.rsem.genes.norm_counts.tab';
+    var fileUrl =
+        "http://localhost:3000/DTB-999_Baseline-bad.rsem.genes.norm_counts.tab";
+    var fileName = 'DTB-999_Baseline-bad.rsem.genes.norm_counts.tab';
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)
-      .setValue(urlInput, largeFileUrl)
+      .setValue(urlInput, fileUrl)
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 3000)
         // .verify.elementPresent(".panel-warning")
@@ -96,13 +82,39 @@ module.exports = {
         .verify.containsText(submissionListItem + ' .btn-warning', 'Delete')
         .verify.containsText(submissionListItem + ' > p > h5', 'Files')
         .verify.containsText(submissionListItem + ' > p > span', fileName)
-    ;
 
-    // click the edit button and make sure it's still there
-    client
+      // click the edit button and make sure it's still there
       .click(submissionListItem + ' .btn-primary')
       .waitForElementVisible(".ellipsis-out-before-badge", 3000)
       .verify.containsText('.ellipsis-out-before-badge', fileName)
+
+      // test the review panels
+      // NOTE: depends on RectangularGeneExpression
+      .waitForElementVisible(".panel-success", 35000) // wait for file done processing
+      .waitForElementVisible("#review-ignored_genes .download-as-file", 3000)
+      .verify.containsText("#review-sample_normalization .download-as-file", "Download")
+      .verify.containsText("#review-ignored_genes .download-as-file", "Download all 5")
+
+      // click the "load more" button for ignored genes
+      .verify.elementPresent("#review-ignored_genes .loadMore")
+      .click("#review-ignored_genes .loadMore")
+      .waitForElementNotPresent(".relative-spinner", 5000)
+      .verify.elementNotPresent("#review-ignored_genes .loadMore")
+      .verify.containsText("#review-ignored_genes .download-as-file", "Download")
+
+
+      // TODO: figure out if this is possible
+      // // ajax call to make sure the files look good
+      // .timeoutsAsyncScript(2000)
+      // .executeAsync(function (data, done) {
+      //   console.log("window.location.pathname:", window.location.pathname);
+      //   $.ajax({
+      //     url: window.location.pathname + "/download?submission_type=gene_expression&document_type=ignored_genes",
+      //     success: done,
+      //   });
+      // }, null, function (result) {
+      //   console.log("result:", result);
+      // })
 
       // delete the file
       .click(".panel-title .pull-right .remove-this-file").pause(200)
@@ -131,7 +143,7 @@ module.exports = {
       .waitForElementVisible(warningText, 60000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
-      
+
       // select RectangularGeneExpression
       .click(".edit-wrangler-file select[name='file_type'] > option[value='RectangularGeneExpression']")
       .pause(1000)

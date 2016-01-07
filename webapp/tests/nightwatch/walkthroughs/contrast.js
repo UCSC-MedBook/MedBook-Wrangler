@@ -40,6 +40,13 @@ module.exports = {
       // set the wrangler file options
       .click(".edit-wrangler-file select[name=file_type] option[value=ContrastMatrix]")
       .pause(1000)
+      // briefly check to make sure there's an error message if we try to
+      // update and there's no existing contrasts
+      .click(".edit-wrangler-file select[name=update_or_create] option[value=update]")
+      .pause(500)
+      .verify.containsText(".edit-wrangler-file .alert",
+          "Oh snap! You have no contrasts you can update. " + 
+          "Note that only the owner of a contrast can update it.")
       .click(".edit-wrangler-file select[name=update_or_create] option[value=create]")
       .pause(500)
       .setValue(".edit-wrangler-file input[name=contrast_label]", "test_contrast")

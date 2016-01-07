@@ -181,12 +181,21 @@
       input-col-class=horizontalInputColClass}}
   {{#if this.options.update_or_create}}
     {{#if compare this.options.update_or_create "update"}}
-      {{> afQuickField name="contrast_label"
-          options=contrastOptions
-          firstOption="(Select an existing contrast)"
-          template="bootstrap3-horizontal"
-          label-class=horizontalLabelClass
-          input-col-class=horizontalInputColClass}}
+      {{#if length contrastOptions}}
+        {{> afQuickField name="contrast_label"
+            options=contrastOptions
+            firstOption="(Select an existing contrast)"
+            template="bootstrap3-horizontal"
+            label-class=horizontalLabelClass
+            input-col-class=horizontalInputColClass}}
+      {{else}}
+        <div class="alert alert-danger" role="alert"
+            style="float: left;"> {{! float left to be below other form-groups}}
+          <strong>Oh snap!</strong>
+          You have no contrasts you can update.
+          Note that only the owner of a contrast can update it.
+        </div>
+      {{/if}}
     {{else}}
       {{> afQuickField name="contrast_label"
           template="bootstrap3-horizontal"

@@ -198,6 +198,7 @@ Template.fileOptions.onRendered(function () {
   var fileType = instance.$(
     ".edit-wrangler-file > div:nth-child(1) > div > select[name=file_type]");
 
+  // set up a handler for when the select[name=file_type] changes
   fileType.change(function (event) {
     WranglerFiles.update(instance.data._id, {
       $set: {
@@ -206,6 +207,9 @@ Template.fileOptions.onRendered(function () {
     });
     validateLater(instance);
   });
+
+  // show schema errors when rendered for the first time
+  validateLater(instance);
 });
 
 Template.fileOptions.helpers({

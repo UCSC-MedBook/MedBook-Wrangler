@@ -79,7 +79,6 @@ Meteor.publish("updatableContrasts", function () {
     user_id: this.userId
   });
 
-  console.log("cursor.find().fetch():", cursor.fetch());
   return cursor;
 });
 

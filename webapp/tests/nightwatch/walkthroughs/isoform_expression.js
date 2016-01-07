@@ -22,8 +22,8 @@ module.exports = {
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     var descriptionTextArea = '#submission-options > div:nth-child(1) > textarea';
-    var studyLabel = '#submission-options > div:nth-child(2) > select';
-    var collaborationLabel = '#submission-options > div:nth-child(3) > select';
+    var studyLabel = "#submission-options select[name='study_label']";
+    var collaborationLabel = "#submission-options select[name='collaboration_label']";
     client
       .url("http://localhost:3000/Wrangler")
       .waitForElementVisible("#create-new-submission", 2000)

@@ -142,8 +142,8 @@
       autosave=true class="edit-wrangler-file"}}
     {{> afQuickField name="file_type" firstOption="Auto"
         template="bootstrap3-horizontal"
-        label-class="col-sm-2 col-xs-3"
-        input-col-class="col-sm-10 col-xs-9"}}
+        label-class=horizontalLabelClass
+        input-col-class=horizontalInputColClass}}
 
     {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
     {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
@@ -151,14 +151,57 @@
       {{> afQuickField name="normalization"
           firstOption="(Select a normalization)"
           template="bootstrap3-horizontal"
-          label-class="col-sm-2 col-xs-3"
-          input-col-class="col-sm-10 col-xs-9"}}
+          label-class=horizontalLabelClass
+          input-col-class=horizontalInputColClass}}
     {{/if}}
 
     {{#if isInSchema "network_name"}}
       {{> afQuickField name="network_name" template="bootstrap3-horizontal"
-          label-class="col-sm-2 col-xs-3"
-          input-col-class="col-sm-10 col-xs-9"}}
+          label-class=horizontalLabelClass
+          input-col-class=horizontalInputColClass}}
+    {{/if}}
+
+    {{#if isInSchema "collaboration_label"}}
+      {{> collaborationLabelField}}
+    {{/if}}
+
+    {{#if isInSchema "contrast_label"}}
+      {{> afQuickField name="update_or_create"
+          type="select"
+          options="allowed"
+          firstOption="(Create new or update existing)"
+          template="bootstrap3-horizontal"
+          label-class=horizontalLabelClass
+          input-col-class=horizontalInputColClass}}
+      {{#if this.options.update_or_create}}
+        {{#if compare this.options.update_or_create "update"}}
+          {{> afQuickField name="contrast_label"
+              options="allowed"
+              firstOption="(Select an existing contrast)"
+              template="bootstrap3-horizontal"
+              label-class=horizontalLabelClass
+              input-col-class=horizontalInputColClass}}
+        {{else}}
+          {{! TODO: fix the weird UI issue here (bootstrap problem)}}
+          {{> afQuickField name="contrast_label"
+              template="bootstrap3-horizontal"
+              label-class=horizontalLabelClass
+              input-col-class=horizontalInputColClass}}
+          {{> afQuickField name="description"
+                template="bootstrap3-horizontal"
+                label-class=horizontalLabelClass
+                input-col-class=horizontalInputColClass}}
+        {{/if}}
+      {{/if}}
     {{/if}}
   {{/autoForm}}
+</template>
+
+<template name="collaborationLabelField">
+  {{> afQuickField name="collaboration_label"
+      options=options
+      firstOption="(Select a collaboration)"
+      template="bootstrap3-horizontal"
+      label-class=horizontalLabelClass
+      input-col-class=horizontalInputColClass}}
 </template>

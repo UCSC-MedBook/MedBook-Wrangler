@@ -2,19 +2,19 @@ Meteor.methods({
   removeTestingData: function () {
     var user = Meteor.users.findOne(ensureLoggedIn());
 
-    if (user.profile.collaborations.indexOf('testing') >= 0) {
+    if (user.profile.collaborations.indexOf("testing") >= 0) {
       console.log("removing testing data");
 
       GeneExpression.remove({
-        collaborations: 'testing',
+        collaborations: "testing",
       });
 
       Expression2.remove({
-        Collaborations: 'testing',
+        Collaborations: "testing",
       });
 
       IsoformExpression.remove({
-        collaborations: 'testing',
+        collaborations: "testing",
       });
 
       Studies.update({
@@ -29,6 +29,10 @@ Meteor.methods({
       CRFs.remove({
         CRF: "Clinical_Info",
         Study_ID: "prad_test",
+      });
+
+      Contrasts.remove({
+        collaborations: "testing",
       });
 
       return "done";

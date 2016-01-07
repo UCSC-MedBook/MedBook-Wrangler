@@ -50,7 +50,10 @@ Template.reviewPanel.onCreated(function () {
   instance.limit = new ReactiveVar(3);
 
   var sort = {};
-  sort['contents.' + instance.data.columns[0].attribute] = 1;
+  _.each(instance.data.columns, function (value, index) {
+    sort["contents." + value.attribute] = 1;
+  });
+
   function getOptions () {
     return {
       sort: sort,

@@ -236,3 +236,16 @@ Template.fileOptions.events({
     validateLater(instance);
   }
 });
+
+// Template.collaborationLabelField
+
+Template.collaborationLabelField.helpers({
+  options: function () {
+    return Collabs.find().map(function (collaboration) {
+      return {
+        label: collaboration.description,
+        value: collaboration.name,
+      };
+    });
+  },
+});

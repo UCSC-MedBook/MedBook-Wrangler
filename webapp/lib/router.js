@@ -51,4 +51,8 @@ Router.map(function() {
   this.route('studyTesting', {
     path: '/Wrangler/testing/studyTesting'
   });
+
+  this.route('contrastTesting', {
+    path: '/Wrangler/testing/contrastTesting'
+  });
 });

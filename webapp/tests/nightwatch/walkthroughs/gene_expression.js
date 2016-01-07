@@ -64,8 +64,8 @@ module.exports = {
 
     // go back to '/Wrangler', click on first 'Edit' button
     var descriptionTextArea = '#submission-options > div:nth-child(1) > textarea';
-    var studyLabel = '#submission-options > div:nth-child(2) > select';
-    var collaborationLabel = '#submission-options > div:nth-child(3) > select';
+    var studyLabel = "#submission-options select[name='study_label']";
+    var collaborationLabel = "#submission-options select[name='collaboration_label']";
     client
       .url('http://localhost:3000/Wrangler')
       .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 5000)

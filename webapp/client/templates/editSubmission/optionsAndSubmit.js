@@ -1,21 +1,26 @@
 var sharedSchema = new SimpleSchema({
-  "description": { type: String },
-  "study_label": { type: String },
-  "collaboration_label": { type: String },
+  description: { type: String },
+  study_label: { type: String },
+  collaboration_label: { type: String },
 });
 
 Template.optionsAndSubmit.helpers({
-  mutationSchema: function () {
-    return new SimpleSchema([
-      sharedSchema,
-      Mutations.simpleSchema().pick([
-        "biological_source",
-        "mutation_impact_assessor",
-      ]),
-    ]);
-  },
+  // mutationSchema: function () {
+  //   return new SimpleSchema([
+  //     sharedSchema,
+  //     Mutations.simpleSchema().pick([
+  //       "biological_source",
+  //       "mutation_impact_assessor",
+  //     ]),
+  //   ]);
+  // },
   sharedSchema: function () {
     return sharedSchema;
+  },
+  contrastSchema: function () {
+    return new SimpleSchema({
+      description: { type: String },
+    });
   },
 
   // superpathwaySchema: function () {

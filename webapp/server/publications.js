@@ -9,7 +9,7 @@ Meteor.publish("wranglerSubmission", function (submission_id) {
 
   ensureSubmissionOwnership(this.userId, submission_id);
 
-  var collabStrings = ['public'];
+  var collabStrings = ["public"];
   var user = Meteor.users.findOne(this.userId);
   if (user && user.profile && user.profile.collaborations) {
     collabStrings = collabStrings.concat(user.profile.collaborations);
@@ -32,11 +32,11 @@ Meteor.publish("specificBlob", function (blob_id) {
 
   return Blobs.find({
     _id: blob_id,
-    'metadata.user_id': this.userId,
+    "metadata.user_id": this.userId,
   });
 });
 
-Meteor.publish('wranglerDocuments',
+Meteor.publish("wranglerDocuments",
     function(submission_id, document_type, options) {
   check([submission_id, document_type], [String]);
   check(options, Object); // TODO: can they do anything fancy here?
@@ -65,7 +65,7 @@ Moko.ensureIndex(WranglerDocuments, {
   document_type: 1,
 });
 
-Meteor.publish('wranglerFiles', function (submission_id) {
+Meteor.publish("wranglerFiles", function (submission_id) {
   check(submission_id, String);
   ensureSubmissionOwnership(this.userId, submission_id);
 
@@ -76,39 +76,39 @@ Meteor.publish('wranglerFiles', function (submission_id) {
 
 // publications specifically for testing
 
-Meteor.publish('geneExpressionTesting', function (options) {
+Meteor.publish("geneExpressionTesting", function (options) {
   check(options, Object); // TODO: can they do anything fancy here?
 
   var user = Meteor.users.findOne(this.userId);
-  if (user.profile.collaborations.indexOf('testing') >= 0) {
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
     return GeneExpression.find({
-      collaborations: 'testing'
+      collaborations: "testing"
     }, options);
   }
 
   this.ready();
 });
 
-Meteor.publish('expression2Testing', function (options) {
+Meteor.publish("expression2Testing", function (options) {
   check(options, Object); // TODO: can they do anything fancy here?
 
   var user = Meteor.users.findOne(this.userId);
-  if (user.profile.collaborations.indexOf('testing') >= 0) {
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
     return Expression2.find({
-      Collaborations: 'testing'
+      Collaborations: "testing"
     }, options);
   }
 
   this.ready();
 });
 
-Meteor.publish('isoformExpressionTesting', function (options) {
+Meteor.publish("isoformExpressionTesting", function (options) {
   check(options, Object); // TODO: can they do anything fancy here?
 
   var user = Meteor.users.findOne(this.userId);
-  if (user.profile.collaborations.indexOf('testing') >= 0) {
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
     return IsoformExpression.find({
-      collaborations: 'testing'
+      collaborations: "testing"
     }, options);
   }
 
@@ -117,16 +117,27 @@ Meteor.publish('isoformExpressionTesting', function (options) {
 
 Meteor.publish("studyTesting", function () {
   var user = Meteor.users.findOne(this.userId);
-  if (user.profile.collaborations.indexOf('testing') >= 0) {
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
     return [
       Studies.find({
-        collaborations: { $in: ['testing', 'public'] }
+        collaborations: { $in: ["testing", "public"] }
       }),
       CRFs.find({
         CRF: "Clinical_Info",
         Study_ID: "prad_test",
       }),
     ];
+  }
+
+  this.ready();
+});
+
+Meteor.publish("contrastTesting", function (options) {
+  check(options, Object); // TODO: can they do anything fancy here?
+
+  var user = Meteor.users.findOne(this.userId);
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
+    return Contrasts.find({ collaborations: "testing" }, options);
   }
 
   this.ready();

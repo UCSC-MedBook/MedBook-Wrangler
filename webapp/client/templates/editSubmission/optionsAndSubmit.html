@@ -19,6 +19,11 @@
           {{/submissionOptions}}
         {{/if}}
 
+        {{#if compare getSubmissionType "contrast"}}
+          {{#submissionOptions schema=contrastSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+
         {{#if compare getSubmissionType "metadata"}}
           <div class="well">
             You cannot submit a submission with only metadata.

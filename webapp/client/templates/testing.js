@@ -164,3 +164,24 @@ Template.isoformExpressionTesting.helpers({
     return text;
   },
 });
+
+// Template.contrastTesting
+
+Template.contrastTesting.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: {
+      contrast_label: 1,
+      version: 1,
+    },
+    limit: 100,
+  };
+  instance.subscribe('contrastTesting', instance.options);
+});
+
+Template.contrastTesting.helpers({
+  getContrasts: function () {
+    return Contrasts.find({}, Template.instance().options);
+  },
+});

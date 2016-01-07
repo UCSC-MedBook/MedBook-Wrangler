@@ -166,35 +166,38 @@
     {{/if}}
 
     {{#if isInSchema "contrast_label"}}
-      {{> afQuickField name="update_or_create"
-          type="select"
-          options="allowed"
-          firstOption="(Create new or update existing)"
+      {{> contrastFields}}
+    {{/if}}
+  {{/autoForm}}
+</template>
+
+<template name="contrastFields">
+  {{> afQuickField name="update_or_create"
+      type="select"
+      options="allowed"
+      firstOption="(Create new or update existing)"
+      template="bootstrap3-horizontal"
+      label-class=horizontalLabelClass
+      input-col-class=horizontalInputColClass}}
+  {{#if this.options.update_or_create}}
+    {{#if compare this.options.update_or_create "update"}}
+      {{> afQuickField name="contrast_label"
+          options=contrastOptions
+          firstOption="(Select an existing contrast)"
           template="bootstrap3-horizontal"
           label-class=horizontalLabelClass
           input-col-class=horizontalInputColClass}}
-      {{#if this.options.update_or_create}}
-        {{#if compare this.options.update_or_create "update"}}
-          {{> afQuickField name="contrast_label"
-              options="allowed"
-              firstOption="(Select an existing contrast)"
-              template="bootstrap3-horizontal"
-              label-class=horizontalLabelClass
-              input-col-class=horizontalInputColClass}}
-        {{else}}
-          {{! TODO: fix the weird UI issue here (bootstrap problem)}}
-          {{> afQuickField name="contrast_label"
-              template="bootstrap3-horizontal"
-              label-class=horizontalLabelClass
-              input-col-class=horizontalInputColClass}}
-          {{> afQuickField name="description"
-                template="bootstrap3-horizontal"
-                label-class=horizontalLabelClass
-                input-col-class=horizontalInputColClass}}
-        {{/if}}
-      {{/if}}
+    {{else}}
+      {{> afQuickField name="contrast_label"
+          template="bootstrap3-horizontal"
+          label-class=horizontalLabelClass
+          input-col-class=horizontalInputColClass}}
+      {{> afQuickField name="description"
+            template="bootstrap3-horizontal"
+            label-class=horizontalLabelClass
+            input-col-class=horizontalInputColClass}}
     {{/if}}
-  {{/autoForm}}
+  {{/if}}
 </template>
 
 <template name="collaborationLabelField">

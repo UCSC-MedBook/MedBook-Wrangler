@@ -74,6 +74,15 @@ Meteor.publish("wranglerFiles", function (submission_id) {
   });
 });
 
+Meteor.publish("updatableContrasts", function () {
+  var cursor = Contrasts.find({
+    user_id: this.userId
+  });
+
+  console.log("cursor.find().fetch():", cursor.fetch());
+  return cursor;
+});
+
 // publications specifically for testing
 
 Meteor.publish("geneExpressionTesting", function (options) {

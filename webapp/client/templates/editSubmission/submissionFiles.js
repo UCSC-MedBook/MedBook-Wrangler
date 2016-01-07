@@ -237,6 +237,27 @@ Template.fileOptions.events({
   }
 });
 
+// Template.contrastFields
+
+Template.contrastFields.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("updatableContrasts");
+});
+
+Template.contrastFields.helpers({
+  contrastOptions: function () {
+    return Contrasts.find({
+      user_id: Meteor.userId(),
+    }).map(function (contrast) {
+      return {
+        label: contrast.contrast_label,
+        value: contrast.contrast_label,
+      };
+    });
+  },
+});
+
 // Template.collaborationLabelField
 
 Template.collaborationLabelField.helpers({

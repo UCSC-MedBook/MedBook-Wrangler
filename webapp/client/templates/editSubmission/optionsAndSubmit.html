@@ -9,6 +9,11 @@
           {{/submissionOptions}}
         {{/if}}
 
+        {{#if compare getSubmissionType "gene_annotation"}}
+          {{#submissionOptions schema=sharedSchema}}
+          {{/submissionOptions}}
+        {{/if}}
+
         {{#if compare getSubmissionType "isoform_expression"}}
           {{#submissionOptions schema=sharedSchema}}
           {{/submissionOptions}}

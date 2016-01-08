@@ -180,13 +180,15 @@ function autoformId () {
   return "edit-wrangler-file-" + this._id;
 }
 
-function validateLater (instance) {
+function validateLater (instance, dontReparse) {
   Meteor.clearTimeout(instance.validateTimeout);
 
   instance.validateTimeout = Meteor.setTimeout(function () {
     if (AutoForm.validateForm(autoformId.call(instance.data))) {
       instance.parent().needSchemaCorrection.set(false);
-      Meteor.call("reparseWranglerFile", instance.data._id);
+      if (!dontReparse) {
+        Meteor.call("reparseWranglerFile", instance.data._id);
+      }
     } else {
       instance.parent().needSchemaCorrection.set(true);
     }
@@ -209,7 +211,7 @@ Template.fileOptions.onRendered(function () {
   });
 
   // show schema errors when rendered for the first time
-  AutoForm.validateForm(autoformId.call(instance.data));
+  validateLater(instance, true);
 });
 
 Template.fileOptions.helpers({

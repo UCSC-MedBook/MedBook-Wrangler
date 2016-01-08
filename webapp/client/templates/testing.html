@@ -265,3 +265,42 @@
     </div>
   {{/if}}
 </template>
+
+<template name="geneAnnotationTesting">
+  <h1>This route is to show GeneAnnotation testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+  <div id="data">
+    {{#if length getAnnotations}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>gene_label</th>
+            <th>study_label</th>
+            <th>collaborations</th>
+            <th>sample_label</th>
+            <th>gistic_copy_number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each getAnnotations}}
+            <tr>
+              <td>{{gene_label}}</td>
+              <td>{{study_label}}</td>
+              <td>{{collaborations}}</td>
+              <td>{{sample_label}}</td>
+              <td>{{checkUndefined gistic_copy_number}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      No data
+    {{/if}}
+  </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>

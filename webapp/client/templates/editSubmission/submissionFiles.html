@@ -168,6 +168,14 @@
     {{#if isInSchema "contrast_label"}}
       {{> contrastFields}}
     {{/if}}
+
+    {{#if isInSchema "annotation_type"}}
+      {{> afQuickField name="annotation_type"
+          firstOption="(Select an annotation type)"
+          template="bootstrap3-horizontal"
+          label-class=horizontalLabelClass
+          input-col-class=horizontalInputColClass}}
+    {{/if}}
   {{/autoForm}}
 </template>
 

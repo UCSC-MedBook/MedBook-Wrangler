@@ -3,18 +3,18 @@
 Template.removeTestingData.onCreated(function () {
   var instance = this;
 
-  instance.status = new ReactiveVar('removing');
+  instance.status = new ReactiveVar("removing");
 });
 
 Template.removeTestingData.onRendered(function () {
   var instance = this;
 
-  Meteor.call('removeTestingData', function (error, result) {
+  Meteor.call("removeTestingData", function (error, result) {
     if (error) {
-      instance.status.set('error');
+      instance.status.set("error");
       console.log("error:", error);
     } else {
-      instance.status.set('done');
+      instance.status.set("done");
     }
   });
 });
@@ -37,7 +37,7 @@ Template.geneExpressionTesting.onCreated(function () {
     },
     limit: 100,
   };
-  instance.subscribe('geneExpressionTesting', instance.options);
+  instance.subscribe("geneExpressionTesting", instance.options);
 });
 
 Template.geneExpressionTesting.helpers({
@@ -46,7 +46,7 @@ Template.geneExpressionTesting.helpers({
   },
   checkUndefined: function (text) {
     if (text === undefined) {
-      return 'undefined';
+      return "undefined";
     }
     return text;
   },
@@ -61,7 +61,7 @@ Template.expression2Testing.onCreated(function () {
     sort: { gene: 1 },
     limit: 100,
   };
-  instance.subscribe('expression2Testing', instance.options);
+  instance.subscribe("expression2Testing", instance.options);
 });
 
 Template.expression2Testing.helpers({
@@ -96,7 +96,7 @@ Template.expression2Testing.helpers({
   },
   checkUndefined: function (text) {
     if (text === undefined) {
-      return 'undefined';
+      return "undefined";
     }
     return text;
   },
@@ -107,7 +107,7 @@ Template.expression2Testing.helpers({
 Template.studyTesting.onCreated(function () {
   var instance = this;
 
-  instance.subscribe('studyTesting');
+  instance.subscribe("studyTesting");
 });
 
 Template.studyTesting.helpers({
@@ -128,7 +128,7 @@ Template.studyTesting.helpers({
   },
   checkUndefined: function (text) {
     if (text === undefined) {
-      return 'undefined';
+      return "undefined";
     }
     return text;
   },
@@ -150,7 +150,7 @@ Template.isoformExpressionTesting.onCreated(function () {
     },
     limit: 100,
   };
-  instance.subscribe('isoformExpressionTesting', instance.options);
+  instance.subscribe("isoformExpressionTesting", instance.options);
 });
 
 Template.isoformExpressionTesting.helpers({
@@ -159,7 +159,7 @@ Template.isoformExpressionTesting.helpers({
   },
   checkUndefined: function (text) {
     if (text === undefined) {
-      return 'undefined';
+      return "undefined";
     }
     return text;
   },
@@ -177,11 +177,38 @@ Template.contrastTesting.onCreated(function () {
     },
     limit: 100,
   };
-  instance.subscribe('contrastTesting', instance.options);
+  instance.subscribe("contrastTesting", instance.options);
 });
 
 Template.contrastTesting.helpers({
   getContrasts: function () {
     return Contrasts.find({}, Template.instance().options);
+  },
+});
+
+// Template.geneAnnotationTesting
+
+Template.geneAnnotationTesting.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: {
+      gene_label: 1,
+      sample_label: 1,
+    },
+    limit: 100,
+  };
+  instance.subscribe("geneAnnotationTesting", instance.options);
+});
+
+Template.geneAnnotationTesting.helpers({
+  getAnnotations: function () {
+    return GeneAnnotation.find({}, Template.instance().options);
+  },
+  checkUndefined: function (text) {
+    if (text === undefined) {
+      return "undefined";
+    }
+    return text;
   },
 });

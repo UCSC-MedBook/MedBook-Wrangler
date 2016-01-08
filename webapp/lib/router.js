@@ -55,4 +55,8 @@ Router.map(function() {
   this.route('contrastTesting', {
     path: '/Wrangler/testing/contrastTesting'
   });
+
+  this.route('geneAnnotationTesting', {
+    path: '/Wrangler/testing/geneAnnotationTesting'
+  });
 });

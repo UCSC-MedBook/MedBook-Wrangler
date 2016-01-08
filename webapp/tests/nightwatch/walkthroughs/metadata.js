@@ -25,7 +25,7 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/BD2K_rna_mapping_test.tsv')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed, make sure file type couldn't be inferred
-      .waitForElementVisible("#submissionFiles div.alert.alert-warning > p", 35000)
+      .waitForElementVisible(".edit-wrangler-file select[name=file_type]", 35000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
       .click("#submissionFiles select > option[value='BD2KSampleLabelMap']")

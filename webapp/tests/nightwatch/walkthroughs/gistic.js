@@ -37,7 +37,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/gistic_fixed_small.txt")
       .click("form.add-from-web-form button[type=submit]")
-      .waitForElementVisible("#submissionFiles .panel-warning", 35000)
+      .waitForElementVisible(".edit-wrangler-file select[name=file_type]", 35000)
 
       // set the wrangler file options
       .click(".edit-wrangler-file select[name=file_type] option[value=RectangularGeneAnnotation]")

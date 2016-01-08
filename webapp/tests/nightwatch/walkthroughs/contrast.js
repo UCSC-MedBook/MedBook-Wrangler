@@ -35,7 +35,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/sample_contrast.tsv")
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible("#submissionFiles .panel-warning", 35000)
+      .waitForElementVisible(".edit-wrangler-file select[name=file_type]", 35000)
 
       // set the wrangler file options
       .click(".edit-wrangler-file select[name=file_type] option[value=ContrastMatrix]")

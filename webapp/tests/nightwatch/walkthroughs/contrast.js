@@ -85,7 +85,7 @@ module.exports = {
       .verify.containsText("#review-new_clinical_data tbody > tr:nth-child(3) > td:nth-child(3)", "DTB-003Pro")
 
       // set submission options, submit
-      .clearValue("descriptionTextArea")
+      .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, "contrast testing")
       .pause(300)
       .click(".validate-and-submit")

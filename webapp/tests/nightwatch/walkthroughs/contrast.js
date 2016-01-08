@@ -45,12 +45,13 @@ module.exports = {
       .click(".edit-wrangler-file select[name=update_or_create] option[value=update]")
       .pause(500)
       .verify.containsText(".edit-wrangler-file .alert",
-          "Oh snap! You have no contrasts you can update. " + 
+          "Oh snap! You have no contrasts you can update. " +
           "Note that only the owner of a contrast can update it.")
       .click(".edit-wrangler-file select[name=update_or_create] option[value=create]")
       .pause(500)
       .setValue(".edit-wrangler-file input[name=contrast_label]", "test_contrast")
       .setValue(".edit-wrangler-file input[name=description]", "test contrast description")
+      .pause(500)
       .click("body") // so that it knows to start processing again
       // set collaboration label last because sometimes nightwatch doesn't
       // record the last text field filled in with autoupdate

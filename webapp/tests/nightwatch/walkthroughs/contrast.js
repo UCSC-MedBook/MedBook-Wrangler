@@ -49,7 +49,10 @@ module.exports = {
           "Note that only the owner of a contrast can update it.")
       .click(".edit-wrangler-file select[name=update_or_create] option[value=create]")
       .pause(500)
+      .clearValue(".edit-wrangler-file input[name=contrast_label]")
       .setValue(".edit-wrangler-file input[name=contrast_label]", "test_contrast")
+      .pause(100)
+      .clearValue(".edit-wrangler-file input[name=description]")
       .setValue(".edit-wrangler-file input[name=description]", "test contrast description")
       .pause(500)
       .click("body") // so that it knows to start processing again
@@ -82,6 +85,7 @@ module.exports = {
       .verify.containsText("#review-new_clinical_data tbody > tr:nth-child(3) > td:nth-child(3)", "DTB-003Pro")
 
       // set submission options, submit
+      .clearValue("descriptionTextArea")
       .setValue(descriptionTextArea, "contrast testing")
       .pause(300)
       .click(".validate-and-submit")
@@ -116,7 +120,7 @@ module.exports = {
       .clearValue(urlInput)
       .setValue(urlInput, "http://localhost:3000/sample_contrast2.tsv")
       .click("form.add-from-web-form button[type='submit']")
-      .waitForElementVisible('#submissionFiles .panel-warning', 35000)
+      .waitForElementVisible(".edit-wrangler-file select[name=file_type]", 35000)
 
       // set file options
       .click(".edit-wrangler-file select[name=file_type] option[value=ContrastMatrix]")
@@ -143,6 +147,7 @@ module.exports = {
       .verify.elementNotPresent("#review-new_clinical_data tbody > tr:nth-child(2)") // only one new clinical thing
 
       // set submission options, submit
+      .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, "contrast version 2 testing")
       .pause(300)
       .click(".validate-and-submit")

@@ -25,7 +25,7 @@ module.exports = {
 
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
-    var geneCountsPanel = '#review-sample_normalization > table > tbody';
+    var geneCountsPanel = '#review-assay_sample_summary > table > tbody';
     client
       .url("http://localhost:3000/Wrangler")
       .waitForElementVisible("#create-new-submission", 5000)
@@ -51,14 +51,14 @@ module.exports = {
       .verify.containsText('#review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)', 'GGACT')
       // .verify.elementPresent('#review-mapped_genes .loadMore')
 
-      .verify.elementPresent('#review-sample_normalization')
+      .verify.elementPresent('#review-assay_sample_summary')
       .verify.containsText(geneCountsPanel + ' > tr > th ', 'DTB-999')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(2)', 'Quantile normalized counts')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '7')
-      .verify.elementNotPresent('#review-sample_normalization .loadMore')
+      .verify.elementNotPresent('#review-assay_sample_summary .loadMore')
 
       // make sure we're not going to overwrite any data
-      .assert.elementNotPresent("#review-expression_data_exists")
+      .assert.elementNotPresent("#review-sample_data_exists")
     ;
 
 
@@ -186,7 +186,7 @@ module.exports = {
       .verify.containsText('#blob_line_count', '[2 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '6')
-      .verify.elementNotPresent("#review-expression_data_exists")
+      .verify.elementNotPresent("#review-sample_data_exists")
       // fill in the bottom stuff
       .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, 'tpm testing')
@@ -312,10 +312,10 @@ module.exports = {
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 35000)
-      .verify.elementPresent("#review-expression_data_exists")
-      .verify.containsText("#review-expression_data_exists > table > tbody > tr > th", "DTB-999")
-      .verify.containsText("#review-expression_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
-      .verify.containsText("#review-expression_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
+      .verify.elementPresent("#review-sample_data_exists")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > th", "DTB-999")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
       .click("#left > ol > li:nth-child(1) > a") // go back to submissions page
       .waitForElementVisible(firstDelete, 5000)
       .click(firstDelete) // delete it
@@ -357,11 +357,11 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 35000)
-      .waitForElementVisible("#review-sample_normalization", 35000)
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(2)",
+      .waitForElementVisible("#review-assay_sample_summary", 35000)
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > td:nth-child(2)",
           "RPKM (Reads Per Kilobase of transcript per Million mapped reads)")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > td:nth-child(3)", "7")
 
       // make sure label mapping file loaded right
       .waitForElementPresent("#review-sample_label_map", 5000)
@@ -529,13 +529,13 @@ module.exports = {
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 35000)
       // check the review panel
-      .verify.elementPresent("#review-sample_normalization")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > th", "DTB-141")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(2)", "Quantile normalized counts")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(3)", "2")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > th", "DTB-143")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(2)", "Quantile normalized counts")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(3)", "2")
+      .verify.elementPresent("#review-assay_sample_summary")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > th", "DTB-141")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > td:nth-child(3)", "2")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > th", "DTB-143")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > td:nth-child(3)", "2")
       // fill in the bottom stuff
       .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, 'rectangular matrix` testing')

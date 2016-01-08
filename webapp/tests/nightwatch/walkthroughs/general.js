@@ -92,7 +92,7 @@ module.exports = {
       // NOTE: depends on RectangularGeneExpression
       .waitForElementVisible(".panel-success", 35000) // wait for file done processing
       .waitForElementVisible("#review-ignored_genes .download-as-file", 3000)
-      .verify.containsText("#review-sample_normalization .download-as-file", "Download")
+      .verify.containsText("#review-assay_sample_summary .download-as-file", "Download")
       .verify.containsText("#review-ignored_genes .download-as-file", "Download all 5")
 
       // click the "load more" button for ignored genes

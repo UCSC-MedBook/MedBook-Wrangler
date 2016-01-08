@@ -25,7 +25,7 @@ module.exports = {
 
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
-    var geneCountsPanel = "#review-sample_normalization > table > tbody";
+    var geneCountsPanel = "#review-assay_sample_summary > table > tbody";
     var descriptionTextArea = "#submission-options > div:nth-child(1) > textarea";
     client
       .url("http://localhost:3000/Wrangler")

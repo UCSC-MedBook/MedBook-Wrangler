@@ -209,7 +209,7 @@ Template.fileOptions.onRendered(function () {
   });
 
   // show schema errors when rendered for the first time
-  validateLater(instance);
+  AutoForm.validateForm(autoformId.call(instance.data));
 });
 
 Template.fileOptions.helpers({

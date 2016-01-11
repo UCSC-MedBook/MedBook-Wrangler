@@ -1,13 +1,40 @@
 Meteor.methods({
   // WranglerSubmission methods
-  addSubmission: function () {
+  addSubmission: function (blobIds) {
+    check(blobIds, Match.Optional([String]));
+
     var user_id = ensureLoggedIn();
 
-    return WranglerSubmissions.insert({
+    // check to make blobs are theirs, don't already belong to a submission
+    var blobNames = [];
+    _.each(blobIds, function (blobId, index) {
+      var blob = Blobs.findOne(blobId);
+      if (!blob || !blob.metadata || blob.metadata.user_id !== user_id) {
+        throw "blob " + blobId + " does not exist or has incorrect metadata";
+      }
+      if (blob.metadata.submission_id) {
+        throw "blob already belongs to another submission";
+      }
+      blobNames.push(blob.original.name);
+    });
+
+    var submission_id = WranglerSubmissions.insert({
       "user_id": user_id,
       "date_created": new Date(),
       "status": "editing",
     });
+
+    // also insert wrangler files
+    _.each(blobIds, function (blobId, index) {
+      Blobs.update(blobId, {
+        $set: {
+          "metadata.submission_id": submission_id
+        }
+      });
+      Meteor.call("addWranglerFile", submission_id, blobId, blobNames[index]);
+    });
+
+    return submission_id;
   },
   removeSubmission: function (submission_id) {
     check(submission_id, String);

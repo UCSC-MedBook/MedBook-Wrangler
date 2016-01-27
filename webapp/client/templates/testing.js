@@ -173,7 +173,7 @@ Template.contrastTesting.onCreated(function () {
   instance.options = {
     sort: {
       contrast_label: 1,
-      version: 1,
+      contrast_version: 1,
     },
     limit: 100,
   };
@@ -210,5 +210,26 @@ Template.geneAnnotationTesting.helpers({
       return "undefined";
     }
     return text;
+  },
+});
+
+// Template.signatureTesting
+
+Template.signatureTesting.onCreated(function () {
+  var instance = this;
+
+  instance.options = {
+    sort: {
+      signature_label: 1,
+      signature_version: 1,
+    },
+    limit: 100,
+  };
+  instance.subscribe("signatureTesting", instance.options);
+});
+
+Template.signatureTesting.helpers({
+  getSignatures: function () {
+    return Signatures.find({}, Template.instance().options);
   },
 });

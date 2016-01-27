@@ -35,6 +35,10 @@ Meteor.methods({
         collaborations: "testing",
       });
 
+      Signatures.remove({
+        collaborations: "testing",
+      });
+
       return "done";
     }
 

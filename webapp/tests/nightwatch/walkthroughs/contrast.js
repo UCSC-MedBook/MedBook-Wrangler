@@ -25,7 +25,6 @@ module.exports = {
 
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
-    var geneCountsPanel = "#review-assay_sample_summary > table > tbody";
     var descriptionTextArea = "#submission-options > div:nth-child(1) > textarea";
     client
       .url("http://localhost:3000/Wrangler")
@@ -91,7 +90,7 @@ module.exports = {
       .click(".validate-and-submit")
       .waitForElementVisible("#optionsAndSubmit .panel-success", 35000)
 
-      // make sure the data is there
+      // make sure the data are there
       .url("http://localhost:3000/Wrangler/testing/contrastTesting")
       .waitForElementVisible("#data", 5000)
       .waitForElementVisible("#data > table > tbody > tr > td:nth-child(7)", 3000)
@@ -129,6 +128,9 @@ module.exports = {
       .click(".edit-wrangler-file select[name=collaboration_label] option[value=testing]")
       .click(".edit-wrangler-file select[name=update_or_create] option[value=update]")
       .pause(500)
+      // make sure there are no duplicates in contrast name list
+      // NOTE: this test needs to be moved somewhere else... (there's only one contrast at this point)
+      .verify.elementNotPresent(".edit-wrangler-file select[name=contrast_label] option:nth-child(3)")
       .click(".edit-wrangler-file select[name=contrast_label] option[value=test_contrast]")
       .verify.elementNotPresent(".edit-wrangler-file input[name=description]")
       .waitForElementVisible("#submissionFiles .panel-success", 35000)

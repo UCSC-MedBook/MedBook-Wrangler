@@ -140,25 +140,17 @@
 <template name="fileOptions">
   {{#autoForm id=autoformId schema=optionsSchema doc=this.options
       autosave=true class="edit-wrangler-file"}}
-    {{> afQuickField name="file_type" firstOption="Auto"
-        template="bootstrap3-horizontal"
-        label-class=horizontalLabelClass
-        input-col-class=horizontalInputColClass}}
+    {{> horizontalField name="file_type" firstOption="Auto"}}
 
     {{! errors caused by this are fixed in aldeed:autoform@5.76.1 }}
     {{! https://github.com/aldeed/meteor-autoform/issues/802 }}
     {{#if isInSchema "normalization"}}
-      {{> afQuickField name="normalization"
-          firstOption="(Select a normalization)"
-          template="bootstrap3-horizontal"
-          label-class=horizontalLabelClass
-          input-col-class=horizontalInputColClass}}
+      {{> horizontalField name="normalization"
+          firstOption="(Select a normalization)"}}
     {{/if}}
 
     {{#if isInSchema "network_name"}}
-      {{> afQuickField name="network_name" template="bootstrap3-horizontal"
-          label-class=horizontalLabelClass
-          input-col-class=horizontalInputColClass}}
+      {{> horizontalField name="network_name"}}
     {{/if}}
 
     {{#if isInSchema "collaboration_label"}}
@@ -169,33 +161,25 @@
       {{> contrastFields}}
     {{/if}}
 
+    {{#if isInSchema "signature_label"}}
+      {{> signatureFields}}
+    {{/if}}
+
     {{#if isInSchema "annotation_type"}}
-      {{> afQuickField name="annotation_type"
-          firstOption="(Select an annotation type)"
-          template="bootstrap3-horizontal"
-          label-class=horizontalLabelClass
-          input-col-class=horizontalInputColClass}}
+      {{> horizontalField name="annotation_type"
+          firstOption="(Select an annotation type)"}}
     {{/if}}
   {{/autoForm}}
 </template>
 
 <template name="contrastFields">
-  {{> afQuickField name="update_or_create"
-      type="select"
-      options="allowed"
-      firstOption="(Create new or update existing)"
-      template="bootstrap3-horizontal"
-      label-class=horizontalLabelClass
-      input-col-class=horizontalInputColClass}}
+  {{> updateOrCreate}}
   {{#if this.options.update_or_create}}
     {{#if compare this.options.update_or_create "update"}}
       {{#if length contrastOptions}}
-        {{> afQuickField name="contrast_label"
+        {{> horizontalField name="contrast_label"
             options=contrastOptions
-            firstOption="(Select an existing contrast)"
-            template="bootstrap3-horizontal"
-            label-class=horizontalLabelClass
-            input-col-class=horizontalInputColClass}}
+            firstOption="(Select an existing contrast)"}}
       {{else}}
         <div class="alert alert-danger" role="alert"
             style="float: left;"> {{! float left to be below other form-groups}}
@@ -205,23 +189,67 @@
         </div>
       {{/if}}
     {{else}}
-      {{> afQuickField name="contrast_label"
-          template="bootstrap3-horizontal"
-          label-class=horizontalLabelClass
-          input-col-class=horizontalInputColClass}}
-      {{> afQuickField name="description"
-            template="bootstrap3-horizontal"
-            label-class=horizontalLabelClass
-            input-col-class=horizontalInputColClass}}
+      {{> horizontalField name="contrast_label"}}
+      {{> horizontalField name="description"}}
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name="signatureFields">
+  {{> updateOrCreate}}
+  {{#if this.options.update_or_create}}
+    {{#if compare this.options.update_or_create "update"}}
+      {{#if length signatureOptions}}
+        {{> horizontalField name="signature_label"
+            options=signatureOptions
+            firstOption="(Select an existing contrast)"}}
+      {{else}}
+        <div class="alert alert-danger" role="alert"
+            style="float: left;"> {{! float left to be below other form-groups}}
+          <strong>Oh snap!</strong>
+          You have no signatures you can update.
+          Note that only the owner of a signature can update it.
+        </div>
+      {{/if}}
+    {{else}}
+      {{> horizontalField name="signature_label"}}
+      {{> horizontalField name="description"}}
+      {{> horizontalField name="algorithm" options="allowed"}}
+      {{> horizontalField name="features_type" options="allowed"}}
     {{/if}}
   {{/if}}
 </template>
 
 <template name="collaborationLabelField">
-  {{> afQuickField name="collaboration_label"
+  {{> horizontalField name="collaboration_label"
       options=options
-      firstOption="(Select a collaboration)"
-      template="bootstrap3-horizontal"
-      label-class=horizontalLabelClass
-      input-col-class=horizontalInputColClass}}
+      firstOption="(Select a collaboration)"}}
+</template>
+
+<template name="updateOrCreate">
+  {{> horizontalField name="update_or_create"
+      type="select"
+      options="allowed"
+      firstOption="(Create new or update existing)"}}
+</template>
+
+<template name="horizontalField">
+  {{! "if options" important becuase if options is specified and is null,
+      it overrides the implied options of the schema}}
+  {{#if options}}
+    {{> afQuickField name=name
+        type=type
+        options=options
+        firstOption=firstOption
+        template="bootstrap3-horizontal"
+        label-class=horizontalLabelClass
+        input-col-class=horizontalInputColClass}}
+  {{else}}
+    {{> afQuickField name=name
+        type=type
+        firstOption=firstOption
+        template="bootstrap3-horizontal"
+        label-class=horizontalLabelClass
+        input-col-class=horizontalInputColClass}}
+  {{/if}}
 </template>

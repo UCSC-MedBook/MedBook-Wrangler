@@ -17,7 +17,7 @@ Template.optionsAndSubmit.helpers({
   sharedSchema: function () {
     return sharedSchema;
   },
-  contrastSchema: function () {
+  onlyDescription: function () {
     return new SimpleSchema({
       description: { type: String },
     });

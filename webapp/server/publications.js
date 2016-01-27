@@ -82,6 +82,14 @@ Meteor.publish("updatableContrasts", function () {
   return cursor;
 });
 
+Meteor.publish("updatableSignatures", function () {
+  var cursor = Signatures.find({
+    user_id: this.userId
+  });
+
+  return cursor;
+});
+
 // publications specifically for testing
 
 Meteor.publish("geneExpressionTesting", function (options) {
@@ -159,6 +167,17 @@ Meteor.publish("geneAnnotationTesting", function (options) {
     return GeneAnnotation.find({
       collaborations: "testing"
     }, options);
+  }
+
+  this.ready();
+});
+
+Meteor.publish("signatureTesting", function (options) {
+  check(options, Object); // TODO: can they do anything fancy here?
+
+  var user = Meteor.users.findOne(this.userId);
+  if (user.profile.collaborations.indexOf("testing") >= 0) {
+    return Signatures.find({ collaborations: "testing" }, options);
   }
 
   this.ready();

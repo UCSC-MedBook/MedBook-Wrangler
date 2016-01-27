@@ -253,12 +253,41 @@ Template.contrastFields.onCreated(function () {
 
 Template.contrastFields.helpers({
   contrastOptions: function () {
-    return Contrasts.find({
+    var contrasts = Contrasts.find({
       user_id: Meteor.userId(),
-    }).map(function (contrast) {
+    }).fetch();
+
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "contrast_label"))
+
+    return _.map(uniqueLabels, function (label) {
       return {
-        label: contrast.contrast_label,
-        value: contrast.contrast_label,
+        label: label,
+        value: label,
+      };
+    });
+  },
+});
+
+// Template.signatureFields
+
+Template.signatureFields.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("updatableSignatures");
+});
+
+Template.signatureFields.helpers({
+  signatureOptions: function () {
+    var contrasts = Signatures.find({
+      user_id: Meteor.userId(),
+    }).fetch();
+
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"))
+
+    return _.map(uniqueLabels, function (label) {
+      return {
+        label: label,
+        value: label,
       };
     });
   },

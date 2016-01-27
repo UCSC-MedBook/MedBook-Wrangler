@@ -25,7 +25,12 @@
         {{/if}}
 
         {{#if compare getSubmissionType "contrast"}}
-          {{#submissionOptions schema=contrastSchema}}
+          {{#submissionOptions schema=onlyDescription}}
+          {{/submissionOptions}}
+        {{/if}}
+
+        {{#if compare getSubmissionType "signature"}}
+          {{#submissionOptions schema=onlyDescription}}
           {{/submissionOptions}}
         {{/if}}
 

@@ -30,9 +30,9 @@ Template.uploadNewFiles.events({
     for (var i = 0; i < files.length; i++) {
       var newFile = new FS.File(files[i]);
       newFile.metadata = {
-        "user_id": Meteor.userId(),
-        "submission_id": instance.data._id,
-        "uploaded": true,
+        user_id: Meteor.userId(),
+        submission_id: instance.data._id,
+        wrangler_upload: true,
       };
 
       // insertion is supposed to happen on the client
@@ -57,7 +57,7 @@ Template.uploadNewFiles.events({
           newFile.metadata = {
             "user_id": Meteor.userId(),
             "submission_id": instance.data._id,
-            "uploaded": true,
+            "wrangler_upload": true,
           };
           Blobs.insert(newFile,
               _.partial(blobsInsertCallback, instance.data._id));

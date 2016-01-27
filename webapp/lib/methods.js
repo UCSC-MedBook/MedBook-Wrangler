@@ -6,16 +6,16 @@ Meteor.methods({
     var user_id = ensureLoggedIn();
 
     // check to make blobs are theirs, don't already belong to a submission
-    var blobNames = [];
+    var cachedBlobs = [];
     _.each(blobIds, function (blobId, index) {
       var blob = Blobs.findOne(blobId);
       if (!blob || !blob.metadata || blob.metadata.user_id !== user_id) {
-        throw "blob " + blobId + " does not exist or has incorrect metadata";
+        throw new Meteor.Error("blob " + blobId + " does not exist or has incorrect metadata");
       }
       if (blob.metadata.submission_id) {
-        throw "blob already belongs to another submission";
+        throw new Meteor.Error("blob already belongs to another submission");
       }
-      blobNames.push(blob.original.name);
+      cachedBlobs.push(blob);
     });
 
     var submission_id = WranglerSubmissions.insert({
@@ -31,7 +31,10 @@ Meteor.methods({
           "metadata.submission_id": submission_id
         }
       });
-      Meteor.call("addWranglerFile", submission_id, blobId, blobNames[index]);
+
+      var blob = cachedBlobs[index];
+      var newFileId = Meteor.call("addWranglerFile",
+          submission_id, blobId, blob.original.name);
     });
 
     return submission_id;
@@ -42,8 +45,8 @@ Meteor.methods({
     ensureSubmissionEditable(ensureLoggedIn(), submission_id);
 
     WranglerFiles.find({ "submission_id": submission_id })
-        .forEach(function (document) {
-      Blobs.remove(document.blob_id);
+        .forEach(function (doc) {
+      Meteor.call("removeWranglerFile", doc._id);
     });
     WranglerDocuments.remove({ "submission_id": submission_id });
     WranglerFiles.remove({ "submission_id": submission_id });
@@ -60,27 +63,40 @@ Meteor.methods({
     var userId = ensureLoggedIn();
     var submission = ensureSubmissionEditable(userId, submission_id);
 
+    var status = "uploading";
     if (Meteor.isServer) { // must be on the server because Blobs not published
-      var file = Blobs.findOne(blobId);
-      if (!file.metadata) {
+      var blob = Blobs.findOne(blobId);
+      if (!blob.metadata) {
         throw new Meteor.Error("file-lacks-metadata", "File metadata not set");
       }
-      if (file.metadata.user_id !== Meteor.userId() ||
-          file.metadata.submission_id !== submission_id) {
+      if (blob.metadata.user_id !== Meteor.userId() ||
+          blob.metadata.submission_id !== submission_id) {
         throw new Meteor.Error("file-metadata-wrong", "File metadata is wrong");
       }
-      if (file.original.name !== blobName) {
+      if (blob.original.name !== blobName) {
         throw new Meteor.Error("file-name-wrong");
+      }
+
+      if (blob.hasStored("blobs")) {
+        // likely this is true because it's from another app
+        // we'll kick off the reparse job after inserting
+        status = "processing";
       }
     }
 
-    var wranglerFileId = WranglerFiles.insert({
+    var insertedId = WranglerFiles.insert({
       "submission_id": submission_id,
       "user_id": submission.user_id,
       "blob_id": blobId,
       "blob_name": blobName,
-      "status": "uploading",
+      status: status,
     });
+
+    if (status === "processing") {
+      Meteor.call("reparseWranglerFile", insertedId);
+    }
+
+    return insertedId;
   },
   removeWranglerFile: function (wranglerFileId) {
     check(wranglerFileId, String);
@@ -101,7 +117,23 @@ Meteor.methods({
       "submission_id": submission_id,
       "wrangler_file_ids": {$size: 0},
     });
-    Blobs.remove(wranglerFile.blob_id);
+
+    // Remove the blob if it was uploaded through Wrangler.
+    // Otherwise remove metadata associated with this submission.
+    // NOTE: the docs say collection.remove on the server returns the number
+    // of docs removed, but this is how it really works
+    Blobs.remove({
+      _id: wranglerFile.blob_id,
+      "metadata.wrangler_upload": true,
+    }, function (error, result) {
+      if (result === 0) {
+        Blobs.update(wranglerFile.blob_id, {
+          $unset: {
+            "metadata.submission_id": 1
+          }
+        });
+      }
+    });
 
     // Jobs not subscribed
     if (Meteor.isServer) {

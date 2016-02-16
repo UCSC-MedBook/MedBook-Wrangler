@@ -53,7 +53,7 @@ module.exports = {
     // add a bunch of full BD2K files, make sure they parse quickly
     client
       .url("http://localhost:3000/Wrangler")
-      .verify.elementPresent("#create-new-submission")
+      .waitForElementVisible("#create-new-submission", 5000)
       .click('#create-new-submission')
       .waitForElementVisible(urlInput, 1000)
 

@@ -5,15 +5,16 @@ var sharedSchema = new SimpleSchema({
 });
 
 Template.optionsAndSubmit.helpers({
-  // mutationSchema: function () {
-  //   return new SimpleSchema([
-  //     sharedSchema,
-  //     Mutations.simpleSchema().pick([
-  //       "biological_source",
-  //       "mutation_impact_assessor",
-  //     ]),
-  //   ]);
-  // },
+  mutationSchema: function () {
+    return new SimpleSchema([
+      sharedSchema,
+      Mutations.simpleSchema().pick([
+        "biological_source",
+        "mutation_impact_assessor",
+        "mutation_caller",
+      ]),
+    ]);
+  },
   sharedSchema: function () {
     return sharedSchema;
   },
@@ -22,6 +23,8 @@ Template.optionsAndSubmit.helpers({
       description: { type: String },
     });
   },
+
+
 
   // superpathwaySchema: function () {
   //   return new SimpleSchema([
@@ -77,7 +80,7 @@ Template.sharedFields.helpers({
     });
   },
   collaborationOptions: function () {
-    return Collabs.find().map(function (collaboration) {
+    return Collaborations.find().map(function (collaboration) {
       return {
         label: collaboration.description,
         value: collaboration.name,

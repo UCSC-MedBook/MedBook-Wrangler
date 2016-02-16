@@ -40,11 +40,11 @@
           </div>
         {{/if}}
 
-        <!-- {{#if compare getSubmissionType 'mutation'}}
+        {{#if compare getSubmissionType 'mutation'}}
           {{#submissionOptions schema=mutationSchema}}
             {{> mutationFields}}
           {{/submissionOptions}}
-        {{/if}} -->
+        {{/if}}
       {{else}}
         {{#submissionOptions schema=sharedSchema}}
         {{/submissionOptions}}
@@ -157,6 +157,7 @@
 <template name="mutationFields">
   {{> afQuickField name="biological_source" options="allowed"}}
   {{> afQuickField name="mutation_impact_assessor" options="allowed"}}
+  {{> afQuickField name="mutation_caller" options="allowed"}}
 </template>
 
 <template name="validateAndSubmit">

@@ -253,11 +253,9 @@ Template.contrastFields.onCreated(function () {
 
 Template.contrastFields.helpers({
   contrastOptions: function () {
-    var contrasts = Contrasts.find({
-      user_id: Meteor.userId(),
-    }).fetch();
+    var contrasts = Contrasts.find({}).fetch();
 
-    var uniqueLabels = _.uniq(_.pluck(contrasts, "contrast_label"))
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "contrast_label"));
 
     return _.map(uniqueLabels, function (label) {
       return {
@@ -282,7 +280,7 @@ Template.signatureFields.helpers({
       user_id: Meteor.userId(),
     }).fetch();
 
-    var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"))
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"));
 
     return _.map(uniqueLabels, function (label) {
       return {
@@ -297,7 +295,7 @@ Template.signatureFields.helpers({
 
 Template.collaborationLabelField.helpers({
   options: function () {
-    return Collabs.find().map(function (collaboration) {
+    return Collaborations.find().map(function (collaboration) {
       return {
         label: collaboration.description,
         value: collaboration.name,

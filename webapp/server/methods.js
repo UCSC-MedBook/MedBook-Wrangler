@@ -1,8 +1,8 @@
 Meteor.methods({
   removeTestingData: function () {
-    var user = Meteor.users.findOne(ensureLoggedIn());
+    var user = MedBook.ensureUser(Meteor.userId());
 
-    if (user.profile.collaborations.indexOf("testing") >= 0) {
+    if (user.getCollaborations().indexOf("testing") >= 0) {
       console.log("removing testing data");
 
       GeneExpression.remove({

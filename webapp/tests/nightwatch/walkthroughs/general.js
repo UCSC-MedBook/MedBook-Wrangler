@@ -146,7 +146,7 @@ module.exports = {
 
       // select RectangularGeneExpression
       .click(".edit-wrangler-file select[name='file_type'] > option[value='RectangularGeneExpression']")
-      .pause(1000)
+      .pause(5000)
       .verify.containsText(warningText, "Please correct the errors below.")
       .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
           "Normalization is required")

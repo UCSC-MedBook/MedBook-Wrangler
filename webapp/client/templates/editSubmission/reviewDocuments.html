@@ -3,21 +3,22 @@
 
   {{print "editSubmission this:" this}}
   {{#if getSubmissionType}}
-    {{#if compare getSubmissionType 'gene_expression'}}
-      {{> showReviewPanels geneExpressionPanels}}
-    {{/if}}
-
-    {{#if compare getSubmissionType 'network'}}
-      {{> showReviewPanels networkPanels}}
-    {{/if}}
+    {{! NOTE: I decided to call showReviewPanels with an argument back when
+              I switched out that argument with #ifs. I'm too lazy to change
+              it without needing to.}}
+    {{> showReviewPanels getPanels}}
   {{else}}
-    {{> submissionTypeNotDefined}}
+    <div class="well">
+      Upload files to continue
+    </div>
   {{/if}}
 </template>
 
 <template name="showReviewPanels">
   {{#each this}}
-    {{> reviewPanel this}}
+    <div class="panel-group">
+      {{> reviewPanel this}}
+    </div>
   {{/each}}
 
   {{#if noPanelsShown}}
@@ -29,8 +30,20 @@
 
 <template name="reviewPanel">
   {{#if shouldShowPanel}}
-    <div class="panel {{css_class}} reviewPanel" id="review-{{name}}">
-      <div class="panel-heading">{{title}}</div>
+    <div class="panel {{css_class}}" id="review-{{name}}">
+      <div class="panel-heading clearfix">
+        <span class="h4">{{title}}</span>
+
+        <a href="#" class="download-as-file pull-right btn btn-xs btn-primary">
+          <span class="glyphicon glyphicon-download-alt"></span>
+          <span>
+            Download
+            {{#if existsAndBig}}
+              all {{getPublishedCount name}}
+            {{/if}}
+          </span>
+        </a>
+      </div>
 
       {{#if description}}
         <div class="panel-body">
@@ -58,8 +71,8 @@
       {{#if Template.subscriptionsReady}}
         {{#if hasMoreRows}}
           <a href="#">
-            <div class="panel-footer loadMore">
-              Load More
+            <div class="panel-footer loadMore text-center">
+              <span>Load more</span>
             </div>
           </a>
         {{/if}}
@@ -81,20 +94,4 @@
       {{/if}}
     {{/each}}
   </tr>
-</template>
-
-<template name="submissionTypeNotDefined">
-  <div class="well">
-    {{#if hasDocuments}}
-      Multiple submission types detected:
-      <ul>
-        {{#each getSubmissionTypes}}
-          <li>{{this}}</li>
-        {{/each}}
-      </ul>
-      Please submit each type of new document seperately.
-    {{else}}
-      Upload files to continue
-    {{/if}}
-  </div>
 </template>

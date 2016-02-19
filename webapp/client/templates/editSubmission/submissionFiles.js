@@ -30,9 +30,9 @@ Template.uploadNewFiles.events({
     for (var i = 0; i < files.length; i++) {
       var newFile = new FS.File(files[i]);
       newFile.metadata = {
-        "user_id": Meteor.userId(),
-        "submission_id": instance.data._id,
-        "uploaded": true,
+        user_id: Meteor.userId(),
+        submission_id: instance.data._id,
+        wrangler_upload: true,
       };
 
       // insertion is supposed to happen on the client
@@ -57,7 +57,7 @@ Template.uploadNewFiles.events({
           newFile.metadata = {
             "user_id": Meteor.userId(),
             "submission_id": instance.data._id,
-            "uploaded": true,
+            "wrangler_upload": true,
           };
           Blobs.insert(newFile,
               _.partial(blobsInsertCallback, instance.data._id));
@@ -71,24 +71,22 @@ Template.uploadNewFiles.events({
 // Template.showFile
 
 Template.showFile.onCreated(function () {
-  var instance = this; // not
+  var instance = this;
 
+  // subscribe to the blob for this wrangler file
+  instance.subscribe("specificBlob", instance.data.blob_id);
+
+  // NOTE: instance.data does not seem to be reactive
   var needToStartJob = instance.data.status === "uploading";
   instance.autorun(function () {
-    newInstance = Template.instance();
-    // subscribe to the blob for this wrangler file
-    instance.subscribe("specificBlob", newInstance.data.blob_id, function () {
-      // switch from uploading to processing when blob has stored
-      instance.autorun(function () {
-        var blob = Blobs.findOne(newInstance.data.blob_id);
+    // NOTE: blob will be null at first
+    var blob = Blobs.findOne(instance.data.blob_id);
 
-        // update if it's stored
-        if (needToStartJob && blob && blob.hasStored("blobs")) {
-          Meteor.call("reparseWranglerFile", newInstance.data._id);
-          needToStartJob = false;
-        }
-      });
-    });
+    // update if it's stored
+    if (needToStartJob && blob && blob.hasStored("blobs")) {
+      Meteor.call("reparseWranglerFile", instance.data._id);
+      needToStartJob = false;
+    }
   });
 });
 
@@ -182,13 +180,15 @@ function autoformId () {
   return "edit-wrangler-file-" + this._id;
 }
 
-function validateLater (instance) {
+function validateLater (instance, dontReparse) {
   Meteor.clearTimeout(instance.validateTimeout);
 
   instance.validateTimeout = Meteor.setTimeout(function () {
     if (AutoForm.validateForm(autoformId.call(instance.data))) {
       instance.parent().needSchemaCorrection.set(false);
-      Meteor.call("reparseWranglerFile", instance.data._id);
+      if (!dontReparse) {
+        Meteor.call("reparseWranglerFile", instance.data._id);
+      }
     } else {
       instance.parent().needSchemaCorrection.set(true);
     }
@@ -200,6 +200,7 @@ Template.fileOptions.onRendered(function () {
   var fileType = instance.$(
     ".edit-wrangler-file > div:nth-child(1) > div > select[name=file_type]");
 
+  // set up a handler for when the select[name=file_type] changes
   fileType.change(function (event) {
     WranglerFiles.update(instance.data._id, {
       $set: {
@@ -208,6 +209,9 @@ Template.fileOptions.onRendered(function () {
     });
     validateLater(instance);
   });
+
+  // show schema errors when rendered for the first time
+  validateLater(instance, true);
 });
 
 Template.fileOptions.helpers({
@@ -237,4 +241,65 @@ Template.fileOptions.events({
 
     validateLater(instance);
   }
+});
+
+// Template.contrastFields
+
+Template.contrastFields.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("updatableContrasts");
+});
+
+Template.contrastFields.helpers({
+  contrastOptions: function () {
+    var contrasts = Contrasts.find({}).fetch();
+
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "contrast_label"));
+
+    return _.map(uniqueLabels, function (label) {
+      return {
+        label: label,
+        value: label,
+      };
+    });
+  },
+});
+
+// Template.signatureFields
+
+Template.signatureFields.onCreated(function () {
+  var instance = this;
+
+  instance.subscribe("updatableSignatures");
+});
+
+Template.signatureFields.helpers({
+  signatureOptions: function () {
+    var contrasts = Signatures.find({
+      user_id: Meteor.userId(),
+    }).fetch();
+
+    var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"));
+
+    return _.map(uniqueLabels, function (label) {
+      return {
+        label: label,
+        value: label,
+      };
+    });
+  },
+});
+
+// Template.collaborationLabelField
+
+Template.collaborationLabelField.helpers({
+  options: function () {
+    return Collaborations.find().map(function (collaboration) {
+      return {
+        label: collaboration.description,
+        value: collaboration.name,
+      };
+    });
+  },
 });

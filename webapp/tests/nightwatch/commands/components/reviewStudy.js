@@ -21,11 +21,19 @@ exports.command = function(study_label, patientSampleList) {
     }
   }
 
+  var studyRowDef = {
+    brca_test: 1,
+    gbl_test: 2,
+    prad_test: 3,
+  };
+  var studyRow = studyRowDef[study_label];
+
   // studies
+  var studyRowSelector = "#studies > tbody > tr:nth-child(3)";
   this
-    .verify.containsText("#studies > tbody > tr > td:nth-child(1)", study_label)
-    .verify.containsText("#studies > tbody > tr > td:nth-child(2)", patientLabels.sort().join(","))
-    .verify.containsText("#studies > tbody > tr > td:nth-child(3)", sampleLabels.sort().join(","))
+    .verify.containsText(studyRowSelector + " > td:nth-child(1)", study_label)
+    .verify.containsText(studyRowSelector + " > td:nth-child(2)", patientLabels.sort().join(","))
+    .verify.containsText(studyRowSelector + " > td:nth-child(3)", sampleLabels.sort().join(","))
   ;
 
   // Clinical_Info

@@ -7,6 +7,7 @@
 </template>
 
 <!-- TODO: combine geneExpressionTesting and expression2Testing -->
+<!-- lol when -->
 <template name="geneExpressionTesting">
   <h1>This route is to show GeneExpression testing data</h1>
 
@@ -119,7 +120,7 @@
           <tbody>
             {{#each getStudies}}
               <tr>
-                <td>{{id}}</td>
+                <td>{{study_label}}</td>
                 <td>{{sorted Patient_IDs}}</td>
                 <td>{{sorted Sample_IDs}}</td>
               </tr>
@@ -146,6 +147,198 @@
                 <td>{{Study_ID}}</td>
                 <td>{{Patient_ID}}</td>
                 <td>{{Sample_ID}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        No data
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="isoformExpressionTesting">
+  <h1>This route is to show IsoformExpression testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+    <div id="data">
+      {{#if length getIsoformExpression}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>transcript_label</th>
+              <th>gene_label</th>
+              <th>study_label</th>
+              <th>collaborations</th>
+              <th>sample_label</th>
+              <th>quantile_counts</th>
+              <th>quantile_counts_log</th>
+              <th>raw_counts</th>
+              <th>tpm</th>
+              <th>fpkm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getIsoformExpression}}
+              <tr>
+                <td>{{checkUndefined transcript_label}}</td>
+                <td>{{checkUndefined gene_label}}</td>
+                <td>{{checkUndefined study_label}}</td>
+                <td>{{checkUndefined collaborations}}</td>
+                <td>{{checkUndefined sample_label}}</td>
+                <td>{{checkUndefined values.quantile_counts}}</td>
+                <td>{{checkUndefined values.quantile_counts_log}}</td>
+                <td>{{checkUndefined values.raw_counts}}</td>
+                <td>{{checkUndefined values.tpm}}</td>
+                <td>{{checkUndefined values.fpkm}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        No data
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="contrastTesting">
+  <h1>This route is to show Contrast testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+    <div id="data">
+      {{#if length getContrasts}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>contrast_label</th>
+              <th>contrast_version</th>
+              <th>description</th>
+              <th>a_name</th>
+              <th>a_samples</th>
+              <th>b_name</th>
+              <th>b_samples</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getContrasts}}
+              <tr>
+                <td>{{contrast_label}}</td>
+                <td>{{contrast_version}}</td>
+                <td>{{description}}</td>
+                <td>{{a_name}}</td>
+                <td>
+                  <ol class="list-group">
+                    {{#each a_samples}}
+                      <li class="list-group-item">{{study_label}}-{{patient_label}}-{{sample_label}}</li>
+                    {{/each}}
+                  </ol>
+                </td>
+                <td>{{b_name}}</td>
+                <td>
+                  <ol class="list-group">
+                    {{#each b_samples}}
+                      <li class="list-group-item">{{study_label}}-{{patient_label}}-{{sample_label}}</li>
+                    {{/each}}
+                  </ol>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        No data
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="geneAnnotationTesting">
+  <h1>This route is to show GeneAnnotation testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+  <div id="data">
+    {{#if length getAnnotations}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>gene_label</th>
+            <th>study_label</th>
+            <th>collaborations</th>
+            <th>sample_label</th>
+            <th>gistic_copy_number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each getAnnotations}}
+            <tr>
+              <td>{{gene_label}}</td>
+              <td>{{study_label}}</td>
+              <td>{{collaborations}}</td>
+              <td>{{sample_label}}</td>
+              <td>{{checkUndefined gistic_copy_number}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      No data
+    {{/if}}
+  </div>
+  {{else}}
+    <div class="relative-spinner">
+      {{> spinner}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="signatureTesting">
+  <h1>This route is to show Signature testing data</h1>
+
+  {{#if Template.subscriptionsReady}}
+    <div id="data">
+      {{#if length getSignatures}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>signature_label</th>
+              <th>signature_version</th>
+              <th>description</th>
+              <th>algorithm</th>
+              <th>features_type</th>
+              <th>features</th>
+              <th>link_label</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each getSignatures}}
+              <tr>
+                <td>{{signature_label}}</td>
+                <td>{{signature_version}}</td>
+                <td>{{description}}</td>
+                <td>{{algorithm}}</td>
+                <td>{{features_type}}</td>
+                <td>
+                  <ol class="list-group">
+                    {{#each features}}
+                      <li class="list-group-item">{{feature_label}}|{{value}}|{{p_value}}|{{false_discovery_rate}}</li>
+                    {{/each}}
+                  </ol>
+                </td>
+                <td>{{link_label}}</td>
               </tr>
             {{/each}}
           </tbody>

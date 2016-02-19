@@ -5,23 +5,9 @@ module.exports = {
       .url("http://localhost:3000/Wrangler")
       .resizeWindow(1024, 768)
       .reviewMainLayout()
-    ;
 
-    // make sure user exists and log in
-    client
-      .timeoutsAsyncScript(1000)
-      .executeAsync(function(data, done){
-        Accounts.createUser({
-          email: 'testing@medbook.ucsc.edu',
-          password: 'testing',
-          profile: {
-            collaborations: ['testing']
-          }
-        }, done);
-      })
-      .executeAsync(function(data, done) {
-        Meteor.logout(done);
-      })
+      // make sure user exists and log in
+      .createTestingUser()
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
@@ -57,22 +43,23 @@ module.exports = {
     ;
 
     // add a file using the URL option
-    // This is a picture test file hosted by copy.com
-    // In case you're wondering it's a picture of Teo's friends
-    // Tanguy and Ilann working at 42.
-    var largeFileUrl =
-        "https://copy.com/qkYYWLwEdPrZmNTf/Tanguy%20and%20Ilann.jpg?download=1";
-    var fileName = 'Tanguy%20and%20Ilann.jpg';
+    // rando image from http://imgur.com/gallery/qZMQD
+    // var largeFileUrl =
+    //     "http://i.imgur.com/i3BsFyU.jpg";
+    // var fileName = 'i3BsFyU.jpg';
+    var fileUrl =
+        "http://localhost:3000/DTB-999_Baseline-bad.rsem.genes.norm_counts.tab";
+    var fileName = 'DTB-999_Baseline-bad.rsem.genes.norm_counts.tab';
     var urlInput = "form.add-from-web-form input[name='urlInput']";
     client
       .clearValue(urlInput)
-      .setValue(urlInput, largeFileUrl)
+      .setValue(urlInput, fileUrl)
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible('div.panel-heading span.badge', 3000)
-        .verify.elementPresent(".panel-warning")
-        .verify.elementPresent(".panel-body .progress")
-        .verify.containsText(".panel-title .badge",  "uploading")
-        .verify.value(urlInput, "")
+        // .verify.elementPresent(".panel-warning")
+        // .verify.elementPresent(".panel-body .progress")
+        // .verify.containsText(".panel-title .badge",  "uploading")
+        // .verify.value(urlInput, "")
         .verify.elementPresent(".panel-title .glyphicon-file")
         .verify.containsText(".panel-title .ellipsis-out-before-badge", fileName)
         .verify.elementPresent(".panel-title .badge")
@@ -95,13 +82,39 @@ module.exports = {
         .verify.containsText(submissionListItem + ' .btn-warning', 'Delete')
         .verify.containsText(submissionListItem + ' > p > h5', 'Files')
         .verify.containsText(submissionListItem + ' > p > span', fileName)
-    ;
 
-    // click the edit button and make sure it's still there
-    client
+      // click the edit button and make sure it's still there
       .click(submissionListItem + ' .btn-primary')
       .waitForElementVisible(".ellipsis-out-before-badge", 3000)
       .verify.containsText('.ellipsis-out-before-badge', fileName)
+
+      // test the review panels
+      // NOTE: depends on RectangularGeneExpression
+      .waitForElementVisible(".panel-success", 35000) // wait for file done processing
+      .waitForElementVisible("#review-ignored_genes .download-as-file", 3000)
+      .verify.containsText("#review-assay_sample_summary .download-as-file", "Download")
+      .verify.containsText("#review-ignored_genes .download-as-file", "Download all 5")
+
+      // click the "load more" button for ignored genes
+      .verify.elementPresent("#review-ignored_genes .loadMore")
+      .click("#review-ignored_genes .loadMore")
+      .waitForElementNotPresent(".relative-spinner", 5000)
+      .verify.elementNotPresent("#review-ignored_genes .loadMore")
+      .verify.containsText("#review-ignored_genes .download-as-file", "Download")
+
+
+      // TODO: figure out if this is possible
+      // // ajax call to make sure the files look good
+      // .timeoutsAsyncScript(2000)
+      // .executeAsync(function (data, done) {
+      //   console.log("window.location.pathname:", window.location.pathname);
+      //   $.ajax({
+      //     url: window.location.pathname + "/download?submission_type=gene_expression&document_type=ignored_genes",
+      //     success: done,
+      //   });
+      // }, null, function (result) {
+      //   console.log("result:", result);
+      // })
 
       // delete the file
       .click(".panel-title .pull-right .remove-this-file").pause(200)
@@ -130,9 +143,10 @@ module.exports = {
       .waitForElementVisible(warningText, 60000)
       .verify.containsText(warningText,
           "File type could not be inferred. Please manually select a file type")
+
       // select RectangularGeneExpression
       .click(".edit-wrangler-file select[name='file_type'] > option[value='RectangularGeneExpression']")
-      .pause(1000)
+      .pause(5000)
       .verify.containsText(warningText, "Please correct the errors below.")
       .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
           "Normalization is required")
@@ -149,19 +163,19 @@ module.exports = {
       .waitForElementPresent(".panel-warning", 30000)
       .verify.containsText(warningText, "Can't find column with header \"Sample_Name\"")
 
-      // select ArachneRegulon
-      .click(".edit-wrangler-file select[name='file_type'] > option[value='ArachneRegulon']")
-      .pause(1000)
-      .verify.containsText(warningText, "Please correct the errors below.")
-      .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
-          "Network name is required")
-
-      // set network name
-      .setValue(".edit-wrangler-file input", "HelloWorld")
-      .click("#submissionFiles") // deselect field, trigger submit
-      .waitForElementPresent(".panel-info", 2000)
-      .waitForElementPresent(".panel-warning", 30000)
-      .verify.containsText(warningText, "No interactions specified for source gene hello")
+      // // select ArachneRegulon
+      // .click(".edit-wrangler-file select[name='file_type'] > option[value='ArachneRegulon']")
+      // .pause(1000)
+      // .verify.containsText(warningText, "Please correct the errors below.")
+      // .verify.containsText(".edit-wrangler-file > div.form-group.has-error > div > span",
+      //     "Network name is required")
+      //
+      // // set network name
+      // .setValue(".edit-wrangler-file input", "HelloWorld")
+      // .click("#submissionFiles") // deselect field, trigger submit
+      // .waitForElementPresent(".panel-info", 2000)
+      // .waitForElementPresent(".panel-warning", 30000)
+      // .verify.containsText(warningText, "No interactions specified for source gene hello")
 
       // go back to the list submissions page and delete it
       .click('#left > ol > li:nth-child(1) > a')

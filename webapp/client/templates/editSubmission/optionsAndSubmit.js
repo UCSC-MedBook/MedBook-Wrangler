@@ -1,7 +1,7 @@
 var sharedSchema = new SimpleSchema({
-  "description": { type: String },
-  "study_label": { type: String },
-  "collaboration_label": { type: String },
+  description: { type: String },
+  study_label: { type: String },
+  collaboration_label: { type: String },
 });
 
 Template.optionsAndSubmit.helpers({
@@ -11,12 +11,20 @@ Template.optionsAndSubmit.helpers({
       Mutations.simpleSchema().pick([
         "biological_source",
         "mutation_impact_assessor",
+        "mutation_caller",
       ]),
     ]);
   },
   sharedSchema: function () {
     return sharedSchema;
   },
+  onlyDescription: function () {
+    return new SimpleSchema({
+      description: { type: String },
+    });
+  },
+
+
 
   // superpathwaySchema: function () {
   //   return new SimpleSchema([
@@ -67,12 +75,12 @@ Template.sharedFields.helpers({
     return Studies.find().map(function (study) {
       return {
         label: study.name,
-        value: study.id,
+        value: study.study_label,
       };
     });
   },
   collaborationOptions: function () {
-    return Collabs.find().map(function (collaboration) {
+    return Collaborations.find().map(function (collaboration) {
       return {
         label: collaboration.description,
         value: collaboration.name,

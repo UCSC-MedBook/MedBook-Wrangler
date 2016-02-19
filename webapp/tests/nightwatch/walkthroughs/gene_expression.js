@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ["BD2K", "travis"],
+  tags: ["gene_expression", "travis"],
   "Upload some RectangularGeneExpression files": function (client) {
     client
       .url("http://localhost:3000/Wrangler")
@@ -9,19 +9,7 @@ module.exports = {
 
     // make sure user exists and log in
     client
-      .timeoutsAsyncScript(2000)
-      .executeAsync(function(data, done){
-        Accounts.createUser({
-          email: 'testing@medbook.ucsc.edu',
-          password: 'testing',
-          profile: {
-            collaborations: ['testing']
-          }
-        }, done);
-      })
-      .executeAsync(function(data, done) {
-        Meteor.logout(done);
-      })
+      .createTestingUser()
       .signIn("testing@medbook.ucsc.edu", "testing")
     ;
 
@@ -31,18 +19,18 @@ module.exports = {
       .url('http://localhost:3000/Wrangler/testing/removeTestingData')
         .waitForElementVisible('#done', 5000)
       .url('http://localhost:3000/Wrangler/testing/geneExpressionTesting')
-        .waitForElementVisible('#data', 2000)
+        .waitForElementVisible('#data', 5000)
         .verify.containsText('#data', 'No data')
     ;
 
     // Create a new submission
     var urlInput = "form.add-from-web-form input[name='urlInput']";
-    var geneCountsPanel = '#review-sample_normalization > table > tbody';
+    var geneCountsPanel = '#review-assay_sample_summary > table > tbody';
     client
       .url("http://localhost:3000/Wrangler")
-      .waitForElementVisible("#create-new-submission", 2000)
+      .waitForElementVisible("#create-new-submission", 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -63,26 +51,26 @@ module.exports = {
       .verify.containsText('#review-mapped_genes > table > tbody > tr:nth-child(2) > td:nth-child(2)', 'GGACT')
       // .verify.elementPresent('#review-mapped_genes .loadMore')
 
-      .verify.elementPresent('#review-sample_normalization')
+      .verify.elementPresent('#review-assay_sample_summary')
       .verify.containsText(geneCountsPanel + ' > tr > th ', 'DTB-999')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(2)', 'Quantile normalized counts')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '7')
-      .verify.elementNotPresent('#review-sample_normalization .loadMore')
+      .verify.elementNotPresent('#review-assay_sample_summary .loadMore')
 
       // make sure we're not going to overwrite any data
-      .assert.elementNotPresent("#review-gene_expression_data_exists")
+      .assert.elementNotPresent("#review-sample_data_exists")
     ;
 
 
     // go back to '/Wrangler', click on first 'Edit' button
     var descriptionTextArea = '#submission-options > div:nth-child(1) > textarea';
-    var studyLabel = '#submission-options > div:nth-child(2) > select';
-    var collaborationLabel = '#submission-options > div:nth-child(3) > select';
+    var studyLabel = "#submission-options select[name='study_label']";
+    var collaborationLabel = "#submission-options select[name='collaboration_label']";
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 2000)
+      .waitForElementVisible('div.list-group > div:nth-child(2) a.btn.btn-xs.btn-primary', 5000)
       .click('h4.list-group-item-heading a.btn-primary')
-        .waitForElementVisible(descriptionTextArea, 2000)
+        .waitForElementVisible(descriptionTextArea, 5000)
         .clearValue(descriptionTextArea)
         .setValue(descriptionTextArea, 'quantile counts testing')
         .click(studyLabel + ' > option:nth-child(2)').pause(500)
@@ -92,7 +80,7 @@ module.exports = {
         .click(collaborationLabel + ' > option:nth-child(2)')
         .click('.save-for-later')
       .refresh()
-        .waitForElementVisible('.validate-and-submit', 2000)
+        .waitForElementVisible('.validate-and-submit', 5000)
         .click('.validate-and-submit')
         .waitForElementVisible('#optionsAndSubmit > div > div:nth-child(2) > div.panel-success', 35000)
     ;
@@ -186,9 +174,9 @@ module.exports = {
     // add another BD2K file (tpm this time)
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -198,7 +186,7 @@ module.exports = {
       .verify.containsText('#blob_line_count', '[2 lines not shown]')
       .verify.elementPresent('.edit-wrangler-file select[name="normalization"]')
       .verify.containsText(geneCountsPanel + ' > tr > td:nth-child(3)', '6')
-      .verify.elementNotPresent("#review-gene_expression_data_exists")
+      .verify.elementNotPresent("#review-sample_data_exists")
       // fill in the bottom stuff
       .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, 'tpm testing')
@@ -316,29 +304,29 @@ module.exports = {
     var firstDelete = "body > div > div.list-group > div:nth-child(2) > h4 > span > a.delete-submission";
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-999_Baseline.rsem.genes.norm_tpm.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 35000)
-      .verify.elementPresent("#review-gene_expression_data_exists")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > th", "DTB-999")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
-      .verify.containsText("#review-gene_expression_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
+      .verify.elementPresent("#review-sample_data_exists")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > th", "DTB-999")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > td:nth-child(2)", "TPM (Transcripts Per Million)")
+      .verify.containsText("#review-sample_data_exists > table > tbody > tr > td:nth-child(3)", "DTB-999_Baseline.rsem.genes.norm_tpm.tab")
       .click("#left > ol > li:nth-child(1) > a") // go back to submissions page
-      .waitForElementVisible(firstDelete, 2000)
+      .waitForElementVisible(firstDelete, 5000)
       .click(firstDelete) // delete it
     ;
 
     // add a file with an undefined sample label, make sure it doesn't work
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/DTB-cool_Baseline.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -360,8 +348,8 @@ module.exports = {
       .waitForElementVisible("#submissionFiles div.alert.alert-warning > p", 35000)
       .verify.containsText("#submissionFiles div.alert.alert-warning > p",
           "File type could not be inferred. Please manually select a file type")
-      .click("#submissionFiles select > option:nth-child(3)")
-      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 2000)
+      .click("#submissionFiles select > option[value='BD2KSampleLabelMap']")
+      .waitForElementVisible("#submissionFiles > div.panel.panel-info", 5000)
       .waitForElementVisible("#submissionFiles > div.panel.panel-success", 35000)
 
       // add UUID file
@@ -369,14 +357,14 @@ module.exports = {
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.norm_fpkm.tab')
       .click("form.add-from-web-form button[type='submit']")
       .waitForElementVisible("#submissionFiles > div:nth-child(3).panel-success", 35000)
-      .waitForElementVisible("#review-sample_normalization", 35000)
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > th", "DTB-998Dup")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(2)",
+      .waitForElementVisible("#review-assay_sample_summary", 35000)
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > th", "DTB-998Dup")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > td:nth-child(2)",
           "RPKM (Reads Per Kilobase of transcript per Million mapped reads)")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr > td:nth-child(3)", "7")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr > td:nth-child(3)", "7")
 
       // make sure label mapping file loaded right
-      .waitForElementPresent("#review-sample_label_map", 2000)
+      .waitForElementPresent("#review-sample_label_map", 5000)
       .verify.containsText("#review-sample_label_map tbody > tr > th", "DTB-998Dup")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(2)", "DTB-998-Baseline-Duplicate")
       .verify.containsText("#review-sample_label_map tr > td:nth-child(3)", "123456789")
@@ -501,9 +489,9 @@ module.exports = {
     // verify we can get to label mappings from a previous submission
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/123456789.rsem.genes.raw_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
@@ -532,22 +520,22 @@ module.exports = {
     // var collaborationLabel = '#submission-options > div:nth-child(3) > select';
     client
       .url('http://localhost:3000/Wrangler')
-      .waitForElementVisible('#create-new-submission', 2000)
+      .waitForElementVisible('#create-new-submission', 5000)
       .click('#create-new-submission')
-      .waitForElementVisible(urlInput, 2000)
+      .waitForElementVisible(urlInput, 5000)
       .clearValue(urlInput)
       .setValue(urlInput, 'http://localhost:3000/two_samples.rsem.genes.norm_counts.tab')
       .click("form.add-from-web-form button[type='submit']")
       // wait for it to be parsed
       .waitForElementVisible('#submissionFiles .panel-success', 35000)
       // check the review panel
-      .verify.elementPresent("#review-sample_normalization")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > th", "DTB-141")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(2)", "Quantile normalized counts")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(1) > td:nth-child(3)", "2")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > th", "DTB-143")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(2)", "Quantile normalized counts")
-      .verify.containsText("#review-sample_normalization > table > tbody > tr:nth-child(2) > td:nth-child(3)", "2")
+      .verify.elementPresent("#review-assay_sample_summary")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > th", "DTB-141")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(1) > td:nth-child(3)", "2")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > th", "DTB-143")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > td:nth-child(2)", "Quantile normalized counts")
+      .verify.containsText("#review-assay_sample_summary > table > tbody > tr:nth-child(2) > td:nth-child(3)", "2")
       // fill in the bottom stuff
       .clearValue(descriptionTextArea)
       .setValue(descriptionTextArea, 'rectangular matrix` testing')

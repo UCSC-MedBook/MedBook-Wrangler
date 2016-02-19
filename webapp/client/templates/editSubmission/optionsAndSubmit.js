@@ -75,7 +75,7 @@ Template.sharedFields.helpers({
     return Studies.find().map(function (study) {
       return {
         label: study.name,
-        value: study.id,
+        value: study.study_label,
       };
     });
   },

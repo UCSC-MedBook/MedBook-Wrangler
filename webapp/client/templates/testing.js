@@ -113,7 +113,7 @@ Template.studyTesting.onCreated(function () {
 Template.studyTesting.helpers({
   getStudies: function () {
     return Studies.find({}, {
-      sort: { id: 1 }
+      sort: { study_label: 1 }
     });
   },
   getClinicalInfo: function () {

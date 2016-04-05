@@ -61,7 +61,7 @@ localstorage@1.0.3
 logging@1.0.7
 medbook:collaborations@2.4.11
 medbook:namespace@0.0.2
-medbook:primary-collections@0.0.17
+medbook:primary-collections@0.0.18
 medbook:wrangler-collections@0.0.23
 meteor@1.1.6
 meteor-platform@1.2.2

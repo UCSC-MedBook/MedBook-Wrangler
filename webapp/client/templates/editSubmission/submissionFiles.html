@@ -165,6 +165,12 @@
       {{> signatureFields}}
     {{/if}}
 
+    {{#if isInSchema "study_label"}}
+      {{> horizontalField name="study_label"
+          options=studyOptions
+          firstOption="(Select a study)"}}
+    {{/if}}
+
     {{#if isInSchema "annotation_type"}}
       {{> horizontalField name="annotation_type"
           firstOption="(Select an annotation type)"}}

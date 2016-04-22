@@ -35,9 +35,8 @@
         {{/if}}
 
         {{#if compare getSubmissionType "metadata"}}
-          <div class="well">
-            You cannot submit a submission with only metadata.
-          </div>
+          {{#submissionOptions schema=onlyDescription}}
+          {{/submissionOptions}}
         {{/if}}
 
         {{#if compare getSubmissionType 'mutation'}}
@@ -135,10 +134,14 @@
 <template name="sharedFields">
   {{> afQuickField name="description" type="textarea" rows=3
       placeholder="Where did the data come from?"}}
-  {{> afQuickField name="study_label" type="select"
-      options=studyOptions firstOption="(Select a study)"}}
+  {{> studyField}}
   <!-- {{> afQuickField name="collaboration_label" type="select"
       options=collaborationOptions firstOption="(Select a collaboration)"}} -->
+</template>
+
+<template name="studyField">
+  {{> afQuickField name="study_label" type="select"
+      options=studyOptions firstOption="(Select a study)"}}
 </template>
 
 <!-- <template name="superpathwayFields">

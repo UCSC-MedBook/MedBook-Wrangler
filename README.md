@@ -22,6 +22,10 @@ Several different genomic matrices are supported:
 - gene expression
 - more are coming soon!
 
-If there are duplicate genes in the a genomic matrix, the values are averaged for all duplicates of that gene. 
+If there are duplicate genes in the a genomic matrix, the values are averaged for all duplicates of that gene.
 
 [Here is an example of a genomic expression file.](/example-files/genomic_expression_matrix.tsv)
+
+### Gene sets (.gmt)
+
+GMT files define a set of gene sets. See [here](http://www.broadinstitute.org/cancer/software/genepattern/file-formats-guide#GMT) for the file format definition.

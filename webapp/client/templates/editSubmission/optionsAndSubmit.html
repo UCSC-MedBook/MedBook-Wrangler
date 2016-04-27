@@ -39,6 +39,11 @@
           {{/submissionOptions}}
         {{/if}}
 
+        {{#if compare getSubmissionType "gene_set_collection"}}
+          {{#submissionOptions schema=onlyDescription}}
+          {{/submissionOptions}}
+        {{/if}}
+
         {{#if compare getSubmissionType 'mutation'}}
           {{#submissionOptions schema=mutationSchema}}
             {{> mutationFields}}

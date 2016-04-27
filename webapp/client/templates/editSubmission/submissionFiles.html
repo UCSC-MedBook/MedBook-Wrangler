@@ -175,6 +175,11 @@
       {{> horizontalField name="annotation_type"
           firstOption="(Select an annotation type)"}}
     {{/if}}
+
+    {{#if compare options.file_type "GeneSetCollection"}}
+      {{> horizontalField name="name"}}
+      {{> horizontalField name="description"}}
+    {{/if}}
   {{/autoForm}}
 </template>
 

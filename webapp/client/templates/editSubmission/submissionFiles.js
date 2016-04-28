@@ -224,6 +224,14 @@ Template.fileOptions.helpers({
     return simpleSchema.schema()[field];
   },
   WranglerFiles: WranglerFiles,
+  studyOptions: function () {
+    return Studies.find().map(function (study) {
+      return {
+        label: study.name,
+        value: study.id,
+      };
+    });
+  },
 });
 
 Template.fileOptions.events({

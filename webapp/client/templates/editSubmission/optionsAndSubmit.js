@@ -72,19 +72,22 @@ Template.submissionOptions.helpers({
 });
 
 Template.sharedFields.helpers({
-  studyOptions: function () {
-    return Studies.find().map(function (study) {
-      return {
-        label: study.name,
-        value: study.id,
-      };
-    });
-  },
   collaborationOptions: function () {
     return Collaborations.find().map(function (collaboration) {
       return {
         label: collaboration.description,
         value: collaboration.name,
+      };
+    });
+  },
+});
+
+Template.studyField.helpers({
+  studyOptions: function () {
+    return Studies.find().map(function (study) {
+      return {
+        label: study.name,
+        value: study.id,
       };
     });
   },

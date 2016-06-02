@@ -165,10 +165,10 @@
       {{> signatureFields}}
     {{/if}}
 
-    {{#if isInSchema "study_label"}}
-      {{> horizontalField name="study_label"
-          options=studyOptions
-          firstOption="(Select a study)"}}
+    {{#if isInSchema "data_set_id"}}
+      {{> horizontalField name="data_set_id"
+          options=dataSetOptions
+          firstOption="(Select a data set)"}}
     {{/if}}
 
     {{#if isInSchema "annotation_type"}}

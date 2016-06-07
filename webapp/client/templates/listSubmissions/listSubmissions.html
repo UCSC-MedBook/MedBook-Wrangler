@@ -1,10 +1,16 @@
 <template name="listSubmissions">
   <h2 class="page-header">Submissions</h2>
   <div class="list-group">
-    <a id="create-new-submission" href="#" class="list-group-item">
-      <span class="glyphicon glyphicon-plus"></span>
-      Create a new submission
-    </a>
+		{{#if currentUser}}
+			<a id="create-new-submission" href="#" class="list-group-item">
+				<span class="glyphicon glyphicon-plus"></span>
+				Create a new submission
+			</a>
+		{{else}}
+			<div class="list-group-item">
+			Sign in to create a new submission.
+			</div>
+		{{/if}}
     {{#each submissions}}
       {{> submissionListItem}}
     {{/each}}

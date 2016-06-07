@@ -165,12 +165,14 @@
 <template name="validateAndSubmit">
   {{! TODO: only show in blue if every file is done processing }}
   <div class="form-group">
-    <button class="btn btn-warning reset-options">
+    {{! Reset & Save buttons are not actually useful; remove for now.
+		<button class="btn btn-warning reset-options">
       Reset options
     </button>
     <button class="btn btn-info save-for-later">
       Save
     </button>
+		}}
     <button class="btn btn-primary validate-and-submit">
       Validate and submit
     </button>

@@ -66,6 +66,24 @@ Template.uploadNewFiles.events({
       });
     }
   },
+  // Attach an existing blob to this submission
+  "submit .add-from-blob-form": function (event, instance) {
+    event.preventDefault();
+    var blobInputElement = event.target.blobIdInput;
+    if(blobInputElement.value){
+      var blobID = blobInputElement.value; 
+
+      // Use a Meteor Method to get the server to find the blob and
+      // attach the metadata, since the blob is already on the server.
+
+      var callback = _.partial(blobsInsertCallback, instance.data._id);
+      Meteor.call('attachBlobToSubmission', instance.data._id, blobID, callback );
+    }else{
+      console.log("Attempted to attach blob, but no ID supplied.");
+    }
+    // Clear the input field
+    blobInputElement.value="";
+  },
 });
 
 // Template.showFile

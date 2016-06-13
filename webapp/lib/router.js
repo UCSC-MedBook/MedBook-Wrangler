@@ -11,14 +11,14 @@ Router.configure({
 
 Router.map(function() {
   this.route('listSubmissions', {
-    path: '/Wrangler/',
+    path: '/wrangler/',
     subscriptions: function () {
       return Meteor.subscribe("listSubmissions");
     },
   });
 
   this.route('editSubmission', {
-    path: '/Wrangler/editSubmission/:submission_id',
+    path: '/wrangler/editSubmission/:submission_id',
     waitOn: function () {
       return Meteor.subscribe("wranglerSubmission", this.params.submission_id);
     },
@@ -33,34 +33,34 @@ Router.map(function() {
 
   // testing routes
   this.route('removeTestingData', {
-    path: '/Wrangler/testing/removeTestingData'
+    path: '/wrangler/testing/removeTestingData'
   });
 
   this.route('geneExpressionTesting', {
-    path: '/Wrangler/testing/geneExpressionTesting'
+    path: '/wrangler/testing/geneExpressionTesting'
   });
 
   this.route('expression2Testing', {
-    path: '/Wrangler/testing/expression2Testing'
+    path: '/wrangler/testing/expression2Testing'
   });
 
   this.route('isoformExpressionTesting', {
-    path: '/Wrangler/testing/isoformExpressionTesting'
+    path: '/wrangler/testing/isoformExpressionTesting'
   });
 
   this.route('studyTesting', {
-    path: '/Wrangler/testing/studyTesting'
+    path: '/wrangler/testing/studyTesting'
   });
 
   this.route('contrastTesting', {
-    path: '/Wrangler/testing/contrastTesting'
+    path: '/wrangler/testing/contrastTesting'
   });
 
   this.route('geneAnnotationTesting', {
-    path: '/Wrangler/testing/geneAnnotationTesting'
+    path: '/wrangler/testing/geneAnnotationTesting'
   });
 
   this.route('signatureTesting', {
-    path: '/Wrangler/testing/signatureTesting'
+    path: '/wrangler/testing/signatureTesting'
   });
 });

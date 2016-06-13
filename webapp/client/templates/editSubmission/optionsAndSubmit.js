@@ -1,8 +1,5 @@
 var sharedSchema = new SimpleSchema({
   description: { type: String },
-  study_label: { type: String },
-  // // NOTE: taken out after we decided on study-level security
-  // collaboration_label: { type: String },
 });
 
 Template.optionsAndSubmit.helpers({
@@ -20,9 +17,7 @@ Template.optionsAndSubmit.helpers({
     return sharedSchema;
   },
   onlyDescription: function () {
-    return new SimpleSchema({
-      description: { type: String },
-    });
+    return sharedSchema;
   },
 
 
@@ -77,17 +72,6 @@ Template.sharedFields.helpers({
       return {
         label: collaboration.description,
         value: collaboration.name,
-      };
-    });
-  },
-});
-
-Template.studyField.helpers({
-  studyOptions: function () {
-    return Studies.find().map(function (study) {
-      return {
-        label: study.name,
-        value: study.id,
       };
     });
   },

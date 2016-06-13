@@ -224,11 +224,11 @@ Template.fileOptions.helpers({
     return simpleSchema.schema()[field];
   },
   WranglerFiles: WranglerFiles,
-  studyOptions: function () {
-    return Studies.find().map(function (study) {
+  dataSetOptions: function () {
+    return DataSets.find().map(function (dataSet) {
       return {
-        label: study.name,
-        value: study.id,
+        label: dataSet.name,
+        value: dataSet._id,
       };
     });
   },

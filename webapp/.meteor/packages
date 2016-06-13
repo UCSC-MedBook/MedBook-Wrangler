@@ -5,7 +5,7 @@
 # but you can also edit it by hand.
 
 meteor-platform
-medbook:primary-collections
+medbook:primary-collections@0.0.19
 iron:router
 cfs:standard-packages
 aldeed:collection2@2.3.3
@@ -22,7 +22,8 @@ twbs:bootstrap
 sacha:spin
 less
 momentjs:moment
-medbook:wrangler-collections
+medbook:wrangler-collections@0.0.24
+medbook:referential-integrity@0.0.2
 erasaur:meteor-lodash
 reactive-var
 
@@ -32,4 +33,4 @@ aldeed:template-extension
 audit-argument-checks
 tmeasday:publish-counts
 mokolodi1:helpers
-medbook:collaborations@2.4.7
+medbook:collaborations@2.4.12

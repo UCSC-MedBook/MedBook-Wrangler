@@ -6,4 +6,4 @@
 	url = https://github.com/UCSC-MedBook/wrangler-collections
 [submodule "webapp/packages/collaborations"]
 	path = webapp/packages/collaborations
-	url = https://github.com/UCSC-MedBook/collaborations/
+	url = https://github.com/UCSC-MedBook/collaborations

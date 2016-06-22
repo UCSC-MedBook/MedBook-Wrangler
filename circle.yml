@@ -8,16 +8,21 @@ dependencies:
   override:
     - docker info
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
-    #TODO figure out how to pass tag in here
+    # CIRCLE_TAG is the git tag name if that's what triggered the build
     - docker build -t medbook/wrangler:$CIRCLE_TAG .
-    - mkdir -p ~/docker; docker save medbook/wrangler > ~/docker/image.tar
+    - mkdir -p ~/docker; docker save medbook/wrangler:$CIRCLE_TAG > ~/docker/image.tar
 
 test:
   override:
     - echo "tests go here"
 
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init --recursive
+
 deployment:
-  hub: 
+  hub:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS

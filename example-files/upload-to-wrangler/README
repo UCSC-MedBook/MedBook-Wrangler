@@ -1,13 +1,36 @@
 Upload to Wrangler
+==================
 
-This is an example script for uploading a file to be imported as a Wrangler
- submission. For details, see the example configuration file "example.conf".
+Prerequisites:
+  python 2.7
 
-Usage Overview
+Usage:
+  uploadToWrangler.py configurationFile sampleID
 
-./uploadToWrangler.py SAMPLENAME
+Example:
+  uploadToWrangler.py example.conf KS_10
 
-This will upload the chosen file to Wrangler and, once completed, will display
+Setup:
+  The first line of the script must be edited to provide the path to
+  your system's python 2.7 executable.
+
+  A configuration file must be supplied with the details about where the
+  sample files are located and what they are named. See the included
+  example.conf file for details. 
+  
+  The following directory structure is assumed:
+-- [A base directory containing all sample directories]
+  -- [A directory named the same as the sampleID ]
+    -- [some number of subdirectories with the same name for every sample]
+      -- [the desired sample file]
+
+ The desired sample file is assumed to be named [sampleID].suffix, with the
+ same suffix for every sample.
+  
+Running the script:
+
+This script uploads a file that is to be imported as a MedBook Wrangler
+submission. Once completed, it will display 
 the ID that it has been assigned. For example:
 
 Blob ID for import to Wrangler:

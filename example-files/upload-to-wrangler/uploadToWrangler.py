@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/python2.7
+
 import ConfigParser
 import sys
 import os.path
@@ -27,7 +28,7 @@ def uploadSample(options, sample_path):
   if( options["protocol"] == "curl"):
     sample_filename = os.path.basename(sample_path)
     url_w_filename = "%s%s" % (options["destination_url"], sample_filename)
-    curl_command = ["curl", url_w_filename, "-H", "Content-Type: text/plain", 
+    curl_command = ["curl", "-k", url_w_filename, "-H", "Content-Type: text/plain", 
                     "-T", sample_path]
 
     #print subprocess.list2cmdline(curl_command)
@@ -48,4 +49,9 @@ def main(config_file, sample):
   print "Blob ID for import to Wrangler:\n%s\n" % blob_id
 
 if __name__ == '__main__':
-   main("example.conf", sys.argv[1]) # TODO help message, choice of conf filename
+  if len(sys.argv) != 3:
+    print ("Usage:\n"
+           "uploadToWrangler.py configurationFile sampleID\n"
+           "See the README for further details.")
+  else:
+    main(sys.argv[1], sys.argv[2])

@@ -154,6 +154,16 @@
 </template>
 
 <template name="fileOptions">
+  {{#if isInSchema "sample_label_field"}}
+    {{#unless formFieldsLoaded}}
+      <div class="alert alert-info" role="alert">
+        <strong>Note:</strong>
+        After this file completes parsing the first time,
+        come back and select which field has the sample ID.
+      </div>
+    {{/unless}}
+  {{/if}}
+
   {{#autoForm id=autoformId schema=optionsSchema doc=this.options
       autosave=true class="edit-wrangler-file"}}
     {{> horizontalField name="file_type" firstOption="Auto"}}
@@ -177,8 +187,27 @@
       {{> contrastFields}}
     {{/if}}
 
-    {{#if isInSchema "signature_label"}}
+    <!-- {{#if isInSchema "signature_label"}}
       {{> signatureFields}}
+    {{/if}} -->
+
+    {{#if isInSchema "study_label"}}
+      {{> horizontalField name="study_label"
+          options=studyOptions
+          firstOption="(Select a study)"}}
+    {{/if}}
+
+    {{#if isInSchema "form_name"}}
+      {{> horizontalField name="form_name"
+          placeholder="Name of the form..."}}
+    {{/if}}
+
+    {{#if isInSchema "sample_label_field"}}
+      {{#if formFieldsLoaded}}
+        {{> sampleLabelFieldSelector}}
+      {{/if}}
+      {{! NOTE: the `else` is up above (outside the form) because
+          of css issues}}
     {{/if}}
 
     {{#if isInSchema "data_set_id"}}
@@ -199,30 +228,17 @@
   {{/autoForm}}
 </template>
 
-<template name="contrastFields">
-  {{> updateOrCreate}}
-  {{#if this.options.update_or_create}}
-    {{#if compare this.options.update_or_create "update"}}
-      {{#if length contrastOptions}}
-        {{> horizontalField name="contrast_label"
-            options=contrastOptions
-            firstOption="(Select an existing contrast)"}}
-      {{else}}
-        <div class="alert alert-danger" role="alert"
-            style="float: left;"> {{! float left to be below other form-groups}}
-          <strong>Oh snap!</strong>
-          You have no contrasts you can update.
-          Note that only the owner of a contrast can update it.
-        </div>
-      {{/if}}
-    {{else}}
-      {{> horizontalField name="contrast_label"}}
-      {{> horizontalField name="description"}}
-    {{/if}}
+<template name="sampleLabelFieldSelector">
+  {{#if Template.subscriptionsReady}}
+    {{> horizontalField name="sample_label_field"
+        placeholder="Sample ID field" options=options}}
+  {{else}}
+    {{! the .alert css isn't working so it's just going to be ugly}}
+    Loading...
   {{/if}}
 </template>
 
-<template name="signatureFields">
+<!-- <template name="signatureFields">
   {{> updateOrCreate}}
   {{#if this.options.update_or_create}}
     {{#if compare this.options.update_or_create "update"}}
@@ -245,7 +261,7 @@
       {{> horizontalField name="features_type" options="allowed"}}
     {{/if}}
   {{/if}}
-</template>
+</template> -->
 
 <template name="collaborationLabelField">
   {{> horizontalField name="collaboration_label"

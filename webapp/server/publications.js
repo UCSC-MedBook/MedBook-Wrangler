@@ -14,15 +14,16 @@ Meteor.publish("wranglerSubmission", function (submission_id) {
 
   var collaborations = user.getCollaborations();
 
+  // we're probably sending too much data here...
   return [
     WranglerSubmissions.find(submission_id),
     WranglerFiles.find({ submission_id: submission_id }),
     DataSets.find({
       "collaborations": { $in: collaborations },
-    }),
-    Collaborations.find({
-      name: { $in: collaborations },
-    }),
+    }, { fields: { name: 1 } }),
+    Studies.find({
+      "collaborations": { $in: collaborations },
+    }, { fields: { name: 1 } }),
   ];
 });
 
@@ -80,13 +81,6 @@ Meteor.publish("wranglerFiles", function (submission_id) {
 
   return WranglerFiles.find({
     submission_id: submission_id
-  });
-});
-
-Meteor.publish("updatableContrasts", function () {
-  var collaborations = MedBook.ensureUser(this.userId).getCollaborations();
-  return Contrasts.find({
-    collaborations: { $in: collaborations }
   });
 });
 

@@ -111,7 +111,7 @@ Template.reviewPanel.helpers({
 
 Template.reviewPanel.events({
   'click .loadMore': function (event, instance) {
-    instance.limit.set(instance.limit.get() + 3);
+    instance.limit.set(instance.limit.get() + 10);
   },
   "click .download-as-file": function (event, instance) {
     var query = "submission_type=" + getSubmissionTypes(this._id)[0] +

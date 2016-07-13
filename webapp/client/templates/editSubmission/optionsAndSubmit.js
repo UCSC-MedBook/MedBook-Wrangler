@@ -99,7 +99,6 @@ Template.validateAndSubmit.events({
     event.preventDefault();
 
     if (AutoForm.validateForm("submission-options")) {
-      console.log("instance:", instance);
       var submission_id = instance.parent(2).data._id;
       WranglerSubmissions.update(submission_id, {
         $set: {

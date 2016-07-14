@@ -285,7 +285,7 @@ Template.fileOptions.events({
 // Template.sampleLabelFieldSelector
 
 Template.sampleLabelFieldSelector.onCreated(function () {
-  let instance = this;
+  var instance = this;
 
   // this is a meh way of doing this
   var submissionId = Router.current().data()._id;
@@ -295,7 +295,7 @@ Template.sampleLabelFieldSelector.onCreated(function () {
 });
 
 Template.sampleLabelFieldSelector.onRendered(function () {
-  let instance = this;
+  var instance = this;
 
   // TODO: add an error to the autoform
 

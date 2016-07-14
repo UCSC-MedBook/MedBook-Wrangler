@@ -175,6 +175,11 @@
           firstOption="(Select a normalization)"}}
     {{/if}}
 
+    {{#if isInSchema "scaling_to_perform"}}
+      {{> horizontalField name="scaling_to_perform"
+          firstOption="(Select a scaling to perform)"}}
+    {{/if}}
+
     {{#if isInSchema "network_name"}}
       {{> horizontalField name="network_name"}}
     {{/if}}
@@ -191,8 +196,8 @@
       {{> signatureFields}}
     {{/if}} -->
 
-    {{#if isInSchema "study_label"}}
-      {{> horizontalField name="study_label"
+    {{#if isInSchema "study_id"}}
+      {{> horizontalField name="study_id"
           options=studyOptions
           firstOption="(Select a study)"}}
     {{/if}}

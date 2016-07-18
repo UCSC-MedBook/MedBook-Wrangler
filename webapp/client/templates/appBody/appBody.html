@@ -15,14 +15,21 @@
             <li class="active">
               <a href="{{pathFor 'listSubmissions'}}">Submissions</a>
             </li>
-            <li class="active">Edit</li>
+            <li class="active">{{viewOrEdit}}</li>
           {{else}}
             <li class="active">Submissions</li>
           {{/if}}
         </ol>
       </div>
-      <div id="center">
+      <!-- <div id="center">
+
+      </div> -->
+      <div id="right">
         {{> loginButtons }}
+
+        <a href="https://medbook.io" class="btn btn-default">
+          Back to MedBook Patient Care
+        </a>
       </div>
     </div>
 

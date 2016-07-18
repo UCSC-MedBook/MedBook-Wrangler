@@ -71,7 +71,7 @@ Template.uploadNewFiles.events({
     event.preventDefault();
     var blobInputElement = event.target.blobIdInput;
     if(blobInputElement.value){
-      var blobID = blobInputElement.value; 
+      var blobID = blobInputElement.value;
 
       // Use a Meteor Method to get the server to find the blob and
       // attach the metadata, since the blob is already on the server.
@@ -250,6 +250,19 @@ Template.fileOptions.helpers({
       };
     });
   },
+  studyOptions: function () {
+    return Studies.find().map(function (study) {
+      return {
+        label: study.name,
+        value: study._id,
+      };
+    });
+  },
+  formFieldsLoaded: function () {
+    return WranglerDocuments.find({
+      document_type: "field_definition",
+    }).count() > 0;
+  },
 });
 
 Template.fileOptions.events({
@@ -269,53 +282,74 @@ Template.fileOptions.events({
   }
 });
 
-// Template.contrastFields
+// Template.sampleLabelFieldSelector
 
-Template.contrastFields.onCreated(function () {
+Template.sampleLabelFieldSelector.onCreated(function () {
   var instance = this;
 
-  instance.subscribe("updatableContrasts");
+  // this is a meh way of doing this
+  var submissionId = Router.current().data()._id;
+
+  instance.subscribe("wranglerDocuments",
+      submissionId, "field_definition", {});
 });
 
-Template.contrastFields.helpers({
-  contrastOptions: function () {
-    var contrasts = Contrasts.find({}).fetch();
-
-    var uniqueLabels = _.uniq(_.pluck(contrasts, "contrast_label"));
-
-    return _.map(uniqueLabels, function (label) {
-      return {
-        label: label,
-        value: label,
-      };
-    });
-  },
-});
-
-// Template.signatureFields
-
-Template.signatureFields.onCreated(function () {
+Template.sampleLabelFieldSelector.onRendered(function () {
   var instance = this;
 
-  instance.subscribe("updatableSignatures");
+  // TODO: add an error to the autoform
+
+  // Customer.simpleSchema().namedContext("newCustomerForm").addInvalidKeys([{
+  //                           name: "CustomerName",
+  //                           type: "notUnique"
+  //                       }]);
 });
 
-Template.signatureFields.helpers({
-  signatureOptions: function () {
-    var contrasts = Signatures.find({
-      user_id: Meteor.userId(),
+Template.sampleLabelFieldSelector.helpers({
+  options: function () {
+    var fieldDocs = WranglerDocuments.find({
+      document_type: "field_definition",
     }).fetch();
 
-    var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"));
+    var fieldNames = _.pluck(_.pluck(fieldDocs, "contents"), "field_name");
 
-    return _.map(uniqueLabels, function (label) {
+    // _.uniq because technically sometimes we can have two WranglerDocuments
+    // loaded for the same field if they reparse the file
+    fieldNames = _.uniq(fieldNames)
+
+    return fieldNames.map(function (fieldName) {
       return {
-        label: label,
-        value: label,
+        label: fieldName,
+        value: fieldName,
       };
     });
   },
 });
+
+// // Template.signatureFields
+//
+// Template.signatureFields.onCreated(function () {
+//   var instance = this;
+//
+//   instance.subscribe("updatableSignatures");
+// });
+//
+// Template.signatureFields.helpers({
+//   signatureOptions: function () {
+//     var contrasts = Signatures.find({
+//       user_id: Meteor.userId(),
+//     }).fetch();
+//
+//     var uniqueLabels = _.uniq(_.pluck(contrasts, "signature_label"));
+//
+//     return _.map(uniqueLabels, function (label) {
+//       return {
+//         label: label,
+//         value: label,
+//       };
+//     });
+//   },
+// });
 
 // Template.collaborationLabelField
 

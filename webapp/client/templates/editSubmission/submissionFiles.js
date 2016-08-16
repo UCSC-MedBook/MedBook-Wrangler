@@ -259,9 +259,9 @@ Template.fileOptions.helpers({
     });
   },
   formFieldsLoaded: function () {
-    return WranglerDocuments.find({
-      document_type: "field_definition",
-    }).count() > 0;
+    if (this.info) {
+      return this.info.header_names;
+    }
   },
 });
 
@@ -284,16 +284,6 @@ Template.fileOptions.events({
 
 // Template.sampleLabelFieldSelector
 
-Template.sampleLabelFieldSelector.onCreated(function () {
-  var instance = this;
-
-  // this is a meh way of doing this
-  var submissionId = Router.current().data()._id;
-
-  instance.subscribe("wranglerDocuments",
-      submissionId, "field_definition", {});
-});
-
 Template.sampleLabelFieldSelector.onRendered(function () {
   var instance = this;
 
@@ -306,18 +296,8 @@ Template.sampleLabelFieldSelector.onRendered(function () {
 });
 
 Template.sampleLabelFieldSelector.helpers({
-  options: function () {
-    var fieldDocs = WranglerDocuments.find({
-      document_type: "field_definition",
-    }).fetch();
-
-    var fieldNames = _.pluck(_.pluck(fieldDocs, "contents"), "field_name");
-
-    // _.uniq because technically sometimes we can have two WranglerDocuments
-    // loaded for the same field if they reparse the file
-    fieldNames = _.uniq(fieldNames)
-
-    return fieldNames.map(function (fieldName) {
+  sampleLabelFieldOptions: function () {
+    return this.info.header_names.map(function (fieldName) {
       return {
         label: fieldName,
         value: fieldName,

@@ -226,7 +226,7 @@
           firstOption="(Select an annotation type)"}}
     {{/if}}
 
-    {{#if compare options.file_type "GeneSetCollection"}}
+    {{#if compare options.file_type "GeneSetGroup"}}
       {{> horizontalField name="name"}}
       {{> horizontalField name="description"}}
     {{/if}}
@@ -236,7 +236,7 @@
 <template name="sampleLabelFieldSelector">
   {{#if Template.subscriptionsReady}}
     {{> horizontalField name="sample_label_field"
-        placeholder="Sample ID field" options=options}}
+        placeholder="Sample ID field" options=sampleLabelFieldOptions}}
   {{else}}
     {{! the .alert css isn't working so it's just going to be ugly}}
     Loading...

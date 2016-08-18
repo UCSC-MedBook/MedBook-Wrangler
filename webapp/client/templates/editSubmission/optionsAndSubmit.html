@@ -19,6 +19,11 @@
           {{/submissionOptions}}
         {{/if}}
 
+        {{#if compare getSubmissionType "metadata"}}
+          {{#submissionOptions schema=onlyDescription}}
+          {{/submissionOptions}}
+        {{/if}}
+
         <!-- {{#if compare getSubmissionType 'mutation'}}
           {{#submissionOptions schema=mutationSchema}}
             {{> mutationFields}}
